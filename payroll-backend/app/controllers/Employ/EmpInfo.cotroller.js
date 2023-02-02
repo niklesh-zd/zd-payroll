@@ -27,23 +27,28 @@ class Emp {
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!First_Name || !Last_Name || !date_of_birth || !date_of_joining || !gender || !Contact_Number
-                || !Contact_Number_Home || !Permanent_Address || !email || !emp_id || !fatherName ||
-                !Nationality || !Blood_Group || !Marital_Status || !PAN_No ||
-                !ADHAR || !Bank_No || !Bank_IFSC || !Position || !Alternate_Contact_number
-                || !Employee_Code || !DEGREE || !STREAM || !YEAR_OF_PASSING || !PASSED || !PERCENTAGE_OF_MARKS)
-                return res.send({ message: "Please fill in all fields." });
+            // if (!First_Name || !Last_Name || !date_of_birth || !date_of_joining || !gender || !Contact_Number
+            //     || !Contact_Number_Home || !Permanent_Address || !email || !emp_id || !fatherName ||
+            //     !Nationality || !Blood_Group || !Marital_Status || !PAN_No ||
+            //     !ADHAR || !Bank_No || !Bank_IFSC || !Position || !Alternate_Contact_number
+            //     || !Employee_Code || !DEGREE || !STREAM || !YEAR_OF_PASSING || !PASSED || !PERCENTAGE_OF_MARKS)
+            //     return res.send({ message: "Please fill in all fields." });
 
             // console.log("fullName", fullName.length);
 
-            if (First_Name.length < 3 || First_Name.trim() == "") {
-                return res.send({ message: "Invalid formate.name" })
-            }
+            // if (First_Name.length < 3 || First_Name.trim() == "") {
+            //     return res.send({ message: "Invalid formate.name" })
+            // }
 
             // EMAIL VALIDATER
-            if (!validateEmail(email))
-                return res.send({ message: "Invalid emails." });
+            // if (!validateEmail(email))
+            //     return res.send({ message: "Invalid emails." });
+            const errors = validationResult(req)
 
+            if (!errors.isEmpty()) {
+                console.log("err=>", errors.array());
+                res.send({ msg: errors.array() })
+            }
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
             const adhar = await EmpInfoModal.findOne({ ADHAR: ADHAR })
@@ -59,51 +64,55 @@ class Emp {
             if (emailFind) {
                 return res.send({ message: "alredy exist emails." });
             }
-            if (ADHAR.length != 12) {
-                return res.send({ message: " please inter 12 digit  " });
-            }
+            // if (ADHAR.length != 12) {
+            //     return res.send({ message: " please inter 12 digit  " });
+            // }
 
 
-            if (Contact_Number.length != 10 || Contact_Number_Home.length != 10 || Alternate_Contact_number.length != 10) {
-                return res.send({ message: " please inter 10 digit  " });
-            }
+            // if (Contact_Number.length != 10 || Contact_Number_Home.length != 10 || Alternate_Contact_number.length != 10) {
+            //     return res.send({ message: " please inter 10 digit  " });
+            // }
 
             // return
-            const employ = new EmpInfoModal({
-                First_Name,
-                Last_Name,
-                date_of_birth,
-                date_of_joining,
-                gender,
-                Contact_Number,
-                Contact_Number_Home,
-                Permanent_Address,
-                Current_Address,
-                email,
-                emp_id,
-                fatherName,
-                Alternate_Contact_number,
-                Nationality,
-                Blood_Group,
-                Marital_Status,
-                PAN_No,
-                ADHAR,
-                Bank_No,
-                Bank_IFSC,
-                Position,
-                Employee_Code,
-                DEGREE,
-                STREAM,
-                PASSED,
-                PERCENTAGE_OF_MARKS
+            else {
+                const employ = new EmpInfoModal({
+                    First_Name,
+                    Last_Name,
+                    date_of_birth,
+                    date_of_joining,
+                    gender,
+                    Contact_Number,
+                    Contact_Number_Home,
+                    Permanent_Address,
+                    Current_Address,
+                    email,
+                    emp_id,
+                    fatherName,
+                    Alternate_Contact_number,
+                    Nationality,
+                    Blood_Group,
+                    Marital_Status,
+                    PAN_No,
 
-                // file,
-            });
+                    ADHAR,
+                    Bank_No,
+                    Bank_IFSC,
+                    Position,
+                    Employee_Code,
+                    DEGREE,
+                    STREAM,
+                    PASSED,
+                    PERCENTAGE_OF_MARKS,
+                    YEAR_OF_PASSING
 
-            //STORE YOUR LOGIN DATA IN DB 
-            await employ.save();
-            console.log({ employ });
-            res.send({ message: "Success " });
+                    // file,
+                });
+
+                //STORE YOUR LOGIN DATA IN DB 
+                await employ.save();
+                console.log({ employ });
+                res.send({ message: "Success " });
+            }
         }
         catch (error) {
             console.log("Error-", error);
@@ -111,7 +120,7 @@ class Emp {
     }
 
     async get_emlpoy(req, res, next) {
-        EmpInfoModal1.find({}).then(function (employee) {
+        EmpInfoModal.find({}).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }
@@ -130,28 +139,25 @@ class Emp {
         if (!errors.isEmpty()) {
             console.log("err=>", errors.array());
             res.send({ msg: errors.array() })
-        } 
-        if( ! email)
-        {
-            res.send({msg:"email num is required"})
         }
-        if( ! phone)
-        {
-            res.send({msg:"phone num is required"})
+        if (!email) {
+            res.send({ msg: "email num is required" })
         }
-        if( ! phone.length ==10)
-        {
-            res.send({msg:"invalid number"})
+        if (!phone) {
+            res.send({ msg: "phone num is required" })
         }
-        
+        if (!phone.length == 10) {
+            res.send({ msg: "invalid number" })
+        }
+
         if (!validateEmail(email))
-        return res.send({ message: "Invalid emails." });
-            const employ = new EmpInfoModal1({
-                name,
-                email,
-                phone
-            })
-    
+            return res.send({ message: "Invalid emails." });
+        const employ = new EmpInfoModal1({
+            name,
+            email,
+            phone
+        })
+
 
         await employ.save();
         console.log({ employ });
