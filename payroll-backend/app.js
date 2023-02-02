@@ -16,7 +16,7 @@ app.use(bodyparser.json());
 // app.use(expressValidator())
 // app.use(expressValidator);       
 app.use("/emp", require("./app/routes/Employ/Employ.route"));
-app.use("Emp_Leave",require("./app/routes/Employ/Leave.route"))
+app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
 const port = 7071;
 
 // Server start
