@@ -47,7 +47,7 @@ class Emp {
 
             if (!errors.isEmpty()) {
                 console.log("err=>", errors.array());
-                res.send({ msg: errors.array() })
+                res.send({ message: errors.array() })
             }
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })

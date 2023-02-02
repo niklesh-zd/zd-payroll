@@ -41,7 +41,7 @@ class Leave {
         }
     }
 
-    async get_leave(req, res) {
+    async get_leave(req, res,next) {
     
         LeaveModal.find({}).then(function (leave) {
                 res.send(leave);
