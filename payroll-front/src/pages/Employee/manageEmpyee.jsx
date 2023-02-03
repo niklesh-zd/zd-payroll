@@ -43,7 +43,6 @@ const ManageEmpyee = () => {
         console.log(err.message)
       })
   }, [])
-  console.log({ empdata }, 'this is emp date')
   return (
     <div>
       <div>

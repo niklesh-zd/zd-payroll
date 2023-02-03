@@ -18,7 +18,7 @@ class Emp {
 
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
                 Contact_Number, Contact_Number_Home, Permanent_Address,
-                Current_Address, email, emp_id,
+                Current_Address, email,
                 fatherName, Nationality,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
@@ -86,7 +86,7 @@ class Emp {
                     Permanent_Address,
                     Current_Address,
                     email,
-                    emp_id,
+                    
                     fatherName,
                     Alternate_Contact_number,
                     Nationality,

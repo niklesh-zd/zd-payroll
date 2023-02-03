@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import validator from 'validator'
 import axios from 'axios'
-function AddEmployee() {
+import { useNavigate } from 'react-router';
+function AddEmployee(props) {
+  console.log('props',props);
   const [fields, setFields] = useState({})
   const [errors, setErrors] = useState({})
-
+  const navigate = useNavigate()
   function ValidateDOB() {
     var lblError = document.getElementById('lblError')
 
@@ -41,27 +43,17 @@ function AddEmployee() {
       return false
     }
   }
-
+useEffect(()=>{
+  console.log('props.data',props.data);
+  props.data && setFields(props.data)
+},[props.data])
   function handleChange(e) {
     let fieldObj = { ...fields }
     fieldObj[e.target.name] = e.target.value
 
     setFields(fieldObj)
   }
-//   console.log("fields",fields);
-  //   const handelSubmit = async () => {
-  //     try {
-  //       console.log(fields)
-  //       const res = await axios.post(
-  //         'http://localhost:7071/emp/add_employ',
-  //         fields,
-  //       )
-  //       console.log(res.fields, { fields })
-  //     } catch (e) {
-  //       alert(e)
-  //     }
-  //   }
-
+  console.log('fields',fields);
   function submituserRegistrationForm(e) {
     e.preventDefault()
     // if (validateForm()) {
@@ -69,6 +61,8 @@ function AddEmployee() {
       axios.post('http://localhost:7071/emp/add_employ', fields)
           .then((response)=>{
             console.log('success',response)
+        navigate('/settings/manageprofile')
+
           })
           .catch(error => {
               console.error('There was an error!', error);
@@ -164,10 +158,8 @@ function AddEmployee() {
                         First Name:
                       </label>
                       <input
-
                         type="text"
                         style={{ textTransform: 'capitalize' }}
-                        // onkeydown="retu"
                         name="First_Name"
                         pattern="^[A-Za-z]+$"
                         minLength="2"
@@ -256,7 +248,6 @@ function AddEmployee() {
                         Date Of Joining:
                       </label>
                       <input
-
                         type="date"
                         name="date_of_joining"
                         className="form-control"
@@ -344,7 +335,6 @@ function AddEmployee() {
                       <select
                         name="Blood_Group"
                         className="form-control"
-
                         value={fields.Blood_Group}
                         onChange={(e) => handleChange(e)}
                       >
@@ -685,10 +675,11 @@ function AddEmployee() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className=" submit">
+                  <div className="submit">
                     <div className="form-group">
                       <input
                         type="submit"
+                        value={props.data? "Update" : "Submit"}
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>
