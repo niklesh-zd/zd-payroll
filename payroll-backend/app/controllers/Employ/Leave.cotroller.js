@@ -13,7 +13,7 @@ class Leave {
         console.log("Run ok");
         try {
 
-            const { userid, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
+            var { userid, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
@@ -21,16 +21,19 @@ class Leave {
                 || !DATE || !REASON_FOR_LEAVE
             )
                 return res.send({ message: "Please fill in all fields." });
-            const today = ''
-            if (LEAVE_TYPE == 'full') {
-                today = 1
-            }
-            else {
-                today = 0.5
-            }           // return
+            // var today = ''
+            // if (LEAVE_TYPE == "half") {
+            //     today = 1
+            // }
+            // if (LEAVE_TYPE == "full") {
+            //     today = 0.5
+            // }
+            // LEAVE_TYPE = today
+            // console.log(today);
+            // return
             const leave = new LeaveModal({
                 userid,
-                today,
+                LEAVE_TYPE,
                 DATE,
                 REASON_FOR_LEAVE,
                 // file,
@@ -39,10 +42,14 @@ class Leave {
             //STORE YOUR LOGIN DATA IN DB 
             await leave.save();
             console.log({ leave });
-            res.send({ message: "Success " });
+            // res.send({ message: "Success " });
+            res.status(200).send({ success: true })
+
         }
         catch (error) {
-            console.log("Error-", error);
+            // res.send("Error-", error);
+            res.status(400).send({ 'status': false, 'error': error })
+
         }
     }
 

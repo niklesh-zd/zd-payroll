@@ -14,7 +14,6 @@ const EmpInfo = Schema({
         required: [true, "Please enter your name!"],
         trim: [true, "space not allow"],
     }
-
 },
     {
         timestamps: true
