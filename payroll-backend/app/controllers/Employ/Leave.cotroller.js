@@ -21,16 +21,16 @@ class Leave {
                 || !DATE || !REASON_FOR_LEAVE
             )
                 return res.send({ message: "Please fill in all fields." });
-            // const today = ''
-            // if (LEAVE_TYPE == 'full') {
-            //     today = 1
-            // }
-            // else {
-            //     today = 0.5
-            // }           // return
+            var today = ''
+            if (LEAVE_TYPE == 'full') {
+                today = 1
+            }
+            else {
+                today = 0.5
+            }           
             const leave = new LeaveModal({
                 userid,
-                LEAVE_TYPE,
+                LEAVE_TYPE:today,
                 DATE,
                 REASON_FOR_LEAVE,
                 // file,
@@ -48,7 +48,8 @@ class Leave {
 
     async get_leave(req, res, next) {
 
-        LeaveModal.find({}).then(function (leave) {
+        LeaveModal.find({})
+        .then(function (leave) {
             res.send(leave);
         }).catch(next);
 
