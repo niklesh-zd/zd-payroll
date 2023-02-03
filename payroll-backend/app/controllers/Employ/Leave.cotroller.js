@@ -3,21 +3,21 @@
 "use strict";
 const express = require("express");
 const LeaveModal = require('../../models/Employ/leave.modal')
-
+const Emp = require('../Employ/EmpInfo.cotroller')
 const ObjectId = require("mongodb").ObjectId;
 
-
+// const info = Emp.add_employ().employee
 class Leave {
     async Leave(req, res) {
 
         console.log("Run ok");
         try {
 
-            const { UUID, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
+            const { userid, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!LEAVE_TYPE || !UUID
+            if (!LEAVE_TYPE || !userid
                 || !DATE || !REASON_FOR_LEAVE
             )
                 return res.send({ message: "Please fill in all fields." });
@@ -29,7 +29,7 @@ class Leave {
                 today = 0.5
             }           // return
             const leave = new LeaveModal({
-                UUID,
+                userid,
                 today,
                 DATE,
                 REASON_FOR_LEAVE,

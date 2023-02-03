@@ -8,9 +8,10 @@ var validateEmail = function (email) {
 };
 const leave = Schema({
 
-    UUID: {
+    userid: {
         type: String,
         required: true,
+        trim: true
     },
     LEAVE_TYPE
         : {
