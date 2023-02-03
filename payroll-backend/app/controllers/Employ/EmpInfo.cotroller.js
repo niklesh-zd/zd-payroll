@@ -23,7 +23,7 @@ class Emp {
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
-                , PASSED, PERCENTAGE_OF_MARKS
+                , PASSED, PERCENTAGE_OF_MARKS,state,city
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
@@ -93,7 +93,8 @@ class Emp {
                     Blood_Group,
                     Marital_Status,
                     PAN_No,
-
+                    state,
+                    city,
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,
