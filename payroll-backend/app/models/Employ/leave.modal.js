@@ -18,7 +18,6 @@ const leave = Schema({
         required: true,
         trim: [true, "space not allow"],
         enum: ['full', 'half']
-
     },
     DATE
         : {

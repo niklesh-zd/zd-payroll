@@ -105,10 +105,8 @@ class Emp {
                     PASSED,
                     PERCENTAGE_OF_MARKS,
                     YEAR_OF_PASSING
-
                     // file,
                 });
-
                 //STORE YOUR LOGIN DATA IN DB 
                 await employ.save();
                 console.log({ employ });
@@ -153,7 +151,7 @@ class Emp {
 
         if (!validateEmail(email))
             return res.send({ message: "Invalid emails." });
-        const employ = new EmpInfoModal1({
+        const employ = new EmpInfoModal({
             name,
             email,
             phone
@@ -173,7 +171,7 @@ class Emp {
     }
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });
-        EmpInfoModal1.findById(req.params.id).then((employee) => {
+        EmpInfoModal.findById(req.params.id).then((employee) => {
             console.log("data:", employee);
             if (!employee) {
                 return res.status(404).send({ message: "This user not Exist." });
@@ -187,7 +185,7 @@ class Emp {
     async emp_delete(req, res) {
         try {
             console.log(req.params.id);
-            const userDelete = await EmpInfoModal1.findByIdAndDelete(req.params.id)
+            const userDelete = await EmpInfoModal.findByIdAndDelete(req.params.id)
             if (!userDelete) {
                 return res.status(404).send({ message: "This user not Exist." });
             }
@@ -195,7 +193,7 @@ class Emp {
             console.log({ userDelete });
 
         } catch (error) {
-            console.log({ error });
+            res.send({ error });
         }
     }
     async emp_update(req, res) {
@@ -208,7 +206,7 @@ class Emp {
 
         const id = req.params.id;
 
-        EmpInfoModal1.findByIdAndUpdate(id, req.body)
+        EmpInfoModal.findByIdAndUpdate(id, req.body)
             .then(data => {
                 if (!data) {
                     res.status(404).send({
