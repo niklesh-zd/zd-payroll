@@ -23,7 +23,7 @@ class Emp {
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
-                , PASSED, PERCENTAGE_OF_MARKS
+                , PASSED, PERCENTAGE_OF_MARKS, state, city
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
@@ -47,7 +47,7 @@ class Emp {
 
             if (!errors.isEmpty()) {
                 console.log("err=>", errors.array());
-                res.send({ msg: errors.array() })
+                res.send({ message: errors.array() })
             }
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
@@ -93,7 +93,8 @@ class Emp {
                     Blood_Group,
                     Marital_Status,
                     PAN_No,
-
+                    state,
+                    city,
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,
@@ -104,10 +105,8 @@ class Emp {
                     PASSED,
                     PERCENTAGE_OF_MARKS,
                     YEAR_OF_PASSING
-
                     // file,
                 });
-
                 //STORE YOUR LOGIN DATA IN DB 
                 await employ.save();
                 console.log({ employ });
@@ -115,10 +114,23 @@ class Emp {
             }
         }
         catch (error) {
-            console.log("Error-", error);
+            res.send("Error-", error);
         }
     }
+    async get_user_id(req, res) {
+        const data = await EmpInfoModal.find()
+        var arr = []
+        data.forEach((Val) => {
+            arr.push(Val.id)
+        })
+        if (!arr) {
+            return res.status(404).send({ message: " user id not  Exist." });
+        }
 
+        res.send(arr);
+
+
+    }
     async get_emlpoy(req, res, next) {
         EmpInfoModal.find({}).then(function (employee) {
             res.send(employee);
@@ -130,7 +142,8 @@ class Emp {
         const {
             name,
             email,
-            phone } = req.body;
+            phone
+        } = req.body;
 
         // const validationRes = signupValidation(userData);
         // console.log({ validationRes });
@@ -152,7 +165,7 @@ class Emp {
 
         if (!validateEmail(email))
             return res.send({ message: "Invalid emails." });
-        const employ = new EmpInfoModal1({
+        const employ = new EmpInfoModal({
             name,
             email,
             phone
@@ -164,7 +177,7 @@ class Emp {
         res.send({ message: "Success " });
     }
     catch(error) {
-        console.log("Error-", error);
+        res.send("Error-", error);
     }
     async update_user() {
         const id = req.params.id;
@@ -194,7 +207,7 @@ class Emp {
             console.log({ userDelete });
 
         } catch (error) {
-            console.log({ error });
+            res.send({ error });
         }
     }
     async emp_update(req, res) {

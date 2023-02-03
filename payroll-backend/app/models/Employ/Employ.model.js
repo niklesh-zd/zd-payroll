@@ -126,6 +126,12 @@ const EmpInfo = Schema({
 
     PERCENTAGE_OF_MARKS: {
         type: String,
+    },
+    state :{
+        type : String
+    },
+    city : {
+        type : String
     }
 
 },
