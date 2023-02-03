@@ -21,16 +21,16 @@ class Leave {
                 || !DATE || !REASON_FOR_LEAVE
             )
                 return res.send({ message: "Please fill in all fields." });
-            const today = ''
-            if (LEAVE_TYPE == 'full') {
-                today = 1
-            }
-            else {
-                today = 0.5
-            }           // return
+            // const today = ''
+            // if (LEAVE_TYPE == 'full') {
+            //     today = 1
+            // }
+            // else {
+            //     today = 0.5
+            // }           // return
             const leave = new LeaveModal({
                 userid,
-                today,
+                LEAVE_TYPE,
                 DATE,
                 REASON_FOR_LEAVE,
                 // file,
