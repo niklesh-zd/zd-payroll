@@ -8,17 +8,17 @@ var validateEmail = function (email) {
 };
 const leave = Schema({
 
+    UUID: {
+        type: String,
+        required: true,
+    },
     LEAVE_TYPE
         : {
         type: String,
         required: true,
         trim: [true, "space not allow"],
-    },
-    NUMBER_OF_DAYS_REQUESTED
-        : {
-        type: String,
-        required: true,
-        trim: true
+        enum: ['full', 'half']
+
     },
     DATE
         : {
@@ -30,7 +30,7 @@ const leave = Schema({
         type: String,
         required: true
     },
-   
+
 
 
 },

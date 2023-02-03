@@ -13,19 +13,19 @@ class Leave {
         console.log("Run ok");
         try {
 
-            const { LEAVE_TYPE, NUMBER_OF_DAYS_REQUESTED, DATE, REASON_FOR_LEAVE,
+            const { UUID, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!LEAVE_TYPE || !NUMBER_OF_DAYS_REQUESTED
+            if (!LEAVE_TYPE || !UUID
                 || !DATE || !REASON_FOR_LEAVE
             )
                 return res.send({ message: "Please fill in all fields." });
 
             // return
             const leave = new LeaveModal({
+                UUID,
                 LEAVE_TYPE,
-                NUMBER_OF_DAYS_REQUESTED,
                 DATE,
                 REASON_FOR_LEAVE,
                 // file,
@@ -41,8 +41,12 @@ class Leave {
         }
     }
 
-    async get_salary(req, res) {
-        console.log(res);
+    async get_leave(req, res) {
+    
+        LeaveModal.find({}).then(function (leave) {
+                res.send(leave);
+            }).catch(next);
+        
     }
 
 
