@@ -109,10 +109,7 @@ const EmpInfo = Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    emp_id: {
-        type: String,
-        required: true
-    },
+   
     DEGREE: {
         type: String,
         required: true

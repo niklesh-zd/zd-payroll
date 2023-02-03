@@ -1,109 +1,145 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AddEmployee = () => {
+  const [id, idchange] = useState('')
+  const [name, namechange] = useState('')
+  const [email, emailchange] = useState('')
+  const [phone, phonechange] = useState('')
+  const [active, activechange] = useState(true)
+  const [validation, valchange] = useState(false)
 
-    const [id, idchange] = useState("");
-    const [name, namechange] = useState("");
-    const [email, emailchange] = useState("");
-    const [phone, phonechange] = useState("");
-    const [active, activechange] = useState(true);
-    const [validation, valchange] = useState(false);
+  const navigate = useNavigate()
 
+  const handlesubmit = (e) => {
+    e.preventDefault()
+    const empdata = { name, email, phone, active, id }
+    fetch('http://192.168.29.37:7071/emp/post_some_data', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(empdata),
+    })
+      .then((res) => {
+        alert('Saved successfully.')
+        console.log({ res }, '==============babu')
+        navigate('/settings/manageprofile')
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
 
-    const navigate = useNavigate();
-
-    const handlesubmit = (e) => {
-        e.preventDefault();
-        const empdata = { name, email, phone, active, id};
-        fetch("http://192.168.29.37:7071/emp/post_some_data",{
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(empdata)
-        }).then((res) => {
-            alert('Saved successfully.')
-            console.log({res},"==============babu");
-            navigate('/settings/manageprofile')
-        }).catch((err) => {
-            console.log(err.message)
-        })
-    }
-
-    return (
-        <div>
-
-            <div className="row">
-                <div className="offset-lg-3 col-lg-6">
-                    <form className="container" onSubmit={handlesubmit}>
-                        <div className="card" style={{ "textAlign": "left" }}>
-                            <div className="card-title">
-                                {/* row justify-content-center pt-6 */}
-                                <h2 className="text-red-900"> Apply Leave</h2>
-                            </div>
-                            <div className="card-body">
-
-                                <div className="row">
-                                    <div className="col-lg-3">
-                                        <div className="form-group">
-                                            <label>User</label>
-                                            <select value="Radish">
-                                            <option value="Orange">User 1</option>
-                                            <option value="Radish">User 2</option>
-                                            <option value="Cherry">User 3</option>
-                                          </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-2">
-                                        <div className="form-group">
-                                            <label>Leave Type 1</label>
-                                            <select value="Radish">
-                                            <option value="Orange">User 1</option>
-                                            <option value="Radish">User 2</option>
-                                            <option value="Cherry">User 3</option>
-                                          </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="col-lg-2">
-                                        <div className="form-group">
-                                            <label>Leave Type 2</label>
-                                            <select value="Radish">
-                                            <option value="Orange">User 1</option>
-                                            <option value="Radish">User 2</option>
-                                            <option value="Cherry">User 3</option>
-                                          </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-3">
-                                        <div className="form-group">
-                                            <label>Date</label>
-                                            <input required type="date" className="form-control"></input>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-2">
-                                    <button className="btn btn-primary">Add</button>
-                                    </div>
-                                    <div className="col-lg-12">
-                                        <div className="form-group">
-                                            <div className="d-grid gap-2 d-md-flex justify-content-md-center">
-                                                <button className="btn btn-primary" type="submit">Submit</button>
-                                                <Link to="/settings/manageprofile" className="btn btn-primary">Back</Link>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </form>
-
+  return (
+    <div>
+      <div className="row">
+        <div className="offset-lg-2 col-lg-8">
+          <form className="container" onSubmit={handlesubmit}>
+            <div className="card p-10">
+              <div className="card-title" style={{ textAlign: 'center' }}>
+                <h2 className="text-red-900">Apply Leave</h2>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div className="form-group">
+                    <label>Start Date Of Leave</label>
+                    <input
+                      type="date"
+                      min="2"
+                      max="50"
+                      name=""
+                      //   value={fields.STREAM}
+                      //   onChange={(e) => handleChange(e)}
+                      className="form-control"
+                    ></input>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div className="form-group">
+                    <label>End Day Of Leave</label>
+                    <input
+                      type="date"
+                      min="2"
+                      max="50"
+                      name=""
+                      //   value={fields.STREAM}
+                      //   onChange={(e) => handleChange(e)}
+                      className="form-control"
+                    ></input>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="form-group">
+                    &nbsp;{' '}
+                    <p> Reason For Leave</p>
+                    &nbsp;{' '}
+                    <input
+                      type="radio"
+                      id="medical_l"
+                      name="leave_reason"
+                      defaultValue="medical_l"
+                    />
+                    &nbsp; <label htmlFor="medical_l">Medical Leave</label>
+                    &nbsp;{' '}
+                    <input
+                      type="radio"
+                      id="family_r"
+                      name="leave_reason"
+                      defaultValue="family_r"
+                    />
+                    &nbsp; <label htmlFor="family_r">Family Reason</label>
+                    &nbsp;{' '}
+                    <input
+                      type="radio"
+                      id="personal_l"
+                      name="leave_reason"
+                      defaultValue="personal_l"
+                    />
+                    &nbsp; <label htmlFor="personal_l">Personal Leave</label>
+                    &nbsp;{' '}
+                    <input
+                      type="radio"
+                      id="other_r"
+                      name="leave_reason"
+                      defaultValue="other_r"
+                    />
+                    &nbsp; <label htmlFor="other_r">Other Reason</label>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div className="form-group pt-8">
+                    <label>Total Days Of Request</label>
+                    <input
+                      type="number"
+                      min="2"
+                      max="50"
+                      name=""
+                      //   value={fields.STREAM}
+                      //   onChange={(e) => handleChange(e)}
+                      className="form-control"
+                    ></input>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                  <div className="submit pt-8">
+                    <div className="form-group">
+                      <input
+                        type="submit"
+                        className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
+                      />
+                    </div>
+                  </div>
                 </div>
             </div>
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  )
 }
 
-export default AddEmployee;
+export default AddEmployee
