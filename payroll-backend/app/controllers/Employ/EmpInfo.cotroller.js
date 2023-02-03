@@ -18,7 +18,7 @@ class Emp {
 
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
                 Contact_Number, Contact_Number_Home, Permanent_Address,
-                Current_Address, email, emp_id,
+                Current_Address, email,
                 fatherName, Nationality,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
@@ -86,7 +86,7 @@ class Emp {
                     Permanent_Address,
                     Current_Address,
                     email,
-                    emp_id,
+                    
                     fatherName,
                     Alternate_Contact_number,
                     Nationality,
@@ -172,7 +172,7 @@ class Emp {
     }
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });
-        EmpInfoModal1.findById(req.params.id).then((employee) => {
+        EmpInfoModal.findById(req.params.id).then((employee) => {
             console.log("data:", employee);
             if (!employee) {
                 return res.status(404).send({ message: "This user not Exist." });
@@ -186,7 +186,7 @@ class Emp {
     async emp_delete(req, res) {
         try {
             console.log(req.params.id);
-            const userDelete = await EmpInfoModal1.findByIdAndDelete(req.params.id)
+            const userDelete = await EmpInfoModal.findByIdAndDelete(req.params.id)
             if (!userDelete) {
                 return res.status(404).send({ message: "This user not Exist." });
             }
@@ -207,7 +207,7 @@ class Emp {
 
         const id = req.params.id;
 
-        EmpInfoModal1.findByIdAndUpdate(id, req.body)
+        EmpInfoModal.findByIdAndUpdate(id, req.body)
             .then(data => {
                 if (!data) {
                     res.status(404).send({

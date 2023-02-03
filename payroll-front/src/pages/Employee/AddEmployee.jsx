@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import validator from 'validator'
 import axios from 'axios'
-function AddEmployee() {
+function AddEmployee(props) {
+  console.log('props',props);
   const [fields, setFields] = useState({})
   const [errors, setErrors] = useState({})
 
@@ -41,27 +42,17 @@ function AddEmployee() {
       return false
     }
   }
-
+useEffect(()=>{
+  console.log('props.data',props.data);
+  props.data && setFields(props.data)
+},[props.data])
   function handleChange(e) {
     let fieldObj = { ...fields }
     fieldObj[e.target.name] = e.target.value
 
     setFields(fieldObj)
   }
-//   console.log("fields",fields);
-  //   const handelSubmit = async () => {
-  //     try {
-  //       console.log(fields)
-  //       const res = await axios.post(
-  //         'http://localhost:7071/emp/add_employ',
-  //         fields,
-  //       )
-  //       console.log(res.fields, { fields })
-  //     } catch (e) {
-  //       alert(e)
-  //     }
-  //   }
-
+  console.log('fields',fields);
   function submituserRegistrationForm(e) {
     e.preventDefault()
     // if (validateForm()) {
@@ -685,10 +676,11 @@ function AddEmployee() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className=" submit">
+                  <div className="submit">
                     <div className="form-group">
                       <input
                         type="submit"
+                        value={props.data? "Update" : "Submit"}
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>
