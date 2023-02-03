@@ -2,7 +2,9 @@
 "use strict"
 
 const router = require("express").Router()
-const { add_employ, get_emlpoy, emp_delete, emp_update, get_one_emp, createUser, update_user } = require('../../controllers/Employ/EmpInfo.cotroller')
+const { add_employ, get_emlpoy, emp_delete, 
+    emp_update, get_one_emp, createUser,
+     update_user,get_user_id } = require('../../controllers/Employ/EmpInfo.cotroller')
 // const { validation_all_field } = require('../../controllers/Employ/validation')                                                                                                                                  
 const { check } = require('express-validator');
 const { Leave, get_salary } = require('../../controllers/Employ/Leave.cotroller')
@@ -33,5 +35,6 @@ router.post('/post_some_data',
     createUser);
 router.post('/user_update', update_user)
 router.post('/leave', Leave)
+router.get('/get-all-user-id',get_user_id)
 module.exports = router;
 

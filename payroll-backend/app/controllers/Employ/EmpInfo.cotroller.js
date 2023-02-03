@@ -114,10 +114,23 @@ class Emp {
             }
         }
         catch (error) {
-            console.log("Error-", error);
+            res.send("Error-", error);
         }
     }
+    async get_user_id(req, res) {
+        const data = await EmpInfoModal.find()
+        var arr = []
+        data.forEach((Val) => {
+            arr.push(Val.id)
+        })
+        if (!arr) {
+            return res.status(404).send({ message: " user id not  Exist." });
+        }
 
+        res.send(arr);
+
+
+    }
     async get_emlpoy(req, res, next) {
         EmpInfoModal.find({}).then(function (employee) {
             res.send(employee);
@@ -129,7 +142,8 @@ class Emp {
         const {
             name,
             email,
-            phone } = req.body;
+            phone
+        } = req.body;
 
         // const validationRes = signupValidation(userData);
         // console.log({ validationRes });
