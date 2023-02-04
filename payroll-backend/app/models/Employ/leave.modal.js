@@ -41,7 +41,7 @@ const leave = Schema({
 )
 
 // collection creation 
-const SalaryModal = model('SALARY', leave, "salary");
+const SalaryModal = model('LEAVE', leave, "leave");
 
 
 

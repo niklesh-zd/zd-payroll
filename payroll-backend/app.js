@@ -20,7 +20,7 @@ app.use(bodyparser.json());
 // app.use(expressValidator);       
 app.use("/emp", require("./app/routes/Employ/Employ.route"));
 app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
-app.use("Emp_Leave",require("./app/routes/Employ/Leave.route"))
+app.use("/Emp_Salary",require("./app/routes/Employ/Salary.route"))
 // const port = process.env.PORT;
 
 
