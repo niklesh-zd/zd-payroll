@@ -1,31 +1,27 @@
 import axios from 'axios'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
-const Leaves = () => {
+const Leaves = (props) => {
   const [leavesData, setLeavesData] = useState({})
-
-  const navigate = useNavigate()
 
   const handleChange = (e) => {
     let leavesObj = { ...leavesData }
     leavesObj[e.target.name] = e.target.value
-    setLeavesData(leavesObj)
+    setLeavesData({leavesObj, '_id': props.empData._id})
   }
-  console.log(leavesData);
   console.log('leavesData', leavesData)
   const handlesubmit = (e) => {
     e.preventDefault()
-    console.log('0000');
-      axios.post('http://localhost:7071/Emp_Leave/leave', leavesData)
-      .then((response)=>{
-        console.log('success',response)
-    // navigate('/settings/manageprofile')
-
+    console.log('0000')
+    axios
+      .post('http://localhost:7071/Emp_Leave/leave', leavesData)
+      .then((response) => {
+        console.log('success', response)
       })
-      .catch(error => {
-          console.error('There was an error!', error);
-      });
+      .catch((error) => {
+        console.error('There was an error!', error)
+      })
   }
 
   return (
@@ -46,16 +42,11 @@ const Leaves = () => {
                     <select
                       name="userid"
                       className="form-control"
-                      value={leavesData.userid}
-                      onChange={(e) => handleChange(e)}
+                      value={props.empData._id}
                       placeholder="Select Employee"
+                      disabled
                     >
-                      <option disabled={true} selected={true}>
-                        Select an Employee
-                      </option>
-                      <option>Anmol</option>
-                      <option>shalini</option>
-                      <option>Sanjay</option>
+                        <option>{props.empData.First_Name}</option>
                     </select>
                   </div>
                 </div>
@@ -75,11 +66,9 @@ const Leaves = () => {
                 </div>
               </div>
               <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label className="profile_details_text">
-                      Reason
-                    </label>
+                    <label className="profile_details_text">Reason</label>
                     <select
                       name="REASON_FOR_LEAVE"
                       className="form-control"
@@ -96,11 +85,9 @@ const Leaves = () => {
                     </select>
                   </div>
                 </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label className="profile_details_text">
-                      Leave Type
-                    </label>
+                    <label className="profile_details_text">Leave Type</label>
                     <select
                       name="LEAVE_TYPE"
                       className="form-control"

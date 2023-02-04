@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-
+import Leaves from '../Leave'
 const EmpDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
   const [empdata, empdatachange] = useState({})
+  const [leaveNavigateState, setLeaveNavigateState] = useState(false)
 
   const LoadEdit = () => {
-    navigate('/settings/EmpEdit' + id)  
+    navigate('/settings/EmpEdit' + id)
+  }
+  const leaveNavigate = () =>{
+    // navigate('/Leave' + id)
+    setLeaveNavigateState(true)
   }
   useEffect(() => {
     fetch('http://localhost:7071/emp/emp_1/' + id)
@@ -25,10 +30,32 @@ const EmpDetail = () => {
   }, [])
 
   return (
+    leaveNavigateState ?
+    <Leaves empData={empdata}/>
+    :
     <div className="">
       <div className="card pt-3 pb-3 pl-10 pr-10">
-        <div className="card-title" style={{ textAlign: 'left' }}>
-          <h3>Employee Details</h3>
+        <div
+          className="card-title"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div className="flex">
+            <Link className="btn btn-danger mr-5" to="/">
+              Back
+            </Link>
+            <h3>Employee Details</h3>
+          </div>
+          <div className="flex">
+            <button className="btn btn-Primary" onClick={() => LoadEdit()}>
+              Update Details
+            </button>
+            <button className="btn btn-Primary" onClick={() => leaveNavigate()}>
+              Apply Leave
+            </button>
+          </div>
         </div>
         {empdata && (
           <div className="">
@@ -47,7 +74,7 @@ const EmpDetail = () => {
                   style={{ width: '70%', justifyContent: 'space-between' }}
                 >
                   <h6>Name</h6>
-                  <p>{empdata.First_Name + " " + empdata.Last_Name}</p>
+                  <p>{empdata.First_Name + ' ' + empdata.Last_Name}</p>
                 </div>
                 <div
                   className="flex"
@@ -146,7 +173,7 @@ const EmpDetail = () => {
               </div>
             </div>
             <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <h5>Bank Details</h5>
                 <div
                   className="flex"
@@ -230,12 +257,6 @@ const EmpDetail = () => {
                 </div>
               </div>
             </div>
-            <Link className="btn btn-danger" to="/">
-              Back
-            </Link>
-            <button className="btn btn-Primary" onClick={() => LoadEdit()}>
-              Update Details
-            </button>
           </div>
         )}
       </div>
