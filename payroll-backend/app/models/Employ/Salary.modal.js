@@ -53,21 +53,64 @@ const Salary = Schema({
         type: String,
         required: true
     },
-    EPF_Account_Number: {
-        type: String,
-        required: true
-    },
-    Universal_Account_Number: {
-        type: String,
-        required: true
-    },
+
     Total_Work_Days: {
         type: Number,
         required: true
     },
-    number_of_Leaves: {
+    Number_of_Leaves: {
         type: Number,
         required: true
+    },
+    Leave_balence: {
+        type: Number,
+        required: true
+    },
+    Leave_taken: {
+        type: Number,
+        required: true
+    },
+    Balence_days: {
+        type: Number,
+        required: true
+    },
+    Present_day: {
+        type: Number,
+        required: true
+    },
+    Total_paid_day: {
+        type: Number,
+        required: true
+    },
+    Basic_DA: {
+        type: Number,
+        required: true
+    },
+    HRA: {
+        type: Number,
+        required: true
+    },
+    RA: {
+        type: Number,
+        required: true
+    },
+    Flext_benefits: {
+        type: Number,
+        required: true
+    },
+    Total_earn: {
+        type: Number,
+        required: true
+    }
+    ,
+    Net_pay_in_words: {
+        type: String,
+        required: true
+    },
+    Net_pay_in_number: {
+        type: Number,
+        required: true
+
     }
 },
     {
