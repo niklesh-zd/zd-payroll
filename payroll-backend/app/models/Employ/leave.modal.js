@@ -15,13 +15,9 @@ const leave = Schema({
     },
     LEAVE_TYPE
         : {
-        type: String,
+        type: Number,
         required: true,
-<<<<<<< HEAD
         // trim: [true, "space not allow"],
-=======
-        trim: [true, "space not allow"],
->>>>>>> f5fb88482fd5ae3b5c61acd995c7cf0150c10af3
         enum: [1,0.5]
     },
     DATE
