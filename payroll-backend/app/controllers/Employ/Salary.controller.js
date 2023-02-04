@@ -20,16 +20,19 @@ class Salary {
                 Bank_Account_Number, Bank_IFSC_Code,
                 EPF_Account_Number,
                 Universal_Account_Number,
-                Total_Work_Days, number_of_Leaves
+                Total_Work_Days, Number_of_Leaves, Leave_balence
+                , Leave_taken, Balence_days, Present_day, Total_paid_day
+                , Basic_DA, HRA, RA, Flext_benefits, Total_earn
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!Employee_name || !Employee_code ||
-                !Employee_PAN || !Employee_Adhar ||
-                !Bank_IFSC_Code || !Universal_Account_Number
-                || !designation || !Salary_Slip_Month_Year
-                || !Date_of_Joining || !Bank_Account_Number
-                || !EPF_Account_Number || !Total_Work_Days || !number_of_Leaves
+            if (!Employee_name || !Employee_code || !Leave_balence ||
+                !Employee_PAN || !Employee_Adhar || !Leave_taken ||
+                !Bank_IFSC_Code || !Universal_Account_Number || !Balence_days
+                || !designation || !Salary_Slip_Month_Year || !Present_day
+                || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
+                || !EPF_Account_Number || !Total_Work_Days || !Number_of_Leaves
+                || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
             )
                 return res.send({ message: "Please fill in all fields." });
 
@@ -46,7 +49,17 @@ class Salary {
                 EPF_Account_Number,
                 Universal_Account_Number,
                 Total_Work_Days,
-                number_of_Leaves
+                Number_of_Leaves,
+                Leave_balence,
+                Leave_taken,
+                Balence_days,
+                Present_day,
+                Total_paid_day,
+                Basic_DA,
+                HRA,
+                RA,
+                Flext_benefits,
+                Total_earn
                 // file,
             });
 
