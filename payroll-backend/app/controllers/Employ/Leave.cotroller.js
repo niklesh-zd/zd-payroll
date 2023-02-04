@@ -22,7 +22,7 @@ class Leave {
             )
                 return res.send({ message: "Please fill in all fields." });
             var today = ''
-            if (LEAVE_TYPE == 'full') {
+            if (leave_type == 'full') {
                 today = 1
             }
             else {
