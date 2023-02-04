@@ -12,6 +12,9 @@ const ManageEmpyee = () => {
   const LoadDetail = (_id) => {
     navigate('/settings/EmpDetail' + _id)
   }
+  const generateSalary = (_id) => {
+    navigate('/settings/salary' + _id)
+  }
   const LoadEdit = (_id) => {
     navigate('/settings/EmpEdit' + _id)
   }
@@ -76,7 +79,6 @@ const ManageEmpyee = () => {
                     <td>{item.Contact_Number}</td>
                     <td>
                       {item.createdAt}
-                      {/* {format(item.date_of_joining, 'dd/mm/yyyy')} */}
                     </td>
                     <td>
                       <a
@@ -102,6 +104,14 @@ const ManageEmpyee = () => {
                         className="btn btn"
                       >
                         Details
+                      </a>
+                      <a
+                        onClick={() => {
+                          generateSalary(item._id)
+                        }}
+                        className="btn btn"
+                      >
+                        Receipt
                       </a>
                     </td>
                   </tr>

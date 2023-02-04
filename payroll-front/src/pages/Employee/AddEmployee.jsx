@@ -131,7 +131,7 @@ useEffect(()=>{
       >
         <div className="container px-4">
           <div className="row gx-12">
-            <div className="col edit_information">
+            <div className="col-4 edit_information">
               <div className="Account-details">
                 <h3 className="text-left"> Personal Details</h3>
                 <hr />
@@ -295,9 +295,8 @@ useEffect(()=>{
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label>Contact Number Home</label>
+                      <label>Home Contact</label>
                       <input
-
                         type="tel"
                         maxLength="12"
                         name="Contact_Number_Home"
@@ -422,7 +421,7 @@ useEffect(()=>{
               </div>
               <br />
             </div>
-            <div className="col edit_information">
+            <div className="col-4 edit_information">
               <div className="Account-details">
                 <h3 className="text-left">Account Details</h3> <hr />
                 <div className="row">
@@ -595,7 +594,7 @@ useEffect(()=>{
                 </div>
               </div>
             </div>
-            <div className="col edit_information">
+            <div className="col-4 edit_information">
               <div className="Account-details">
                 <h3 className="text-left">Address</h3> <hr />
                 {/* <div className="row">
@@ -637,7 +636,7 @@ useEffect(()=>{
                   </div>
                 </div> */}
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
                         Current Address:
@@ -647,7 +646,7 @@ useEffect(()=>{
                         id="w3review"
                         name="Current_Address"
                         rows="4"
-                        cols="50"
+                        cols="35"
                         placeholder="Enter your Local Address"
                         value={fields.Current_Address}
                         onChange={(e) => handleChange(e)}
@@ -656,7 +655,7 @@ useEffect(()=>{
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
                         Parmanent Address:
@@ -666,7 +665,7 @@ useEffect(()=>{
                         id="w3review"
                         name="Permanent_Address"
                         rows="4"
-                        cols="50"
+                        cols="35"
                         placeholder="Parmanent Address"
                         value={fields.Permanent_Address}
                         onChange={(e) => handleChange(e)}
