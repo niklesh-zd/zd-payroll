@@ -6,6 +6,6 @@ const { salary, get_salary } = require('../../controllers/Employ/Salary.controll
 
 
 router.post('/salary', salary)
-router.get('/get_leave', get_salary)
+router.get('/get_salary', get_salary)
 
 module.exports = router;
