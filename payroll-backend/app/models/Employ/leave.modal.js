@@ -13,20 +13,25 @@ const leave = Schema({
         required: true,
         trim: true
     },
-    LEAVE_TYPE
+    employee_name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    leave_type
         : {
         type: Number,
         required: true,
         // trim: [true, "space not allow"],
-        enum: [1,0.5]
+        enum: [1, 0.5]
     },
-    DATE
+    date
         : {
         type: Date,
         required: true,
 
     },
-    REASON_FOR_LEAVE: {
+    reason_for_leave: {
         type: String,
         required: true
     },

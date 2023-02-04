@@ -13,12 +13,12 @@ class Leave {
         console.log("Run ok");
         try {
 
-            var { userid, LEAVE_TYPE, DATE, REASON_FOR_LEAVE,
+            var { userid, leave_type, date, reason_for_leave,employee_name
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!LEAVE_TYPE || !userid
-                || !DATE || !REASON_FOR_LEAVE
+            if (!leave_type || !userid ||!employee_name
+                || !date || !reason_for_leave
             )
                 return res.send({ message: "Please fill in all fields." });
             var today = ''
@@ -30,9 +30,10 @@ class Leave {
             }
             const leave = new LeaveModal({
                 userid,
-                LEAVE_TYPE: today,
-                DATE,
-                REASON_FOR_LEAVE,
+                employee_name,
+                leave_type: today,
+                date,
+                reason_for_leave
                 // file,
             });
 
