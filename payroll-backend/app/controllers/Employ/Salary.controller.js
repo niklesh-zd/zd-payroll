@@ -18,8 +18,8 @@ class Salary {
                 Salary_Slip_Month_Year,
                 Employee_PAN, Employee_Adhar,
                 Bank_Account_Number, Bank_IFSC_Code,
-                EPF_Account_Number,
-                Universal_Account_Number,
+                Net_pay_in_words,
+                Net_pay_in_number,
                 Total_Work_Days, Number_of_Leaves, Leave_balence
                 , Leave_taken, Balence_days, Present_day, Total_paid_day
                 , Basic_DA, HRA, RA, Flext_benefits, Total_earn
@@ -28,10 +28,10 @@ class Salary {
             // CHECK ALL FIELD IN FILL
             if (!Employee_name || !Employee_code || !Leave_balence ||
                 !Employee_PAN || !Employee_Adhar || !Leave_taken ||
-                !Bank_IFSC_Code || !Universal_Account_Number || !Balence_days
+                !Bank_IFSC_Code || !Net_pay_in_number || !Balence_days
                 || !designation || !Salary_Slip_Month_Year || !Present_day
                 || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
-                || !EPF_Account_Number || !Total_Work_Days || !Number_of_Leaves
+                || !Net_pay_in_words || !Total_Work_Days || !Number_of_Leaves
                 || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
             )
                 return res.send({ message: "Please fill in all fields." });
@@ -46,8 +46,8 @@ class Salary {
                 Employee_Adhar,
                 Bank_Account_Number,
                 Bank_IFSC_Code,
-                EPF_Account_Number,
-                Universal_Account_Number,
+                Net_pay_in_words,
+                Net_pay_in_number,
                 Total_Work_Days,
                 Number_of_Leaves,
                 Leave_balence,
