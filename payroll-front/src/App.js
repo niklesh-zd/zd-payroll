@@ -10,6 +10,7 @@ import ManageEmpyee from "./pages/Employee/manageEmpyee";
 import EmpEdit from "./pages/Employee/EmpEdit";
 import EmpDetail from "./pages/Employee/EmpDetail";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import LeaveDetails from "./pages/LeaveDetails";
 // import {  useParams } from "react-router-dom";
 
 
@@ -20,13 +21,14 @@ function App() {
       <SideBar>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/Leave" element={<Leave/>} />
           <Route path="/settings" element={<Logout />} />
           <Route path="/salary" element={<Salary/>} />
           <Route path="/settings/profile" element={<AddEmployee/>} />
           <Route path="/settings/manageprofile" element={<ManageEmpyee/>} />
           <Route path="/settings/EmpEdit:id" element={<EmpEdit />} />
           <Route path="/settings/EmpDetail:id" element={<EmpDetail/>} />
+          <Route path="/settings/leave" element={<Leave/>} />
+          <Route path="/settings/leavedetails" element={<LeaveDetails/>} />
         </Routes>
       </SideBar>
     </Router>

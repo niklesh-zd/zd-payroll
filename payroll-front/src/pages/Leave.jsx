@@ -77,8 +77,8 @@ const Leaves = () => {
                       type="date"
                       min="2"
                       max="50"
-                      name="DATE"
-                      value={leavesData.DATE}
+                      name="date"
+                      value={leavesData.date}
                       onChange={(e) => handleChange(e)}
                       className="form-control"
                     ></input>
@@ -90,9 +90,9 @@ const Leaves = () => {
                   <div className="form-group">
                     <label className="profile_details_text">Reason</label>
                     <select
-                      name="REASON_FOR_LEAVE"
+                      name="reason_for_leave"
                       className="form-control"
-                      value={leavesData.REASON_FOR_LEAVE}
+                      value={leavesData.reason_for_leave}
                       onChange={(e) => handleChange(e)}
                       placeholder="Leave Reason"
                     >
@@ -109,9 +109,9 @@ const Leaves = () => {
                   <div className="form-group">
                     <label className="profile_details_text">Leave Type</label>
                     <select
-                      name="LEAVE_TYPE"
+                      name="leave_type"
                       className="form-control"
-                      value={leavesData.LEAVE_TYPE}
+                      value={leavesData.leave_type}
                       onChange={(e) => handleChange(e)}
                       placeholder="Leave Type"
                     >
