@@ -28,7 +28,7 @@ router.post('/update/:id', emp_update)
 router.get('/emp_1/:id', get_one_emp)
 // router.post('/post_some_data', createUser, validation_all_field)
 // route.route('/post_some_data').post(validateUser, createUser);
-u
+
 router.post('/user_update', update_user)
 router.post('/leave', Leave)
 router.get('/get-all-user-id', get_user_id)
