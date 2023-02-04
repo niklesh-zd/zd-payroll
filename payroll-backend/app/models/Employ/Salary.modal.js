@@ -53,14 +53,7 @@ const Salary = Schema({
         type: String,
         required: true
     },
-    EPF_Account_Number: {
-        type: String,
-        required: true
-    },
-    Universal_Account_Number: {
-        type: String,
-        required: true
-    },
+
     Total_Work_Days: {
         type: Number,
         required: true
@@ -108,6 +101,16 @@ const Salary = Schema({
     Total_earn: {
         type: Number,
         required: true
+    }
+    ,
+    Net_pay_in_words: {
+        type: String,
+        required: true
+    },
+    Net_pay_in_number: {
+        type: Number,
+        required: true
+
     }
 },
     {
