@@ -1,32 +1,31 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const AddEmployee = () => {
-  const [id, idchange] = useState('')
-  const [name, namechange] = useState('')
-  const [email, emailchange] = useState('')
-  const [phone, phonechange] = useState('')
-  const [active, activechange] = useState(true)
-  const [validation, valchange] = useState(false)
+const Leaves = () => {
+  const [leavesData, setLeavesData] = useState({})
 
   const navigate = useNavigate()
 
+  const handleChange = (e) => {
+    let leavesObj = { ...leavesData }
+    leavesObj[e.target.name] = e.target.value
+    setLeavesData(leavesObj)
+  }
+  console.log(leavesData);
+  console.log('leavesData', leavesData)
   const handlesubmit = (e) => {
     e.preventDefault()
-    const empdata = { name, email, phone, active, id }
-    fetch('http://192.168.29.37:7071/emp/post_some_data', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(empdata),
-    })
-      .then((res) => {
-        alert('Saved successfully.')
-        console.log({ res }, '==============babu')
-        navigate('/settings/manageprofile')
+    console.log('0000');
+      axios.post('http://localhost:7071/Emp_Leave/leave', leavesData)
+      .then((response)=>{
+        console.log('success',response)
+    // navigate('/settings/manageprofile')
+
       })
-      .catch((err) => {
-        console.log(err.message)
-      })
+      .catch(error => {
+          console.error('There was an error!', error);
+      });
   }
 
   return (
@@ -41,76 +40,86 @@ const AddEmployee = () => {
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label>Start Date Of Leave</label>
-                    <input
-                      type="date"
-                      min="2"
-                      max="50"
-                      name=""
-                      //   value={fields.STREAM}
-                      //   onChange={(e) => handleChange(e)}
+                    <label className="profile_details_text">
+                      Select Employee Name
+                    </label>
+                    <select
+                      name="userid"
                       className="form-control"
-                    ></input>
+                      value={leavesData.userid}
+                      onChange={(e) => handleChange(e)}
+                      placeholder="Select Employee"
+                    >
+                      <option disabled={true} selected={true}>
+                        Select an Employee
+                      </option>
+                      <option>Anmol</option>
+                      <option>shalini</option>
+                      <option>Sanjay</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label>End Day Of Leave</label>
+                    <label>Date</label>
                     <input
                       type="date"
                       min="2"
                       max="50"
-                      name=""
-                      //   value={fields.STREAM}
-                      //   onChange={(e) => handleChange(e)}
+                      name="DATE"
+                      value={leavesData.DATE}
+                      onChange={(e) => handleChange(e)}
                       className="form-control"
                     ></input>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    &nbsp;{' '}
-                    <p> Reason For Leave</p>
-                    &nbsp;{' '}
-                    <input
-                      type="radio"
-                      id="medical_l"
-                      name="leave_reason"
-                      defaultValue="medical_l"
-                    />
-                    &nbsp; <label htmlFor="medical_l">Medical Leave</label>
-                    &nbsp;{' '}
-                    <input
-                      type="radio"
-                      id="family_r"
-                      name="leave_reason"
-                      defaultValue="family_r"
-                    />
-                    &nbsp; <label htmlFor="family_r">Family Reason</label>
-                    &nbsp;{' '}
-                    <input
-                      type="radio"
-                      id="personal_l"
-                      name="leave_reason"
-                      defaultValue="personal_l"
-                    />
-                    &nbsp; <label htmlFor="personal_l">Personal Leave</label>
-                    &nbsp;{' '}
-                    <input
-                      type="radio"
-                      id="other_r"
-                      name="leave_reason"
-                      defaultValue="other_r"
-                    />
-                    &nbsp; <label htmlFor="other_r">Other Reason</label>
+                    <label className="profile_details_text">
+                      Reason
+                    </label>
+                    <select
+                      name="REASON_FOR_LEAVE"
+                      className="form-control"
+                      value={leavesData.REASON_FOR_LEAVE}
+                      onChange={(e) => handleChange(e)}
+                      placeholder="Leave Reason"
+                    >
+                      <option disabled={true} selected={true}>
+                        Reason
+                      </option>
+                      <option>Sick Leave</option>
+                      <option>Casual Leave</option>
+                      <option>Compensatory Leave</option>
+                    </select>
+                  </div>
+                </div>
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div className="form-group">
+                    <label className="profile_details_text">
+                      Leave Type
+                    </label>
+                    <select
+                      name="LEAVE_TYPE"
+                      className="form-control"
+                      value={leavesData.LEAVE_TYPE}
+                      onChange={(e) => handleChange(e)}
+                      placeholder="Leave Type"
+                    >
+                      <option disabled={true} selected={true}>
+                        Leave Type
+                      </option>
+                      <option>full</option>
+                      <option>half</option>
+                    </select>
                   </div>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div className="form-group pt-8">
+                  <div className="form-group pt-2">
                     <label>Total Days Of Request</label>
                     <input
                       type="number"
@@ -123,17 +132,18 @@ const AddEmployee = () => {
                     ></input>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
-                  <div className="submit pt-8">
-                    <div className="form-group">
-                      <input
-                        type="submit"
-                        className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
-                      />
-                    </div>
+                <div className="submit pt-8">
+                  <div className="form-group">
+                    <input
+                      type="submit"
+                      value="Add"
+                      className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
+                    />
                   </div>
                 </div>
+              </div>
             </div>
           </form>
         </div>
@@ -142,4 +152,4 @@ const AddEmployee = () => {
   )
 }
 
-export default AddEmployee
+export default Leaves

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 // import validator from 'validator'
 import axios from 'axios'
+import { useNavigate } from 'react-router';
 function AddEmployee(props) {
   console.log('props',props);
   const [fields, setFields] = useState({})
   const [errors, setErrors] = useState({})
-
+  const navigate = useNavigate()
   function ValidateDOB() {
     var lblError = document.getElementById('lblError')
 
@@ -60,6 +61,8 @@ useEffect(()=>{
       axios.post('http://localhost:7071/emp/add_employ', fields)
           .then((response)=>{
             console.log('success',response)
+        navigate('/settings/manageprofile')
+
           })
           .catch(error => {
               console.error('There was an error!', error);
@@ -155,10 +158,8 @@ useEffect(()=>{
                         First Name:
                       </label>
                       <input
-
                         type="text"
                         style={{ textTransform: 'capitalize' }}
-                        // onkeydown="retu"
                         name="First_Name"
                         pattern="^[A-Za-z]+$"
                         minLength="2"
@@ -247,7 +248,6 @@ useEffect(()=>{
                         Date Of Joining:
                       </label>
                       <input
-
                         type="date"
                         name="date_of_joining"
                         className="form-control"
@@ -335,7 +335,6 @@ useEffect(()=>{
                       <select
                         name="Blood_Group"
                         className="form-control"
-
                         value={fields.Blood_Group}
                         onChange={(e) => handleChange(e)}
                       >
