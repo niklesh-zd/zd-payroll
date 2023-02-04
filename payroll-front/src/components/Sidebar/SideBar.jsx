@@ -35,11 +35,11 @@ const routes = [
       // },
     ],
   },
-  // {
-  //   path: "/Leave",
-  //   name: "Leave",
-  //   icon: <MdMessage />,
-  // },
+  {
+    path: "/Leave",
+    name: "Leave",
+    icon: <MdMessage />,
+  },
   {
     path: "/salary",
     name: "salary",

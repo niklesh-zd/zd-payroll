@@ -1,28 +1,43 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-const Leaves = (props) => {
-  const [leavesData, setLeavesData] = useState({})
+const Leaves = () => {
+  const [leavesData, setLeavesData] = useState({});
+  const [users, setUsers] = useState([]);
 
   const handleChange = (e) => {
-    let leavesObj = { ...leavesData }
-    leavesObj[e.target.name] = e.target.value
-    setLeavesData({leavesObj, '_id': props.empData._id})
-  }
-  console.log('leavesData', leavesData)
+    let leavesObj = { ...leavesData };
+    leavesObj[e.target.name] = e.target.value;
+    setLeavesData(leavesObj);
+  };
+  console.log("leavesData", leavesData);
+  useEffect(() => {
+    window
+      .fetch('http://localhost:7071/emp/get_employ')
+      .then((res) => {
+        return res.json()
+      })
+      .then((resp) => {
+        console.log('res', resp)
+        setUsers(resp)
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }, [])
   const handlesubmit = (e) => {
-    e.preventDefault()
-    console.log('0000')
+    e.preventDefault();
+    console.log("0000");
     axios
-      .post('http://localhost:7071/Emp_Leave/leave', leavesData)
+      .post("http://localhost:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
-        console.log('success', response)
+        console.log("success", response);
       })
       .catch((error) => {
-        console.error('There was an error!', error)
-      })
-  }
+        console.error("There was an error!", error);
+      });
+  };
 
   return (
     <div>
@@ -30,7 +45,7 @@ const Leaves = (props) => {
         <div className="offset-lg-2 col-lg-8">
           <form className="container" onSubmit={handlesubmit}>
             <div className="card p-10">
-              <div className="card-title" style={{ textAlign: 'center' }}>
+              <div className="card-title" style={{ textAlign: "center" }}>
                 <h2 className="text-red-900">Apply Leave</h2>
               </div>
               <div className="row">
@@ -42,11 +57,16 @@ const Leaves = (props) => {
                     <select
                       name="userid"
                       className="form-control"
-                      value={props.empData._id}
+                      value={leavesData.userid}
                       placeholder="Select Employee"
-                      disabled
+                      onChange={(e) => handleChange(e)}
                     >
-                        <option>{props.empData.First_Name}</option>
+                      <option disabled={true} selected={true}>
+                        select Employee
+                      </option>
+                      {users.map((u) => {
+                        return <option value={u._id}>{u.First_Name}</option>;
+                      })}
                     </select>
                   </div>
                 </div>
@@ -136,7 +156,7 @@ const Leaves = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Leaves
+export default Leaves;
