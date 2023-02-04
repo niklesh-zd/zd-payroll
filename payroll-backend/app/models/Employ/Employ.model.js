@@ -82,8 +82,8 @@ const EmpInfo = Schema({
         type: String,
         required: true,
         unique: true,
-        minimum: [10, '12 digit are required'],
-        maximum: [10, '12 digit are required'],
+        minimum: [10, '10 digit are required'],
+        maximum: [10, '10 digit are required'],
     },
     ADHAR: {
         type: Number,
