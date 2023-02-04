@@ -13,20 +13,25 @@ const leave = Schema({
         required: true,
         trim: true
     },
-    LEAVE_TYPE
-        : {
+    employee_name: {
         type: String,
         required: true,
-        trim: [true, "space not allow"],
-        enum: [1,0.5]
+        trim: true
     },
-    DATE
+    leave_type
+        : {
+        type: Number,
+        required: true,
+        // trim: [true, "space not allow"],
+        enum: [1, 0.5]
+    },
+    date
         : {
         type: Date,
         required: true,
 
     },
-    REASON_FOR_LEAVE: {
+    reason_for_leave: {
         type: String,
         required: true
     },
@@ -41,7 +46,7 @@ const leave = Schema({
 )
 
 // collection creation 
-const SalaryModal = model('SALARY', leave, "salary");
+const SalaryModal = model('LEAVE', leave, "leave");
 
 
 
