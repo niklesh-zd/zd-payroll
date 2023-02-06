@@ -12,10 +12,7 @@ const { signupValidation, loginValidation, validation_all_field } = require('./v
 
 class Emp {
     async add_employ(req, res,next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        next();
-        signupValidation,
+        
             console.log("Run ok");
         try {
 
@@ -99,6 +96,8 @@ class Emp {
         }
         catch (error) {
             res.send({message : "error"});
+            Error.captureStackTrace(error);
+
 
         }
     }

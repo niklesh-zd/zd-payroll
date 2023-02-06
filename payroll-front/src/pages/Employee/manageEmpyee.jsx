@@ -21,20 +21,20 @@ const ManageEmpyee = () => {
     navigate('/settings/EmpEdit' + _id)
   }
   const Removefunction = (id) => {
-    
-    
-      window
-        .fetch('http://192.168.29.37:7071/emp/delete_emp/' + id, {
-          method: 'POST',
-        })
-        .then((res) => {
-          notify()
-          window.location.reload()
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
-    
+
+
+    window
+      .fetch('http://192.168.29.37:7071/emp/delete_emp/' + id, {
+        method: 'POST',
+      })
+      .then((res) => {
+        notify()
+        window.location.reload()
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+
   }
   useEffect(() => {
     window
@@ -116,7 +116,7 @@ const ManageEmpyee = () => {
             </tbody>
 
           </table>
-          <ToastContainer/>
+          <ToastContainer />
         </div>
       </div>
     </div>
