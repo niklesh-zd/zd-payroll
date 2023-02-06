@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import Leaves from '../Leave'
 const EmpDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
   const [empdata, empdatachange] = useState({})
-  const [leaveNavigateState, setLeaveNavigateState] = useState(false)
 
   const LoadEdit = () => {
     navigate('/settings/EmpEdit' + id)
   }
   const leaveNavigate = () =>{
     // navigate('/Leave' + id)
-    setLeaveNavigateState(true)
+    // setLeaveNavigateState(true)
   }
   useEffect(() => {
     fetch('http://192.168.29.37:7071/emp/emp_1/' + id)
@@ -30,9 +28,6 @@ const EmpDetail = () => {
   }, [])
 
   return (
-    leaveNavigateState ?
-    <Leaves empData={empdata}/>
-    :
     <div className="">
       <div className="card pt-3 pb-3 pl-10 pr-10">
         <div
