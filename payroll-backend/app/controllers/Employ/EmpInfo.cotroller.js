@@ -86,7 +86,7 @@ class Emp {
                     Permanent_Address,
                     Current_Address,
                     email,
-                    
+
                     fatherName,
                     Alternate_Contact_number,
                     Nationality,
@@ -136,49 +136,7 @@ class Emp {
             res.send(employee);
         }).catch(next);
     }
-    async createUser(req, res) {
-        console.log('ok runnng');
-        const userData = req.body;
-        const {
-            name,
-            email,
-            phone
-        } = req.body;
 
-        // const validationRes = signupValidation(userData);
-        // console.log({ validationRes });
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            console.log("err=>", errors.array());
-            res.send({ msg: errors.array() })
-        }
-        if (!email) {
-            res.send({ msg: "email num is required" })
-        }
-        if (!phone) {
-            res.send({ msg: "phone num is required" })
-        }
-        if (!phone.length == 10) {
-            res.send({ msg: "invalid number" })
-        }
-
-        if (!validateEmail(email))
-            return res.send({ message: "Invalid emails." });
-        const employ = new EmpInfoModal({
-            name,
-            email,
-            phone
-        })
-
-
-        await employ.save();
-        console.log({ employ });
-        res.send({ message: "Success " });
-    }
-    catch(error) {
-        res.send("Error-", error);
-    }
     async update_user() {
         const id = req.params.id;
 
