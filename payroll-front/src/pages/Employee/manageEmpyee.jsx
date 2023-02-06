@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
 const ManageEmpyee = () => {
+
+  const notify = () => toast("employee is delete!");
+
   const { id } = useParams()
 
   const [empdata, empdatachange] = useState(null)
@@ -16,18 +21,20 @@ const ManageEmpyee = () => {
     navigate('/settings/EmpEdit' + _id)
   }
   const Removefunction = (id) => {
-    if (window.confirm('Do you want to remove?')) {
+    
+    
       window
         .fetch('http://192.168.29.37:7071/emp/delete_emp/' + id, {
           method: 'POST',
         })
         .then((res) => {
+          notify()
           window.location.reload()
         })
         .catch((err) => {
           console.log(err.message)
         })
-    }
+    
   }
   useEffect(() => {
     window
@@ -107,7 +114,9 @@ const ManageEmpyee = () => {
                   </tr>
                 ))}
             </tbody>
+
           </table>
+          <ToastContainer/>
         </div>
       </div>
     </div>

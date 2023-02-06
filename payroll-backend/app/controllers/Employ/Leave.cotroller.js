@@ -55,14 +55,14 @@ class Leave {
         var leave_type = []
         data.forEach((Val) => {
             user_id.push(Val.userid)
-            leave_type.push(Val.LEAVE_TYPE)
+            leave_type.push(Val.leave_type)
         })
         if (!user_id) {
             return res.status(404).send({ message: " user id not  Exist." });
         }
         if (user_id == user_id) {
-            console.log(leave_type);
             leave_type = leave_type[0] + leave_type[1]
+            console.log(leave_type);
         }
         res.send({ user_id, leave_type });
     }
