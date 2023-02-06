@@ -21,7 +21,6 @@ const ManageEmpyee = () => {
     navigate('/settings/EmpEdit' + _id)
   }
   const Removefunction = (id) => {
-<<<<<<< HEAD
 
 
     window
@@ -36,20 +35,6 @@ const ManageEmpyee = () => {
         console.log(err.message)
       })
 
-=======
-    if (window.confirm('Do you want to remove?')) {
-      window
-        .fetch('http://localhost:7071/emp/delete_emp/' + id, {
-          method: 'POST',
-        })
-        .then((res) => {
-          window.location.reload()
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
-    }
->>>>>>> c72d438e29464e027daf937473deeb01888cd3d1
   }
   useEffect(() => {
     window
