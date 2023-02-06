@@ -58,7 +58,7 @@ useEffect(()=>{
     e.preventDefault()
     // if (validateForm()) {
       console.log('fields', fields)
-      axios.post('http://localhost:7071/emp/add_employ', fields)
+      axios.post('http://192.168.29.37:7071/emp/add_employ', fields)
           .then((response)=>{
             console.log('success',response)
         navigate('/settings/manageprofile')
