@@ -30,7 +30,11 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
+<<<<<<< HEAD:payroll-front/src/pages/Leaves/Leave.jsx
       .post("http://localhost:7071/Emp_Leave/leave", leavesData)
+=======
+      .post('http://192.168.29.37:7071/Emp_Leave/leave', leavesData)
+>>>>>>> b32c547c91dad4832fc7dc03ecfd822a8f93da32:payroll-front/src/pages/Leave.jsx
       .then((response) => {
         console.log("success", response);
       })

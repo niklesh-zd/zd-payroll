@@ -11,7 +11,10 @@ const { signupValidation, loginValidation, validation_all_field } = require('./v
 
 
 class Emp {
-    async add_employ(req, res) {
+    async add_employ(req, res,next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        next();
         signupValidation,
             console.log("Run ok");
         try {
@@ -26,23 +29,6 @@ class Emp {
                 , PASSED, PERCENTAGE_OF_MARKS, state, city
             } = req.body;
 
-            // CHECK ALL FIELD IN FILL
-            // if (!First_Name || !Last_Name || !date_of_birth || !date_of_joining || !gender || !Contact_Number
-            //     || !Contact_Number_Home || !Permanent_Address || !email || !emp_id || !fatherName ||
-            //     !Nationality || !Blood_Group || !Marital_Status || !PAN_No ||
-            //     !ADHAR || !Bank_No || !Bank_IFSC || !Position || !Alternate_Contact_number
-            //     || !Employee_Code || !DEGREE || !STREAM || !YEAR_OF_PASSING || !PASSED || !PERCENTAGE_OF_MARKS)
-            //     return res.send({ message: "Please fill in all fields." });
-
-            // console.log("fullName", fullName.length);
-
-            // if (First_Name.length < 3 || First_Name.trim() == "") {
-            //     return res.send({ message: "Invalid formate.name" })
-            // }
-
-            // EMAIL VALIDATER
-            // if (!validateEmail(email))
-            //     return res.send({ message: "Invalid emails." });
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
@@ -59,8 +45,6 @@ class Emp {
             if (Pan_no) {
                 return res.send({ message: "alredy exist PAN_NO." })
             }
-
-            // console.log("checkcemail", emailFind);
             if (emailFind) {
                 return res.send({ message: "alredy exist emails." });
             }
@@ -114,7 +98,8 @@ class Emp {
             }
         }
         catch (error) {
-            res.send("Error-", error);
+            res.send({message : "error"});
+
         }
     }
     async get_user_id(req, res) {
@@ -193,23 +178,6 @@ class Emp {
                 console.log(err)
             });
     }
-
-
-    // async emp_update() {
-    //     let myquery = { _id: ObjectId(req.params.id) };
-    //     let newvalues = {
-    //         $set: {
-    //             name: req.body.name,
-    //             position: req.body.position,
-    //             level: req.body.level,
-    //         }
-    //     }
-    //     EmpInfoModal.updateOne(myquery, newvalues, function (err, res) {
-    //         if (err) throw err;
-    //         console.log("1 document updated");
-    //         response.json(res);
-    //     });
-    // }
 }
 
 function validateEmail(email) {

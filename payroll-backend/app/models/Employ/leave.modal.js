@@ -13,11 +13,7 @@ const leave = Schema({
         required: true,
         trim: true
     },
-    employee_name: {
-        type: String,
-        required: true,
-        trim: true
-    },
+   
     leave_type
         : {
         type: Number,

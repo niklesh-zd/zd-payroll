@@ -85,5 +85,44 @@ class Salary {
             }).catch(next);
 
     }
+    async update_salary(req, res) {
+        console.log('update runnig');
+        if (!req.body) {
+            return res.status(400).send({
+                message: "Data to update can not be empty!"
+            });
+        }
+
+        const id = req.params.id;
+
+        SalaryModal.findByIdAndUpdate(id, req.body)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({
+                        message: `Cannot update =${id}`
+                    });
+                } else res.send({ message: "updated successfully." });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Error updating=" + id
+                });
+                console.log(err)
+            });
+    }
+    async salary_delete(req, res) {
+        try {
+            console.log(req.params.id);
+            const userDelete = await SalaryModal.findByIdAndDelete(req.params.id)
+            if (!userDelete) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
+            res.status(201).json({ message: "delete successfuly" });
+            console.log({ userDelete });
+
+        } catch (error) {
+            res.send({ error });
+        }
+    }
 }
 module.exports = new Salary();
