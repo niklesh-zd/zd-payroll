@@ -9,33 +9,6 @@ const ManageEmpyee = () => {
   const [empdata, empdatachange] = useState(null)
   const navigate = useNavigate()
 
-<<<<<<< HEAD
-    const LoadDetail = (_id) => {
-        navigate("/settings/EmpDetail" + _id);
-    }
-    const LoadEdit = (_id) => {
-        navigate("/settings/EmpEdit" + _id);
-    }
-    const Removefunction = (id) => {
-        if (window.confirm('Do you want to remove?')) {
-           window.fetch("http://localhost:7071/emp/delete_emp/" + id, {
-                method: "POST"
-            }).then((res) => {
-                window.location.reload();
-            }).catch((err) => {
-                console.log(err.message)
-            })
-        }
-    }
-    useEffect(() => {
-        window.fetch("http://localhost:7071/emp/get_employ").then((res) => {
-            return res.json();
-        }).then((resp) => {
-            console.log('res', resp);
-            empdatachange(resp);
-        }).catch((err) => {
-            console.log(err.message);
-=======
   const LoadDetail = (_id) => {
     navigate('/settings/EmpDetail' + _id)
   }
@@ -45,9 +18,8 @@ const ManageEmpyee = () => {
   const Removefunction = (id) => {
     if (window.confirm('Do you want to remove?')) {
       window
-        .fetch('http://192.168.29.37:7071/emp/delete_emp/' + id, {
+        .fetch('http://localhost:7071/emp/delete_emp/' + id, {
           method: 'POST',
->>>>>>> d57f67feaeac7b71a56a918632b325338fdc1488
         })
         .then((res) => {
           window.location.reload()
@@ -59,7 +31,7 @@ const ManageEmpyee = () => {
   }
   useEffect(() => {
     window
-      .fetch('http://192.168.29.37:7071/emp/get_employ')
+      .fetch('http://localhost:7071/emp/get_employ')
       .then((res) => {
         return res.json()
       })

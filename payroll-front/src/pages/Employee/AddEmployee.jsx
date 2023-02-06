@@ -24,25 +24,6 @@ function AddEmployee(props) {
         return false
       }
 
-<<<<<<< HEAD
-
-    const navigate = useNavigate();
-
-    const handlesubmit = (e) => {
-        e.preventDefault();
-        const empdata = { name, email, phone, active, id};
-        window.fetch("http://localhost:7071/emp/post_some_data",{
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(empdata)
-        }).then((res) => {
-            alert('Saved successfully.')
-            console.log({res},"==============babu");
-            navigate('/settings/manageprofile')
-        }).catch((err) => {
-            console.log(err.message)
-        })
-=======
       if (dtCurrent.getFullYear() - dtDOB.getFullYear() == 18) {
         //CD: 11/06/2018 and DB: 15/07/2000. Will turned 18 on 15/07/2018.
         if (dtCurrent.getMonth() < dtDOB.getMonth()) {
@@ -60,7 +41,6 @@ function AddEmployee(props) {
     } else {
       lblError.innerHTML = 'Enter date in dd/MM/yyyy format ONLY.'
       return false
->>>>>>> d57f67feaeac7b71a56a918632b325338fdc1488
     }
   }
 useEffect(()=>{
