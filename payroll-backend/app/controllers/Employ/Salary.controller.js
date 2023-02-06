@@ -110,5 +110,19 @@ class Salary {
                 console.log(err)
             });
     }
+    async salary_delete(req, res) {
+        try {
+            console.log(req.params.id);
+            const userDelete = await SalaryModal.findByIdAndDelete(req.params.id)
+            if (!userDelete) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
+            res.status(201).json({ message: "delete successfuly" });
+            console.log({ userDelete });
+
+        } catch (error) {
+            res.send({ error });
+        }
+    }
 }
 module.exports = new Salary();
