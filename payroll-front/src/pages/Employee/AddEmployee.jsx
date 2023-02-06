@@ -161,7 +161,7 @@ useEffect(()=>{
                         type="text"
                         style={{ textTransform: 'capitalize' }}
                         name="First_Name"
-                        pattern="^[A-Za-z]+$"
+                        // pattern="^[A-Za-z]+$"
                         minLength="2"
                         maxLength="50"
                         className="form-control"
@@ -183,7 +183,7 @@ useEffect(()=>{
 
                         type="text"
                         name="Last_Name"
-                        pattern="^[A-Za-z]+$"
+                        // pattern="^[A-Za-z]+$"
                         minLength="2"
                         maxLength="50"
                         className="form-control"
@@ -202,7 +202,7 @@ useEffect(()=>{
                       <input
 
                         type="text"
-                        pattern="^[A-Za-z]+$"
+                        // pattern="^[A-Za-z]+$"
                         name="fatherName"
                         minLength="2"
                         maxLength="50"

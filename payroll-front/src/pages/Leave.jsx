@@ -15,7 +15,7 @@ const Leaves = (props) => {
     e.preventDefault()
     console.log('0000')
     axios
-      .post('http://localhost:7071/Emp_Leave/leave', leavesData)
+      .post('http://192.168.29.37:7071/Emp_Leave/leave', leavesData)
       .then((response) => {
         console.log('success', response)
       })
