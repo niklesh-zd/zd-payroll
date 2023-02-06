@@ -14,7 +14,7 @@ const EmpDetail = () => {
     // setLeaveNavigateState(true)
   }
   useEffect(() => {
-    fetch('http://localhost:7071/emp/emp_1/' + id)
+    fetch('http://192.168.29.37:7071/emp/emp_1/' + id)
       .then((res) => {
         return res.json()
       })
