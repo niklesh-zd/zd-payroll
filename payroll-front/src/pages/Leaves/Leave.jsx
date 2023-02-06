@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Leaves = () => {
+  let navigate = useNavigate()
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
 
@@ -33,6 +34,8 @@ const Leaves = () => {
       .post("http://192.168.29.37:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
         console.log("success", response);
+      }).then(()=>{
+        navigate('/settings/leavedetails')
       })
       .catch((error) => {
         console.error("There was an error!", error);
