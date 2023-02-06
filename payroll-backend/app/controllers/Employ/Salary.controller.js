@@ -85,5 +85,30 @@ class Salary {
             }).catch(next);
 
     }
+    async update_salary(req, res) {
+        console.log('update runnig');
+        if (!req.body) {
+            return res.status(400).send({
+                message: "Data to update can not be empty!"
+            });
+        }
+
+        const id = req.params.id;
+
+        SalaryModal.findByIdAndUpdate(id, req.body)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({
+                        message: `Cannot update =${id}`
+                    });
+                } else res.send({ message: "updated successfully." });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Error updating=" + id
+                });
+                console.log(err)
+            });
+    }
 }
 module.exports = new Salary();
