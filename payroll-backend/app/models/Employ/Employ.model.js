@@ -82,8 +82,8 @@ const EmpInfo = Schema({
         type: String,
         required: true,
         unique: true,
-        minimum: [10, '12 digit are required'],
-        maximum: [10, '12 digit are required'],
+        minimum: [10, '10 digit are required'],
+        maximum: [10, '10 digit are required'],
     },
     ADHAR: {
         type: Number,
@@ -109,10 +109,7 @@ const EmpInfo = Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    emp_id: {
-        type: String,
-        required: true
-    },
+   
     DEGREE: {
         type: String,
         required: true
@@ -129,6 +126,12 @@ const EmpInfo = Schema({
 
     PERCENTAGE_OF_MARKS: {
         type: String,
+    },
+    state :{
+        type : String
+    },
+    city : {
+        type : String
     }
 
 },

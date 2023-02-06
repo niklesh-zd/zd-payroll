@@ -4,13 +4,6 @@
   box-sizing: border-box;
 }
 
-/* .main-container { */
-  /* display: flex; */
-/* } */
-main {
-  padding: 10px;
-}
-
 .title {
   font-size: 3rem;
   display: grid;
@@ -117,11 +110,11 @@ main {
   box-sizing: border-box;
 }
 
-/* .main-container { */
-  /* display: flex; */
-/* } */
+.main-container {
+  display: flex;
+}
 main {
-  padding: 10px;
+  width: 100%;
 }
 
 .title {
@@ -135,7 +128,7 @@ main {
   background: rgb(0, 7, 61);
   color: white;
   height: 100vh;
-  position: fixed;
+  position: relative;
 }
 
 .top_section {

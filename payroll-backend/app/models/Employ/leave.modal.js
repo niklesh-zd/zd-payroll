@@ -8,29 +8,34 @@ var validateEmail = function (email) {
 };
 const leave = Schema({
 
-    LEAVE_TYPE
-        : {
-        type: String,
-        required: true,
-        trim: [true, "space not allow"],
-    },
-    NUMBER_OF_DAYS_REQUESTED
-        : {
+    userid: {
         type: String,
         required: true,
         trim: true
     },
-    DATE
+    employee_name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    leave_type
+        : {
+        type: Number,
+        required: true,
+        // trim: [true, "space not allow"],
+        enum: [1, 0.5]
+    },
+    date
         : {
         type: Date,
         required: true,
 
     },
-    REASON_FOR_LEAVE: {
+    reason_for_leave: {
         type: String,
         required: true
     },
-   
+
 
 
 },
@@ -41,7 +46,7 @@ const leave = Schema({
 )
 
 // collection creation 
-const SalaryModal = model('SALARY', leave, "salary");
+const SalaryModal = model('LEAVE', leave, "leave");
 
 
 
