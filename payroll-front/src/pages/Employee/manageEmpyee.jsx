@@ -17,7 +17,7 @@ const ManageEmpyee = () => {
     }
     const Removefunction = (id) => {
         if (window.confirm('Do you want to remove?')) {
-           window.fetch("http://192.168.29.37:7071/emp/delete_emp/" + id, {
+           window.fetch("http://localhost:7071/emp/delete_emp/" + id, {
                 method: "POST"
             }).then((res) => {
                 window.location.reload();
@@ -27,7 +27,7 @@ const ManageEmpyee = () => {
         }
     }
     useEffect(() => {
-        window.fetch("http://192.168.29.37:7071/emp/get_employ").then((res) => {
+        window.fetch("http://localhost:7071/emp/get_employ").then((res) => {
             return res.json();
         }).then((resp) => {
             console.log('res', resp);

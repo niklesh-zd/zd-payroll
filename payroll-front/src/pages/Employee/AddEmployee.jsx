@@ -17,7 +17,7 @@ const AddEmployee = () => {
     const handlesubmit = (e) => {
         e.preventDefault();
         const empdata = { name, email, phone, active, id};
-        window.fetch("http://192.168.29.37:7071/emp/post_some_data",{
+        window.fetch("http://localhost:7071/emp/post_some_data",{
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(empdata)
