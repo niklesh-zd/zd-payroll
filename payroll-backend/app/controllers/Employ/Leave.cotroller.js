@@ -3,10 +3,10 @@
 "use strict";
 const express = require("express");
 const LeaveModal = require('../../models/Employ/leave.modal')
-const Emp = require('../Employ/EmpInfo.cotroller')
-const ObjectId = require("mongodb").ObjectId;
+const EmpInfoModal = require('../../models/Employ/Employ.model')
 
-// const info = Emp.add_employ().employee
+const Emp = require('../Employ/EmpInfo.cotroller')
+
 class Leave {
     async Leave(req, res) {
 
@@ -68,11 +68,22 @@ class Leave {
     }
     async get_leave(req, res, next) {
 
-        LeaveModal.find({})
-            .then(function (leave) {
-                res.send(leave);
-            }).catch(next);
+     
 
+        const docs = await LeaveModal.aggregate([
+            {
+                $lookup: {
+                    from: "EmpInfo",
+                    localField: "userid",
+                    foreignField: "_id",
+                    as: "result"
+                  }
+            }
+        ])
+
+
+        res.send({msg:docs})
+        console.log("docs",docs);
     }
 }
 module.exports = new Leave();

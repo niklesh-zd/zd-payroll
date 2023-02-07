@@ -9,7 +9,7 @@ var validateEmail = function (email) {
 const leave = Schema({
 
     userid: {
-        type: String,
+        type: Schema.ObjectId,
         required: true,
         trim: true
     },
