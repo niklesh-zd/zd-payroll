@@ -6,22 +6,8 @@ import AddEmployee from "./AddEmployee";
 const Empedit = () => {
     const { id } = useParams();
     const [empdata, empdatachange] = useState({});
-
-    // useEffect((id) => {
-    //     axios.post("http://192.168.29.37:7071/emp/update/" + id ).then((res) => {
-    //         // return res.json();
-    //     }).then((resp) => {
-    //         console.log({resp}, "----lll----------");
-    //         empdatachange(resp)
-    //         namechange(resp.name);
-    //         emailchange(resp.email);
-    //         phonechange(resp.phone);
-    //         // activechange(resp.isactive);
-    //     }).catch((err) => {
-    //         console.log(err.message);
-    //     })
-    // }, []);
-
+    console.log('idddd', id)
+  
     useEffect(() => {
         fetch('http://192.168.29.37:7071/emp/emp_1/' + id)
           .then((res) => {

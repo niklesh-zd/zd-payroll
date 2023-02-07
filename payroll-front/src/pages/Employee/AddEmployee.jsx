@@ -17,18 +17,16 @@ function AddEmployee(props) {
 
     setFields(fieldObj)
   }
-  console.log('fields', fields)
   function submituserRegistrationForm(e) {
     e.preventDefault()
     // if (validateForm()) {
-    console.log('fields', fields)
     axios
       .post('http://192.168.29.37:7071/emp/add_employ', fields)
       .then((response) => {
         console.log('success', response)
       })
       .then(() => {
-        navigate('/settings/manageprofile')
+        // navigate('/settings/manageprofile')
       })
       .catch((error) => {
         console.error('There was an error!', error)
@@ -188,7 +186,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control"
                         placeholder="Date Of Birth"
-                        value={fields.date_of_birth}
+                        value={new Date(fields.date_of_birth).toLocaleDateString('en-CA')}
                         onChange={(e) => handleChange(e)}
                         // onChange={(e) => ValidateDOB(e.target.value)}
                       />
@@ -212,7 +210,7 @@ function AddEmployee(props) {
                         name="date_of_joining"
                         className="form-control"
                         placeholder="Date Of Joining"
-                        value={fields.date_of_joining}
+                        value={new Date(fields.date_of_joining).toLocaleDateString('en-CA')}
                         onChange={(e) => handleChange(e)}
                       />
                     </div>
@@ -343,8 +341,8 @@ function AddEmployee(props) {
                     <div className="form-group">
                       <label className="profile_details_text">Gender:</label>
                       <div onChange={(e) => handleChange(e)}>
-                        <input type="radio" value="Male" name="gender" /> Male
-                        <input type="radio" value="Female" name="gender" />{' '}
+                        <input type="radio" value="Male" name="gender"  checked={fields.gender == "Male"}/> Male
+                        <input type="radio" value="Female" name="gender" checked={fields.gender == "Female"}/>{' '}
                         Female
                       </div>
                     </div>
@@ -360,12 +358,14 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                        />{' '}
+                          checked={fields.Marital_Status == "Single"}
+                          />{' '}
                         Single
                         <input
                           type="radio"
                           value="Married"
                           name="Marital_Status"
+                          checked={fields.Marital_Status == "Married"}
                         />{' '}
                         Married
                       </div>

@@ -68,7 +68,7 @@ const Leaves = () => {
                         select Employee
                       </option>
                       {users.map((u) => {
-                        return <option value={u._id}>{u.First_Name}</option>;
+                        return <option value={u._id} key={u._id}>{u.First_Name}</option>;
                       })}
                     </select>
                   </div>

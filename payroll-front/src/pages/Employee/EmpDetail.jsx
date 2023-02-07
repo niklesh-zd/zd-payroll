@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2';
 const EmpDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -9,9 +10,8 @@ const EmpDetail = () => {
   const LoadEdit = () => {
     navigate('/settings/EmpEdit' + id)
   }
-  const leaveNavigate = () =>{
-    // navigate('/Leave' + id)
-    // setLeaveNavigateState(true)
+  const leaveNavigate = () => {
+    navigate('/settings/leave')
   }
   useEffect(() => {
     fetch('http://192.168.29.37:7071/emp/emp_1/' + id)
@@ -26,7 +26,31 @@ const EmpDetail = () => {
         console.log(err.message)
       })
   }, [])
-
+  const Removefunction = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window
+          .fetch('http://192.168.29.37:7071/emp/delete_emp/' + id, {
+            method: 'POST',
+          })
+          .then((res) => {
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+            .then(()=>{navigate('/settings/manageprofile')})
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+      }
+    })
+  }
   return (
     <div className="">
       <div className="card pt-3 pb-3 pl-10 pr-10">
@@ -38,17 +62,26 @@ const EmpDetail = () => {
           }}
         >
           <div className="flex">
-            <Link className="btn btn-danger mr-5" to="/">
-              Back
-            </Link>
             <h3>Employee Details</h3>
           </div>
           <div className="flex">
-            <button className="btn btn-Primary" onClick={() => LoadEdit()}>
+            <button
+              className="btn btn-sm btn-primary mr-2"
+              onClick={() => LoadEdit()}
+            >
               Update Details
             </button>
-            <button className="btn btn-Primary" onClick={() => leaveNavigate()}>
+            <button
+              className="btn btn-sm btn-primary mr-2"
+              onClick={() => leaveNavigate()}
+            >
               Apply Leave
+            </button>
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={() => Removefunction()}
+            >
+              Delete Employee
             </button>
           </div>
         </div>
@@ -90,14 +123,14 @@ const EmpDetail = () => {
                   style={{ width: '70%', justifyContent: 'space-between' }}
                 >
                   <h6>Father Name</h6>
-                  <p>{'oooo'}</p>
+                  <p>{empdata.fatherName}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: '70%', justifyContent: 'space-between' }}
                 >
                   <h6>Date Of Birth</h6>
-                  <p>{empdata.date_of_birth}</p>
+                  <p>{new Date(empdata.date_of_birth).toLocaleDateString('pt-PT')}</p>
                 </div>
                 <div
                   className="flex"
@@ -149,7 +182,7 @@ const EmpDetail = () => {
                   style={{ width: '70%', justifyContent: 'space-between' }}
                 >
                   <h6>Date Of Joinig</h6>
-                  <p>{empdata.date_of_joining}</p>
+                  <p>{new Date(empdata.date_of_joining).toLocaleDateString('pt-PT')}</p>
                 </div>
                 <div
                   className="flex"
