@@ -14,6 +14,12 @@ const EmpInfo = Schema({
         required: [true, "Please enter your name!"],
         trim: [true, "space not allow"],
     },
+    fatherName
+        : {
+        type: String,
+        required: [true, "Please enter your father name!"],
+        trim: [true, "space not allow"],
+    },
     Last_Name
         : {
         type: String,
