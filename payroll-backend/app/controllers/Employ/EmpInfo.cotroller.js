@@ -6,14 +6,11 @@ const EmpInfoModal1 = require('../../models/Employ/Emp1')
 const { validationResult } = require('express-validator/check');
 
 const ObjectId = require("mongodb").ObjectId;
-// const { body, validationResult, check } = require('express-validator');
-const { signupValidation, loginValidation, validation_all_field } = require('./validation.js');
-
 
 class Emp {
-    async add_employ(req, res,next) {
-        
-            console.log("Run ok");
+    async add_employ(req, res, next) {
+
+        console.log("Run ok");
         try {
 
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
@@ -45,16 +42,7 @@ class Emp {
             if (emailFind) {
                 return res.send({ message: "alredy exist emails." });
             }
-            // if (ADHAR.length != 12) {
-            //     return res.send({ message: " please inter 12 digit  " });
-            // }
 
-
-            // if (Contact_Number.length != 10 || Contact_Number_Home.length != 10 || Alternate_Contact_number.length != 10) {
-            //     return res.send({ message: " please inter 10 digit  " });
-            // }
-
-            // return
             else {
                 const employ = new EmpInfoModal({
                     First_Name,
@@ -95,7 +83,7 @@ class Emp {
             }
         }
         catch (error) {
-            res.send({message : "error"});
+            res.send({ message: "error" });
             Error.captureStackTrace(error);
 
 
@@ -179,10 +167,4 @@ class Emp {
     }
 }
 
-function validateEmail(email) {
-    const re =
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email)
-        ;
-}
 module.exports = new Emp();
