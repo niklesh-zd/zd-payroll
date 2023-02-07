@@ -68,7 +68,7 @@ class Leave {
     }
     async get_leave(req, res, next) {
 
-     
+
 
         const docs = await LeaveModal.aggregate([
             {
@@ -77,13 +77,50 @@ class Leave {
                     localField: "userid",
                     foreignField: "_id",
                     as: "result"
-                  }
+                }
             }
         ])
 
 
-        res.send({msg:docs})
-        console.log("docs",docs);
+        res.send({ msg: docs })
+        console.log("docs", docs);
+    }
+    async update_laeve(req, res) {
+        console.log('update runnig');
+        if (!req.body) {
+            return res.status(400).send({
+                message: "Data to update can not be empty!"
+            });
+        }
+
+        const id = req.params.id;
+
+        LeaveModal.findByIdAndUpdate(id, req.body)
+            .then(data => {
+                if (!data) {
+                    res.status(404).send({
+                        message: `Cannot update =${id}`
+                    });
+                } else res.send({ message: "updated successfully." });
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Error updating=" + id
+                });
+                console.log(err)
+            });
+    }
+    async leave_delete(req, res) {
+        try {
+            console.log(req.params.id);
+            const userDelete = await LeaveModal.findByIdAndDelete(req.params.id)
+
+            res.status(201).json({ message: "delete successfuly" });
+            console.log({ userDelete });
+
+        } catch (error) {
+            res.send({ error });
+        }
     }
 }
 module.exports = new Leave();
