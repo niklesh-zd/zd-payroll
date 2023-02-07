@@ -35,15 +35,39 @@ const routes = [
       // },
     ],
   },
-  // {
-  //   path: "/Leave",
-  //   name: "Leave",
-  //   icon: <MdMessage />,
-  // },
+  {
+    path: "/Leave",
+    name: "Leave",
+    icon: <MdMessage />,
+    subRoutes: [
+      {
+        path: "/settings/leave",
+        name: "Add Leave",
+        icon: <MdMessage />,
+      },
+      {
+        path: "/settings/leavedetails",
+        name: "Manage leaves",
+        icon: <MdMessage />,
+      },
+    ],
+  },
   {
     path: "/salary",
     name: "salary",
     icon: <BiAnalyse />,
+    subRoutes: [
+      {
+        path: "/settings/salary",
+        name: "Salary Receipt",
+        icon: <MdMessage />,
+      },
+      {
+        path: "/settings/salarydetails",
+        name: "Manage Salary",
+        icon: <MdMessage />,
+      },
+    ],
   },
 
   {
