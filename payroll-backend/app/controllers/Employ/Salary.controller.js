@@ -124,5 +124,19 @@ class Salary {
             res.send({ error });
         }
     }
+    async get_salary_id(req, res) {
+        const data = await SalaryModal.find()
+        var arr = []
+        data.forEach((Val) => {
+            arr.push(Val.id)
+        })
+        if (!arr) {
+            return res.status(404).send({ message: " user id not  Exist." });
+        }
+
+        res.send(arr);
+
+
+    }
 }
 module.exports = new Salary();
