@@ -26,6 +26,11 @@ const EmpInfo = Schema({
         required: true,
         trim: true
     },
+    fatherName: {
+        type: String,
+        required: true,
+        trim: true
+    },
     date_of_birth
         : {
         type: Date,
@@ -115,7 +120,7 @@ const EmpInfo = Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-   
+
     DEGREE: {
         type: String,
         required: true
@@ -133,11 +138,11 @@ const EmpInfo = Schema({
     PERCENTAGE_OF_MARKS: {
         type: String,
     },
-    state :{
-        type : String
+    state: {
+        type: String
     },
-    city : {
-        type : String
+    city: {
+        type: String
     }
 
 },
