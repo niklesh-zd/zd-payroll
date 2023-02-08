@@ -58,7 +58,7 @@ function AddEmployee(props) {
               title: 'Successful',
               text: 'Emplooye Successfully Created!',
             }).then(() => {
-              // navigate('/settings/manageprofile')
+              navigate('/settings/manageprofile')
             })
           } else {
             notify(response.data.message)
@@ -112,6 +112,7 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                         disabled={props.data}
                       />
+                      <div className="errorMsg">{errors.Employee_Code}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
