@@ -15,7 +15,7 @@ function LeaveDetails() {
         console.error("There was an error!", error);
       });
   }, []);
-
+console.log('----',empLeaveData)
   return (
     <div>
       <div>

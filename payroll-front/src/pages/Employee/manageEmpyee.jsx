@@ -25,11 +25,20 @@ const ManageEmpyee = () => {
         return res.json()
       })
       .then((resp) => {
-        console.log('res', resp)
-        empdatachange(resp)
+        let DOJ
+        let arr = []
+        let finalArr = []
+        for(let i = 0; i < resp.length; i++){
+          arr.push(resp[i])
+        }
+        arr.map((e)=>{
+          DOJ = new Date(e.date_of_joining).toLocaleDateString('pt-PT')
+          finalArr.push({...e, 'DOJ':DOJ})
+        })
+        empdatachange(finalArr)
       })
       .catch((err) => {
-        console.log(err.message)
+        console.log(err)
       })
   }, [])
   var columns = [
@@ -37,7 +46,7 @@ const ManageEmpyee = () => {
       name: 'Employee Code',
       selector: 'Employee_Code',
       sortable: true,
-      width:'col col-lg-1'
+      width: 30,
     },
     {
       name: 'Name',
@@ -56,7 +65,7 @@ const ManageEmpyee = () => {
     },
     {
       name: 'DOJ',
-      selector: 'date_of_joining',
+      selector: 'DOJ',
     },
     {
       name: 'Action',
@@ -80,7 +89,7 @@ const ManageEmpyee = () => {
           </span>
           <span
             className="btn btn-sm btn-success"
-            style={{padding:"2px"}}
+            style={{ padding: '2px' }}
             onClick={() => {
               generateSalary(row._id)
             }}
@@ -89,22 +98,14 @@ const ManageEmpyee = () => {
           </span>
         </>
       ),
-  
+
       ignoreRowClick: true,
     },
   ]
   return (
     <div>
       <div>
-        {/* <div className="ml-10">
-          <h2 className="text-sky-900">Employee</h2>
-        </div> */}
         <div className="ml-5 mr-5">
-          <div>
-            <Link to="/settings/profile" className="btn btn-primary btn-sm">
-              Add New (+)
-            </Link>
-          </div>
           {/* <table id='example' className="table table-striped table-bordered">
             <thead className="">
               <tr>
@@ -158,7 +159,14 @@ const ManageEmpyee = () => {
             </tbody>
           </table> */}
           <DataTable
-            title="Employees"
+            title={
+              <div style={{display:'flex'}}>
+                <h4>Employees</h4>{' '}
+                <Link to="/settings/profile" className="btn btn-primary btn-sm ml-5 mr-5">
+                  Add New (+)
+                </Link>
+              </div>
+            }
             columns={columns}
             data={empdata ? empdata : []}
             pagination
