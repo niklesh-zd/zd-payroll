@@ -68,11 +68,11 @@ export function validateForm(fields) {
         errObj['Marital_Status'] = '*Please Select Marital Status.'
         formIsValid = false
     }
-    if(!fields.Bank_IFSC || fields.Bank_IFSC == ""){
+    if(!fields.Bank_IFSC || fields.Bank_IFSC.length != 11){
         errObj['Bank_IFSC'] = '*Please Enter Bank IFSC.'
         formIsValid = false
     }
-    if(!fields.Bank_No || fields.Bank_No == ""){
+    if(!fields.Bank_No || (fields.Bank_No.length < 9 || fields.Bank_No.length > 17)){
         errObj['Bank_No'] = '*Please Enter Bank Number.'
         formIsValid = false
     }
