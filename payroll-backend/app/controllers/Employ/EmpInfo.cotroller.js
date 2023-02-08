@@ -54,7 +54,6 @@ class Emp {
                     Permanent_Address,
                     Current_Address,
                     email,
-
                     fatherName,
                     Alternate_Contact_number,
                     Nationality,
