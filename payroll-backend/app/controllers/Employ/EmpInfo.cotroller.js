@@ -45,8 +45,8 @@ class Emp {
 
             else {
                 const employ = new EmpInfoModal({
-                    First_Name,
-                    Last_Name,
+                    First_Name: First_Name.charAt(0).toUpperCase() + First_Name.slice(1),
+                    Last_Name: Last_Name.charAt(0).toUpperCase() + Last_Name.slice(1),
                     date_of_birth,
                     date_of_joining,
                     gender,
@@ -82,6 +82,7 @@ class Emp {
             }
         }
         catch (error) {
+            console.log(error);
             res.send({ message: "error" });
             Error.captureStackTrace(error);
 
@@ -108,10 +109,6 @@ class Emp {
         }).catch(next);
     }
 
-    async update_user() {
-        const id = req.params.id;
-
-    }
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });
         EmpInfoModal.findById(req.params.id).then((employee) => {
@@ -171,14 +168,14 @@ class Emp {
 
         var userId = "63e1f986fcdf89a79014d616"
 
-        EmpInfoModal.findById(userId).then((employee) => {
+        EmpInfoModal.findById(ObjectId("63e1f986fcdf89a79014d616")).then((employee) => {
             // console.log("data:", employee);
             if (!employee) {
                 return res.status(404).send({ message: "This user not Exist." });
             }
 
             console.log("check", employee._id);
-
+          
 
             return
             const employ = new DeleteEmpInfo({

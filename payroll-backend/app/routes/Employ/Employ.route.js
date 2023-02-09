@@ -25,7 +25,6 @@ router.get('/get_employ', get_emlpoy)
 router.post('/delete_emp/:id', emp_delete)
 router.post('/update/:id', emp_update)
 router.get('/emp_1/:id', get_one_emp)
-router.post('/user_update', update_user)
 router.post('/leave', Leave)
 router.get('/get-all-user-id', get_user_id)
 
