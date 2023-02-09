@@ -3,11 +3,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-.errorMsg{
+.errorMsg {
   color: red;
   font-size: 12px;
 }
-.form-group label{
+.form-group label {
+  padding-top: 10px;
+  font-size: 15px;
+}
+.form-group input::placeholder {
+  font-size: 12px;
+}
+.form-group select{
+  font-size: 15px;
+}
+.form-group .small_date{
   font-size: 15px;
 }
 body {
@@ -18,7 +28,6 @@ body {
   display: grid;
   place-items: center;
 }
-
 
 .top_section {
   display: flex;
@@ -103,8 +112,6 @@ body {
   border-bottom: #fff 0.5px solid;
 }
 
-
-
 /* -----Table------- */
 
 .main-container {
@@ -120,4 +127,3 @@ main {
   height: 100vh;
   position: relative;
 }
-

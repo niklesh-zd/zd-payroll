@@ -1,80 +1,80 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-import DataTable from 'react-data-table-component'
-import { BsPencilSquare } from 'react-icons/bs'
-import { CgMoreO } from 'react-icons/cg'
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import DataTable from "react-data-table-component";
+import { BsPencilSquare } from "react-icons/bs";
+import { CgMoreO } from "react-icons/cg";
 const ManageEmpyee = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
-  const [empdata, empdatachange] = useState(null)
-  const navigate = useNavigate()
+  const [empdata, empdatachange] = useState(null);
+  const navigate = useNavigate();
   const LoadDetail = (_id) => {
-    navigate('/settings/EmpDetail' + _id)
-  }
+    navigate("/settings/EmpDetail" + _id);
+  };
   const generateSalary = (_id) => {
-    navigate('/settings/salary' + _id)
-  }
+    navigate("/settings/salary" + _id);
+  };
   const LoadEdit = (_id) => {
-    navigate('/settings/EmpEdit' + _id)
-  }
+    navigate("/settings/EmpEdit" + _id);
+  };
   useEffect(() => {
     window
-      .fetch('http://192.168.29.37:7071/emp/get_employ')
+      .fetch("http://192.168.29.37:7071/emp/get_employ")
       .then((res) => {
-        return res.json()
+        return res.json();
       })
       .then((resp) => {
-        let DOJ
-        let arr = []
-        let finalArr = []
-        for(let i = 0; i < resp.length; i++){
-          arr.push(resp[i])
+        let DOJ;
+        let arr = [];
+        let finalArr = [];
+        for (let i = 0; i < resp.length; i++) {
+          arr.push(resp[i]);
         }
-        arr.map((e)=>{
-          DOJ = new Date(e.date_of_joining).toLocaleDateString('pt-PT')
-          finalArr.push({...e, 'DOJ':DOJ})
-        })
-        empdatachange(finalArr)
+        arr.map((e) => {
+          DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
+          finalArr.push({ ...e, DOJ: DOJ });
+        });
+        empdatachange(finalArr);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
   var columns = [
     {
-      name: 'Employee Code',
-      selector: 'Employee_Code',
+      name: "Employee Code",
+      selector: "Employee_Code",
       sortable: true,
       width: 30,
     },
     {
-      name: 'Name',
-      selector: 'First_Name',
+      name: "Name",
+      selector: "First_Name",
       sortable: true,
     },
     {
-      name: 'Email',
-      selector: 'email',
+      name: "Email",
+      selector: "email",
       sortable: true,
     },
     {
-      name: 'Phone',
-      selector: 'Contact_Number',
+      name: "Phone",
+      selector: "Contact_Number",
       sortable: true,
     },
     {
-      name: 'DOJ',
-      selector: 'DOJ',
+      name: "DOJ",
+      selector: "DOJ",
     },
     {
-      name: 'Action',
+      name: "Action",
       cell: (row) => (
         <>
           <span
             className="btn btn-md"
             onClick={() => {
-              LoadEdit(row._id)
+              LoadEdit(row._id);
             }}
           >
             <BsPencilSquare />
@@ -82,16 +82,16 @@ const ManageEmpyee = () => {
           <span
             className="btn btn-md"
             onClick={() => {
-              LoadDetail(row._id)
+              LoadDetail(row._id);
             }}
           >
             <CgMoreO />
           </span>
           <span
             className="btn btn-sm btn-success"
-            style={{ padding: '2px' }}
+            style={{ padding: "2px" }}
             onClick={() => {
-              generateSalary(row._id)
+              generateSalary(row._id);
             }}
           >
             Receipt
@@ -101,11 +101,29 @@ const ManageEmpyee = () => {
 
       ignoreRowClick: true,
     },
-  ]
+  ];
   return (
     <div>
       <div>
         <div className="ml-5 mr-5">
+          <DataTable
+            title={
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <h4>Employees</h4>{" "}
+                <Link
+                  to="/settings/profile"
+                  className="btn btn-primary btn-sm ml-5 mr-5"
+                >
+                  Add New (+)
+                </Link>
+              </div>
+            }
+            columns={columns}
+            data={empdata ? empdata : []}
+            pagination
+            highlightOnHover
+            search
+          />
           {/* <table id='example' className="table table-striped table-bordered">
             <thead className="">
               <tr>
@@ -158,25 +176,10 @@ const ManageEmpyee = () => {
                 ))}
             </tbody>
           </table> */}
-          <DataTable
-            title={
-              <div style={{display:'flex'}}>
-                <h4>Employees</h4>{' '}
-                <Link to="/settings/profile" className="btn btn-primary btn-sm ml-5 mr-5">
-                  Add New (+)
-                </Link>
-              </div>
-            }
-            columns={columns}
-            data={empdata ? empdata : []}
-            pagination
-            highlightOnHover
-            search
-          />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ManageEmpyee
+export default ManageEmpyee;
