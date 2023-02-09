@@ -124,5 +124,34 @@ class Salary {
             res.send({ error });
         }
     }
+    async get_salary_id(req, res) {
+        console.log('get-salart');
+        const data = await SalaryModal.find()
+        var arr = []
+        data.forEach((Val) => {
+            arr.push(Val.userid)
+            console.log(Val.userid);
+        })
+        if (!arr) {
+            return res.status(404).send({ message: " user id not  Exist." });
+        }
+
+        res.send(arr);
+    }
+    async get_one_emp(req, res, next) {
+        var val = req.params;
+        const name =val.id
+        // return
+        SalaryModal.findOne({ userid: name }).then((employee) => {
+            console.log("data:", employee);
+            if (!employee) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
+            res.send(employee);
+        }).catch((error) => {
+            res.status(500).send(error);
+        })
+    }
+
 }
 module.exports = new Salary();
