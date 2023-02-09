@@ -10,102 +10,105 @@ const Salary = Schema({
         required: [true, "Please enter  name!"],
         trim: [true, "space not allow"],
     },
+    userid: {
+        type: String,
+    },
     Employee_code: {
 
         type: String,
-        required: [true, "Please enter  name!"],
+        // required: [true, "Please enter  name!"],
     },
     designation: {
         type: String,
-        required: [true, "Please enter  name!"],
+        // required: [true, "Please enter  name!"],
     },
     Salary_Slip_Month_Year: {
         type: String,
-        required: true,
+        // required: true,
     },
     Date_of_Joining: {
         type: Date,
-        required: true,
+        // required: true,
     },
     Employee_PAN: {
         type: String,
-        required: true,
+        // required: true,
         unique: true,
         minimum: [10, '10 digit are required'],
         maximum: [10, '10 digit are required'],
     },
     Employee_Adhar: {
         type: Number,
-        required: true,
+        // required: true,
         minimum: [12, '12 digit are required'],
         maximum: [12, '12 digit are required'],
         unique: true
     },
     Bank_Account_Number: {
         type: String,
-        required: true
+        // required: true
     },
     Bank_IFSC_Code: {
         type: String,
-        required: true
+        // required: true
     },
 
     Total_Work_Days: {
         type: Number,
-        required: true
+        // required: true
     },
     Number_of_Leaves: {
         type: Number,
-        required: true
+        // required: true
     },
     Leave_balence: {
         type: Number,
-        required: true
+        // required: true
     },
     Leave_taken: {
         type: Number,
-        required: true
+        // required: true
     },
     Balence_days: {
         type: Number,
-        required: true
+        // required: true
     },
     Present_day: {
         type: Number,
-        required: true
+        // required: true
     },
     Total_paid_day: {
         type: Number,
-        required: true
+        // required: true
     },
     Basic_DA: {
         type: Number,
-        required: true
+        // required: true
     },
     HRA: {
         type: Number,
-        required: true
+        // required: true
     },
     RA: {
         type: Number,
-        required: true
+        // required: true
     },
     Flext_benefits: {
         type: Number,
-        required: true
+        // required: true
     },
     Total_earn: {
         type: Number,
-        required: true
+        // required: true
     }
     ,
     Net_pay_in_words: {
         type: String,
-        required: true
+        // required: true
     },
     Net_pay_in_number: {
         type: Number,
-        required: true
+        // required: true
 
     }
 },
