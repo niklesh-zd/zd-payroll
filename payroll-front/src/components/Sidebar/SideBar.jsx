@@ -28,16 +28,11 @@ const routes = [
         name: "Manage Employee",
         icon: <FaUser />,
       },
-      // {
-      //   path: "/settings/billing",
-      //   name: "Billing",
-      //   icon: <FaMoneyBill />,
-      // },
     ],
   },
   {
     path: "/settings/leavedetails",
-    name: "Leave",
+    name: "Leaves",
     icon: <MdMessage />,
     // subRoutes: [
     //   // {
