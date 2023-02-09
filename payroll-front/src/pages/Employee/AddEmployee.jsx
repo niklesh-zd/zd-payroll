@@ -21,7 +21,7 @@ function AddEmployee(props) {
     e.preventDefault()
     // if (validateForm()) {
     axios
-      .post('http://192.168.29.37:7071/emp/add_employ', fields)
+      .post('http://localhost:7071/emp/add_employ', fields)
       .then((response) => {
         console.log('success', response)
       })

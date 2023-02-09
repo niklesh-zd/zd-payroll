@@ -83,6 +83,7 @@ class Emp {
         }
         catch (error) {
             res.send({ message: "error" });
+            console.log(error);
             Error.captureStackTrace(error);
 
 
