@@ -28,7 +28,7 @@ router.get('/emp_1/:id', get_one_emp)
 router.post('/leave', Leave)
 router.get('/get-all-user-id', get_user_id)
 
-router.post('/emp-swap', Emp_swap)
+router.post('/emp-swap/:id', Emp_swap)
 
 
 module.exports = router;

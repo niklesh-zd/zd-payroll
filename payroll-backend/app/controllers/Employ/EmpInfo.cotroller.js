@@ -83,7 +83,7 @@ class Emp {
         }
         catch (error) {
             console.log(error);
-            res.send({ message: "error" });
+            res.send({ message: error });
             Error.captureStackTrace(error);
 
 
@@ -164,22 +164,18 @@ class Emp {
 
 
     async Emp_swap(req, res) {
-        console.log("Check");
+        // console.log("Check");
 
-        var userId = "63e1f986fcdf89a79014d616"
+        var userId = req.params.id
 
-        EmpInfoModal.findById(ObjectId("63e1f986fcdf89a79014d616")).then((employee) => {
+        EmpInfoModal.findById(userId).then((employee) => {
             // console.log("data:", employee);
             if (!employee) {
                 return res.status(404).send({ message: "This user not Exist." });
             }
 
-            console.log("check", employee._id);
-          
-
-            return
-            const employ = new DeleteEmpInfo({
-                Emp_Id,
+            const employDelete = new DeleteEmpInfo({
+                Emp_Id: employee._id,
                 First_Name: employee.First_Name,
                 Last_Name: employee.Last_Name,
                 date_of_birth: employee.date_of_birth,
@@ -211,11 +207,28 @@ class Emp {
                 // file,
             });
             //STORE YOUR LOGIN DATA IN DB 
-            employ.save();
-            console.log({ employ });
-            res.send({ message: "Success " });
 
-            res.send(employee);
+            const userDelete = EmpInfoModal.findByIdAndDelete(userId)
+            if (!userDelete) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
+            res.status(201).json({ message: "delete successfuly" });
+            console.log({ userDelete });
+
+
+            employDelete.save();
+            // res.send({ message: "Success " });
+            // const userDelete = EmpInfoModal.deleteOne({ First_Name: employee.First_Name })
+            // console.log("delete=>", userDelete);
+            // if (!userDelete) {
+            //     return res.status(404).send({ message: "This user not Exist." });
+            // } else {
+            //     res.status(201).json({ message: "delete successfuly" });
+            //     console.log({ userDelete });
+            // }
+
+
+            // res.send(employee);
         }).catch((error) => {
             res.status(500).send(error);
         })
