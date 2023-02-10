@@ -49,7 +49,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.37:7071/emp/add_employ", fields)
+        .post("http://localhost:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -76,14 +76,14 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.37:7071/emp/update/" + props.data._id, fields)
+        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
             Swal.fire({
               icon: "success",
               title: "Successful",
-              text: "Emplooye Successfully Updated!",
+              text: "Employee Successfully Updated!",
             }).then(() => {
               navigate("/settings/manageprofile");
             });
@@ -676,7 +676,7 @@ function AddEmployee(props) {
                         name="Permanent_Address"
                         rows="4"
                         cols="35"
-                        placeholder="Parmanent Address"
+                        placeholder="Permanent Address"
                         value={fields.Permanent_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>
