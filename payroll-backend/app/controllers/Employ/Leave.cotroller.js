@@ -15,7 +15,11 @@ class Leave {
 
             var { userid, leave_type, date, reason_for_leave,
             } = req.body;
+            const datelFind = await LeaveModal.findOne({ date: date })
 
+            if (datelFind) {
+                return res.send({ message: "alredy exist ." })
+            }
             // CHECK ALL FIELD IN FILL
             if (!leave_type || !userid
                 || !date || !reason_for_leave
