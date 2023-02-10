@@ -11,8 +11,7 @@ import EmpDetail from "./pages/Employee/EmpDetail";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
-// import {  useParams } from "react-router-dom";
-
+import Downloadslip from "./pages/Salary_slip/downloadslip";
 
 
 
@@ -30,6 +29,7 @@ function App() {
           <Route path="/settings/EmpDetail:id" element={<EmpDetail/>} />
           <Route path="/settings/leave" element={<Leaves />} />
           <Route path="/settings/leavedetails" element={<LeaveDetails />} />
+          <Route path="/download:id" element={<Downloadslip />} />
         </Routes>
       </SideBar>
     </Router>

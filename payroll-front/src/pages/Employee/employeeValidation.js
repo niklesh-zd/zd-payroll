@@ -8,7 +8,7 @@ export function validateForm(fields) {
         formIsValid = false
     }
     if(!fields.Employee_Code || fields.Employee_Code == ""){
-        errObj['Employee_Code'] = '*Please Enter Employee Code.'
+        errObj['Employee_Code'] = '*Field is required'
         formIsValid = false
     }
     if(!fields.First_Name || fields.First_Name == ""){
@@ -31,15 +31,15 @@ export function validateForm(fields) {
         errObj['date_of_joining'] = '*Please Enter DOJ.'
         formIsValid = false
     }
-    if(!fields.Contact_Number || fields.Contact_Number.length != 10){
+    if(!fields.Contact_Number || fields.Contact_Number.toString().length != 10){
         errObj['Contact_Number'] = '*Please Enter Valid Number.'
         formIsValid = false
     }
-    if(!fields.Alternate_Contact_number || fields.Alternate_Contact_number.length != 10){
+    if(!fields.Alternate_Contact_number || fields.Alternate_Contact_number.toString().length != 10){
         errObj['Alternate_Contact_number'] = '*Please Enter Valid Number.'
         formIsValid = false
     }
-    if(!fields.Contact_Number_Home || fields.Contact_Number_Home.length != 10){
+    if(!fields.Contact_Number_Home || fields.Contact_Number_Home.toString().length != 10){
         errObj['Contact_Number_Home'] = '*Please Enter Valid Number.'
         formIsValid = false
     }
@@ -65,27 +65,27 @@ export function validateForm(fields) {
         formIsValid = false
     }
     if(!fields.Marital_Status || fields.Marital_Status == ""){
-        errObj['Marital_Status'] = '*Please Select Marital Status.'
+        errObj['Marital_Status'] = '*Field is required'
         formIsValid = false
     }
     if(!fields.Bank_IFSC || fields.Bank_IFSC.length != 11){
         errObj['Bank_IFSC'] = '*Please Enter Bank IFSC.'
         formIsValid = false
     }
-    if(!fields.Bank_No || (fields.Bank_No.length < 9 || fields.Bank_No.length > 17)){
+    if(!fields.Bank_No || (fields.Bank_No.toString().length < 9 || fields.Bank_No.toString().length > 17)){
         errObj['Bank_No'] = '*Please Enter Bank Number.'
         formIsValid = false
     }
-    if(!fields.PAN_No || fields.PAN_No.length != 10){
+    if(!fields.PAN_No || fields.PAN_No.toString().length != 10){
         errObj['PAN_No'] = '*Please Enter Pan Number.'
         formIsValid = false
     }
-    if(!fields.ADHAR || fields.ADHAR.length != 12){
+    if(!fields.ADHAR || fields.ADHAR.toString().length != 12){
         errObj['ADHAR'] = '*Please Enter Aadhar Number.'
         formIsValid = false
     }
     if(!fields.DEGREE || fields.DEGREE == ""){
-        errObj['DEGREE'] = '*Please Select Degree.'
+        errObj['DEGREE'] = '*Field is required.'
         formIsValid = false
     }
     if(!fields.STREAM || fields.STREAM == ""){
@@ -93,7 +93,7 @@ export function validateForm(fields) {
         formIsValid = false
     }
     if(!fields.PASSED || fields.PASSED == ""){
-        errObj['PASSED'] = '*Please Select Passed / Appearing.'
+        errObj['PASSED'] = '*Field is required'
         formIsValid = false
     }
     if(!fields.YEAR_OF_PASSING || fields.YEAR_OF_PASSING == ""){

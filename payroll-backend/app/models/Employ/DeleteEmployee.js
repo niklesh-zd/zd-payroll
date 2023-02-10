@@ -6,8 +6,14 @@ var validateEmail = function (email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
-const EmpInfo = Schema({
+const DeleteEmpInfo = Schema({
 
+    Emp_Id
+        : {
+        type: String,
+        required: [true, "Please enter your name!"],
+        trim: [true, "space not allow"],
+    },
     First_Name
         : {
         type: String,
@@ -154,11 +160,11 @@ const EmpInfo = Schema({
 )
 
 // collection creation 
-const EmpInfoModal = model('EMPLOY', EmpInfo, "EmpInfo");
+const DeletEmpInfoModal = model('DELETEMPLOY', DeleteEmpInfo, "DeletEmpInfo");
 
 
 
 
 
-module.exports = EmpInfoModal;
+module.exports = DeletEmpInfoModal;
 

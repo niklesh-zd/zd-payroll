@@ -1,101 +1,110 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router'
-import { validateForm } from './employeeValidation'
-import Swal from 'sweetalert2'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import { validateForm } from "./employeeValidation";
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddEmployee(props) {
-  const [fields, setFields] = useState({})
-  const [errors, setErrors] = useState({})
-  const navigate = useNavigate()
+  const [fields, setFields] = useState({});
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    props.data && setFields(props.data)
-  }, [props.data])
+    props.data && setFields(props.data);
+  }, [props.data]);
 
   function handleChange(e) {
-    let fieldObj = { ...fields }
-    fieldObj[e.target.name] = e.target.value
+    let fieldObj = { ...fields };
+    fieldObj[e.target.name] = e.target.value;
 
-    setFields(fieldObj)
+    setFields(fieldObj);
   }
+  console.log("fields", fields);
   const notify = (message) => {
     toast(
-      message == 'alredy exist ADHAR.'
-        ? 'Aadhar already exiest'
-        : message == 'alredy exist PAN_NO.'
-        ? 'Pan Number already exiest'
-        : message == 'alredy exist emails.'
-        ? 'Email already exiest'
-        : 'ppp',
+      message == "alredy exist ADHAR."
+        ? "Aadhar already exiest"
+        : message == "alredy exist PAN_NO."
+        ? "Pan Number already exiest"
+        : message == "alredy exist emails."
+        ? "Email already exiest"
+        : null,
       {
-        position: 'top-center',
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'light',
-      },
-    )
-  }
+        theme: "light",
+      }
+    );
+  };
   function submituserRegistrationForm(e) {
-    e.preventDefault()
-    const validationErrors = validateForm(fields)
-    setErrors(validationErrors.errObj)
-    console.log('validationErrors', validationErrors)
+    e.preventDefault();
+    const validationErrors = validateForm(fields);
+    setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post('http://192.168.29.37:7071/emp/add_employ', fields)
+        .post("http://192.168.29.37:7071/emp/add_employ", fields)
         .then((response) => {
-          console.log('success', response.data.message)
-          if (response.data.message == 'Success ') {
+          console.log("success", response.data.message);
+          if (response.data.message == "Success ") {
             Swal.fire({
-              icon: 'success',
-              title: 'Successful',
-              text: 'Emplooye Successfully Created!',
+              icon: "success",
+              title: "Successful",
+              text: "Emplooye Successfully Created!",
             }).then(() => {
-              navigate('/settings/manageprofile')
-            })
+              navigate("/settings/manageprofile");
+            });
           } else {
-            notify(response.data.message)
+            notify(response.data.message);
           }
         })
         .catch((err) => {
-          console.error('There was an error!', err)
-        })
+          console.error("There was an error!", err);
+        });
     }
   }
 
   function updateUserDetails(e) {
-    e.preventDefault()
-    console.log('update')
-    axios
-      .post('http://localhost:7071/emp/update/' + props.data._id, fields)
-      .then((response) => {
-        console.log('success', response)
-      })
-      .then(() => {
-        // navigate('/settings/manageprofile')
-      })
-      .catch((error) => {
-        console.error('There was an error!', error)
-      })
+    e.preventDefault();
+    const validationErrors = validateForm(fields);
+    setErrors(validationErrors.errObj);
+    if (validationErrors && validationErrors.formIsValid) {
+      axios
+        .post("http://192.168.29.37:7071/emp/update/" + props.data._id, fields)
+        .then((response) => {
+          console.log("success", response);
+          if (response.data.message == "updated successfully.") {
+            Swal.fire({
+              icon: "success",
+              title: "Successful",
+              text: "Emplooye Successfully Updated!",
+            }).then(() => {
+              navigate("/settings/manageprofile");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    }
   }
   return (
     <div className="">
-      <form style={{ display: 'flex' }}>
+      <form style={{ display: "flex" }}>
         <ToastContainer />
 
-        <div className="container p-3">
+        <div className="container px-4 pt-3">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
-                <hr />
+                <hr style={{ margin: "0px" }} />
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -104,7 +113,7 @@ function AddEmployee(props) {
                       </label>
                       <input
                         type="text"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                         name="Employee_Code"
                         className="form-control"
                         placeholder="Employee Code"
@@ -122,7 +131,7 @@ function AddEmployee(props) {
                       </label>
                       <input
                         type="text"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                         name="First_Name"
                         minLength="2"
                         maxLength="50"
@@ -139,7 +148,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Last Name:{' '}
+                        Last Name:{" "}
                       </label>
                       <input
                         type="text"
@@ -148,7 +157,7 @@ function AddEmployee(props) {
                         maxLength="50"
                         className="form-control"
                         placeholder="Last Name"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                         value={fields.Last_Name}
                         onChange={(e) => handleChange(e)}
                       />
@@ -169,7 +178,7 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Father Name"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                       />
                       <div className="errorMsg">{errors.fatherName}</div>
                     </div>
@@ -180,24 +189,24 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Date Of Birth:
+                        Date of Birth:
                       </label>
                       <input
                         type="date"
                         name="date_of_birth"
-                        className="form-control"
+                        className="form-control small_date"
                         placeholder="Date Of Birth"
                         value={new Date(
-                          fields.date_of_birth,
-                        ).toLocaleDateString('en-CA')}
+                          fields.date_of_birth
+                        ).toLocaleDateString("en-CA")}
                         onChange={(e) => handleChange(e)}
                         // onChange={(e) => ValidateDOB(e.target.value)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
                       <span
                         style={{
-                          fontWeight: 'bold',
-                          color: 'red',
+                          fontWeight: "bold",
+                          color: "red",
                         }}
                       >
                         {/* {errorMessage} */}
@@ -212,11 +221,11 @@ function AddEmployee(props) {
                       <input
                         type="date"
                         name="date_of_joining"
-                        className="form-control"
+                        className="form-control small_date"
                         placeholder="Date Of Joining"
                         value={new Date(
-                          fields.date_of_joining,
-                        ).toLocaleDateString('en-CA')}
+                          fields.date_of_joining
+                        ).toLocaleDateString("en-CA")}
                         onChange={(e) => handleChange(e)}
                       />
                     </div>
@@ -242,7 +251,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label>Alternate Contact</label>
+                      <label>Alternate Contact No</label>
                       <input
                         type="number"
                         maxLength="12"
@@ -279,7 +288,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                     <div className="form-group">
-                      <label className="profile_details_text">Email:</label>
+                      <label className="profile_details_text">Email ID</label>
                       <input
                         type="email"
                         name="email"
@@ -297,7 +306,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Blood Group:
+                        Blood Group
                       </label>
                       <select
                         name="Blood_Group"
@@ -325,7 +334,7 @@ function AddEmployee(props) {
                       <label className="profile_details_text">Position</label>
                       <input
                         type="text"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                         name="Position"
                         value={fields.Position}
                         onChange={(e) => handleChange(e)}
@@ -342,7 +351,7 @@ function AddEmployee(props) {
                       </label>
                       <input
                         type="text"
-                        style={{ textTransform: 'capitalize' }}
+                        style={{ textTransform: "capitalize" }}
                         name="Nationality"
                         value={fields.Nationality}
                         onChange={(e) => handleChange(e)}
@@ -362,15 +371,15 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          checked={fields.gender == 'Male'}
-                        />{' '}
+                          checked={fields.gender == "Male"}
+                        />{" "}
                         Male
                         <input
                           type="radio"
                           value="Female"
                           name="gender"
-                          checked={fields.gender == 'Female'}
-                        />{' '}
+                          checked={fields.gender == "Female"}
+                        />{" "}
                         Female
                       </div>
                       <div className="errorMsg">{errors.gender}</div>
@@ -379,7 +388,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Marital Staus:
+                        Marital Status:
                       </label>
 
                       <div onChange={(e) => handleChange(e)}>
@@ -387,15 +396,15 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == 'Single'}
-                        />{' '}
+                          checked={fields.Marital_Status == "Single"}
+                        />{" "}
                         Single
                         <input
                           type="radio"
                           value="Married"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == 'Married'}
-                        />{' '}
+                          checked={fields.Marital_Status == "Married"}
+                        />{" "}
                         Married
                       </div>
                       <div className="errorMsg">{errors.Marital_Status}</div>
@@ -408,7 +417,8 @@ function AddEmployee(props) {
             </div>
             <div className="col-4 edit_information">
               <div className="Account-details">
-                <h5 className="text-left">Account Details</h5> <hr />
+                <h5 className="text-left">Account Details</h5>{" "}
+                <hr style={{ margin: "0px" }} />
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -453,7 +463,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label>ADHAR No.</label>
+                      <label>Aadhaar No.</label>
                       <input
                         name="ADHAR"
                         type="number"
@@ -472,7 +482,8 @@ function AddEmployee(props) {
 
               <div className="col-sm-12 edit_information">
                 <div className="Account-details">
-                  <h5 className="text-left">Education Information</h5> <hr />
+                  <h5 className="text-left">Educational Information</h5>{" "}
+                  <hr style={{ margin: "0px" }} />
                   <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                       <div className="form-group">
@@ -574,7 +585,7 @@ function AddEmployee(props) {
                   <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                       <div className="form-group">
-                        <label>Percentage Of Marks </label>
+                        <label>Percentage of Marks </label>
                         <input
                           name="PERCENTAGE_OF_MARKS"
                           type="number"
@@ -595,7 +606,8 @@ function AddEmployee(props) {
             </div>
             <div className="col-4 edit_information">
               <div className="Account-details">
-                <h5 className="text-left">Address</h5> <hr />
+                <h5 className="text-left">Address Details</h5>{" "}
+                <hr style={{ margin: "0px" }} />
                 {/* <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -657,7 +669,7 @@ function AddEmployee(props) {
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Parmanent Address:
+                        Permanent Address:
                       </label>
                       <textarea
                         className="form-control"
@@ -699,6 +711,6 @@ function AddEmployee(props) {
         </div>
       </form>
     </div>
-  )
+  );
 }
-export default AddEmployee
+export default AddEmployee;

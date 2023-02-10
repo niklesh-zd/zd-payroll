@@ -122,7 +122,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: '70%', justifyContent: 'space-between' }}
                 >
-                  <h6>Father Name</h6>
+                  <h6>Father's Name</h6>
                   <p>{empdata.fatherName}</p>
                 </div>
                 <div
