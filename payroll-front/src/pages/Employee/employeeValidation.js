@@ -56,16 +56,16 @@ export function validateForm(fields) {
         errObj['Position'] = '*Please Enter Position.'
         formIsValid = false
     }
-    if(!fields.Nationality || fields.Nationality == ""){
-        errObj['Nationality'] = '*Please Enter Nationality.'
-        formIsValid = false
-    }
     if(!fields.gender || fields.gender == ""){
         errObj['gender'] = '*Please Select Gender.'
         formIsValid = false
     }
     if(!fields.Marital_Status || fields.Marital_Status == ""){
         errObj['Marital_Status'] = '*Field is required'
+        formIsValid = false
+    }
+    if(!fields.base_salary || fields.base_salary == ""){
+        errObj['base_salary'] = '*Please Enter Base Salary'
         formIsValid = false
     }
     if(!fields.Bank_IFSC || fields.Bank_IFSC.length != 11){
@@ -106,6 +106,22 @@ export function validateForm(fields) {
     }
     if(!fields.PERCENTAGE_OF_MARKS || fields.PERCENTAGE_OF_MARKS == ""){
         errObj['PERCENTAGE_OF_MARKS'] = '*Please Enter Percentage'
+        formIsValid = false
+    }
+    if(!fields.current_state || fields.current_state == ""){
+        errObj['current_state'] = '*Please Enter Satate.'
+        formIsValid = false
+    }
+    if(!fields.current_city || fields.current_city == ""){
+        errObj['current_city'] = '*Please Enter City.'
+        formIsValid = false
+    }
+    if(!fields.permanent_city || fields.permanent_city == ""){
+        errObj['permanent_city'] = '*Please Enter City.'
+        formIsValid = false
+    }
+    if(!fields.permanent_state || fields.permanent_state == ""){
+        errObj['permanent_state'] = '*Please Enter State.'
         formIsValid = false
     }
     if(!fields.Current_Address || fields.Current_Address == ""){
