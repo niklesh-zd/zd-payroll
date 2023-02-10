@@ -16,7 +16,7 @@ class Emp {
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
                 Contact_Number, Contact_Number_Home, Permanent_Address,
                 Current_Address, email,
-                fatherName,
+                fatherName,base_salary,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
@@ -62,6 +62,7 @@ class Emp {
                     PAN_No,
                     state,
                     city,
+                    base_salary,
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,

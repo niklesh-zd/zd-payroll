@@ -64,7 +64,7 @@ const EmpInfo = Schema({
     Employee_Code: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
     Blood_Group: {
         type: String,
@@ -103,6 +103,9 @@ const EmpInfo = Schema({
     Bank_No: {
         type: String,
         required: true
+    },
+    base_salary: {
+        type: Number
     },
     Bank_IFSC: {
         type: String,
