@@ -20,7 +20,10 @@ class Emp {
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
-                , PASSED, PERCENTAGE_OF_MARKS, state, city
+                , PASSED, PERCENTAGE_OF_MARKS,   permanent_state,
+                permanent_city,
+                current_state,
+                current_city,
             } = req.body;
 
             const errors = validationResult(req)
