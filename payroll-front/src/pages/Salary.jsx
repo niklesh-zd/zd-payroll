@@ -23,54 +23,54 @@ function Salary() {
   //   navigate("/download" + _id)
   // }
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    switch (event.target.value) {
-      case 'January':
-        setInputValue('25');
-        break;
-      case 'February':
-        setInputValue('22');
-        break;
-      case 'March':
-        setInputValue('25');
-        break;
-      case 'april':
-        setInputValue('24');
-        break;
-      case 'may':
-        setInputValue('25');
-        break;
-      case 'june':
-        setInputValue('24');
-        break;
-      case 'july':
-        setInputValue('25');
-        break;
-      case 'August':
-        setInputValue('25');
-        break;
-      case 'September':
-        setInputValue('24');
-        break;
-      case 'October':
-        setInputValue('25');
-        break;
-      case 'november':
-        setInputValue('24');
-        break;
-      case 'December':
-        setInputValue('25');
-        break;
-      default:
-        setInputValue('25');
-    }
-  }
+  // const handleOptionChange = (event) => {
+  //   setSelectedOption(event.target.value);
+  //   switch (event.target.value) {
+  //     case 'January':
+  //       setInputValue('25');
+  //       break;
+  //     case 'February':
+  //       setInputValue('22');
+  //       break;
+  //     case 'March':
+  //       setInputValue('25');
+  //       break;
+  //     case 'april':
+  //       setInputValue('24');
+  //       break;
+  //     case 'may':
+  //       setInputValue('25');
+  //       break;
+  //     case 'june':
+  //       setInputValue('24');
+  //       break;
+  //     case 'july':
+  //       setInputValue('25');
+  //       break;
+  //     case 'August':
+  //       setInputValue('25');
+  //       break;
+  //     case 'September':
+  //       setInputValue('24');
+  //       break;
+  //     case 'October':
+  //       setInputValue('25');
+  //       break;
+  //     case 'november':
+  //       setInputValue('24');
+  //       break;
+  //     case 'December':
+  //       setInputValue('25');
+  //       break;
+  //     default:
+  //       setInputValue('25');
+  //   }
+  // }
 
   function handlesubmit(e) {
     e.preventDefault()
     // console.log({ fields }, 'this is main field');
-    axios.post('http://localhost:7071/Emp_Salary/salary', fields,)
+    axios.post('http://localhost:7071/Emp_Salary/salary',)
       // console.log(fields.fields,'fields.fields')
       .then((response) => {
         console.log('success data ---------------------geted', response)
@@ -82,7 +82,7 @@ function Salary() {
       });
   }
   function handleChange(e) {
-    let fieldObj = { ...empdata, ...fields }
+    let fieldObj = { ...empdata,}
     fieldObj[e.target.name] = e.target.value
     setFields(fieldObj)
   }
@@ -146,7 +146,7 @@ function Salary() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Designation</label>
                       <input
@@ -159,8 +159,8 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  </div> */}
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
                       <label>Salary Slip Month</label>
                       <select
@@ -171,7 +171,7 @@ function Salary() {
                         // value={empdata.Salary_Slip_Month_Year}
                         value={selectedOption}
                         onClick={(e) => handleChange(e)}
-                        onChange={handleOptionChange}
+                        // onChange={handleOptionChange}
                       >
                         <option value="January">January</option>
                         <option value="February">February</option>
@@ -189,7 +189,7 @@ function Salary() {
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>DOJ</label>
@@ -219,8 +219,8 @@ function Salary() {
                       ></input>
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Aadhar Number</label>
@@ -249,8 +249,8 @@ function Salary() {
                       ></input>
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>IFSC Code</label>
@@ -281,8 +281,8 @@ function Salary() {
                       ></input>
                     </div>
                   </div>
-                </div>
-                <div className="row">
+                </div> */}
+                {/* <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Total Work Days</label>
@@ -329,7 +329,7 @@ function Salary() {
                       ></input>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="row">
                   <div className="submit pt-8">
                     <div className="form-group">
