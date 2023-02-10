@@ -138,10 +138,16 @@ const EmpInfo = Schema({
     PERCENTAGE_OF_MARKS: {
         type: String,
     },
-    state: {
+    current_state: {
         type: String
     },
-    city: {
+    current_city: {
+        type: String
+    },
+    permanent_state: {
+        type: String
+    },
+    permanent_city: {
         type: String
     }
 
