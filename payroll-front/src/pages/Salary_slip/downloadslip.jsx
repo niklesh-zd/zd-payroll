@@ -18,13 +18,14 @@ const Downloadslip = () => {
     const [Npayra, Setnpayra] = useState('');
     const [Npfb, Setnpayfb] = useState('');
     const [totalearn, Settotalearn] = useState('');
-    const [word, Setword] = useState('');
     useEffect(() => {
         fetch('http://localhost:7071/Emp_Salary/get-one-user/' + id)
             .then((res) => {
                 return res.json()
             })
             .then((resp) => {
+                let leave = resp.Leave_taken;
+                console.log(resp);
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 let TWD = resp.Total_Work_Days
                 resdatachange(resp)
@@ -34,19 +35,14 @@ const Downloadslip = () => {
                 Settsalary(fiftyPercent);
                 const fortyPercent = fiftyPercent * 0.4;
                 Sethra(fortyPercent);
-                // console.log(fortyPercent);
                 const fifteenPercent = fiftyPercent * 0.15;
                 Setra(fifteenPercent)
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
                 Setflexib(FB)
                 const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
-                let leave = resp.Leave_taken
-                let netp = Tgross / TWD 
-                // let netpay = netp + Tgross
+                let netp = Tgross / TWD
                 let tpd = resp.Present_day + 1
-                // leave = 0 > Tgross / TWD * tpd
-                // let netpay = leave = 0 ? netp + Tgross : leave = 0 >  netp * tpd;
-                let netpay = leave = 0 ? netp + Tgross : leave = leave = 0 >  netp * tpd;
+                let netpay = leave = 0 ? console.log('leave-0') : leave = leave > 0 ? netp * tpd : '';
                 let npaybda = netpay / 2;
                 let npayhra = npaybda * 0.4;
                 let npayra = npaybda * 0.15;
@@ -118,70 +114,72 @@ const Downloadslip = () => {
                     href="/download"
                 >
                     {(
-                        <div className="col-md-12">
+                        <div className="" style={{border: '1px solid black', padding: '1%', width: '100%'}}>
                             <div className="text-center lh-1 mb-2">
-                                <h6 className="fw-bold">Payslip</h6> <span className="fw-normal">Payment slip for the month of {resdata.Salary_Slip_Month_Year} 2023</span>
+                                <h3 className="fw-bold" style={{color: '#368bb5'}}>ZecData</h3> <h5 className="fw-bold text-dark">Payment slip for the month of {resdata.Salary_Slip_Month_Year} 2023</h5>
                             </div>
-                            <div className="d-flex justify-content-end"> <span>..................</span> </div>
-                            <div className="row">
-                                <div className="col-md-6">
-
-                                    <div className="row">
+                            {/* style={{width:'57.333333%'}} */}
+                            {/* style={{width: '39.5rem', marginLeft: '13px'}} */}
+                            {/* <div className="d-flex justify-content-end"> <span>..................</span> </div>  */}
+                            <div className="row text-white">
+                                <div className="col-md-6 border-top border-dark" >
+                                    <div className="row" style={{backgroundColor: '#368bb5'}}>
                                         <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Name</span> <small className="ms-3">{resdata.Employee_name}</small> </div>
+                                            <div> <span className="fw-bolder">Name :</span> <small className="ms-3">{resdata.Employee_name}</small> </div>
                                         </div>
                                         <div className="col-md-6">
-                                            <div> <span className="fw-bolder">EMP Code</span> <small className="ms-3">{resdata.Employee_code}</small> </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Designation -</span> <span className="ms-3">{resdata.designation}</span> </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Ac No.</span> <small className="ms-3">{resdata.Bank_Account_Number}</small> </div>
+                                            <div> <span className="fw-bolder">EMP Code :</span> <small className="ms-3">{resdata.Employee_code}</small> </div>
                                         </div>
                                     </div>
 
-                                    <div className="row">
+                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
                                         <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Date Of Joining</span> <small className="ms-3">{restime}</small></div>
+                                            <div> <span className="fw-bolder">Designation :</span> <span className="ms-3">{resdata.designation}</span> </div>
                                         </div>
                                         <div className="col-md-6">
-                                            <div> <span className="fw-bolder">IFSC</span> <small className="ms-3">{resdata.Bank_IFSC_Code}</small> </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Leave (Balance)</span> <small className="ms-3">1</small> </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Total Working Days</span> <small className="ms-3">{resdata.Total_Work_Days}</small> </div>
+                                            <div> <span className="fw-bolder">Ac No. :</span> <small className="ms-3">{resdata.Bank_Account_Number}</small> </div>
                                         </div>
                                     </div>
 
-                                    <div className="row">
-
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Leave Taken</span> <small className="ms-3">{resdata.Leave_taken}</small> </div>
+                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
+                                        <div className="col-md-6 border-bottom border-dark">
+                                            <div> <span className="fw-bolder ">Date Of Joining :</span> <small className="ms-3">{restime}</small></div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Present Days</span> <small className="ms-3">{resdata.Present_day}</small> </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Balance Days</span> <small className="ms-3">1</small> </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Total Paid Days</span> <small className="ms-3">{resdata.Present_day + 1}</small> </div>
+                                        <div className="col-md-6 border-bottom border-dark">
+                                            <div> <span className="fw-bolder">IFSC :</span> <small className="ms-3">{resdata.Bank_IFSC_Code}</small> </div>
                                         </div>
                                     </div>
                                 </div>
-                                <table className="mt-4 table table-bordered">
-                                    <thead className="bg-dark text-white">
+
+                                <div className="col-md-6"style={{backgroundColor: '#368bb5'}}>
+                                    <div className="row border-top border-dark">
+                                        <div className="col-md-6">
+                                            <div> <span className="fw-bolder">Leave (Balance) :</span> <small className="ms-3">1</small> </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div> <span className="fw-bolder">Total Working Days :</span> <small className="ms-3">{resdata.Total_Work_Days}</small> </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
+
+                                        <div className="col-md-6 ">
+                                            <div> <span className="fw-bolder">Leave Taken :</span> <small className="ms-3">{resdata.Leave_taken}</small> </div>
+                                        </div>
+                                        <div className="col-md-6 ">
+                                            <div> <span className="fw-bolder ">Present Days :</span> <small className="ms-3">{resdata.Present_day}</small> </div>
+                                        </div>
+                                        <div className="col-md-6 border-top border-bottom border-dark ">
+                                            <div> <span className="fw-bolder">Balance Days :</span> <small className="ms-3">1</small> </div>
+                                        </div>
+                                        <div className="col-md-6 border-top border-bottom border-dark">
+                                            <div> <span className="fw-bolder">Total Paid Days :</span> <small className="ms-3">{resdata.Present_day + 1}</small> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* style={{width: '98%', marginLeft: '13px',}} */}
+                                <table className="mt-1 table table-bordered border-dark" >
+                                    <thead className=" text-white"  style={{backgroundColor: '#368bb5'}}>
                                         <tr>
                                             <th scope="col">Gross</th>
                                             <th scope="col">Amount</th>
@@ -257,9 +255,9 @@ const Downloadslip = () => {
                                 </table>
                             </div>
                             <div className="row">
-                                <div className="col-md-4"> <br /> <span className="fw-bold">Net Salary Payable (In Words)</span> </div>
-                                <div className="border col-md-8">
-                                    <div className="d-flex flex-column"><span className="text-danger">{fword} Only</span><br></br>
+                                <div className="col-md-5" > <br /> <span className="fw-bold">Net Salary Payable(In Words)</span> </div>
+                                <div className="border border-dark col-md-7" >
+                                    <div className="d-flex flex-column" ><span className="text-danger">{fword} Only</span><br></br>
                                         <span>*This is computer generated copy not need to stamp and sign*</span> </div>
                                 </div>
                             </div>
