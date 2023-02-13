@@ -70,22 +70,26 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault()
     // console.log({ fields }, 'this is main field');
-    axios.post('http://localhost:7071/Emp_Salary/salary', fields,)
+    axios.post('http://localhost:7071/Emp_Salary/salary', fields)
       // console.log(fields.fields,'fields.fields')
       .then((response) => {
         console.log('success data ---------------------geted', response)
 
-        navigate("/" + id)
+        navigate("/download" + id)
       })
       .catch(error => {
         console.error('There was an error!', error);
       });
   }
+
+
   function handleChange(e) {
-    let fieldObj = { ...empdata, ...fields }
+    let fieldObj = { ...empdata, ...fields}
     fieldObj[e.target.name] = e.target.value
     setFields(fieldObj)
   }
+
+
   useEffect(() => {
     let obje = {};
     fetch('http://localhost:7071/emp/emp_1/' + id)
@@ -94,14 +98,16 @@ function Salary() {
       })
       .then((resp) => {
         console.log({ resp }, 'resp');
-        let obje = { Employee_name: resp.First_Name, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_Work_Days: resp.Total_Work_Days, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, userid: resp._id, Present_day: resp.Present_day }
-        // console.log(resp._id, "userid8888-------------88");
+        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_Work_Days: resp.Total_Work_Days, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Present_day: resp.Present_day }
+        console.log(resp._id, "userid8888-------------88");
         empdatachange(obje)
       })
       .catch((err) => {
         console.log(err.message)
       })
   }, [])
+
+
 
   return (
     <div>
@@ -117,7 +123,6 @@ function Salary() {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Name</label>
-
                       <input
                         type="text"
                         min="2"
@@ -130,6 +135,8 @@ function Salary() {
                       </input>
                     </div>
                   </div>
+                  
+                 
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Employee Code</label>
