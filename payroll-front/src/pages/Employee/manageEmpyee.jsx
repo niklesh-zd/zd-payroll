@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
+import { experienceCalculator } from "./experienceCalculator";
 const ManageEmpyee = () => {
   const { id } = useParams();
 
@@ -20,20 +21,23 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://192.168.29.37:7071/emp/get_employ")
+      .fetch("http://localhost:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
       .then((resp) => {
         let DOJ;
+        let experience;
         let arr = [];
         let finalArr = [];
         for (let i = 0; i < resp.length; i++) {
           arr.push(resp[i]);
         }
         arr.map((e) => {
+          experience = experienceCalculator(e.date_of_joining) 
           DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
-          finalArr.push({ ...e, DOJ: DOJ });
+          console.log('experience',experience);
+          finalArr.push({ ...e, DOJ: DOJ, experience: experience });
         });
         empdatachange(finalArr);
       })
@@ -62,6 +66,10 @@ const ManageEmpyee = () => {
       name: "Phone",
       selector: "Contact_Number",
       sortable: true,
+    },
+    {
+      name: "Experience",
+      selector: "experience",
     },
     {
       name: "DOJ",
