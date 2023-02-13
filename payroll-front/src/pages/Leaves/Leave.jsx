@@ -121,8 +121,8 @@ const Leaves = () => {
                       <option disabled={true} selected={true}>
                         Leave Type
                       </option>
-                      <option>full</option>
-                      <option>half</option>
+                      <option value="full">Full Day</option>
+                      <option value="half">Half Day</option>
                     </select>
                   </div>
                 </div>

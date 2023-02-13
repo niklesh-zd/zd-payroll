@@ -332,7 +332,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">Position</label>
-                      <input
+                      {/* <input
                         type="text"
                         style={{ textTransform: "capitalize" }}
                         name="Position"
@@ -340,25 +340,28 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Enter your Position"
-                      />
-                      <div className="errorMsg">{errors.Position}</div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">
-                        Nationality
-                      </label>
-                      <input
-                        type="text"
-                        style={{ textTransform: "capitalize" }}
-                        name="Nationality"
-                        value={fields.Nationality}
-                        onChange={(e) => handleChange(e)}
+                      /> */}
+                      <select
+                        name="Position"
                         className="form-control"
-                        placeholder="Enter your Nationality"
-                      />
-                      <div className="errorMsg">{errors.Nationality}</div>
+                        value={fields.Position}
+                        onChange={(e) => handleChange(e)}
+                      >
+                        <option disabled={true} selected={true}>
+                          Choose Position
+                        </option>
+                        <option>Software Architect</option>
+                        <option>Engineering Project Manager/Engineering Manager</option>
+                        <option>Technical Lead/Engineering Lead/Team Lead</option>
+                        <option>Principal Software Engineer</option>
+                        <option>Senior Software Engineer/Senior Software Developer</option>
+                        <option>Software Engineer</option>
+                        <option>Software Developer</option>
+                        <option>Junior Software Developer</option>
+                        <option>Intern Software Developer</option>
+                        <option>Other</option>
+                      </select>
+                      <div className="errorMsg">{errors.Position}</div>
                     </div>
                   </div>
                 </div>
@@ -419,6 +422,22 @@ function AddEmployee(props) {
               <div className="Account-details">
                 <h5 className="text-left">Account Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label>Base Salary</label>
+                      <input
+                        type="number"
+                        name="base_salary"
+                        value={fields.base_salary}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Enter Base Salary"
+                      ></input>
+                      <div className="errorMsg">{errors.base_salary}</div>
+                    </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -482,12 +501,12 @@ function AddEmployee(props) {
 
               <div className="col-sm-12 edit_information">
                 <div className="Account-details">
-                  <h5 className="text-left">Educational Information</h5>{" "}
+                  <h5 className="text-left">Educational Details</h5>{" "}
                   <hr style={{ margin: "0px" }} />
                   <div className="row">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                       <div className="form-group">
-                        <label className="profile_details_text">Degree:</label>
+                        <label className="profile_details_text">Degree</label>
                         <select
                           name="DEGREE"
                           className="form-control"
@@ -608,44 +627,46 @@ function AddEmployee(props) {
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />
-                {/* <div className="row">
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label className="profile_details_text">State: </label>
+                      <label className="profile_details_text">
+                        Current State
+                      </label>
                       <input
-
                         type="text"
-                        name="state"
+                        name="current_state"
                         minLength="2"
                         maxLength="50"
                         className="form-control"
-                        placeholder="State"
-                        style={{ textTransform: 'capitalize' }}
-                        value={fields.state}
+                        placeholder="Current State"
+                        style={{ textTransform: "capitalize" }}
+                        value={fields.current_state}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{errors.state}</div>
+                      <div className="errorMsg">{errors.current_state}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label className="profile_details_text">City:</label>
+                      <label className="profile_details_text">
+                        Current City
+                      </label>
                       <input
-
                         type="text"
-                        name="City"
+                        name="current_city"
                         minLength="2"
                         maxLength="50"
-                        value={fields.City}
+                        value={fields.current_city}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        placeholder="City"
-                        style={{ textTransform: 'capitalize' }}
+                        placeholder="Current City"
+                        style={{ textTransform: "capitalize" }}
                       />
-                      <div className="errorMsg">{errors.City}</div>
+                      <div className="errorMsg">{errors.current_city}</div>
                     </div>
                   </div>
-                </div> */}
+                </div>
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
@@ -655,13 +676,53 @@ function AddEmployee(props) {
                       <textarea
                         className="form-control"
                         name="Current_Address"
-                        rows="4"
+                        rows="3"
                         cols="35"
                         placeholder="Enter your Local Address"
                         value={fields.Current_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>
                       <div className="errorMsg">{errors.Current_Address}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Permanent State
+                      </label>
+                      <input
+                        type="text"
+                        name="permanent_state"
+                        minLength="2"
+                        maxLength="50"
+                        className="form-control"
+                        placeholder="Permanent State"
+                        style={{ textTransform: "capitalize" }}
+                        value={fields.permanent_state}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <div className="errorMsg">{errors.permanent_state}</div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Permanent City
+                      </label>
+                      <input
+                        type="text"
+                        name="permanent_city"
+                        minLength="2"
+                        maxLength="50"
+                        value={fields.permanent_city}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Permanent City"
+                        style={{ textTransform: "capitalize" }}
+                      />
+                      <div className="errorMsg">{errors.permanent_city}</div>
                     </div>
                   </div>
                 </div>
@@ -674,7 +735,7 @@ function AddEmployee(props) {
                       <textarea
                         className="form-control"
                         name="Permanent_Address"
-                        rows="4"
+                        rows="3"
                         cols="35"
                         placeholder="Permanent Address"
                         value={fields.Permanent_Address}
