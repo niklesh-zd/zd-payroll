@@ -15,8 +15,13 @@ var columns = [
     sortable: true,
   },
   {
-    name: "Date",
-    selector: "date",
+    name: "From Date",
+    selector: "from_date",
+    sortable: true,
+  },
+  {
+    name: "To Date",
+    selector: "to_date",
     sortable: true,
   },
   {
@@ -55,7 +60,8 @@ function LeaveDetails() {
           });
           filteredArr.push({
             ...filteredObj,
-            date: new Date(e.date).toLocaleDateString('pt-PT'),
+            from_date: new Date(e.from_date).toLocaleDateString('pt-PT'),
+            to_date: new Date(e.to_date).toLocaleDateString('pt-PT'),
             leave_type: e.leave_type == 1 ? "Full Day" : "Half Day",
             reason_for_leave: e.reason_for_leave,
           });
