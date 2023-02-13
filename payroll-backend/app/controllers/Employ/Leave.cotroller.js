@@ -27,8 +27,8 @@ class Leave {
                 return res.send({ message: "alredy exist  date." })
             }
             // CHECK ALL FIELD IN FILL
-            if (!leave_type || !userid
-                || !date || !reason_for_leave
+            if (!leave_type || !userid || !to_date
+                || !from_date || !reason_for_leave
             )
                 return res.send({ message: "Please fill in all fields." });
             var today = ''
