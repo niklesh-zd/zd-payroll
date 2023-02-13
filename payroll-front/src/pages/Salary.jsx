@@ -10,6 +10,10 @@ function Salary() {
   const [fields, setFields] = useState({})
   const [selectedOption, setSelectedOption] = useState('January');
   const [inputValue, setInputValue] = useState('');
+  const [holiday, Setholiday] = useState('');
+  const [startdate, Setstartdate] = useState('');
+  const [enddate, Setenddate] = useState('');
+  const [totalworkday, Settotalworkday] = useState('');
 
 
   const navigate = useNavigate()
@@ -22,70 +26,75 @@ function Salary() {
   // const generateSalary = (_id) => {
   //   navigate("/download" + _id)
   // }
-
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     switch (event.target.value) {
       case 'January':
-        setInputValue('25');
+        setInputValue('31');
         break;
       case 'February':
-        setInputValue('22');
+        setInputValue('28');
+
         break;
       case 'March':
-        setInputValue('25');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
+        setInputValue('31');
         break;
       case 'april':
-        setInputValue('24');
+        setInputValue('30');
         break;
       case 'may':
-        setInputValue('25');
+        setInputValue('31');
         break;
       case 'june':
-        setInputValue('24');
+        setInputValue('30');
         break;
       case 'july':
-        setInputValue('25');
+        setInputValue('31');
         break;
       case 'August':
-        setInputValue('25');
+        setInputValue('31');
         break;
       case 'September':
-        setInputValue('24');
+        setInputValue('30');
         break;
       case 'October':
-        setInputValue('25');
+        setInputValue('31');
         break;
       case 'november':
-        setInputValue('24');
+        setInputValue('30');
         break;
       case 'December':
-        setInputValue('25');
+        setInputValue('31');
         break;
       default:
-        setInputValue('25');
+        setInputValue('31');
     }
   }
 
   function handlesubmit(e) {
     e.preventDefault()
-    // console.log({ fields }, 'this is main field');
-    axios.post('http://localhost:7071/Emp_Salary/salary', fields,)
-      // console.log(fields.fields,'fields.fields')
+    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
       .then((response) => {
-        console.log('success data ---------------------geted', response)
-
-        navigate("/" + id)
+        console.log('success data ---------------------geted', response.data.length)
+        let holiday = response.data.length;
+        Setholiday(holiday);
+      }).then(() => {
+        Settotalworkday(inputValue - holiday)
+        axios.post('http://localhost:7071/Emp_Salary/salary', fields)
+        // navigate("/download" + id)
       })
       .catch(error => {
         console.error('There was an error!', error);
       });
   }
+
+  
   function handleChange(e) {
-    let fieldObj = { ...empdata, ...fields }
-    fieldObj[e.target.name] = e.target.value
-    setFields(fieldObj)
+    setFields({ from_date: startdate, end_date: enddate,Total_Work_Days:totalworkday, ...empdata })
   }
+
   useEffect(() => {
     let obje = {};
     fetch('http://localhost:7071/emp/emp_1/' + id)
@@ -93,15 +102,16 @@ function Salary() {
         return res.json()
       })
       .then((resp) => {
-        console.log({ resp }, 'resp');
-        let obje = { Employee_name: resp.First_Name, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_Work_Days: resp.Total_Work_Days, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, userid: resp._id, Present_day: resp.Present_day }
+        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Present_day: resp.Present_day }
         // console.log(resp._id, "userid8888-------------88");
-        empdatachange(obje)
+        empdatachange(obje,)
       })
       .catch((err) => {
         console.log(err.message)
       })
   }, [])
+
+  // Settwd();  
 
   return (
     <div>
@@ -117,19 +127,20 @@ function Salary() {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Name</label>
-
                       <input
                         type="text"
                         min="2"
                         max="50"
                         name="Employee_name"
                         value={empdata.Employee_name}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
                         className="form-control"
                       >
                       </input>
                     </div>
                   </div>
+
+
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Employee Code</label>
@@ -139,14 +150,14 @@ function Salary() {
                         max="50"
                         name="Employee_code"
                         value={empdata.Employee_code}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
                         className="form-control"
                       ></input>
                     </div>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Designation</label>
                       <input
@@ -159,15 +170,15 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  </div> */}
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div className="form-group">
                       <label>Salary Slip Month</label>
                       <select
                         min="2"
                         max="50"
                         name="Salary_Slip_Month_Year"
-                        className="form-control"
+                        className="form-control "
                         // value={empdata.Salary_Slip_Month_Year}
                         value={selectedOption}
                         onClick={(e) => handleChange(e)}
@@ -188,9 +199,40 @@ function Salary() {
                       </select>
                     </div>
                   </div>
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label>start Date</label>
+                      <input
+                        type="date"
+                        min="2"
+                        max="50"
+                        name="from_date"
+                        value={startdate}
+                        onClick={(e) => handleChange(e)}
+                        className="form-control"
+                      ></input>
+                    </div>
+                  </div> */}
+
+
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label>end Date</label>
+                      <input
+                        type="date"
+                        min="2"
+                        max="50"
+                        name="end_date"
+                        value={enddate}
+                        onClick={(e) => handleChange(e)}
+                        className="form-control"
+                      ></input>
+                    </div>
+                  </div> */}
+
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>DOJ</label>
                       <input
@@ -203,8 +245,8 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  </div> */}
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Pan Number</label>
                       <input
@@ -218,10 +260,10 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Aadhar Number</label>
                       <input
@@ -234,8 +276,8 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  </div> */}
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Account Number</label>
                       <input
@@ -248,10 +290,10 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>IFSC Code</label>
                       <input
@@ -264,7 +306,7 @@ function Salary() {
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Leave taken</label>
@@ -276,14 +318,14 @@ function Salary() {
                         name="Leave_taken"
                         value={empdata.Leave_taken}
                         onClick={(e) => Calculate(e)}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
                         className="form-control"
                       ></input>
                     </div>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Total Work Days</label>
                       <input
@@ -291,13 +333,13 @@ function Salary() {
                         type="number"
                         name="Total_Work_Days"
                         // value={empdata.Total_Work_Days}
-                        value={inputValue}
+                        // value={inputValue - holiday}
                         // onClick={(e) => Calculate(e)}
-                        onClick={(e) => handleChange(e)}
+                        // onClick={(e) => handleChange(e)}
                         className="form-control"
                       ></input>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -310,7 +352,7 @@ function Salary() {
                         name="Present_day"
                         value={third.value}
                         // onClick={(e) => Calculate(e)}
-                        onClick={(e) => handleChange(e)}
+                        // onClick={(e) => handleChange(e)}
                         className="form-control"
                       ></input>
                     </div>
@@ -324,7 +366,7 @@ function Salary() {
                         min="8000"
                         name="Total_earn"
                         value={empdata.Total_earn}
-                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
                         className="form-control"
                       ></input>
                     </div>
