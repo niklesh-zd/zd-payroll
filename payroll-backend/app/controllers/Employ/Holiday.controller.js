@@ -39,7 +39,7 @@ class Holiday {
         }
     }
 
-    async get_Holiday(req, res,next) {
+    async get_Holiday_all(req, res,next) {
 
         HolidayModal.find({})
             .then(function (leave) {

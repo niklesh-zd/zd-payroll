@@ -19,7 +19,7 @@ class Emp {
                 fatherName, base_salary,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
-                Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
+                Position,  DEGREE, STREAM, YEAR_OF_PASSING
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
                 permanent_city,
                 current_state, is_active, permanent_pin_code,
@@ -80,9 +80,6 @@ class Emp {
                     PERCENTAGE_OF_MARKS,
                     permanent_pin_code,
                     current_pin_code,
-
-
-
                     YEAR_OF_PASSING
                     // file,
                 });
@@ -127,6 +124,13 @@ class Emp {
     }
 
     async position(req, res) {
+        var arr = ['Software_Architect', 'Engineering_Lead', 'Principal_Software_Engineer', 'Senior_Software_Developer',
+            'Software_Engineer', 'Software_Developer', ' Junior_Software_Developer', ' Intern_Software_Developer', 'Other']
+
+        for (var val = 0; val <= arr.length; val++) {
+            console.log(arr[val]);
+             res.send({arr:arr[val]})
+        }
 
     }
     async get_one_emp(req, res, next) {

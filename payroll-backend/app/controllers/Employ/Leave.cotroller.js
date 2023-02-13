@@ -13,14 +13,15 @@ class Leave {
         console.log("Run ok");
         try {
 
-            var { userid, leave_type, date, reason_for_leave,
+            var { userid, leave_type, from_date,
+                to_date, reason_for_leave,
             } = req.body;
-            const datelFind = await LeaveModal.findOne({  
-                 $and: [
-                { data:date},
-                { userid:userid},
-               
-             ] })
+            const datelFind = await LeaveModal.findOne({
+                $and: [
+                    { from_date: from_date },
+                    { userid: userid }
+                ]
+            })
 
             if (datelFind) {
                 return res.send({ message: "alredy exist  date." })
@@ -40,7 +41,8 @@ class Leave {
             const leave = new LeaveModal({
                 userid,
                 leave_type: today,
-                date,
+                from_date,
+                to_date,
                 reason_for_leave
             });
 
@@ -55,27 +57,28 @@ class Leave {
 
         }
     }
+    // async get_user_id(req, res) {
+    //     const data = await LeaveModal.find()
+    //     var user_id = []
+    //     var leave_type = []
+    //     data.forEach((Val) => {
+    //         user_id.push(Val.userid)
+    //         leave_type.push(Val.leave_type)
+    //     })
+    //     if (!user_id) {
+    //         return res.status(404).send({ message: " user id not  Exist." });
+    //     }
+    //     if (user_id == user_id) {
+    //         leave_type = leave_type[0] + leave_type[1]
+    //         console.log(leave_type);
+    //     }
+    //     res.send({ user_id, leave_type });
+    // }
+
     async get_user_id(req, res) {
-        const data = await LeaveModal.find()
-        var user_id = []
-        var leave_type = []
-        data.forEach((Val) => {
-            user_id.push(Val.userid)
-            leave_type.push(Val.leave_type)
-        })
-        if (!user_id) {
-            return res.status(404).send({ message: " user id not  Exist." });
-        }
-        if (user_id == user_id) {
-            leave_type = leave_type[0] + leave_type[1]
-            console.log(leave_type);
-        }
-        res.send({ user_id, leave_type });
+
     }
     async get_leave(req, res, next) {
-
-
-
         const docs = await LeaveModal.aggregate([
             {
                 $lookup: {
@@ -86,8 +89,6 @@ class Leave {
                 }
             }
         ])
-
-
         res.send({ msg: docs })
         console.log("docs", docs);
     }

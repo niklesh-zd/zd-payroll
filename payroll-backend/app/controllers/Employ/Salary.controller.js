@@ -18,7 +18,7 @@ class Salary {
                 Salary_Slip_Month_Year,
                 Employee_PAN, Employee_Adhar,
                 Bank_Account_Number, Bank_IFSC_Code,
-                Net_pay_in_words,
+                Net_pay_in_words,userid,
                 Net_pay_in_number,
                 Total_Work_Days, Number_of_Leaves, Leave_balence
                 , Leave_taken, Balence_days, Present_day, Total_paid_day
@@ -39,6 +39,7 @@ class Salary {
             const leave = new SalaryModal({
                 Employee_name,
                 Employee_code,
+                userid,
                 designation,
                 Salary_Slip_Month_Year,
                 Date_of_Joining,
