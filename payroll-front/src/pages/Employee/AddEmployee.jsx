@@ -671,6 +671,27 @@ function AddEmployee(props) {
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
+                        Current Pin Code
+                      </label>
+                      <input
+                        type="text"
+                        name="current_pin_code"
+                        minLength="2"
+                        maxLength="50"
+                        className="form-control"
+                        placeholder="Current Pin"
+                        style={{ textTransform: "capitalize" }}
+                        value={fields.current_pin_code}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <div className="errorMsg">{errors.current_pin_code}</div>
+                    </div>
+                  </div>
+                </div>  
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
                         Current Address:
                       </label>
                       <textarea
@@ -723,6 +744,27 @@ function AddEmployee(props) {
                         style={{ textTransform: "capitalize" }}
                       />
                       <div className="errorMsg">{errors.permanent_city}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Permanent Pin Code
+                      </label>
+                      <input
+                        type="text"
+                        name="permanent_pin_code"
+                        minLength="2"
+                        maxLength="50"
+                        className="form-control"
+                        placeholder="Permanent Pin"
+                        style={{ textTransform: "capitalize" }}
+                        value={fields.permanent_pin_code}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <div className="errorMsg">{errors.permanent_pin_code}</div>
                     </div>
                   </div>
                 </div>
