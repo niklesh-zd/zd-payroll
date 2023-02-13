@@ -67,10 +67,6 @@ const DeleteEmpInfo = Schema({
         maximum: [10, '10 digit are required'],
 
     },
-    Nationality: {
-        type: String,
-        required: true
-    },
     Employee_Code: {
         type: String,
         required: true,
