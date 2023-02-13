@@ -19,7 +19,7 @@ class Emp {
                 fatherName, base_salary,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
-                Position,  DEGREE, STREAM, YEAR_OF_PASSING
+                Position, DEGREE, STREAM, YEAR_OF_PASSING
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
                 permanent_city,
                 current_state, is_active, permanent_pin_code,
@@ -37,17 +37,17 @@ class Emp {
             const adhar = await EmpInfoModal.findOne({ ADHAR: ADHAR })
             const last_emp = await EmpInfoModal.find().sort({ _id: -1 }).limit(1);
             var next_emp_code;
-            if (last_emp){
+            if (last_emp) {
                 const last_emp_code = last_emp[0].Employee_Code;
                 console.log(`last emp code : ${last_emp_code}`);
                 const splitted_emp_code = last_emp_code.split("-");
                 var emp_code = Number(splitted_emp_code[1]) + 1;
                 emp_code = emp_code.toString();
                 while (emp_code.length < 4) emp_code = "0" + emp_code;
-                next_emp_code = splitted_emp_code[0]+ "-" + emp_code;
-    
+                next_emp_code = splitted_emp_code[0] + "-" + emp_code;
+
             }
-            else{
+            else {
                 next_emp_code = "A-0001";
             }
             console.log(`next emp code : ${next_emp_code}`);
@@ -89,7 +89,7 @@ class Emp {
                     Bank_No,
                     Bank_IFSC,
                     Position,
-                    Employee_Code : next_emp_code,
+                    Employee_Code: next_emp_code,
                     DEGREE,
                     STREAM,
                     is_active,
@@ -146,7 +146,7 @@ class Emp {
 
         for (var val = 0; val <= arr.length; val++) {
             console.log(arr[val]);
-             res.send({arr:arr[val]})
+            res.send({ arr: arr[val] })
         }
 
     }

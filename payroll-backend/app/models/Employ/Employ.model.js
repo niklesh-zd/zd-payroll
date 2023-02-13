@@ -62,12 +62,9 @@ const EmpInfo = Schema({
 
     },
     Employee_Code: {
-        type: Number,
-        // required: true,
-        // unique: true
-        default: 'A-2001',
+        type: String,
+        default: true,
 
-        // Employee_Code,
     },
     Blood_Group: {
         type: String,
