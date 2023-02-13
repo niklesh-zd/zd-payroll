@@ -3,10 +3,12 @@
 
 const router = require("express").Router()
 const { add_employ, get_emlpoy, emp_delete,
-    emp_update, get_one_emp,
-    update_user, get_user_id ,Emp_swap} = require('../../controllers/Employ/EmpInfo.cotroller')
+    emp_update, get_one_emp, get_user_id
+    , Emp_swap, udateStatus_emlpoy } = require('../../controllers/Employ/EmpInfo.cotroller')
 const { check } = require('express-validator');
+
 const { Leave, get_salary } = require('../../controllers/Employ/Leave.cotroller')
+
 router.post('/add_employ', [check('email').isEmail().normalizeEmail(),
 check('First_Name', 'First_Name is required').not().isEmpty().isLength({ min: 3, max: 50 }),
 check('Last_Name', 'Last_Name no is required').not().isEmpty().isLength({ min: 3, max: 50 }),
@@ -21,15 +23,22 @@ check('PAN_No', 'PAN_No is required').not().isEmpty(),
 check('ADHAR', 'ADHAR  is valid').not().isEmpty().isLength({ min: 12, max: 12 }, 'invalid adhar number'),
 check('Bank_No', 'Bank_No is required').not().isEmpty()
 ], add_employ)
+
 router.get('/get_employ', get_emlpoy)
+
 router.post('/delete_emp/:id', emp_delete)
+
 router.post('/update/:id', emp_update)
+
 router.get('/emp_1/:id', get_one_emp)
+
 router.post('/leave', Leave)
+
 router.get('/get-all-user-id', get_user_id)
 
-router.post('/emp-swap/:id', Emp_swap)
+router.post('/update_status', udateStatus_emlpoy)
 
+router.post('/emp-swap/:id', Emp_swap)
 
 module.exports = router;
 

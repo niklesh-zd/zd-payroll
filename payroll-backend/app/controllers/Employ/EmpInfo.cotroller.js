@@ -22,7 +22,7 @@ class Emp {
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
                 , PASSED, PERCENTAGE_OF_MARKS,   permanent_state,
                 permanent_city,
-                current_state,
+                current_state,is_active,
                 current_city,
             } = req.body;
 
@@ -75,6 +75,7 @@ class Emp {
                     Employee_Code,
                     DEGREE,
                     STREAM,
+                    is_active,
                     PASSED,
                     PERCENTAGE_OF_MARKS,
                     YEAR_OF_PASSING
@@ -109,10 +110,18 @@ class Emp {
 
     }
     async get_emlpoy(req, res, next) {
-        EmpInfoModal.find({}).then(function (employee) {
+        EmpInfoModal.find({is_active:1}).then(function(employee) {
             res.send(employee);
         }).catch(next);
     }
+
+    async udateStatus_emlpoy(req, res, next) {
+        EmpInfoModal.findByIdAndUpdate(req.body.id,{is_active:req.body.status}).then(function(employee) {
+            res.send(employee);
+        }).catch(next);
+    }
+
+
 
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });

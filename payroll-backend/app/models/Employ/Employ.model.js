@@ -149,7 +149,13 @@ const EmpInfo = Schema({
     },
     permanent_city: {
         type: String
-    }
+    },
+    is_active
+        : {
+        type: Number,
+        default: 1,
+        enum: [1, 0]
+    },
 
 },
     {

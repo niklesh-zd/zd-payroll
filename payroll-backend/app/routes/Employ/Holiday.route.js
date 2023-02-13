@@ -6,7 +6,7 @@ const { holiday, get_holiday, update_holiday, holiday_delete } = require('../../
 
 
 router.post('/holiday', holiday)
-router.get('/get_holiday', get_holiday)
+router.post('/get_holiday', get_holiday)
 router.get('/leave_update', update_holiday)
 router.post('/holiday_dalate', holiday_delete)
 

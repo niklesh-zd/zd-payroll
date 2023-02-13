@@ -3,7 +3,7 @@
 "use strict";
 const express = require("express");
 const HolidayModal = require('../../models/Employ/Holiday.modal')
-
+const moment = require("moment")
 
 class Holiday {
     async holiday(req, res) {
@@ -13,19 +13,16 @@ class Holiday {
 
             var { holiday_name, holiday_type, holiday_date,
             } = req.body;
-
             // CHECK ALL FIELD IN FILL
             if (!holiday_name || !holiday_type
                 || !holiday_date
             )
                 return res.send({ message: "Please fill in all fields." });
 
-            const leave = new HolidayModal({
+                const leave = new HolidayModal({
                 holiday_name,
                 holiday_type,
                 holiday_date,
-
-                // file,
             });
 
             //STORE YOUR LOGIN DATA IN DB 
@@ -42,11 +39,18 @@ class Holiday {
         }
     }
 
+
     async get_holiday(req, res, next) {
-        HolidayModal.find({}).then(function (employee) {
+
+        var FromDate = req.body.from_date;
+        var EndDate = req.body.end_date;
+        console.log('runnnig holiday..');
+        HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
+        ).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }
+
     async update_holiday(req, res) {
         console.log('update runnig');
         if (!req.body) {
