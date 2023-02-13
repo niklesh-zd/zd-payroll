@@ -207,7 +207,6 @@ class Emp {
                 email: employee.email,
                 fatherName: employee.fatherName,
                 Alternate_Contact_number: employee.Alternate_Contact_number,
-                Nationality: employee.Nationality,
                 Blood_Group: employee.Blood_Group,
                 Marital_Status: employee.Marital_Status,
                 PAN_No: employee.PAN_No,
