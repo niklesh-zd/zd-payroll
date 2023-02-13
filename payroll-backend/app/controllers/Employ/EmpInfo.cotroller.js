@@ -16,14 +16,14 @@ class Emp {
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
                 Contact_Number, Contact_Number_Home, Permanent_Address,
                 Current_Address, email,
-                fatherName,base_salary,
+                fatherName, base_salary,
                 Blood_Group, Marital_Status, PAN_No,
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, Employee_Code, DEGREE, STREAM, YEAR_OF_PASSING
-                , PASSED, PERCENTAGE_OF_MARKS,   permanent_state,
+                , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
                 permanent_city,
-                current_state,is_active,
-                current_city,
+                current_state, is_active, permanent_pin_code,
+                current_city, current_pin_code
             } = req.body;
 
             const errors = validationResult(req)
@@ -78,6 +78,11 @@ class Emp {
                     is_active,
                     PASSED,
                     PERCENTAGE_OF_MARKS,
+                    permanent_pin_code,
+                    current_pin_code,
+
+
+
                     YEAR_OF_PASSING
                     // file,
                 });
@@ -110,13 +115,13 @@ class Emp {
 
     }
     async get_emlpoy(req, res, next) {
-        EmpInfoModal.find({is_active:1}).then(function(employee) {
+        EmpInfoModal.find({ is_active: 1 }).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }
 
     async udateStatus_emlpoy(req, res, next) {
-        EmpInfoModal.findByIdAndUpdate(req.body.id,{is_active:req.body.status}).then(function(employee) {
+        EmpInfoModal.findByIdAndUpdate(req.body.id, { is_active: req.body.status }).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }

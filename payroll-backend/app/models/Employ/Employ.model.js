@@ -156,6 +156,13 @@ const EmpInfo = Schema({
         default: 1,
         enum: [1, 0]
     },
+    permanent_pin_code: {
+        type: Number,
+    },
+    current_pin_code: {
+        type: Number,
+    }
+
 
 },
     {
