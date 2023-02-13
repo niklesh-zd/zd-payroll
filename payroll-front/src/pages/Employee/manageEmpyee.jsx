@@ -20,11 +20,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-<<<<<<< HEAD
       .fetch('http://localhost:7071/emp/get_employ')
-=======
-      .fetch("http://192.168.29.37:7071/emp/get_employ")
->>>>>>> 25767a6c8a6c4360613f860b91e88dafbce1397e
       .then((res) => {
         return res.json();
       })
