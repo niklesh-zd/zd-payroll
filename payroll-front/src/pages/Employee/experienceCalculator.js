@@ -4,7 +4,6 @@ export function experienceCalculator(startDate) {
   
     let years = endDate.getFullYear() - startDate.getFullYear();
     let months = endDate.getMonth() - startDate.getMonth();
-  
     if (months < 0) {
       years--;
       months += 12;
