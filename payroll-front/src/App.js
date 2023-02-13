@@ -11,12 +11,7 @@ import EmpDetail from "./pages/Employee/EmpDetail";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
-<<<<<<< HEAD
 import Downloadslip from "./pages/Salary_slip/downloadslip";
-=======
-// import {  useParams } from "react-router-dom";
-
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9
 
 
 function App() {
@@ -33,10 +28,7 @@ function App() {
           <Route path="/settings/EmpDetail:id" element={<EmpDetail/>} />
           <Route path="/settings/leave" element={<Leaves />} />
           <Route path="/settings/leavedetails" element={<LeaveDetails />} />
-<<<<<<< HEAD
           <Route path="/download:id" element={<Downloadslip />} />
-=======
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9
         </Routes>
       </SideBar>
     </Router>

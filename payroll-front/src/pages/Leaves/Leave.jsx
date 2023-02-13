@@ -3,10 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Leaves = () => {
-<<<<<<< HEAD:payroll-front/src/pages/Leaves/Leave.jsx
   let navigate = useNavigate()
-=======
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9:payroll-front/src/pages/Leave.jsx
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
 
@@ -37,11 +34,8 @@ const Leaves = () => {
       .post("http://localhost:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
         console.log("success", response);
-<<<<<<< HEAD:payroll-front/src/pages/Leaves/Leave.jsx
       }).then(()=>{
         navigate('/settings/leavedetails')
-=======
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9:payroll-front/src/pages/Leave.jsx
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -74,11 +68,7 @@ const Leaves = () => {
                         select Employee
                       </option>
                       {users.map((u) => {
-<<<<<<< HEAD:payroll-front/src/pages/Leaves/Leave.jsx
                         return <option value={u._id} key={u._id}>{u.First_Name}</option>;
-=======
-                        return <option value={u._id}>{u.First_Name}</option>;
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9:payroll-front/src/pages/Leave.jsx
                       })}
                     </select>
                   </div>

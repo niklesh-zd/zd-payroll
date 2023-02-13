@@ -11,7 +11,6 @@ const ManageEmpyee = () => {
   const [empdata, empdatachange] = useState(null);
   const navigate = useNavigate();
   const LoadDetail = (_id) => {
-<<<<<<< HEAD
     navigate("/settings/EmpDetail" + _id);
   };
   const generateSalary = (_id) => {
@@ -23,33 +22,6 @@ const ManageEmpyee = () => {
   useEffect(() => {
     window
       .fetch("http://localhost:7071/emp/get_employ")
-=======
-    navigate('/settings/EmpDetail' + _id)
-  }
-  const generateSalary = (_id) => {
-    navigate('/settings/salary' + _id)
-  }
-  const LoadEdit = (_id) => {
-    navigate('/settings/EmpEdit' + _id)
-  }
-  const Removefunction = (id) => {
-    if (window.confirm('Do you want to remove?')) {
-      window
-        .fetch('http://localhost:7071/emp/delete_emp/' + id, {
-          method: 'POST',
-        })
-        .then((res) => {
-          window.location.reload()
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
-    }
-  }
-  useEffect(() => {
-    window
-      .fetch('http://localhost:7071/emp/get_employ')
->>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9
       .then((res) => {
         return res.json();
       })
