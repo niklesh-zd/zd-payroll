@@ -83,7 +83,7 @@ function AddEmployee(props) {
             Swal.fire({
               icon: "success",
               title: "Successful",
-              text: "Emplooye Successfully Updated!",
+              text: "Employee Successfully Updated!",
             }).then(() => {
               navigate("/settings/manageprofile");
             });
@@ -779,7 +779,7 @@ function AddEmployee(props) {
                         name="Permanent_Address"
                         rows="3"
                         cols="35"
-                        placeholder="Parmanent Address"
+                        placeholder="Permanent Address"
                         value={fields.Permanent_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>

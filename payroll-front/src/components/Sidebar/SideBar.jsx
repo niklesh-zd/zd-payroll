@@ -34,18 +34,6 @@ const routes = [
     path: "/settings/leavedetails",
     name: "Leaves",
     icon: <MdMessage />,
-    // subRoutes: [
-    //   // {
-    //   //   path: "/settings/leave",
-    //   //   name: "Add Leave",
-    //   //   icon: <MdMessage />,
-    //   // },
-    //   // {
-    //   //   path: "/settings/leavedetails",
-    //   //   name: "Manage leaves",
-    //   //   icon: <MdMessage />,
-    //   // },
-    // ],
   },
   {
     path: "/salary",
@@ -57,11 +45,6 @@ const routes = [
         name: "Salary Receipt",
         icon: <MdMessage />,
       },
-      // {
-      //   path: "/settings/salarydetails",
-      //   name: "Manage Salary",
-      //   icon: <MdMessage />,
-      // },
     ],
   },
 

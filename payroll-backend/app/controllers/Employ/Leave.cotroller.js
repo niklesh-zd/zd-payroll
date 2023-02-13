@@ -15,7 +15,16 @@ class Leave {
 
             var { userid, leave_type, date, reason_for_leave,
             } = req.body;
+            const datelFind = await LeaveModal.findOne({  
+                 $and: [
+                { data:date},
+                { userid:userid},
+               
+             ] })
 
+            if (datelFind) {
+                return res.send({ message: "alredy exist  date." })
+            }
             // CHECK ALL FIELD IN FILL
             if (!leave_type || !userid
                 || !date || !reason_for_leave
@@ -33,18 +42,15 @@ class Leave {
                 leave_type: today,
                 date,
                 reason_for_leave
-                // file,
             });
 
             //STORE YOUR LOGIN DATA IN DB 
             await leave.save();
             console.log({ leave });
-            // res.send({ message: "Success " });
             res.status(200).send({ success: true })
 
         }
         catch (error) {
-            // res.send("Error-", error);
             res.status(400).send({ 'status': false, 'error': error })
 
         }

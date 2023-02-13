@@ -6,8 +6,14 @@ var validateEmail = function (email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
 };
-const EmpInfo = Schema({
+const DeleteEmpInfo = Schema({
 
+    Emp_Id
+        : {
+        type: String,
+        required: [true, "Please enter your name!"],
+        trim: [true, "space not allow"],
+    },
     First_Name
         : {
         type: String,
@@ -61,10 +67,14 @@ const EmpInfo = Schema({
         maximum: [10, '10 digit are required'],
 
     },
+    Nationality: {
+        type: String,
+        required: true
+    },
     Employee_Code: {
         type: String,
         required: true,
-        unique: true
+        unique:true
     },
     Blood_Group: {
         type: String,
@@ -104,9 +114,6 @@ const EmpInfo = Schema({
         type: String,
         required: true
     },
-    base_salary: {
-        type: Number
-    },
     Bank_IFSC: {
         type: String,
         required: true
@@ -138,31 +145,12 @@ const EmpInfo = Schema({
     PERCENTAGE_OF_MARKS: {
         type: String,
     },
-    current_state: {
+    state: {
         type: String
     },
-    current_city: {
+    city: {
         type: String
-    },
-    permanent_state: {
-        type: String
-    },
-    permanent_city: {
-        type: String
-    },
-    is_active
-        : {
-        type: Number,
-        default: 1,
-        enum: [1, 0]
-    },
-    permanent_pin_code: {
-        type: Number,
-    },
-    current_pin_code: {
-        type: Number,
     }
-
 
 },
     {
@@ -172,11 +160,11 @@ const EmpInfo = Schema({
 )
 
 // collection creation 
-const EmpInfoModal = model('EMPLOY', EmpInfo, "EmpInfo");
+const DeletEmpInfoModal = model('DELETEMPLOY', DeleteEmpInfo, "DeletEmpInfo");
 
 
 
 
 
-module.exports = EmpInfoModal;
+module.exports = DeletEmpInfoModal;
 

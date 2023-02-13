@@ -75,7 +75,7 @@ function Salary() {
       .then((response) => {
         console.log('success data ---------------------geted', response)
 
-        navigate("/download" + id)
+        navigate("/" + id)
       })
       .catch(error => {
         console.error('There was an error!', error);

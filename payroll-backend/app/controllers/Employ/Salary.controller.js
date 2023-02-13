@@ -26,15 +26,15 @@ class Salary {
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
-            if (!Employee_name || !Employee_code || !Leave_balence ||
-                !Employee_PAN || !Employee_Adhar || !Leave_taken ||
-                !Bank_IFSC_Code || !Net_pay_in_number || !Balence_days
-                || !designation || !Salary_Slip_Month_Year || !Present_day
-                || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
-                || !Net_pay_in_words || !Total_Work_Days || !Number_of_Leaves
-                || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
-            )
-                return res.send({ message: "Please fill in all fields." });
+            // if (!Employee_name || !Employee_code || !Leave_balence ||
+            //     !Employee_PAN || !Employee_Adhar || !Leave_taken ||
+            //     !Bank_IFSC_Code || !Net_pay_in_number || !Balence_days
+            //     || !designation || !Salary_Slip_Month_Year || !Present_day
+            //     || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
+            //     || !Net_pay_in_words || !Total_Work_Days || !Number_of_Leaves
+            //     || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
+            // )
+            //     return res.send({ message: "Please fill in all fields." });
 
             const leave = new SalaryModal({
                 Employee_name,

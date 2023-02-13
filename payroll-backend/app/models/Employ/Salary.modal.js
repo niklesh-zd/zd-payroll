@@ -33,16 +33,16 @@ const Salary = Schema({
     Employee_PAN: {
         type: String,
         // required: true,
-        unique: true,
-        minimum: [10, '10 digit are required'],
-        maximum: [10, '10 digit are required'],
+        // unique: true,
+        // minimum: [10, '10 digit are required'],
+        // maximum: [10, '10 digit are required'],
     },
     Employee_Adhar: {
         type: Number,
         // required: true,
-        minimum: [12, '12 digit are required'],
-        maximum: [12, '12 digit are required'],
-        unique: true
+        // minimum: [12, '12 digit are required'],
+        // maximum: [12, '12 digit are required'],
+        // unique: true
     },
     Bank_Account_Number: {
         type: String,
