@@ -109,7 +109,11 @@ export function validateForm(fields) {
         formIsValid = false
     }
     if(!fields.current_state || fields.current_state == ""){
-        errObj['current_state'] = '*Please Enter Satate.'
+        errObj['current_state'] = '*Please Enter State.'
+        formIsValid = false
+    }
+    if(!fields.current_pin_code || fields.current_pin_code == ""){
+        errObj['current_pin_code'] = '*Please Enter Cuurent Pin.'
         formIsValid = false
     }
     if(!fields.current_city || fields.current_city == ""){
@@ -122,6 +126,10 @@ export function validateForm(fields) {
     }
     if(!fields.permanent_state || fields.permanent_state == ""){
         errObj['permanent_state'] = '*Please Enter State.'
+        formIsValid = false
+    }
+    if(!fields.permanent_pin_code || fields.permanent_pin_code == ""){
+        errObj['permanent_pin_code'] = '*Please Enter Permanent Pin.'
         formIsValid = false
     }
     if(!fields.Current_Address || fields.Current_Address == ""){
