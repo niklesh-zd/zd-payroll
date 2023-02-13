@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+<<<<<<< HEAD
 import Swal from 'sweetalert2';
+=======
+>>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9
 const EmpDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -10,8 +13,14 @@ const EmpDetail = () => {
   const LoadEdit = () => {
     navigate('/settings/EmpEdit' + id)
   }
+<<<<<<< HEAD
   const leaveNavigate = () => {
     navigate('/settings/leave')
+=======
+  const leaveNavigate = () =>{
+    // navigate('/Leave' + id)
+    // setLeaveNavigateState(true)
+>>>>>>> c496239e7274b14f03ca1a6805626eb223b13bf9
   }
   useEffect(() => {
     fetch('http://localhost:7071/emp/emp_1/' + id)
