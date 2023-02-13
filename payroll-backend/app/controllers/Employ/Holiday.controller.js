@@ -19,7 +19,7 @@ class Holiday {
             )
                 return res.send({ message: "Please fill in all fields." });
 
-                const leave = new HolidayModal({
+            const leave = new HolidayModal({
                 holiday_name,
                 holiday_type,
                 holiday_date,
@@ -39,7 +39,13 @@ class Holiday {
         }
     }
 
+    async get_Holiday(req, res,next) {
 
+        HolidayModal.find({})
+            .then(function (leave) {
+                res.send(leave);
+            }).catch(next);
+    }
     async get_holiday(req, res, next) {
 
         var FromDate = req.body.from_date;

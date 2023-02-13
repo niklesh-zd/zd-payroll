@@ -126,8 +126,9 @@ class Emp {
         }).catch(next);
     }
 
+    async position(req, res) {
 
-
+    }
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });
         EmpInfoModal.findById(req.params.id).then((employee) => {
@@ -180,7 +181,6 @@ class Emp {
                 console.log(err)
             });
     }
-
 
     async Emp_swap(req, res) {
         // console.log("Check");
