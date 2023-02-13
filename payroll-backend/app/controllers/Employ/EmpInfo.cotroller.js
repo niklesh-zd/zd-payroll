@@ -32,6 +32,23 @@ class Emp {
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
             const adhar = await EmpInfoModal.findOne({ ADHAR: ADHAR })
+            const last_emp = await EmpInfoModal.find().sort({ _id: -1 }).limit(1);
+            var next_emp_code;
+            if (last_emp){
+                const last_emp_code = last_emp[0].Employee_Code;
+                console.log(`last emp code : ${last_emp_code}`);
+                const splitted_emp_code = last_emp_code.split("-");
+                var emp_code = Number(splitted_emp_code[1]) + 1;
+                emp_code = emp_code.toString();
+                while (emp_code.length < 4) emp_code = "0" + emp_code;
+                next_emp_code = splitted_emp_code[0]+ "-" + emp_code;
+    
+            }
+            else{
+                next_emp_code = "A-0001";
+            }
+            console.log(`next emp code : ${next_emp_code}`);
+
             if (adhar) {
                 return res.send({ message: "alredy exist ADHAR." })
             }
@@ -67,7 +84,7 @@ class Emp {
                     Bank_No,
                     Bank_IFSC,
                     Position,
-                    Employee_Code,
+                    Employee_Code : next_emp_code,
                     DEGREE,
                     STREAM,
                     PASSED,
