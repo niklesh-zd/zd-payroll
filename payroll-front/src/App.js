@@ -14,6 +14,7 @@ import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
 
 
+
 function App() {
   return (
     <Router>

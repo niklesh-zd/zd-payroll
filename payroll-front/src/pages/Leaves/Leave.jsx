@@ -15,7 +15,11 @@ const Leaves = () => {
   console.log("leavesData", leavesData);
   useEffect(() => {
     window
+<<<<<<< HEAD
       .fetch("http://localhost:7071/emp/get_employ")
+=======
+      .fetch('http://localhost:7071/emp/get_employ')
+>>>>>>> 78d5fa079848af5f0cb0697658bb0f37b84aa60a
       .then((res) => {
         return res.json();
       })
@@ -137,8 +141,13 @@ const Leaves = () => {
                       <option disabled={true} selected={true}>
                         Leave Type
                       </option>
+<<<<<<< HEAD
                       <option value="full">Full Day</option>
                       <option value="half">Half Day</option>
+=======
+                      <option>Full</option>
+                      <option>Half</option>
+>>>>>>> 78d5fa079848af5f0cb0697658bb0f37b84aa60a
                     </select>
                   </div>
                 </div>
