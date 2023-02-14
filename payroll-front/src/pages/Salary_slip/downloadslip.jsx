@@ -27,9 +27,8 @@ const Downloadslip = () => {
                 return res.json()
             })
             .then((resp) => {
-                // console.log('base_salary',resp.base_salary);
-                let leave = resp.Leave_taken;
-                // console.log(resp);
+                let leave = totalleave;
+                // console.log('leave',leave);
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 let TWD = resp.Total_Work_Days
                 resdatachange(resp)
@@ -42,23 +41,26 @@ const Downloadslip = () => {
                 const fifteenPercent = fiftyPercent * 0.15;
                 Setra(fifteenPercent.toFixed(2))
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
-                Setflexib(FB.toFixed(2))
+                Setflexib(FB.toFixed(0))
                 const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
-                Settgross(Tgross)
+                let tpd = resp.Total_Work_Days - totalleave + 1
+                console.log(tpd);
                 let netp = Tgross / TWD
-                let tpd = resp.Present_day + 1
-                let netpay = leave = 0 ? console.log('leave-0') : leave = leave > 0 ? netp * tpd : '';
+                // console.log('totalleave', leave);
+                // let netpay = netp + Tgross;
+                let netpay = leave = 0 ? netp + Tgross : leave = leave > 0 ? netp * tpd : '';
                 let npaybda = netpay / 2;
                 let npayhra = npaybda * 0.4;
                 let npayra = npaybda * 0.15;
                 let npayfb = netpay - npaybda - npayhra - npayra;
                 let totalearn = npaybda + npayhra + npayra + npayfb;
+                Setnpay(netpay.toFixed(0))
+                Settgross(Tgross.toFixed(0))
                 Settotalearn(totalearn.toFixed(0));
                 Setnpayfb(npayfb.toFixed(0))
                 Setnpayra(npayra.toFixed(0))
                 Setnpayhra(npayhra.toFixed(0))
                 Setnpaybda(npaybda.toFixed(0));
-                Setnpay(netpay.toFixed(2));
             })
             .catch((err) => {
                 console.log(err.message)
@@ -72,12 +74,12 @@ const Downloadslip = () => {
             let total_leave = 0;
             arr.map((e) => {
                 total_leave = total_leave + e.leave_type;
-                console.log('total_leave',total_leave);
-                // Settotalleave(total_leave);
+                Settotalleave(total_leave);
             })
         })
     }, [])
 
+    // console.log('total_leave',totalleave);
 
     //   console.log('emp---jo mange wo ---sdata', empdata);
     const ButtonClick = () => {
@@ -133,16 +135,16 @@ const Downloadslip = () => {
                     href="/download"
                 >
                     {(
-                        <div className="" style={{border: '1px solid black', padding: '1%', width: '100%'}}>
+                        <div className="" style={{ border: '1px solid black', padding: '1%', width: '100%' }}>
                             <div className="text-center lh-1 mb-2">
-                                <h3 className="fw-bold" style={{color: '#368bb5'}}>ZecData</h3> <h5 className="fw-bold text-dark">Payment slip for the month of {resdata.Salary_Slip_Month_Year} 2023</h5>
+                                <h3 className="fw-bold" style={{ color: '#368bb5' }}>ZecData</h3> <h5 className="fw-bold text-dark">Payment slip for the month of {resdata.Salary_Slip_Month_Year} 2023</h5>
                             </div>
                             {/* style={{width:'57.333333%'}} */}
                             {/* style={{width: '39.5rem', marginLeft: '13px'}} */}
                             {/* <div className="d-flex justify-content-end"> <span>..................</span> </div>  */}
                             <div className="row text-white">
                                 <div className="col-md-6 border-top border-dark" >
-                                    <div className="row" style={{backgroundColor: '#368bb5'}}>
+                                    <div className="row" style={{ backgroundColor: '#368bb5' }}>
                                         <div className="col-md-6">
                                             <div> <span className="fw-bolder">Name :</span> <small className="ms-3">{resdata.Employee_name}</small> </div>
                                         </div>
@@ -151,16 +153,16 @@ const Downloadslip = () => {
                                         </div>
                                     </div>
 
-                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
+                                    <div className="row border-top border-dark" style={{ backgroundColor: '#368bb5' }}>
                                         <div className="col-md-6">
-                                            <div> <span className="fw-bolder">Designation :</span> <span className="ms-3">{resdata.designation}</span> </div>
+                                            <div> <span className="fw-bolder">Designation :</span> <small className="ms-3">{resdata.designation}</small> </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div> <span className="fw-bolder">Ac No. :</span> <small className="ms-3">{resdata.Bank_Account_Number}</small> </div>
                                         </div>
                                     </div>
 
-                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
+                                    <div className="row border-top border-dark" style={{ backgroundColor: '#368bb5' }}>
                                         <div className="col-md-6 border-bottom border-dark">
                                             <div> <span className="fw-bolder ">Date Of Joining :</span> <small className="ms-3">{restime}</small></div>
                                         </div>
@@ -170,7 +172,7 @@ const Downloadslip = () => {
                                     </div>
                                 </div>
 
-                                <div className="col-md-6"style={{backgroundColor: '#368bb5'}}>
+                                <div className="col-md-6" style={{ backgroundColor: '#368bb5' }}>
                                     <div className="row border-top border-dark">
                                         <div className="col-md-6">
                                             <div> <span className="fw-bolder">Leave (Balance) :</span> <small className="ms-3">1</small> </div>
@@ -180,25 +182,25 @@ const Downloadslip = () => {
                                         </div>
                                     </div>
 
-                                    <div className="row border-top border-dark" style={{backgroundColor: '#368bb5'}}>
+                                    <div className="row border-top border-dark" style={{ backgroundColor: '#368bb5' }}>
 
                                         <div className="col-md-6 ">
-                                            <div> <span className="fw-bolder">Leave Taken :</span> <small className="ms-3">{resdata.Leave_taken}</small> </div>
+                                            <div> <span className="fw-bolder">Leave Taken :</span> <small className="ms-3">{totalleave}</small> </div>
                                         </div>
                                         <div className="col-md-6 ">
-                                            <div> <span className="fw-bolder ">Present Days :</span> <small className="ms-3">{resdata.Present_day}</small> </div>
+                                            <div> <span className="fw-bolder ">Present Days :</span> <small className="ms-3">{resdata.Total_Work_Days - totalleave}</small> </div>
                                         </div>
                                         <div className="col-md-6 border-top border-bottom border-dark ">
                                             <div> <span className="fw-bolder">Balance Days :</span> <small className="ms-3">1</small> </div>
                                         </div>
                                         <div className="col-md-6 border-top border-bottom border-dark">
-                                            <div> <span className="fw-bolder">Total Paid Days :</span> <small className="ms-3">{resdata.Present_day + 1}</small> </div>
+                                            <div> <span className="fw-bolder">Total Paid Days :</span> <small className="ms-3">{resdata.Total_Work_Days - totalleave + 1}</small> </div>
                                         </div>
                                     </div>
                                 </div>
                                 {/* style={{width: '98%', marginLeft: '13px',}} */}
                                 <table className="mt-1 table table-bordered border-dark" >
-                                    <thead className=" text-white"  style={{backgroundColor: '#368bb5'}}>
+                                    <thead className=" text-white" style={{ backgroundColor: '#368bb5' }}>
                                         <tr>
                                             <th scope="col">Gross</th>
                                             <th scope="col">Amount</th>
