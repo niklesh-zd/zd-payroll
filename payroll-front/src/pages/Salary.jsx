@@ -176,8 +176,8 @@ function Salary() {
                   </div> */}
                 </div>
                 <div className="row">
-                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {/* <div className="form-group">
                       <label>Designation</label>
                       <input
                         type="text"
@@ -249,8 +249,8 @@ function Salary() {
                   </div> */}
 
                 </div>
-                <div className="row">
-                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                {/* <div className="row">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>DOJ</label>
                       <input
@@ -403,7 +403,7 @@ function Salary() {
                     </div>
                   </div>
                 </div>
-              </div>
+             </div>
             </form>
           )}
         </div>

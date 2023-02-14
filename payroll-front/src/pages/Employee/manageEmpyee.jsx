@@ -7,8 +7,8 @@ import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
 const ManageEmpyee = () => {
   const { id } = useParams();
-
-  const [empdata, empdatachange] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
   const LoadDetail = (_id) => {
     navigate("/settings/EmpDetail" + _id);
@@ -34,9 +34,9 @@ const ManageEmpyee = () => {
           arr.push(resp[i]);
         }
         arr.map((e) => {
-          experience = experienceCalculator(e.date_of_joining) 
+          experience = experienceCalculator(e.date_of_joining);
           DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
-          console.log('experience',experience);
+          console.log("experience", experience);
           finalArr.push({ ...e, DOJ: DOJ, experience: experience });
         });
         empdatachange(finalArr);
@@ -110,27 +110,41 @@ const ManageEmpyee = () => {
       ignoreRowClick: true,
     },
   ];
+  const filteredData = empdata.filter((row) => {
+    return row.First_Name.toLowerCase().includes(searchTerm.toLowerCase());
+    // row.address.toLowerCase().includes(searchTerm.toLowerCase())
+  });
   return (
     <div>
       <div>
         <div className="ml-5 mr-5">
           <DataTable
             title={
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <h4>Employees</h4>{" "}
-                <Link
-                  to="/settings/profile"
-                  className="btn btn-primary btn-sm ml-5 mr-5"
-                >
-                  Add New (+)
-                </Link>
+              <div style={{ display: "flex", alignItems: "center", justifyContent:'space-between' }}>
+                <div style={{ display: "flex"}}>
+                  <h4>Employees</h4>{" "}
+                  <Link
+                    to="/settings/profile"
+                    className="btn btn-primary btn-sm ml-5 mr-5"
+                  >
+                    Add New (+)
+                  </Link>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
               </div>
             }
             columns={columns}
-            data={empdata ? empdata : []}
+            data={filteredData ? filteredData : []}
             pagination
             highlightOnHover
-            search
           />
           {/* <table id='example' className="table table-striped table-bordered">
             <thead className="">
@@ -170,6 +184,14 @@ const ManageEmpyee = () => {
                         className="btn btn"
                       >
                         Details
+                      </a>
+                      <a
+                        onClick={() => {
+                          generateSalary(item._id)
+                        }}
+                        className="btn btn"
+                      >
+                        Receipt
                       </a>
                       <a
                         onClick={() => {

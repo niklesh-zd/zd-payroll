@@ -49,7 +49,7 @@ const routes = [
   },
   {
     path: "/salary",
-    name: "salary",
+    name: "Payroll",
     icon: <BiAnalyse />,
     subRoutes: [
       {
@@ -63,13 +63,6 @@ const routes = [
       //   icon: <MdMessage />,
       // },
     ],
-  },
-
-  {
-    path: "/settings",
-    name: "logout",
-    icon: <BiCog />,
-    
   },
 ];
 

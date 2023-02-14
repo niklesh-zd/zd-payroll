@@ -17,11 +17,15 @@ const leave = Schema({
         // trim: [true, "space not allow"],
         enum: [1, 0.5]
     },
-    date
+    from_date
         : {
         type: Date,
         required: true,
 
+    },
+    to_date:{
+        type: Date,
+        required: true,
     },
     reason_for_leave: {
         type: String,

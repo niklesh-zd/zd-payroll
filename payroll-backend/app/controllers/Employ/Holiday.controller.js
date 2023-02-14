@@ -39,9 +39,9 @@ class Holiday {
         }
     }
 
-    async get_Holiday(req, res,next) {
+    async get_Holiday_all(req, res,next) {
 
-        HolidayModal.find({})
+        HolidayModal.find({}).sort({ _id: -1 })
             .then(function (leave) {
                 res.send(leave);
             }).catch(next);
@@ -52,7 +52,7 @@ class Holiday {
         var EndDate = req.body.end_date;
         console.log('runnnig holiday..');
         HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
-        ).then(function (employee) {
+        ).sort({ _id: -1 }).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }

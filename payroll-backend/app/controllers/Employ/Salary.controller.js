@@ -39,6 +39,7 @@ class Salary {
             const leave = new SalaryModal({
                 Employee_name,
                 Employee_code,
+                userid,
                 designation,
                 base_salary,
                 Salary_Slip_Month_Year,
@@ -48,6 +49,7 @@ class Salary {
                 Bank_Account_Number,
                 Bank_IFSC_Code,
                 Net_pay_in_words,
+                base_salary,
                 Net_pay_in_number,
                 Total_Work_Days,
                 Number_of_Leaves,
