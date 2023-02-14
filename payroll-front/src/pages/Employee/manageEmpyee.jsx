@@ -21,7 +21,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch("http://192.168.29.146:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -111,8 +111,14 @@ const ManageEmpyee = () => {
     },
   ];
   const filteredData = empdata.filter((row) => {
-    return row.First_Name.toLowerCase().includes(searchTerm.toLowerCase());
-    // row.address.toLowerCase().includes(searchTerm.toLowerCase())
+    return (
+      row.First_Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.DOJ.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.experience.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.Contact_Number.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.Employee_Code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   });
   return (
     <div>
@@ -120,8 +126,14 @@ const ManageEmpyee = () => {
         <div className="ml-5 mr-5">
           <DataTable
             title={
-              <div style={{ display: "flex", alignItems: "center", justifyContent:'space-between' }}>
-                <div style={{ display: "flex"}}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex" }}>
                   <h4>Employees</h4>{" "}
                   <Link
                     to="/settings/profile"

@@ -14,7 +14,7 @@ const EmpDetail = () => {
     navigate("/settings/leavedetails");
   };
   useEffect(() => {
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
@@ -38,7 +38,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://localhost:7071/emp/delete_emp/" + id, {
+          .fetch("http://192.168.29.146:7071/emp/delete_emp/" + id, {
             method: "POST",
           })
           .then((res) => {
@@ -204,13 +204,6 @@ const EmpDetail = () => {
                   <h6>Merital Status</h6>
                   <p>{empdata.Marital_Status}</p>
                 </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Nationality</h6>
-                  <p>{empdata.Nationality}</p>
-                </div>
               </div>
             </div>
             <div className="row">
@@ -220,7 +213,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Adhar Number</h6>
+                  <h6>Aadhar Number</h6>
                   <p>{empdata.ADHAR}</p>
                 </div>
                 <div
@@ -241,7 +234,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Bank IFSC</h6>
+                  <h6>Bank IFSC Code</h6>
                   <p>{empdata.Bank_IFSC}</p>
                 </div>
               </div>
@@ -249,23 +242,23 @@ const EmpDetail = () => {
                 <h5>Contact Details</h5>
                 <div
                   className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
+                  style={{ width: "70%", justifyContent: "space-between"  }}
                 >
-                  <h6>Contact</h6>
-                  <p>{empdata.Contact_Number}</p>
+                  <h6>Contact Number</h6>
+                  <p style={{alignSelf:"left"}}>{empdata.Contact_Number}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Alternate Contact</h6>
+                  <h6>Alternate Contact Number</h6>
                   <p>{empdata.Alternate_Contact_number}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Home Contact</h6>
+                  <h6>Home Contact Number</h6>
                   <p>{empdata.Contact_Number_Home}</p>
                 </div>
                 <div

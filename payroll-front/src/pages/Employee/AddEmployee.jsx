@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { validateForm } from "./employeeValidation";
@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddEmployee(props) {
+  const dobDateInputRef = useRef(null);
+  const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/add_employ", fields)
+        .post("http://192.168.29.146:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -76,7 +78,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
+        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -94,19 +96,40 @@ function AddEmployee(props) {
         });
     }
   }
+  useEffect(() => {
+    const today = new Date();
+    if (dobDateInputRef.current) {
+      var eighteenYearsAgo = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+      );
+      eighteenYearsAgo = new Date(eighteenYearsAgo).toISOString().split("T")[0];
+      dobDateInputRef.current.setAttribute("max", eighteenYearsAgo);
+    }
+    if (dojDateInputRef.current) {
+      var oneMonthAgo = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        today.getDate()
+      );
+      oneMonthAgo = new Date(oneMonthAgo).toISOString().split("T")[0];
+      dojDateInputRef.current.setAttribute("min", oneMonthAgo);
+    }
+  }, []);
   return (
     <div className="">
       <form style={{ display: "flex" }}>
         <ToastContainer />
 
-        <div className="container px-4 pt-3">
+        <div className="px-4 pt-3">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
                         Employee Code
@@ -123,7 +146,7 @@ function AddEmployee(props) {
                       />
                       <div className="errorMsg">{errors.Employee_Code}</div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -143,8 +166,6 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.First_Name}</div>
                     </div>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -164,6 +185,8 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.Last_Name}</div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -183,57 +206,6 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.fatherName}</div>
                     </div>
                   </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">
-                        Date of Birth:
-                      </label>
-                      <input
-                        type="date"
-                        name="date_of_birth"
-                        className="form-control small_date"
-                        placeholder="Date Of Birth"
-                        value={new Date(
-                          fields.date_of_birth
-                        ).toLocaleDateString("en-CA")}
-                        onChange={(e) => handleChange(e)}
-                        // onChange={(e) => ValidateDOB(e.target.value)}
-                      />
-                      <div className="errorMsg">{errors.date_of_birth}</div>
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "red",
-                        }}
-                      >
-                        {/* {errorMessage} */}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">
-                        Date Of Joining:
-                      </label>
-                      <input
-                        type="date"
-                        name="date_of_joining"
-                        className="form-control small_date"
-                        placeholder="Date Of Joining"
-                        value={new Date(
-                          fields.date_of_joining
-                        ).toLocaleDateString("en-CA")}
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </div>
-                    <div className="errorMsg">{errors.date_of_joining}</div>
-                  </div>
-                </div>
-
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Contact Number</label>
@@ -249,6 +221,8 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.Contact_Number}</div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Alternate Contact No</label>
@@ -266,9 +240,6 @@ function AddEmployee(props) {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Home Contact</label>
@@ -286,6 +257,8 @@ function AddEmployee(props) {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                     <div className="form-group">
                       <label className="profile_details_text">Email ID</label>
@@ -300,9 +273,89 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.email}</div>
                     </div>
                   </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Date of Birth:
+                      </label>
+                      <input
+                        ref={dobDateInputRef}
+                        type="date"
+                        name="date_of_birth"
+                        className="form-control small_date"
+                        placeholder="Date of Birth"
+                        value={new Date(
+                          fields.date_of_birth
+                        ).toLocaleDateString("en-CA")}
+                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => ValidateDOB(e.target.value)}
+                      />
+                      <div className="errorMsg">{errors.date_of_birth}</div>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "red",
+                        }}
+                      >
+                        {/* {errorMessage} */}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
                 <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">Position</label>
+                      <select
+                        name="Position"
+                        className="form-control"
+                        value={fields.Position}
+                        onChange={(e) => handleChange(e)}
+                      >
+                        <option disabled={true} selected={true}>
+                          Choose Position
+                        </option>
+                        <option>Software Architect</option>
+                        <option>
+                          Engineering Project Manager/Engineering Manager
+                        </option>
+                        <option>
+                          Technical Lead/Engineering Lead/Team Lead
+                        </option>
+                        <option>Principal Software Engineer</option>
+                        <option>
+                          Senior Software Engineer/Senior Software Developer
+                        </option>
+                        <option>Software Engineer</option>
+                        <option>Software Developer</option>
+                        <option>Junior Software Developer</option>
+                        <option>Intern Software Developer</option>
+                        <option>Other</option>
+                      </select>
+                      <div className="errorMsg">{errors.Position}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Date of Joining:
+                      </label>
+                      <input
+                        ref={dojDateInputRef}
+                        type="date"
+                        name="date_of_joining"
+                        className="form-control small_date"
+                        placeholder="Date Of Joining"
+                        value={new Date(
+                          fields.date_of_joining
+                        ).toLocaleDateString("en-CA")}
+                        onChange={(e) => handleChange(e)}
+                      />
+                    </div>
+                    <div className="errorMsg">{errors.date_of_joining}</div>
+                  </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -327,41 +380,6 @@ function AddEmployee(props) {
                         <option>AB- </option>
                       </select>
                       <div className="errorMsg">{errors.Blood_Group}</div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">Position</label>
-                      {/* <input
-                        type="text"
-                        style={{ textTransform: "capitalize" }}
-                        name="Position"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Enter your Position"
-                      /> */}
-                      <select
-                        name="Position"
-                        className="form-control"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                      >
-                        <option disabled={true} selected={true}>
-                          Choose Position
-                        </option>
-                        <option>Software Architect</option>
-                        <option>Engineering Project Manager/Engineering Manager</option>
-                        <option>Technical Lead/Engineering Lead/Team Lead</option>
-                        <option>Principal Software Engineer</option>
-                        <option>Senior Software Engineer/Senior Software Developer</option>
-                        <option>Software Engineer</option>
-                        <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
-                        <option>Intern Software Developer</option>
-                        <option>Other</option>
-                      </select>
-                      <div className="errorMsg">{errors.Position}</div>
                     </div>
                   </div>
                 </div>
@@ -423,22 +441,6 @@ function AddEmployee(props) {
                 <h5 className="text-left">Account Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="form-group">
-                      <label>Base Salary</label>
-                      <input
-                        type="number"
-                        name="base_salary"
-                        value={fields.base_salary}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Enter Base Salary"
-                      ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Bank A/C IFSC</label>
@@ -492,6 +494,22 @@ function AddEmployee(props) {
                         placeholder="Enter Aadhar"
                       ></input>
                       <div className="errorMsg">{errors.ADHAR}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label>Base Salary</label>
+                      <input
+                        type="number"
+                        name="base_salary"
+                        value={fields.base_salary}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Enter Base Salary"
+                      ></input>
+                      <div className="errorMsg">{errors.base_salary}</div>
                     </div>
                   </div>
                 </div>
@@ -687,7 +705,7 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.current_pin_code}</div>
                     </div>
                   </div>
-                </div>  
+                </div>
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
@@ -764,7 +782,9 @@ function AddEmployee(props) {
                         value={fields.permanent_pin_code}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{errors.permanent_pin_code}</div>
+                      <div className="errorMsg">
+                        {errors.permanent_pin_code}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -772,14 +792,14 @@ function AddEmployee(props) {
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Permanent Address:
+                        Permanent Address
                       </label>
                       <textarea
                         className="form-control"
                         name="Permanent_Address"
                         rows="3"
                         cols="35"
-                        placeholder="Permanent Address"
+                        placeholder="Enter Your Permanent Address"
                         value={fields.Permanent_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>

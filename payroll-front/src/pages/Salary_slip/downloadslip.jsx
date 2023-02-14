@@ -19,7 +19,7 @@ const Downloadslip = () => {
     const [Npfb, Setnpayfb] = useState('');
     const [totalearn, Settotalearn] = useState('');
     useEffect(() => {
-        fetch('http://localhost:7071/Emp_Salary/get-one-user/' + id)
+        fetch('http://192.168.29.146:7071/Emp_Salary/get-one-user/' + id)
             .then((res) => {
                 return res.json()
             })
