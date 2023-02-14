@@ -111,8 +111,8 @@ const Salary = Schema({
         // required: true
 
     },
-    base_salary:{
-        type : String
+    base_salary: {
+        type: String
     }
 },
     {
