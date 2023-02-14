@@ -44,7 +44,7 @@ function LeaveDetails() {
   const [empLeaveData, setEmpLeaveData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:7071/Emp_Leave/get_leave")
+      .get("http://192.168.29.146:7071/Emp_Leave/get_leave")
       .then((response) => {
         let filteredArr = [];
         let filteredObj = {};

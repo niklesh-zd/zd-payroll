@@ -7,10 +7,10 @@ export function validateForm(fields) {
         console.log('Error')
         formIsValid = false
     }
-    if(!fields.Employee_Code || fields.Employee_Code == ""){
-        errObj['Employee_Code'] = '*Field is required'
-        formIsValid = false
-    }
+    // if(!fields.Employee_Code || fields.Employee_Code == ""){
+    //     errObj['Employee_Code'] = '*Field is required'
+    //     formIsValid = false
+    // }
     if(!fields.First_Name || fields.First_Name == ""){
         errObj['First_Name'] = '*Please Enter Fisrt Name.'
         formIsValid = false

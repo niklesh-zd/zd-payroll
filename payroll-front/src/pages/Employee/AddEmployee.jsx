@@ -49,7 +49,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/add_employ", fields)
+        .post("http://192.168.29.146:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -76,7 +76,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
+        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -106,7 +106,7 @@ function AddEmployee(props) {
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
                         Employee Code
@@ -123,7 +123,7 @@ function AddEmployee(props) {
                       />
                       <div className="errorMsg">{errors.Employee_Code}</div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -143,8 +143,6 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.First_Name}</div>
                     </div>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -164,6 +162,8 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.Last_Name}</div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -183,8 +183,55 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.fatherName}</div>
                     </div>
                   </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+                    <div className="form-group">
+                      <label className="profile_details_text">Email ID</label>
+                      <input
+                        type="email"
+                        name="email"
+                        className="form-control"
+                        placeholder="Email"
+                        value={fields.email}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <div className="errorMsg">{errors.email}</div>
+                    </div>
+                  </div>
                 </div>
-
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">Position</label>
+                      <select
+                        name="Position"
+                        className="form-control"
+                        value={fields.Position}
+                        onChange={(e) => handleChange(e)}
+                      >
+                        <option disabled={true} selected={true}>
+                          Choose Position
+                        </option>
+                        <option>Software Architect</option>
+                        <option>
+                          Engineering Project Manager/Engineering Manager
+                        </option>
+                        <option>
+                          Technical Lead/Engineering Lead/Team Lead
+                        </option>
+                        <option>Principal Software Engineer</option>
+                        <option>
+                          Senior Software Engineer/Senior Software Developer
+                        </option>
+                        <option>Software Engineer</option>
+                        <option>Software Developer</option>
+                        <option>Junior Software Developer</option>
+                        <option>Intern Software Developer</option>
+                        <option>Other</option>
+                      </select>
+                      <div className="errorMsg">{errors.Position}</div>
+                    </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -286,23 +333,6 @@ function AddEmployee(props) {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
-                    <div className="form-group">
-                      <label className="profile_details_text">Email ID</label>
-                      <input
-                        type="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Email"
-                        value={fields.email}
-                        onChange={(e) => handleChange(e)}
-                      />
-                      <div className="errorMsg">{errors.email}</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -327,41 +357,6 @@ function AddEmployee(props) {
                         <option>AB- </option>
                       </select>
                       <div className="errorMsg">{errors.Blood_Group}</div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">Position</label>
-                      {/* <input
-                        type="text"
-                        style={{ textTransform: "capitalize" }}
-                        name="Position"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Enter your Position"
-                      /> */}
-                      <select
-                        name="Position"
-                        className="form-control"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                      >
-                        <option disabled={true} selected={true}>
-                          Choose Position
-                        </option>
-                        <option>Software Architect</option>
-                        <option>Engineering Project Manager/Engineering Manager</option>
-                        <option>Technical Lead/Engineering Lead/Team Lead</option>
-                        <option>Principal Software Engineer</option>
-                        <option>Senior Software Engineer/Senior Software Developer</option>
-                        <option>Software Engineer</option>
-                        <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
-                        <option>Intern Software Developer</option>
-                        <option>Other</option>
-                      </select>
-                      <div className="errorMsg">{errors.Position}</div>
                     </div>
                   </div>
                 </div>
@@ -687,7 +682,7 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.current_pin_code}</div>
                     </div>
                   </div>
-                </div>  
+                </div>
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
@@ -764,7 +759,9 @@ function AddEmployee(props) {
                         value={fields.permanent_pin_code}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{errors.permanent_pin_code}</div>
+                      <div className="errorMsg">
+                        {errors.permanent_pin_code}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -772,14 +769,14 @@ function AddEmployee(props) {
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Permanent Address:
+                        Permanent Address
                       </label>
                       <textarea
                         className="form-control"
                         name="Permanent_Address"
                         rows="3"
                         cols="35"
-                        placeholder="Permanent Address"
+                        placeholder="Enter Your Permanent Address"
                         value={fields.Permanent_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>

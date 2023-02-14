@@ -75,14 +75,14 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault()
-    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
+    axios.post('http://192.168.29.146:7071/Holiday/get_holiday', fields)
       .then((response) => {
         console.log('success data ---------------------geted', response.data.length)
         let holiday = response.data.length;
         Setholiday(holiday);
       }).then(() => {
         Settotalworkday(inputValue - holiday)
-        axios.post('http://localhost:7071/Emp_Salary/salary', fields)
+        axios.post('http://192.168.29.146:7071/Emp_Salary/salary', fields)
         // navigate("/download" + id)
       })
       .catch(error => {
@@ -97,7 +97,7 @@ function Salary() {
 
   useEffect(() => {
     let obje = {};
-    fetch('http://localhost:7071/emp/emp_1/' + id)
+    fetch('http://192.168.29.146:7071/emp/emp_1/' + id)
       .then((res) => {
         return res.json()
       })

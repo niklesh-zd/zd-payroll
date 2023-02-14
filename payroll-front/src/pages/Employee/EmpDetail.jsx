@@ -14,7 +14,7 @@ const EmpDetail = () => {
     navigate("/settings/leavedetails");
   };
   useEffect(() => {
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
@@ -38,7 +38,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://localhost:7071/emp/delete_emp/" + id, {
+          .fetch("http://192.168.29.146:7071/emp/delete_emp/" + id, {
             method: "POST",
           })
           .then((res) => {
@@ -203,13 +203,6 @@ const EmpDetail = () => {
                 >
                   <h6>Merital Status</h6>
                   <p>{empdata.Marital_Status}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Nationality</h6>
-                  <p>{empdata.Nationality}</p>
                 </div>
               </div>
             </div>
