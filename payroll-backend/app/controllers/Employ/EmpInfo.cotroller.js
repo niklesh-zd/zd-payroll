@@ -129,7 +129,7 @@ class Emp {
 
     }
     async get_emlpoy(req, res, next) {
-        EmpInfoModal.find({ is_active: 1 }).then(function (employee) {
+        EmpInfoModal.find({ is_active: 1 }).sort({ _id: -1 }).then(function (employee) {
             res.send(employee);
         }).catch(next);
     }
