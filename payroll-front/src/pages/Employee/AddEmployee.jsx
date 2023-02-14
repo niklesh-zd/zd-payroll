@@ -122,7 +122,7 @@ function AddEmployee(props) {
       <form style={{ display: "flex" }}>
         <ToastContainer />
 
-        <div className="container px-4 pt-3">
+        <div className="px-4 pt-3">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
@@ -206,6 +206,59 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.fatherName}</div>
                     </div>
                   </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label>Contact Number</label>
+                      <input
+                        type="number"
+                        maxLength="12"
+                        value={fields.Contact_Number}
+                        onChange={(e) => handleChange(e)}
+                        name="Contact_Number"
+                        className="form-control"
+                        placeholder="Mobile Number"
+                      ></input>
+                      <div className="errorMsg">{errors.Contact_Number}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label>Alternate Contact No</label>
+                      <input
+                        type="number"
+                        maxLength="12"
+                        value={fields.Alternate_Contact_number}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        name="Alternate_Contact_number"
+                        placeholder="Alternate Contact (optional)"
+                      ></input>
+                      <div className="errorMsg">
+                        {errors.Alternate_Contact_number}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label>Home Contact</label>
+                      <input
+                        type="number"
+                        maxLength="12"
+                        name="Contact_Number_Home"
+                        className="form-control"
+                        placeholder="Mobile Number"
+                        value={fields.Contact_Number_Home}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <div className="errorMsg">
+                        {errors.Contact_Number_Home}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
                     <div className="form-group">
                       <label className="profile_details_text">Email ID</label>
@@ -218,6 +271,34 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.email}</div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Date of Birth:
+                      </label>
+                      <input
+                        ref={dobDateInputRef}
+                        type="date"
+                        name="date_of_birth"
+                        className="form-control small_date"
+                        placeholder="Date of Birth"
+                        value={new Date(
+                          fields.date_of_birth
+                        ).toLocaleDateString("en-CA")}
+                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => ValidateDOB(e.target.value)}
+                      />
+                      <div className="errorMsg">{errors.date_of_birth}</div>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "red",
+                        }}
+                      >
+                        {/* {errorMessage} */}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -259,35 +340,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Date of Birth:
-                      </label>
-                      <input
-                        ref={dobDateInputRef}
-                        type="date"
-                        name="date_of_birth"
-                        className="form-control small_date"
-                        placeholder="Date of Birth"
-                        value={new Date(
-                          fields.date_of_birth
-                        ).toLocaleDateString("en-CA")}
-                        onChange={(e) => handleChange(e)}
-                        // onChange={(e) => ValidateDOB(e.target.value)}
-                      />
-                      <div className="errorMsg">{errors.date_of_birth}</div>
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          color: "red",
-                        }}
-                      >
-                        {/* {errorMessage} */}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">
-                        Date Of Joining:
+                        Date of Joining:
                       </label>
                       <input
                         ref={dojDateInputRef}
@@ -302,61 +355,6 @@ function AddEmployee(props) {
                       />
                     </div>
                     <div className="errorMsg">{errors.date_of_joining}</div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label>Contact Number</label>
-                      <input
-                        type="number"
-                        maxLength="12"
-                        value={fields.Contact_Number}
-                        onChange={(e) => handleChange(e)}
-                        name="Contact_Number"
-                        className="form-control"
-                        placeholder="Mobile Number"
-                      ></input>
-                      <div className="errorMsg">{errors.Contact_Number}</div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label>Alternate Contact No</label>
-                      <input
-                        type="number"
-                        maxLength="12"
-                        value={fields.Alternate_Contact_number}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        name="Alternate_Contact_number"
-                        placeholder="Alternate Contact (optional)"
-                      ></input>
-                      <div className="errorMsg">
-                        {errors.Alternate_Contact_number}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label>Home Contact</label>
-                      <input
-                        type="number"
-                        maxLength="12"
-                        name="Contact_Number_Home"
-                        className="form-control"
-                        placeholder="Mobile Number"
-                        value={fields.Contact_Number_Home}
-                        onChange={(e) => handleChange(e)}
-                      />
-                      <div className="errorMsg">
-                        {errors.Contact_Number_Home}
-                      </div>
-                    </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
@@ -443,22 +441,6 @@ function AddEmployee(props) {
                 <h5 className="text-left">Account Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="form-group">
-                      <label>Base Salary</label>
-                      <input
-                        type="number"
-                        name="base_salary"
-                        value={fields.base_salary}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Enter Base Salary"
-                      ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label>Bank A/C IFSC</label>
@@ -512,6 +494,22 @@ function AddEmployee(props) {
                         placeholder="Enter Aadhar"
                       ></input>
                       <div className="errorMsg">{errors.ADHAR}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label>Base Salary</label>
+                      <input
+                        type="number"
+                        name="base_salary"
+                        value={fields.base_salary}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Enter Base Salary"
+                      ></input>
+                      <div className="errorMsg">{errors.base_salary}</div>
                     </div>
                   </div>
                 </div>
