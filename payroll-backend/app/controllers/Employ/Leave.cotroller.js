@@ -72,7 +72,7 @@ class Leave {
                     as: "result"
                 }
             }
-        ])
+        ]).sort({ _id: -1 })
         res.send({ msg: docs })
         console.log("docs", docs);
     }
