@@ -1,52 +1,103 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
-var columns = [
-  {
-    name: "Name",
-    selector: "First_Name",
-    sortable: true,
-    width: 30,
-  },
-  {
-    name: "Email",
-    selector: "email",
-    sortable: true,
-  },
-  {
-    name: "createdAt",
-    selector: "createdAt",
-    sortable: true,
-  },
-  {
-    name: "From Date",
-    selector: "from_date",
-    sortable: true,
-  },
-  {
-    name: "To Date",
-    selector: "to_date",
-    sortable: true,
-  },
-  {
-    name: "Phone",
-    selector: "Contact_Number",
-    sortable: true,
-  },
-  {
-    name: "Leave Type",
-    selector: "leave_type",
-    sortable: true,
-  },
-  {
-    name: "Reason For Leave",
-    selector: "reason_for_leave",
-    sortable: true,
-  },
-];
+import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 function LeaveDetails() {
+  const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
+  const deleteLeave = (id) => {
+    console.log("id", id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window
+          .fetch("http://192.168.29.146:7071/Emp_Leave/leave_dalete/" + id, {
+            method: "POST",
+          })
+          .then((res) => {
+            Swal.fire(
+              "Deleted!",
+              "Your Leave has been deleted.",
+              "success"
+            ).then(() => {
+              navigate("/settings/leavedetails");
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      }
+    });
+  };
+  var columns = [
+    {
+      name: "Name",
+      selector: "First_Name",
+      sortable: true,
+      width: 30,
+    },
+    {
+      name: "Email",
+      selector: "email",
+      sortable: true,
+    },
+    {
+      name: "createdAt",
+      selector: "createdAt",
+      sortable: true,
+    },
+    {
+      name: "From Date",
+      selector: "from_date",
+      sortable: true,
+    },
+    {
+      name: "To Date",
+      selector: "to_date",
+      sortable: true,
+    },
+    {
+      name: "Phone",
+      selector: "Contact_Number",
+      sortable: true,
+    },
+    {
+      name: "Leave Type",
+      selector: "leave_type",
+      sortable: true,
+    },
+    {
+      name: "Reason For Leave",
+      selector: "reason_for_leave",
+      sortable: true,
+    },
+    {
+      name: "Action",
+      cell: (row) => (
+        <>
+          <span
+            className="btn btn-md"
+            onClick={() => {
+              deleteLeave(row);
+            }}
+          >
+            <FaTrash />
+          </span>
+        </>
+      ),
+
+      ignoreRowClick: true,
+    },
+  ];
   useEffect(() => {
     axios
       .get("http://192.168.29.146:7071/Emp_Leave/get_leave")
@@ -65,11 +116,12 @@ function LeaveDetails() {
           });
           filteredArr.push({
             ...filteredObj,
-            from_date: new Date(e.from_date).toLocaleDateString('pt-PT'),
-            to_date: new Date(e.to_date).toLocaleDateString('pt-PT'),
+            from_date: new Date(e.from_date).toLocaleDateString("pt-PT"),
+            to_date: new Date(e.to_date).toLocaleDateString("pt-PT"),
             leave_type: e.leave_type == 1 ? "Full Day" : "Half Day",
             reason_for_leave: e.reason_for_leave,
-            createdAt: new Date(e.createdAt).toLocaleDateString('pt-PT'),
+            id: e._id,
+            createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
           });
         });
         console.log("filteredArr", filteredArr);
@@ -86,7 +138,7 @@ function LeaveDetails() {
         <div className="ml-5 mr-5">
           <DataTable
             title={
-              <div style={{ display: "flex", alignItems:'center' }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <h4>Leaves Details</h4>{" "}
                 <Link
                   to="/settings/leave"

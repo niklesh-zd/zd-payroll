@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Leaves = () => {
   let navigate = useNavigate();
@@ -14,7 +17,7 @@ const Leaves = () => {
     leavesObj[e.target.name] = e.target.value;
     console.log("leave", leavesObj);
     if (leavesObj.from_date) {
-      setDisableToDate(false)
+      setDisableToDate(false);
       if (toDateInputRef.current) {
         const today = new Date(leavesObj.from_date).toISOString().split("T")[0];
         toDateInputRef.current.setAttribute("min", today);
@@ -37,16 +40,36 @@ const Leaves = () => {
         console.log(err.message);
       });
   }, []);
+  const notify = (message) => {
+    toast("Leave already added..!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("0000");
     axios
       .post("http://192.168.29.146:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
-        console.log("success", response);
-      })
-      .then(() => {
-        navigate("/settings/leavedetails");
+        console.log("success", response.data.success);
+        if (response.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Successful",
+            text: "Leave Added Successfully!",
+          }).then(() => {
+            navigate("/settings/leavedetails");
+          });
+        } else {
+          notify(response.data.message);
+        }
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -56,6 +79,7 @@ const Leaves = () => {
   return (
     <div>
       <div className="offset-lg-2 col-lg-8">
+        <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>
           <div className="card p-10">
             <div className="card-title" style={{ textAlign: "center" }}>

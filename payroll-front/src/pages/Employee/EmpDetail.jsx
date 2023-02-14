@@ -213,7 +213,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Adhar Number</h6>
+                  <h6>Aadhar Number</h6>
                   <p>{empdata.ADHAR}</p>
                 </div>
                 <div
@@ -234,7 +234,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Bank IFSC</h6>
+                  <h6>Bank IFSC Code</h6>
                   <p>{empdata.Bank_IFSC}</p>
                 </div>
               </div>
@@ -242,23 +242,23 @@ const EmpDetail = () => {
                 <h5>Contact Details</h5>
                 <div
                   className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
+                  style={{ width: "70%", justifyContent: "space-between"  }}
                 >
-                  <h6>Contact</h6>
-                  <p>{empdata.Contact_Number}</p>
+                  <h6>Contact Number</h6>
+                  <p style={{alignSelf:"left"}}>{empdata.Contact_Number}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Alternate Contact</h6>
+                  <h6>Alternate Contact Number</h6>
                   <p>{empdata.Alternate_Contact_number}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Home Contact</h6>
+                  <h6>Home Contact Number</h6>
                   <p>{empdata.Contact_Number_Home}</p>
                 </div>
                 <div
