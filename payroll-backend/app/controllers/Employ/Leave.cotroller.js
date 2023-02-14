@@ -19,13 +19,13 @@ class Leave {
             } = req.body;
 
             //date range validation
-            const user_data = await LeaveModal.find({userid: userid});
-            for (let i = 0; i < user_data.length; i++){
+            const user_data = await LeaveModal.find({ userid: userid });
+            for (let i = 0; i < user_data.length; i++) {
                 if (
                     moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
                     && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
-                ){
-                    return res.send({message:"applied date range already exist."})
+                ) {
+                    return res.send({ message: "applied date range already exist." })
                 }
             }
 
@@ -116,11 +116,14 @@ class Leave {
                 console.log(err)
             });
     }
+ 
     async leave_delete(req, res) {
         try {
             console.log(req.params.id);
             const userDelete = await LeaveModal.findByIdAndDelete(req.params.id)
-
+            if (!userDelete) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
             res.status(201).json({ message: "delete successfuly" });
             console.log({ userDelete });
 
@@ -128,7 +131,6 @@ class Leave {
             res.send({ error });
         }
     }
-
 
 
     async get_User_leave(req, res, next) {

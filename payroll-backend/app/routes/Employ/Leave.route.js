@@ -8,7 +8,7 @@ const { Leave, get_leave, get_user_id, leave_delete, update_laeve ,get_User_leav
 router.post('/leave', Leave)
 router.get('/get_leave', get_leave)
 router.get('/get-user-id', get_user_id)
-router.post('/leave_dalate', leave_delete)
+router.post('/leave_dalete/:id', leave_delete)
 router.post('/leave_update', update_laeve)
 router.post('/get_User_leave/:id', get_User_leave)
 
