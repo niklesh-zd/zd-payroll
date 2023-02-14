@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import axios from 'axios';
 
 const Downloadslip = () => {
     const { id } = useParams();
@@ -18,16 +18,18 @@ const Downloadslip = () => {
     const [Npayra, Setnpayra] = useState('');
     const [Npfb, Setnpayfb] = useState('');
     const [totalearn, Settotalearn] = useState('');
+    const [totalleave, Settotalleave] = useState('');
+
+
     useEffect(() => {
         fetch('http://localhost:7071/Emp_Salary/get-one-user/' + id)
             .then((res) => {
                 return res.json()
             })
             .then((resp) => {
-                console.log('base_salary',resp.base_salary);
-
+                // console.log('base_salary',resp.base_salary);
                 let leave = resp.Leave_taken;
-                console.log(resp);
+                // console.log(resp);
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 let TWD = resp.Total_Work_Days
                 resdatachange(resp)
@@ -36,12 +38,11 @@ const Downloadslip = () => {
                 const fiftyPercent = Tsalary / 2;
                 Settsalary(fiftyPercent);
                 const fortyPercent = fiftyPercent * 0.4;
-                Sethra(fortyPercent);
+                Sethra(fortyPercent.toFixed(2));
                 const fifteenPercent = fiftyPercent * 0.15;
-                Setra(fifteenPercent)
+                Setra(fifteenPercent.toFixed(2))
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
-                Setflexib(FB)
-
+                Setflexib(FB.toFixed(2))
                 const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
                 Settgross(Tgross)
                 let netp = Tgross / TWD
@@ -63,6 +64,21 @@ const Downloadslip = () => {
                 console.log(err.message)
             })
     }, [])
+
+
+    useEffect(() => {
+        axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
+            const arr = res.data;
+            let total_leave = 0;
+            arr.map((e) => {
+                total_leave = total_leave + e.leave_type;
+                console.log('total_leave',total_leave);
+                // Settotalleave(total_leave);
+            })
+        })
+    }, [])
+
+
     //   console.log('emp---jo mange wo ---sdata', empdata);
     const ButtonClick = () => {
         window.print();
