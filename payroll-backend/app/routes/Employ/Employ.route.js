@@ -4,8 +4,8 @@
 const router = require("express").Router()
 const { add_employ, get_emlpoy, emp_delete,
     emp_update, get_one_emp, get_user_id
-    , Emp_swap, udateStatus_emlpoy ,position
-    ,autoincrement} = require('../../controllers/Employ/EmpInfo.cotroller')
+    , udateStatus_emlpoy
+} = require('../../controllers/Employ/EmpInfo.cotroller')
 const { check } = require('express-validator');
 
 const { Leave, get_salary } = require('../../controllers/Employ/Leave.cotroller')
@@ -32,15 +32,12 @@ router.post('/update/:id', emp_update)
 
 router.get('/emp_1/:id', get_one_emp)
 // router.get('/',autoincrement)
-router.get('/get-position',position)
 
 router.post('/leave', Leave)
 
 router.get('/get-all-user-id', get_user_id)
 
 router.post('/update_status', udateStatus_emlpoy)
-
-router.post('/emp-swap/:id', Emp_swap)
 
 module.exports = router;
 
