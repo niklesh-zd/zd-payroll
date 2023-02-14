@@ -18,11 +18,11 @@ class Salary {
                 Salary_Slip_Month_Year,
                 Employee_PAN, Employee_Adhar,
                 Bank_Account_Number, Bank_IFSC_Code,
-                Net_pay_in_words,userid,
+                Net_pay_in_words, userid,
                 Net_pay_in_number,
                 Total_Work_Days, Number_of_Leaves, Leave_balence
                 , Leave_taken, Balence_days, Present_day, Total_paid_day
-                , Basic_DA, HRA, RA, Flext_benefits, Total_earn
+                , Basic_DA, HRA, RA, Flext_benefits, Total_earn, base_salary
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
@@ -48,6 +48,7 @@ class Salary {
                 Bank_Account_Number,
                 Bank_IFSC_Code,
                 Net_pay_in_words,
+                base_salary,
                 Net_pay_in_number,
                 Total_Work_Days,
                 Number_of_Leaves,
@@ -141,7 +142,7 @@ class Salary {
     }
     async get_one_emp(req, res, next) {
         var val = req.params;
-        const name =val.id
+        const name = val.id
         // return
         SalaryModal.findOne({ userid: name }).then((employee) => {
             console.log("data:", employee);

@@ -140,16 +140,6 @@ class Emp {
         }).catch(next);
     }
 
-    async position(req, res) {
-        var arr = ['Software_Architect', 'Engineering_Lead', 'Principal_Software_Engineer', 'Senior_Software_Developer',
-            'Software_Engineer', 'Software_Developer', ' Junior_Software_Developer', ' Intern_Software_Developer', 'Other']
-
-        for (var val = 0; val <= arr.length; val++) {
-            console.log(arr[val]);
-            res.send({ arr: arr[val] })
-        }
-
-    }
     async get_one_emp(req, res, next) {
         console.log('----------', { id: req.params.id });
         EmpInfoModal.findById(req.params.id).then((employee) => {
@@ -186,8 +176,7 @@ class Emp {
         }
 
         const id = req.params.id;
-
-        EmpInfoModal.findByIdAndUpdate(id, req.body)
+        EmpInfoModal.findByIdAndUpdate(id, req.body).sort({ _id: -1 })
             .then(data => {
                 if (!data) {
                     res.status(404).send({
@@ -202,79 +191,6 @@ class Emp {
                 console.log(err)
             });
     }
-
-    async Emp_swap(req, res) {
-        // console.log("Check");
-
-        var userId = req.params.id
-
-        EmpInfoModal.findById(userId).then((employee) => {
-            // console.log("data:", employee);
-            if (!employee) {
-                return res.status(404).send({ message: "This user not Exist." });
-            }
-
-            const employDelete = new DeleteEmpInfo({
-                Emp_Id: employee._id,
-                First_Name: employee.First_Name,
-                Last_Name: employee.Last_Name,
-                date_of_birth: employee.date_of_birth,
-                date_of_joining: employee.date_of_joining,
-                gender: employee.gender,
-                Contact_Number: employee.Contact_Number,
-                Contact_Number_Home: employee.Alternate_Contact_number,
-                Permanent_Address: employee.Permanent_Address,
-                Current_Address: employee.Current_Address,
-                email: employee.email,
-                fatherName: employee.fatherName,
-                Alternate_Contact_number: employee.Alternate_Contact_number,
-                Blood_Group: employee.Blood_Group,
-                Marital_Status: employee.Marital_Status,
-                PAN_No: employee.PAN_No,
-                state: employee.state,
-                city: employee.city,
-                ADHAR: employee.ADHAR,
-                Bank_No: employee.Bank_No,
-                Bank_IFSC: employee.Bank_IFSC,
-                Position: employee.Position,
-                Employee_Code: employee.Employee_Code,
-                DEGREE: employee.DEGREE,
-                STREAM: employee.STREAM,
-                PASSED: employee.PASSED,
-                PERCENTAGE_OF_MARKS: employee.PERCENTAGE_OF_MARKS,
-                YEAR_OF_PASSING: employee.YEAR_OF_PASSING
-                // file,
-            });
-            //STORE YOUR LOGIN DATA IN DB 
-
-            const userDelete = EmpInfoModal.findByIdAndDelete(userId)
-            if (!userDelete) {
-                return res.status(404).send({ message: "This user not Exist." });
-            }
-            res.status(201).json({ message: "delete successfuly" });
-            console.log({ userDelete });
-
-
-            employDelete.save();
-            // res.send({ message: "Success " });
-            // const userDelete = EmpInfoModal.deleteOne({ First_Name: employee.First_Name })
-            // console.log("delete=>", userDelete);
-            // if (!userDelete) {
-            //     return res.status(404).send({ message: "This user not Exist." });
-            // } else {
-            //     res.status(201).json({ message: "delete successfuly" });
-            //     console.log({ userDelete });
-            // }
-
-
-            // res.send(employee);
-        }).catch((error) => {
-            res.status(500).send(error);
-        })
-
-
-    }
-
 
 }
 

@@ -4,6 +4,7 @@
 const express = require("express");
 const LeaveModal = require('../../models/Employ/leave.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model')
+const moment = require('moment');
 
 const Emp = require('../Employ/EmpInfo.cotroller')
 
@@ -16,6 +17,18 @@ class Leave {
             var { userid, leave_type, from_date,
                 to_date, reason_for_leave,
             } = req.body;
+
+            //date range validation
+            const user_data = await LeaveModal.find({userid: userid});
+            for (let i = 0; i < user_data.length; i++){
+                if (
+                    moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
+                    && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
+                ){
+                    return res.send({message:"applied date range already exist."})
+                }
+            }
+
             const datelFind = await LeaveModal.findOne({
                 $and: [
                     { from_date: from_date },
@@ -38,6 +51,7 @@ class Leave {
             else {
                 today = 0.5
             }
+
             const leave = new LeaveModal({
                 userid,
                 leave_type: today,
@@ -48,16 +62,17 @@ class Leave {
 
             //STORE YOUR LOGIN DATA IN DB 
             await leave.save();
-            console.log({ leave });
+            // console.log({ leave });
             res.status(200).send({ success: true })
 
         }
         catch (error) {
+            console.log(error);
             res.status(400).send({ 'status': false, 'error': error })
 
         }
     }
-  
+
 
     async get_user_id(req, res) {
 
@@ -72,7 +87,7 @@ class Leave {
                     as: "result"
                 }
             }
-        ])
+        ]).sort({ _id: -1 })
         res.send({ msg: docs })
         console.log("docs", docs);
     }
@@ -118,7 +133,8 @@ class Leave {
 
     async get_User_leave(req, res, next) {
 
-        var userId = '63e89f56fa1ba6ba64525e9c'
+        var userId = req.params.id
+        console.log(userId);
         const findLeave = await LeaveModal.find({ userid: userId }).sort({ _id: -1 })
         console.log("findLeave", findLeave);
         res.send(findLeave)
