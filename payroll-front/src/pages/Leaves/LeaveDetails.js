@@ -15,6 +15,11 @@ var columns = [
     sortable: true,
   },
   {
+    name: "createdAt",
+    selector: "createdAt",
+    sortable: true,
+  },
+  {
     name: "From Date",
     selector: "from_date",
     sortable: true,
@@ -64,6 +69,7 @@ function LeaveDetails() {
             to_date: new Date(e.to_date).toLocaleDateString('pt-PT'),
             leave_type: e.leave_type == 1 ? "Full Day" : "Half Day",
             reason_for_leave: e.reason_for_leave,
+            createdAt: new Date(e.createdAt).toLocaleDateString('pt-PT'),
           });
         });
         console.log("filteredArr", filteredArr);

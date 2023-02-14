@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { validateForm } from "./employeeValidation";
@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddEmployee(props) {
+  const dobDateInputRef = useRef(null);
+  const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -94,6 +96,27 @@ function AddEmployee(props) {
         });
     }
   }
+  useEffect(() => {
+    const today = new Date();
+    if (dobDateInputRef.current) {
+      var eighteenYearsAgo = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+      );
+      eighteenYearsAgo = new Date(eighteenYearsAgo).toISOString().split("T")[0];
+      dobDateInputRef.current.setAttribute("max", eighteenYearsAgo);
+    }
+    if (dojDateInputRef.current) {
+      var oneMonthAgo = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        today.getDate()
+      );
+      oneMonthAgo = new Date(oneMonthAgo).toISOString().split("T")[0];
+      dojDateInputRef.current.setAttribute("min", oneMonthAgo);
+    }
+  }, []);
   return (
     <div className="">
       <form style={{ display: "flex" }}>
@@ -239,10 +262,11 @@ function AddEmployee(props) {
                         Date of Birth:
                       </label>
                       <input
+                        ref={dobDateInputRef}
                         type="date"
                         name="date_of_birth"
                         className="form-control small_date"
-                        placeholder="Date Of Birth"
+                        placeholder="Date of Birth"
                         value={new Date(
                           fields.date_of_birth
                         ).toLocaleDateString("en-CA")}
@@ -266,6 +290,7 @@ function AddEmployee(props) {
                         Date Of Joining:
                       </label>
                       <input
+                        ref={dojDateInputRef}
                         type="date"
                         name="date_of_joining"
                         className="form-control small_date"
