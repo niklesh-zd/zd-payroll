@@ -19,10 +19,10 @@ class Salary {
                 Employee_PAN, Employee_Adhar,
                 Bank_Account_Number, Bank_IFSC_Code,
                 Net_pay_in_words,
-                Net_pay_in_number,
+                Net_pay_in_number,userid,
                 Total_Work_Days, Number_of_Leaves, Leave_balence
                 , Leave_taken, Balence_days, Present_day, Total_paid_day
-                , Basic_DA, HRA, RA, Flext_benefits, Total_earn
+                , Basic_DA, HRA, RA, Flext_benefits, Total_earn,base_salary
             } = req.body;
 
             // CHECK ALL FIELD IN FILL
@@ -40,6 +40,7 @@ class Salary {
                 Employee_name,
                 Employee_code,
                 designation,
+                base_salary,
                 Salary_Slip_Month_Year,
                 Date_of_Joining,
                 Employee_PAN,
@@ -55,6 +56,7 @@ class Salary {
                 Balence_days,
                 Present_day,
                 Total_paid_day,
+                userid,
                 Basic_DA,
                 HRA,
                 RA,

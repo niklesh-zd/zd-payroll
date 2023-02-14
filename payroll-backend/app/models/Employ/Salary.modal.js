@@ -110,6 +110,9 @@ const Salary = Schema({
         type: Number,
         // required: true
 
+    },
+    base_salary: {
+        type: String
     }
 },
     {

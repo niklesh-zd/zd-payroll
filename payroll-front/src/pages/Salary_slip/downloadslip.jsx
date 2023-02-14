@@ -24,13 +24,15 @@ const Downloadslip = () => {
                 return res.json()
             })
             .then((resp) => {
+                console.log('base_salary',resp.base_salary);
+
                 let leave = resp.Leave_taken;
                 console.log(resp);
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 let TWD = resp.Total_Work_Days
                 resdatachange(resp)
                 restimechange(doj)
-                const Tsalary = resp.Total_earn
+                const Tsalary = resp.base_salary
                 const fiftyPercent = Tsalary / 2;
                 Settsalary(fiftyPercent);
                 const fortyPercent = fiftyPercent * 0.4;
@@ -39,7 +41,9 @@ const Downloadslip = () => {
                 Setra(fifteenPercent)
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
                 Setflexib(FB)
+
                 const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
+                Settgross(Tgross)
                 let netp = Tgross / TWD
                 let tpd = resp.Present_day + 1
                 let netpay = leave = 0 ? console.log('leave-0') : leave = leave > 0 ? netp * tpd : '';
@@ -54,7 +58,6 @@ const Downloadslip = () => {
                 Setnpayhra(npayhra.toFixed(0))
                 Setnpaybda(npaybda.toFixed(0));
                 Setnpay(netpay.toFixed(2));
-                Settgross(Tgross)
             })
             .catch((err) => {
                 console.log(err.message)
