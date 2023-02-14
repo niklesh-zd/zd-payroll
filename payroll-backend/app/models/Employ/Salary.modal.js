@@ -111,13 +111,8 @@ const Salary = Schema({
         // required: true
 
     },
-<<<<<<< HEAD
     base_salary: {
         type: String
-=======
-    base_salary:{
-        type : String
->>>>>>> f8b40196bf3a21ce717ef2f98d3214779186882f
     }
 },
     {
