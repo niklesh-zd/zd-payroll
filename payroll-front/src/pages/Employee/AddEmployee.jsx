@@ -128,25 +128,28 @@ function AddEmployee(props) {
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
-                <div className="row">
-                  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">
-                        Employee Code
-                      </label>
-                      <input
-                        type="text"
-                        style={{ textTransform: "capitalize" }}
-                        name="Employee_Code"
-                        className="form-control"
-                        placeholder="Employee Code"
-                        value={fields.Employee_Code}
-                        onChange={(e) => handleChange(e)}
-                        disabled={props.data}
-                      />
-                      <div className="errorMsg">{errors.Employee_Code}</div>
+                {props.data ? (
+                  <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div className="form-group">
+                        <label className="profile_details_text">
+                          Employee Code
+                        </label>
+                        <input
+                          type="text"
+                          style={{ textTransform: "capitalize" }}
+                          name="Employee_Code"
+                          className="form-control"
+                          placeholder="Employee Code"
+                          value={fields.Employee_Code}
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <div className="errorMsg">{errors.Employee_Code}</div>
+                      </div>
                     </div>
-                  </div> */}
+                  </div>
+                ) : null}
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
