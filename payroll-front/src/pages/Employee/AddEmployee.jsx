@@ -224,6 +224,34 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.Contact_Number}</div>
                     </div>
                   </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">
+                        Date of Birth:
+                      </label>
+                      <input
+                        ref={dobDateInputRef}
+                        type="date"
+                        name="date_of_birth"
+                        className="form-control small_date"
+                        placeholder="Date of Birth"
+                        value={new Date(
+                          fields.date_of_birth
+                        ).toLocaleDateString("en-CA")}
+                        onChange={(e) => handleChange(e)}
+                        // onChange={(e) => ValidateDOB(e.target.value)}
+                      />
+                      <div className="errorMsg">{errors.date_of_birth}</div>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "red",
+                        }}
+                      >
+                        {/* {errorMessage} */}
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
