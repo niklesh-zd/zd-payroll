@@ -134,7 +134,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Date Of Birth</h6>
+                  <h6>Date of Birth</h6>
                   <p>
                     {new Date(empdata.date_of_birth).toLocaleDateString(
                       "pt-PT"
@@ -183,14 +183,14 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Year Of Passing</h6>
+                  <h6>Year of Passing</h6>
                   <p>{empdata.YEAR_OF_PASSING}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Date Of Joinig</h6>
+                  <h6>Date of Joinig</h6>
                   <p>
                     {new Date(empdata.date_of_joining).toLocaleDateString(
                       "pt-PT"
@@ -201,7 +201,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Merital Status</h6>
+                  <h6>Marital Status</h6>
                   <p>{empdata.Marital_Status}</p>
                 </div>
               </div>
@@ -227,7 +227,7 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Bank Number</h6>
+                  <h6>Bank A/C No.</h6>
                   <p>{empdata.Bank_No}</p>
                 </div>
                 <div
@@ -251,14 +251,14 @@ const EmpDetail = () => {
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Alternate Contact Number</h6>
+                  <h6>Alternate Contact No.</h6>
                   <p>{empdata.Alternate_Contact_number}</p>
                 </div>
                 <div
                   className="flex"
                   style={{ width: "70%", justifyContent: "space-between" }}
                 >
-                  <h6>Home Contact Number</h6>
+                  <h6>Home Contact No.</h6>
                   <p>{empdata.Contact_Number_Home}</p>
                 </div>
                 <div
