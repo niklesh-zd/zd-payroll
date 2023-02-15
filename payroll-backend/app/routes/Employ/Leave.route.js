@@ -10,7 +10,7 @@ router.get('/get_leave', get_leave)
 router.get('/get-user-id', get_user_id)
 router.post('/leave_dalete/:id', leave_delete)
 router.post('/leave_update', update_laeve)
-router.post('/get_User_leave/:id', get_User_leave)
+router.post('/get_User_leave', get_User_leave)
 
 
 module.exports = router;

@@ -141,7 +141,7 @@ class Leave {
              to_date : { $gte: req.query.from_date, $lte: req.query.to_date } 
             });
         console.log("findLeave", findLeave);
-        res.send(findLeave)
+        res.send({findLeave})
     }
 }
 
