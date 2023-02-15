@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
+  console.log("empLeaveData", empLeaveData);
   const deleteLeave = (id) => {
-    console.log("id", id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -20,7 +20,7 @@ function LeaveDetails() {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://192.168.29.146:7071/Emp_Leave/leave_dalete/" + id, {
+          .fetch("http://192.168.29.146:7071/Emp_Leave/leave_dalete/" + id.id, {
             method: "POST",
           })
           .then((res) => {
@@ -29,7 +29,7 @@ function LeaveDetails() {
               "Your Leave has been deleted.",
               "success"
             ).then(() => {
-              navigate("/settings/leavedetails");
+              window.location.reload(false);
             });
           })
           .catch((err) => {
@@ -107,6 +107,7 @@ function LeaveDetails() {
         let responseArr = response.data.msg;
         console.log("responseArr", responseArr);
         responseArr.map((e) => {
+          console.log("e", e);
           e.result.map((w) => {
             filteredObj = {
               First_Name: w.First_Name,
