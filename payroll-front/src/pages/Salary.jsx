@@ -12,6 +12,8 @@ function Salary() {
   const [inputValue, setInputValue] = useState('');
   const [startdate, Setstartdate] = useState('');
   const [enddate, Setenddate] = useState('');
+  const [month, Setmonth] = useState('');
+  const [leavetaken, Setleavetaken] = useState('');
 
 
   const navigate = useNavigate()
@@ -26,52 +28,87 @@ function Salary() {
     setSelectedOption(event.target.value);
     switch (event.target.value) {
       case 'January':
+        Setmonth('January')
         setInputValue('31');
+        Setstartdate('2023-01-01');
+        Setenddate('2023-01-31');
         break;
       case 'February':
+        Setmonth('February')
         setInputValue('28');
-
+        Setstartdate('2023-02-01');
+        Setenddate('2023-02-31');
         break;
       case 'March':
+        Setmonth('March')
         setInputValue('31');
         Setstartdate('2023-03-01');
         Setenddate('2023-03-31');
         break;
       case 'april':
+        Setmonth('april')
         setInputValue('30');
+        Setstartdate('2023-04-01');
+        Setenddate('2023-04-30');
         break;
       case 'may':
+        Setmonth('may')
         setInputValue('31');
+        Setstartdate('2023-05-01');
+        Setenddate('2023-05-31');
         break;
       case 'june':
+        Setmonth('june')
         setInputValue('30');
+        Setstartdate('2023-06-01');
+        Setenddate('2023-06-30');
         break;
       case 'july':
+        Setmonth('july')
         setInputValue('31');
+        Setstartdate('2023-07-01');
+        Setenddate('2023-07-31');
         break;
       case 'August':
+        Setmonth('August')
         setInputValue('31');
+        Setstartdate('2023-08-01');
+        Setenddate('2023-08-31');
         break;
       case 'September':
+        Setmonth('September')
         setInputValue('30');
+        Setstartdate('2023-09-01');
+        Setenddate('2023-09-30');
         break;
       case 'October':
+        Setmonth('October')
         setInputValue('31');
+        Setstartdate('2023-10-01');
+        Setenddate('2023-10-31');
         break;
       case 'november':
+        Setmonth('november')
         setInputValue('30');
+        Setstartdate('2023-11-01');
+        Setenddate('2023-11-30');
         break;
       case 'December':
+        Setmonth('December')
         setInputValue('31');
+        Setstartdate('2023-12-01');
+        Setenddate('2023-12-31');
         break;
       default:
+        Setmonth('January')
         setInputValue('31');
+        Setstartdate('2023-01-01');
+        Setenddate('2023-01-31');
     }
   }
 
 
   function getSalaryData(data) {
-    // console.log('postSalaryData', postSalaryData);
     if (data) {
       axios.post('http://localhost:7071/Emp_Salary/salary', data)
         .then((res) => {
@@ -87,26 +124,39 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault()
-    axios.post('http://192.168.29.146:7071/Holiday/get_holiday', fields)
+    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
       .then((response) => {
         let holiday = response.data.length;
-        Setholiday(holiday);
-      }).then(() => {
-        Settotalworkday(inputValue - holiday)
-        axios.post('http://192.168.29.146:7071/Emp_Salary/salary', fields)
-        // navigate("/download" + id)
+        let calholiday = inputValue - holiday;
+        getSalaryData({ Total_Work_Days: calholiday, Leave_taken: leavetaken, ...fields })
       })
   }
 
   useEffect(() => {
-    let obje = {};
-    fetch('http://192.168.29.146:7071/emp/emp_1/' + id)
+    console.log('month',month);
+    setFields({ from_date: startdate, end_date: enddate, Salary_Slip_Month_Year: month, ...empdata });
+  }, [startdate, enddate, month])
+
+
+  useEffect(() => {
+    axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
+      const arr = res.data;
+      let total_leave = 0;
+      arr.map((e) => {
+        total_leave = total_leave + e.leave_type;
+      })
+      Setleavetaken(total_leave);
+    })
+  }, [])
+
+  useEffect(() => {
+    fetch('http://localhost:7071/emp/emp_1/' + id)
       .then((res) => {
         return res.json()
       })
       .then((resp) => {
-        console.log(resp.base_salary);
-        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Present_day: resp.Present_day, base_salary: resp.base_salary }
+        console.log('resp.Present_day',resp.ADHAR);
+        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, base_salary: resp.base_salary}
         // console.log(resp._id, "userid8888-------------88");
         empdatachange(obje,)
       })
@@ -114,6 +164,7 @@ function Salary() {
         console.log(err.message)
       })
   }, [])
+
 
   return (
     <div className="pt-5">
@@ -128,7 +179,6 @@ function Salary() {
                 <div className="row text-center pt-5">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      {/* <h5>Name : </h5><p className="">{empdata.Employee_name}</p> */}
                       <div className="col-md-6">
                         <div> <span className="fw-bolder text-lg">Name :</span> <small className="ms-3 text-lg fw-bolder" >{empdata.Employee_name}</small> </div>
                       </div>
@@ -150,7 +200,6 @@ function Salary() {
                           max="50"
                           name="Salary_Slip_Month_Year"
                           className="form-control "
-                          // value={empdata.Salary_Slip_Month_Year}
                           value={selectedOption}
                           onChange={handleOptionChange}
                         >
