@@ -12,7 +12,7 @@ const Downloadslip = () => {
     const [ra, Setra] = useState('');
     const [flexib, Setflexib] = useState('');
     const [tgross, Settgross] = useState('');
-    const [Npay, Setnpay] = useState('');
+    const [npay, Setnpay] = useState('');
     const [Npaybda, Setnpaybda] = useState('');
     const [Npayhra, Setnpayhra] = useState('');
     const [Npayra, Setnpayra] = useState('');
@@ -22,17 +22,20 @@ const Downloadslip = () => {
 
 
     useEffect(() => {
-        fetch('http://192.168.29.146:7071/Emp_Salary/get-one-user/' + id)
+        fetch('http://localhost:7071/Emp_Salary/get-one-user/' + id)
             .then((res) => {
                 return res.json()
             })
             .then((resp) => {
-                let leave = resp.Leave_taken;
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
-                let TWD = resp.Total_Work_Days
+                restimechange(doj);
+                console.log('resp',resp);
                 resdatachange(resp)
-                restimechange(doj)
-                const Tsalary = resp.base_salary
+                let Tsalary = resp.base_salary
+                Settgross(Tsalary)
+                let leave = resp.Leave_taken;
+                Settotalleave(leave);
+                let TWD = resp.Total_Work_Days
                 const fiftyPercent = Tsalary / 2;
                 Settsalary(fiftyPercent);
                 const fortyPercent = fiftyPercent * 0.4;
@@ -41,39 +44,35 @@ const Downloadslip = () => {
                 Setra(fifteenPercent.toFixed(2))
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
                 Setflexib(FB.toFixed(0))
-                const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
-                let tpd = resp.Total_Work_Days - leave + 1
-                let netp = Tgross / TWD
-                let netpay = leave = 0 ? netp + Tgross : leave = leave > 0 ? netp * tpd : '';
-                let npaybda = netpay / 2;
-                let npayhra = npaybda * 0.4;
-                let npayra = npaybda * 0.15;
-                let npayfb = netpay - npaybda - npayhra - npayra;
-                let totalearn = npaybda + npayhra + npayra + npayfb;
-                Setnpay(netpay.toFixed(0))
-                Settgross(Tgross.toFixed(0))
-                Settotalearn(totalearn.toFixed(0));
-                Setnpayfb(npayfb.toFixed(0))
-                Setnpayra(npayra.toFixed(0))
-                Setnpayhra(npayhra.toFixed(0))
-                Setnpaybda(npaybda.toFixed(0));
+
+
+                // let tpd = resp.Total_Work_Days - leave + 1;
+                
+                // let netpay = leave = 0 ? netp + tgross : leave = leave > 0 ? netp * tpd : '';
+
+                let finalsalary = Tsalary
+                let netp = Tsalary / TWD
+                let netpay = Number(finalsalary) + Number(netp);
+
+                // console.log('netpaay',Number(netpay).toFixed(0));
+
+                let npaybda = Number(netpay) / 2;
+                let npayhra = Number(npaybda) * 0.4;
+                let npayra = Number(npaybda) * 0.15;
+                let npayfb = Number(netpay) - Number(npaybda) - Number(npayhra) - Number(npayra);
+                let totalearn = Number(npaybda) + Number(npayhra) + Number(npayra) + Number(npayfb);
+                Setnpay(Number(netpay).toFixed(0))
+                Settotalearn(Number(totalearn).toFixed(0));
+                Setnpayfb(Number(npayfb).toFixed(0))
+                Setnpayra(Number(npayra).toFixed(0))
+                Setnpayhra(Number(npayhra).toFixed(0))
+                Setnpaybda(Number(npaybda).toFixed(0));
             })
             .catch((err) => {
                 console.log(err.message)
             })
     }, [])
 
-
-    useEffect(() => {
-        axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
-            const arr = res.data;
-            let total_leave = 0;
-            arr.map((e) => {
-                total_leave = total_leave + e.leave_type;
-                Settotalleave(total_leave);
-            })
-        })
-    }, [])
 
 
     const ButtonClick = () => {
@@ -109,15 +108,19 @@ const Downloadslip = () => {
         if (amount < 10000) {
             return `${units[Math.floor(amount / 1000)]} Thousand` + (amount % 1000 ? ` and ${convertNumberToWords(amount % 1000)}` : '');
         }
+        
         if (amount < 100000) {
-            return `${tens[Math.floor(amount / 10000) - 1]} Thousand` + (amount % 10000 ? ` and ${convertNumberToWords(amount % 10000)}` : '');
+            return `${tens[Math.floor(amount / 10000) - 1]} ${tens ? 'Thousand' : ""}`  + (amount % 10000 ? `  ${convertNumberToWords(amount % 10000)}` : '');
         }
+        // if (amount < 100000) {
+        //     return `${tens[Math.floor(amount / 10000) - 1] } Thousand` + (amount % 10000 ? ` and ${convertNumberToWords(amount % 10000)}` : '');
+        // } {amount = Number(amount) = tens[Math.floor(amount / 10000) - 1] ? }${amount < 10000 ? `thousend` : ''} 
         return 'its too high';
     }
 
-    const amount = totalearn;
+    const amount = 21000;
     const fword = numword(amount)
-
+console.log(fword);
 
     return (
         <div className="container mt-5 mb-5">
@@ -249,7 +252,7 @@ const Downloadslip = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row">Net Pay</th>
-                                            <td>{Npay}</td>
+                                            <td>{npay}</td>
                                             <td></td>
                                             <td></td>
                                             <td>Total Deduction</td>
