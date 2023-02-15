@@ -6,7 +6,6 @@ const Dashboard = () => {
   const [totalEmployee, setTotalEmployee] = useState('')
   const [totalHoliday, setTotalHoliday] = useState('')
   const [monthName, setMonthName] = useState('')
-  console.warn('======');
   useEffect(() => {
     window
       .fetch("http://192.168.29.146:7071/emp/get_employ")
@@ -30,9 +29,7 @@ const Dashboard = () => {
       })
       .then((resp) => {
         var today = new Date().toISOString()
-        console.warn(today);
         resp.map((e) => {
-          console.warn(e.holiday_date);
           if (e.holiday_date.includes("2023-02") && today.includes("2023-02")) {
             marchHolidays.push(e.holiday_date)
             setMonthName("February")
