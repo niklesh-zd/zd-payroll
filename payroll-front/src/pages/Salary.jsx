@@ -108,7 +108,7 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault()
-    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
+    axios.post('http://192.168.29.146:7071/Holiday/get_holiday', fields)
       .then((response) => {
         let holiday = response.data.length;
         let calholiday = inputValue - holiday;
