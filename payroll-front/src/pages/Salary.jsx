@@ -12,6 +12,7 @@ function Salary() {
   const [inputValue, setInputValue] = useState('');
   const [startdate, Setstartdate] = useState('');
   const [enddate, Setenddate] = useState('');
+  const [leavetaken, Setleavetaken] = useState('');
 
 
   const navigate = useNavigate()
@@ -39,33 +40,53 @@ function Salary() {
         break;
       case 'april':
         setInputValue('30');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-30');
         break;
       case 'may':
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
         break;
       case 'june':
         setInputValue('30');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-30');
         break;
       case 'july':
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
         break;
       case 'August':
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
         break;
       case 'September':
         setInputValue('30');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-30');
         break;
       case 'October':
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
         break;
       case 'november':
         setInputValue('30');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-30');
         break;
       case 'December':
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
         break;
       default:
         setInputValue('31');
+        Setstartdate('2023-03-01');
+        Setenddate('2023-03-31');
     }
   }
 
@@ -91,7 +112,7 @@ function Salary() {
       .then((response) => {
         let holiday = response.data.length;
         let calholiday = inputValue - holiday;
-        getSalaryData({ Total_Work_Days: calholiday, ...fields })
+        getSalaryData({ Total_Work_Days: calholiday, Leave_taken: leavetaken, ...fields })
       })
   }
 
@@ -101,13 +122,24 @@ function Salary() {
 
 
   useEffect(() => {
+    axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
+      const arr = res.data;
+      let total_leave = 0;
+      arr.map((e) => {
+        total_leave = total_leave + e.leave_type;
+      })
+      Setleavetaken(total_leave);
+    })
+  }, [])
+
+  useEffect(() => {
     fetch('http://localhost:7071/emp/emp_1/' + id)
       .then((res) => {
         return res.json()
       })
       .then((resp) => {
         console.log(resp.base_salary);
-        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Leave_taken: resp.Leave_taken, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Present_day: resp.Present_day, base_salary: resp.base_salary }
+        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, Total_earn: resp.Total_earn, Salary_Slip_Month_Year: resp.Salary_Slip_Month_Year, Present_day: resp.Present_day, base_salary: resp.base_salary }
         // console.log(resp._id, "userid8888-------------88");
         empdatachange(obje,)
       })
@@ -115,6 +147,7 @@ function Salary() {
         console.log(err.message)
       })
   }, [])
+
 
   return (
     <div className="pt-5">
@@ -129,7 +162,6 @@ function Salary() {
                 <div className="row text-center pt-5">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      {/* <h5>Name : </h5><p className="">{empdata.Employee_name}</p> */}
                       <div className="col-md-6">
                         <div> <span className="fw-bolder text-lg">Name :</span> <small className="ms-3 text-lg fw-bolder" >{empdata.Employee_name}</small> </div>
                       </div>
@@ -151,7 +183,6 @@ function Salary() {
                           max="50"
                           name="Salary_Slip_Month_Year"
                           className="form-control "
-                          // value={empdata.Salary_Slip_Month_Year}
                           value={selectedOption}
                           onChange={handleOptionChange}
                         >

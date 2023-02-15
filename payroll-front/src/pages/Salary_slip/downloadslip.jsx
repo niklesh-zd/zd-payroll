@@ -27,8 +27,7 @@ const Downloadslip = () => {
                 return res.json()
             })
             .then((resp) => {
-                let leave = totalleave;
-                // console.log('leave',leave);
+                let leave = resp.Leave_taken;
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 let TWD = resp.Total_Work_Days
                 resdatachange(resp)
@@ -43,11 +42,8 @@ const Downloadslip = () => {
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
                 Setflexib(FB.toFixed(0))
                 const Tgross = fiftyPercent + fortyPercent + fifteenPercent + FB;
-                let tpd = resp.Total_Work_Days - totalleave + 1
-                console.log(tpd);
+                let tpd = resp.Total_Work_Days - leave + 1
                 let netp = Tgross / TWD
-                // console.log('totalleave', leave);
-                // let netpay = netp + Tgross;
                 let netpay = leave = 0 ? netp + Tgross : leave = leave > 0 ? netp * tpd : '';
                 let npaybda = netpay / 2;
                 let npayhra = npaybda * 0.4;
@@ -79,21 +75,17 @@ const Downloadslip = () => {
         })
     }, [])
 
-    // console.log('total_leave',totalleave);
 
-    //   console.log('emp---jo mange wo ---sdata', empdata);
     const ButtonClick = () => {
         window.print();
         fetch('/download.pdf').then(response => {
             response.blob().then(blob => {
                 let alink = document.createElement('a');
-                // alink.href = fileURL;
                 alink.click();
             })
         })
     }
     let numword = function convertNumberToWords(amount) {
-        // let amount = ''
         const units = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
         const tens = ['Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
         const teens = ['Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -139,9 +131,7 @@ const Downloadslip = () => {
                             <div className="text-center lh-1 mb-2">
                                 <h3 className="fw-bold" style={{ color: '#368bb5' }}>ZecData</h3> <h5 className="fw-bold text-dark">Payment slip for the month of {resdata.Salary_Slip_Month_Year} 2023</h5>
                             </div>
-                            {/* style={{width:'57.333333%'}} */}
-                            {/* style={{width: '39.5rem', marginLeft: '13px'}} */}
-                            {/* <div className="d-flex justify-content-end"> <span>..................</span> </div>  */}
+
                             <div className="row text-white">
                                 <div className="col-md-6 border-top border-dark" >
                                     <div className="row" style={{ backgroundColor: '#368bb5' }}>
@@ -185,7 +175,7 @@ const Downloadslip = () => {
                                     <div className="row border-top border-dark" style={{ backgroundColor: '#368bb5' }}>
 
                                         <div className="col-md-6 ">
-                                            <div> <span className="fw-bolder">Leave Taken :</span> <small className="ms-3">{totalleave}</small> </div>
+                                            <div> <span className="fw-bolder">Leave Taken :</span> <small className="ms-3">{resdata.Leave_taken}</small> </div>
                                         </div>
                                         <div className="col-md-6 ">
                                             <div> <span className="fw-bolder ">Present Days :</span> <small className="ms-3">{resdata.Total_Work_Days - totalleave}</small> </div>
@@ -198,7 +188,6 @@ const Downloadslip = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {/* style={{width: '98%', marginLeft: '13px',}} */}
                                 <table className="mt-1 table table-bordered border-dark" >
                                     <thead className=" text-white" style={{ backgroundColor: '#368bb5' }}>
                                         <tr>
