@@ -34,18 +34,18 @@ const routes = [
     path: "/settings/leavedetails",
     name: "Leaves",
     icon: <MdMessage />,
-    // subRoutes: [
-    //   // {
-    //   //   path: "/settings/leave",
-    //   //   name: "Add Leave",
-    //   //   icon: <MdMessage />,
-    //   // },
-    //   // {
-    //   //   path: "/settings/leavedetails",
-    //   //   name: "Manage leaves",
-    //   //   icon: <MdMessage />,
-    //   // },
-    // ],
+    subRoutes: [
+      {
+        path: "/settings/leave",
+        name: "Add Leave",
+        icon: <MdMessage />,
+      },
+      {
+        path: "/settings/leavedetails",
+        name: "Manage leaves",
+        icon: <MdMessage />,
+      },
+    ],
   },
   {
     path: "/salary",
