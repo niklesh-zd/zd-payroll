@@ -132,9 +132,12 @@ class Leave {
 
 
     async get_User_leave(req, res, next) {
-
-        var userId = '63e89f56fa1ba6ba64525e9c'
-        const findLeave = await LeaveModal.find({ userid: userId })
+        
+        const findLeave = await LeaveModal.find({
+             userid: req.query.id,
+             from_date : { $gte: req.query.from_date, $lte: req.query.to_date },
+             to_date : { $gte: req.query.from_date, $lte: req.query.to_date } 
+            });
         console.log("findLeave", findLeave);
         res.send(findLeave)
     }
