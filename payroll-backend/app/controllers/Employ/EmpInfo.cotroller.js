@@ -35,6 +35,7 @@ class Emp {
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
             const adhar = await EmpInfoModal.findOne({ ADHAR: ADHAR })
+            const emp_code = await EmpInfoModal.findOne({ Employee_Code: Employee_Code })
             const last_emp = await EmpInfoModal.find().sort({ _id: -1 }).limit(1);
             var next_emp_code;
             if (last_emp) {
@@ -55,7 +56,9 @@ class Emp {
             if (adhar) {
                 return res.send({ message: "alredy exist ADHAR." })
             }
-
+            if (emp_code) {
+                return res.send({ message: "alredy exist Employee_Code." })
+            }
             if (Pan_no) {
                 return res.send({ message: "alredy exist PAN_NO." })
             }
