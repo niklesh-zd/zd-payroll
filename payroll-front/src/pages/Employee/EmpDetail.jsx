@@ -11,7 +11,7 @@ const EmpDetail = () => {
     navigate("/settings/EmpEdit" + id);
   };
   const leaveNavigate = () => {
-    navigate("/settings/leavedetails");
+    navigate("/settings/userleavedetails" + id);
   };
   useEffect(() => {
     fetch("http://localhost:7071/emp/emp_1/" + id)

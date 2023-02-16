@@ -23,7 +23,7 @@ const Dashboard = () => {
   var marchHolidays = []
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/Holiday/get-holiday")
+      .fetch("http://192.168.29.146:7071/Holiday/get-holiday")
       .then((res) => {
         return res.json();
       })

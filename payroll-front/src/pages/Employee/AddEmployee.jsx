@@ -306,33 +306,6 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">Position</label>
-                      <select
-                        name="Position"
-                        className="form-control"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                      >
-                        <option disabled={true} selected={true}>
-                          Choose Position
-                        </option>
-                        <option>Software Architect</option>
-                        <option>Project Manager</option>
-                        <option>Team Lead</option>
-                        <option>Principal Software Engineer</option>
-                        <option>Senior Software Developer</option>
-                        <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
-                        <option>Intern Software Developer</option>
-                        <option>Other</option>
-                      </select>
-                      <div className="errorMsg">{errors.Position}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -376,6 +349,33 @@ function AddEmployee(props) {
                         <option>AB- </option>
                       </select>
                       <div className="errorMsg">{errors.Blood_Group}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">Position</label>
+                      <select
+                        name="Position"
+                        className="form-control"
+                        value={fields.Position}
+                        onChange={(e) => handleChange(e)}
+                      >
+                        <option disabled={true} selected={true}>
+                          Choose Position
+                        </option>
+                        <option>Software Architect</option>
+                        <option>Project Manager</option>
+                        <option>Team Lead</option>
+                        <option>Principal Software Engineer</option>
+                        <option>Senior Software Developer</option>
+                        <option>Software Developer</option>
+                        <option>Junior Software Developer</option>
+                        <option>Intern Software Developer</option>
+                        <option>Other</option>
+                      </select>
+                      <div className="errorMsg">{errors.Position}</div>
                     </div>
                   </div>
                 </div>
