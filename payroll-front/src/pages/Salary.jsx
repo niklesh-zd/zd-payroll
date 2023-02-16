@@ -1,172 +1,181 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 import { getSnackbarContentUtilityClass } from "@mui/material";
+import Downloadslip from "./Salary_slip/downloadslip";
 
 function Salary() {
   const { id } = useParams();
   const [empdata, empdatachange] = useState({});
-  const [fields, setFields] = useState({})
-  const [selectedOption, setSelectedOption] = useState('January');
-  const [inputValue, setInputValue] = useState('');
-  const [startdate, Setstartdate] = useState('');
-  const [enddate, Setenddate] = useState('');
-  const [month, Setmonth] = useState('');
-  const [leavetaken, Setleavetaken] = useState('');
+  const [fields, setFields] = useState({});
+  const [selectedOption, setSelectedOption] = useState("January");
+  const [inputValue, setInputValue] = useState("");
+  const [startdate, Setstartdate] = useState("");
+  const [enddate, Setenddate] = useState("");
+  const [month, Setmonth] = useState("");
+  const [totalHolydays, setTotalHolydays] = useState("");
+  const [switchToDownload, setSwitchToDownload] = useState(false);
 
-
-  const navigate = useNavigate()
-  // const Calculate = () => {
-  //   var resources = document.getElementById('inp1').value;
-  //   var minutes = document.getElementById('inp2').value;
-  //   document.getElementById('inp3').value = minutes - resources;
-  // }
-
-
+  const navigate = useNavigate();
   const handleOptionChange = (event) => {
+    console.log(event.target.value);
     setSelectedOption(event.target.value);
     switch (event.target.value) {
-      case 'January':
-        Setmonth('January')
-        setInputValue('31');
-        Setstartdate('2023-01-01');
-        Setenddate('2023-01-31');
+      case "January":
+        Setmonth("January");
+        setInputValue("31");
+        Setstartdate("2023-01-01");
+        Setenddate("2023-01-31");
         break;
-      case 'February':
-        Setmonth('February')
-        setInputValue('28');
-        Setstartdate('2023-02-01');
-        Setenddate('2023-02-31');
+      case "February":
+        Setmonth("February");
+        setInputValue("28");
+        Setstartdate("2023-02-01");
+        Setenddate("2023-02-28");
         break;
-      case 'March':
-        Setmonth('March')
-        setInputValue('31');
-        Setstartdate('2023-03-01');
-        Setenddate('2023-03-31');
+      case "March":
+        Setmonth("March");
+        setInputValue("31");
+        Setstartdate("2023-03-01");
+        Setenddate("2023-03-31");
         break;
-      case 'april':
-        Setmonth('april')
-        setInputValue('30');
-        Setstartdate('2023-04-01');
-        Setenddate('2023-04-30');
+      case "april":
+        Setmonth("april");
+        setInputValue("30");
+        Setstartdate("2023-04-01");
+        Setenddate("2023-04-30");
         break;
-      case 'may':
-        Setmonth('may')
-        setInputValue('31');
-        Setstartdate('2023-05-01');
-        Setenddate('2023-05-31');
+      case "may":
+        Setmonth("may");
+        setInputValue("31");
+        Setstartdate("2023-05-01");
+        Setenddate("2023-05-31");
         break;
-      case 'june':
-        Setmonth('june')
-        setInputValue('30');
-        Setstartdate('2023-06-01');
-        Setenddate('2023-06-30');
+      case "june":
+        Setmonth("june");
+        setInputValue("30");
+        Setstartdate("2023-06-01");
+        Setenddate("2023-06-30");
         break;
-      case 'july':
-        Setmonth('july')
-        setInputValue('31');
-        Setstartdate('2023-07-01');
-        Setenddate('2023-07-31');
+      case "july":
+        Setmonth("july");
+        setInputValue("31");
+        Setstartdate("2023-07-01");
+        Setenddate("2023-07-31");
         break;
-      case 'August':
-        Setmonth('August')
-        setInputValue('31');
-        Setstartdate('2023-08-01');
-        Setenddate('2023-08-31');
+      case "August":
+        Setmonth("August");
+        setInputValue("31");
+        Setstartdate("2023-08-01");
+        Setenddate("2023-08-31");
         break;
-      case 'September':
-        Setmonth('September')
-        setInputValue('30');
-        Setstartdate('2023-09-01');
-        Setenddate('2023-09-30');
+      case "September":
+        Setmonth("September");
+        setInputValue("30");
+        Setstartdate("2023-09-01");
+        Setenddate("2023-09-30");
         break;
-      case 'October':
-        Setmonth('October')
-        setInputValue('31');
-        Setstartdate('2023-10-01');
-        Setenddate('2023-10-31');
+      case "October":
+        Setmonth("October");
+        setInputValue("31");
+        Setstartdate("2023-10-01");
+        Setenddate("2023-10-31");
         break;
-      case 'november':
-        Setmonth('november')
-        setInputValue('30');
-        Setstartdate('2023-11-01');
-        Setenddate('2023-11-30');
+      case "november":
+        Setmonth("november");
+        setInputValue("30");
+        Setstartdate("2023-11-01");
+        Setenddate("2023-11-30");
         break;
-      case 'December':
-        Setmonth('December')
-        setInputValue('31');
-        Setstartdate('2023-12-01');
-        Setenddate('2023-12-31');
+      case "December":
+        Setmonth("December");
+        setInputValue("31");
+        Setstartdate("2023-12-01");
+        Setenddate("2023-12-31");
         break;
       default:
-        Setmonth('January')
-        setInputValue('31');
-        Setstartdate('2023-01-01');
-        Setenddate('2023-01-31');
+        Setmonth("January");
+        setInputValue("31");
+        Setstartdate("2023-01-01");
+        Setenddate("2023-01-31");
     }
-  }
+  };
 
-
-  function getSalaryData(data) {
-    if (data) {
-      axios.post('http://localhost:7071/Emp_Salary/salary', data)
-        .then((res) => {
-          console.log('res', res);
-          navigate("/download" + id)
-        })
-        .catch(error => {
-          console.error('There was an error!', error);
-        });
-    }
-  }
-
+  // function getSalaryData(data) {
+  //   if (data) {
+  //     axios
+  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
+  //       .then((res) => {
+  //         console.log("res", res);
+  //         navigate("/download" + id);
+  //       })
+  //       .catch((error) => {
+  //         console.error("There was an error!", error);
+  //       });
+  //   }
+  // }
 
   function handlesubmit(e) {
-    e.preventDefault()
-    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
+    e.preventDefault();
+    axios
+      .post("http://192.168.29.146:7071/Holiday/get_holiday", fields)
       .then((response) => {
-        let holiday = response.data.length;
-        let calholiday = inputValue - holiday;
-        getSalaryData({ Total_Work_Days: calholiday, Leave_taken: leavetaken, ...fields })
+        console.log('response',response);
+        let holidays = response.data.length;
+        setTotalHolydays(holidays)
+        // setFields({ ...fields, holidays: holidays})
+        // let calholiday = inputValue - holiday;
+        // getSalaryData({
+        //   Total_Work_Days: calholiday,
+        //   Leave_taken: leavetaken,
+        //   ...fields,
+        // });
+      }).then(()=>{
+        setSwitchToDownload(true)
+        console.log('fields',fields);
       })
   }
 
   useEffect(() => {
-    console.log('month',month);
-    setFields({ from_date: startdate, end_date: enddate, Salary_Slip_Month_Year: month, ...empdata });
-  }, [startdate, enddate, month])
-
-
-  useEffect(() => {
-    axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
-      const arr = res.data;
-      let total_leave = 0;
-      arr.map((e) => {
-        total_leave = total_leave + e.leave_type;
-      })
-      Setleavetaken(total_leave);
-    })
-  }, [])
+    setFields({
+      from_date: startdate,
+      end_date: enddate,
+      Salary_Slip_Month_Year: month,
+      monthDays:inputValue,
+      ...empdata,
+    });
+  }, [startdate, enddate, month]);
 
   useEffect(() => {
-    fetch('http://localhost:7071/emp/emp_1/' + id)
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
       .then((res) => {
-        return res.json()
+        return res.json();
       })
       .then((resp) => {
-        console.log('resp.Present_day',resp.ADHAR);
-        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, base_salary: resp.base_salary}
-        // console.log(resp._id, "userid8888-------------88");
-        empdatachange(obje,)
+        let obje = {
+          Employee_name: resp.First_Name,
+          userid: resp._id,
+          Employee_code: resp.Employee_Code,
+          designation: resp.Position,
+          Date_of_Joining: resp.date_of_joining,
+          Employee_PAN: resp.PAN_No,
+          Employee_Adhar: resp.ADHAR,
+          Bank_Account_Number: resp.Bank_No,
+          Bank_IFSC_Code: resp.Bank_IFSC,
+          base_salary: resp.base_salary,
+        };
+        empdatachange(obje);
       })
       .catch((err) => {
-        console.log(err.message)
-      })
-  }, [])
-
+        console.log(err.message);
+      });
+  }, []);
 
   return (
+    switchToDownload ?
+    <Downloadslip data={fields} holidays={totalHolydays}/>
+    :
     <div className="pt-5">
       <div className="row">
         <div className="offset-lg-2 col-lg-8">
@@ -180,18 +189,28 @@ function Salary() {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <div className="col-md-6">
-                        <div> <span className="fw-bolder text-lg">Name :</span> <small className="ms-3 text-lg fw-bolder" >{empdata.Employee_name}</small> </div>
+                        <div>
+                          {" "}
+                          <span className="fw-bolder text-lg">Name :</span>{" "}
+                          <small className="ms-3 text-lg fw-bolder">
+                            {empdata.Employee_name}
+                          </small>{" "}
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <div> <span className="fw-bolder text-lg">EMP Code :</span> <small className="ms-3 text-lg fw-bolder" >{empdata.Employee_code}</small> </div>
+                    <div>
+                      {" "}
+                      <span className="fw-bolder text-lg">EMP Code :</span>{" "}
+                      <small className="ms-3 text-lg fw-bolder">
+                        {empdata.Employee_code}
+                      </small>{" "}
+                    </div>
                   </div>
-
                 </div>
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-4">
                       <div className="form-group">
                         <label>Select the month</label>
@@ -219,16 +238,10 @@ function Salary() {
                       </div>
                     </div>
                   </div>
-
                 </div>
-                <div className="row">
-
-                </div>
-                <div className="row">
-
-                </div>
-                <div className="row">
-                </div>
+                <div className="row"></div>
+                <div className="row"></div>
+                <div className="row"></div>
                 <div className="row">
                   <div className="submit pt-8">
                     <div className="form-group">
