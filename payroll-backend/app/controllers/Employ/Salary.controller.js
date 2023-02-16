@@ -10,6 +10,7 @@ class Salary {
     async salary(req, res) {
 
         console.log("Run ok");
+
         try {
 
             var { Employee_name,
@@ -24,58 +25,84 @@ class Salary {
                 , Leave_taken, Balence_days, Present_day, Total_paid_day
                 , Basic_DA, HRA, RA, Flext_benefits, Total_earn, base_salary
             } = req.body;
+            const date = new Date();
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const currentMonthName = monthNames[date.getMonth()];
+            console.log(currentMonthName);
+            const user_id = await SalaryModal.findOne({ userid: userid })
+            // console.log(user_id.userid,"---------------------user_id-------------------");
+            if ("March" || user_id.userid) {
+                const userid = user_id.userid;
 
-            // CHECK ALL FIELD IN FILL
-            // if (!Employee_name || !Employee_code || !Leave_balence ||
-            //     !Employee_PAN || !Employee_Adhar || !Leave_taken ||
-            //     !Bank_IFSC_Code || !Net_pay_in_number || !Balence_days
-            //     || !designation || !Salary_Slip_Month_Year || !Present_day
-            //     || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
-            //     || !Net_pay_in_words || !Total_Work_Days || !Number_of_Leaves
-            //     || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
-            // )
-            //     return res.send({ message: "Please fill in all fields." });
+                try {
+                    console.log(userid, '...........');
+                    const userDelete = await SalaryModal.findByIdAndDelete(userid)
+                    console.log(userDelete,'.........');
+                    if (!userDelete) {
+                        return res.status(404).send({ message: "This user not Exist." });
+                    }
+                    res.status(201).json({ message: "delete successfuly" });
+                    console.log({ userDelete });
 
-            const leave = new SalaryModal({
-                Employee_name,
-                Employee_code,
-                userid,
-                designation,
-                base_salary,
-                Salary_Slip_Month_Year,
-                Date_of_Joining,
-                Employee_PAN,
-                Employee_Adhar,
-                Bank_Account_Number,
-                Bank_IFSC_Code,
-                Net_pay_in_words,
-                base_salary,
-                Net_pay_in_number,
-                Total_Work_Days,
-                Number_of_Leaves,
-                Leave_balence,
-                Leave_taken,
-                Balence_days,
-                Present_day,
-                Total_paid_day,
-                userid,
-                Basic_DA,
-                HRA,
-                RA,
-                Flext_benefits,
-                Total_earn
-                // file,
-            });
+                } catch (error) {
+                    res.send({ error });
+                }
 
-            //STORE YOUR LOGIN DATA IN DB 
-            await leave.save();
-            console.log({ leave });
-            // res.send({ message: "Success " });
-            res.status(200).send({ success: true })
+            }
+            else {
+                // CHECK ALL FIELD IN FILL
+                // if (!Employee_name || !Employee_code || !Leave_balence ||
+                //     !Employee_PAN || !Employee_Adhar || !Leave_taken ||
+                //     !Bank_IFSC_Code || !Net_pay_in_number || !Balence_days
+                //     || !designation || !Salary_Slip_Month_Year || !Present_day
+                //     || !Date_of_Joining || !Bank_Account_Number || !Total_paid_day
+                //     || !Net_pay_in_words || !Total_Work_Days || !Number_of_Leaves
+                //     || !Basic_DA || !HRA || !RA || !Flext_benefits || !Total_earn
+                // )
+                //     return res.send({ message: "Please fill in all fields." });
 
+                const leave = new SalaryModal({
+                    Employee_name,
+                    Employee_code,
+                    userid,
+                    designation,
+                    base_salary,
+                    Salary_Slip_Month_Year,
+                    Date_of_Joining,
+                    Employee_PAN,
+                    Employee_Adhar,
+                    Bank_Account_Number,
+                    Bank_IFSC_Code,
+                    Net_pay_in_words,
+                    base_salary,
+                    Net_pay_in_number,
+                    Total_Work_Days,
+                    Number_of_Leaves,
+                    Leave_balence,
+                    Leave_taken,
+                    Balence_days,
+                    Present_day,
+                    Total_paid_day,
+                    userid,
+                    Basic_DA,
+                    HRA,
+                    RA,
+                    Flext_benefits,
+                    Total_earn
+                    // file,
+                });
+
+                //STORE YOUR LOGIN DATA IN DB 
+                await leave.save();
+                console.log({ leave });
+                // res.send({ message: "Success " });
+                res.status(200).send({ success: true })
+
+            }
         }
         catch (error) {
             // res.send("Error-", error);
+            console.log(error);
             res.status(400).send({ 'status': false, 'error': error })
 
         }
@@ -97,9 +124,9 @@ class Salary {
             });
         }
 
-        const id = req.params.id;
+        const userid = req.params.id;
 
-        SalaryModal.findByIdAndUpdate(id, req.body)
+        SalaryModal.findOneAndUpdate({ userid: userid }, req.body)
             .then(data => {
                 if (!data) {
                     res.status(404).send({

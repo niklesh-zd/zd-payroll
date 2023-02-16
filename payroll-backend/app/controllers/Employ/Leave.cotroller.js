@@ -116,7 +116,7 @@ class Leave {
                 console.log(err)
             });
     }
- 
+
     async leave_delete(req, res) {
         try {
             console.log(req.params.id);
@@ -131,17 +131,29 @@ class Leave {
             res.send({ error });
         }
     }
+    async get_user_leave_id(req, res) {
+      const   userid=req.params.id
 
+        const datelFind = await LeaveModal.find({
+            userid: userid
+        })
+        if (!datelFind) {
+            return res.status(404).send({ message: "This user not Exist." });
+        }
+        res.send(datelFind)
+        console.log({ datelFind });
+
+    }
 
     async get_User_leave(req, res, next) {
-        
+
         const findLeave = await LeaveModal.find({
-             userid: req.query.id,
-             from_date : { $gte: req.query.from_date, $lte: req.query.to_date },
-             to_date : { $gte: req.query.from_date, $lte: req.query.to_date } 
-            });
+            userid: req.query.id,
+            from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
+            to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
+        });
         console.log("findLeave", findLeave);
-        res.send({findLeave})
+        res.send({ findLeave })
     }
 }
 
