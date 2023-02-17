@@ -25,6 +25,7 @@ app.get('/slip', (req, res) =>{
   res.sendFile(__dirname + '/pdf_generator/salarySlip.html')
 })
 
+
 app.post('/slip', (req, res) =>{
   pdf_genearation()
   console.log("button clicked")

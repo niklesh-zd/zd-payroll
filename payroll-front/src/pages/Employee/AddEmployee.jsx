@@ -58,7 +58,7 @@ function AddEmployee(props) {
             Swal.fire({
               icon: "success",
               title: "Successful",
-              text: "Emplooye Successfully Created!",
+              text: "Employee Successfully Created!",
             }).then(() => {
               navigate("/settings/manageprofile");
             });
@@ -193,7 +193,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Father Name:
+                        Father's Name:
                       </label>
                       <input
                         type="text"
@@ -203,7 +203,7 @@ function AddEmployee(props) {
                         value={fields.fatherName}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        placeholder="Father Name"
+                        placeholder="Father's Name"
                         style={{ textTransform: "capitalize" }}
                       />
                       <div className="errorMsg">{errors.fatherName}</div>
@@ -211,7 +211,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label>Contact Number</label>
+                      <label>Contact No</label>
                       <input
                         type="number"
                         maxLength="12"
@@ -245,7 +245,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label>Home Contact</label>
+                      <label>Home Contact No.</label>
                       <input
                         type="number"
                         maxLength="12"
@@ -306,40 +306,6 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="form-group">
-                      <label className="profile_details_text">Position</label>
-                      <select
-                        name="Position"
-                        className="form-control"
-                        value={fields.Position}
-                        onChange={(e) => handleChange(e)}
-                      >
-                        <option disabled={true} selected={true}>
-                          Choose Position
-                        </option>
-                        <option>Software Architect</option>
-                        <option>
-                          Engineering Project Manager/Engineering Manager
-                        </option>
-                        <option>
-                          Technical Lead/Engineering Lead/Team Lead
-                        </option>
-                        <option>Principal Software Engineer</option>
-                        <option>
-                          Senior Software Engineer/Senior Software Developer
-                        </option>
-                        <option>Software Engineer</option>
-                        <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
-                        <option>Intern Software Developer</option>
-                        <option>Other</option>
-                      </select>
-                      <div className="errorMsg">{errors.Position}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
@@ -387,6 +353,33 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="form-group">
+                      <label className="profile_details_text">Position</label>
+                      <select
+                        name="Position"
+                        className="form-control"
+                        value={fields.Position}
+                        onChange={(e) => handleChange(e)}
+                      >
+                        <option disabled={true} selected={true}>
+                          Choose Position
+                        </option>
+                        <option>Software Architect</option>
+                        <option>Project Manager</option>
+                        <option>Team Lead</option>
+                        <option>Principal Software Engineer</option>
+                        <option>Senior Software Developer</option>
+                        <option>Software Developer</option>
+                        <option>Junior Software Developer</option>
+                        <option>Intern Software Developer</option>
+                        <option>Other</option>
+                      </select>
+                      <div className="errorMsg">{errors.Position}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">Gender:</label>
@@ -412,7 +405,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Marital Status:
+                        Marital Status
                       </label>
 
                       <div onChange={(e) => handleChange(e)}>
@@ -695,7 +688,7 @@ function AddEmployee(props) {
                         Current Pin Code
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         name="current_pin_code"
                         minLength="2"
                         maxLength="50"
@@ -775,7 +768,7 @@ function AddEmployee(props) {
                         Permanent Pin Code
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         name="permanent_pin_code"
                         minLength="2"
                         maxLength="50"

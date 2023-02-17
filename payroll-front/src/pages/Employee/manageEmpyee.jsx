@@ -50,12 +50,19 @@ const ManageEmpyee = () => {
       name: "Employee Code",
       selector: "Employee_Code",
       sortable: true,
-      width: 30,
+      width: "150px",                       // added line here
+      headerStyle: (selector, id) => {
+        return { textAlign: "center" };   // removed partial line here
+      },
     },
     {
       name: "Name",
       selector: "First_Name",
       sortable: true,
+      width: "150px",                       // added line here
+      headerStyle: (selector, id) => {
+        return { textAlign: "center" };   // removed partial line here
+      },
     },
     {
       name: "Email",
@@ -77,6 +84,10 @@ const ManageEmpyee = () => {
     },
     {
       name: "Action",
+      width: "220px",                       // added line here
+      headerStyle: (selector, id) => {
+        return { textAlign: "center" };   // removed partial line here
+      },
       cell: (row) => (
         <>
           <span

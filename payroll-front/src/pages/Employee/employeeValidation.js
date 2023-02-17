@@ -3,6 +3,7 @@ export function validateForm(fields) {
   console.log("fields", fields);
   var formIsValid = true;
   let errObj = {};
+  let alfhaRegex = /^[A-Za-z]+$/;
   if (Object.keys(fields).length === 0) {
     console.log("Error");
     formIsValid = false;
@@ -11,15 +12,27 @@ export function validateForm(fields) {
   //     errObj['Employee_Code'] = '*Field is required'
   //     formIsValid = false
   // }
-  if (!fields.First_Name || fields.First_Name == "") {
+  if (
+    !fields.First_Name ||
+    fields.First_Name == "" ||
+    fields.First_Name.length < 3
+  ) {
     errObj["First_Name"] = "*Please Enter Fisrt Name.";
     formIsValid = false;
   }
-  if (!fields.Last_Name || fields.Last_Name == "") {
+  if (
+    !fields.Last_Name ||
+    fields.Last_Name == "" ||
+    fields.Last_Name.length < 3
+  ) {
     errObj["Last_Name"] = "*Please Enter Last Name.";
     formIsValid = false;
   }
-  if (!fields.fatherName || fields.fatherName == "") {
+  if (
+    !fields.fatherName ||
+    fields.fatherName == "" ||
+    fields.fatherName.length < 3
+  ) {
     errObj["fatherName"] = "*Please Enter Father Name.";
     formIsValid = false;
   }
@@ -114,7 +127,7 @@ export function validateForm(fields) {
     errObj["DEGREE"] = "*Field is required.";
     formIsValid = false;
   }
-  if (!fields.STREAM || fields.STREAM == "") {
+  if (!fields.STREAM || fields.STREAM == "" || fields.STREAM.length < 2) {
     errObj["STREAM"] = "*Please Enter Stream.";
     formIsValid = false;
   }
@@ -130,39 +143,71 @@ export function validateForm(fields) {
     errObj["PERCENTAGE_OF_MARKS"] = "*Please Enter Percentage";
     formIsValid = false;
   }
-  if (!fields.PERCENTAGE_OF_MARKS || fields.PERCENTAGE_OF_MARKS == "") {
-    errObj["PERCENTAGE_OF_MARKS"] = "*Please Enter Percentage";
-    formIsValid = false;
-  }
-  if (!fields.current_state || fields.current_state == "") {
+  if (
+    !fields.current_state ||
+    fields.current_state == "" ||
+    !alfhaRegex.test(fields.current_state) ||
+    fields.current_state.length < 2
+  ) {
     errObj["current_state"] = "*Please Enter State.";
     formIsValid = false;
   }
-  if (!fields.current_pin_code || fields.current_pin_code == "") {
-    errObj["current_pin_code"] = "*Please Enter Cuurent Pin.";
+  if (
+    !fields.current_pin_code ||
+    fields.current_pin_code.toString().length < 4 ||
+    fields.current_pin_code.toString().length > 8
+  ) {
+    errObj["current_pin_code"] = "*Please Enter Current Pin.";
     formIsValid = false;
   }
-  if (!fields.current_city || fields.current_city == "") {
+  if (
+    !fields.current_city ||
+    fields.current_city == "" ||
+    !alfhaRegex.test(fields.current_city) ||
+    fields.current_city.length < 3
+  ) {
     errObj["current_city"] = "*Please Enter City.";
     formIsValid = false;
   }
-  if (!fields.permanent_city || fields.permanent_city == "") {
+  if (
+    !fields.permanent_city ||
+    fields.permanent_city == "" ||
+    !alfhaRegex.test(fields.permanent_city) ||
+    fields.permanent_city.length < 3
+  ) {
     errObj["permanent_city"] = "*Please Enter City.";
     formIsValid = false;
   }
-  if (!fields.permanent_state || fields.permanent_state == "") {
+  if (
+    !fields.permanent_state ||
+    fields.permanent_state == "" ||
+    !alfhaRegex.test(fields.permanent_state) ||
+    fields.permanent_state.length < 2
+  ) {
     errObj["permanent_state"] = "*Please Enter State.";
     formIsValid = false;
   }
-  if (!fields.permanent_pin_code || fields.permanent_pin_code == "") {
+  if (
+    !fields.permanent_pin_code ||
+    fields.permanent_pin_code.toString().length < 4 ||
+    fields.permanent_pin_code.toString().length > 8
+  ) {
     errObj["permanent_pin_code"] = "*Please Enter Permanent Pin.";
     formIsValid = false;
   }
-  if (!fields.Current_Address || fields.Current_Address == "") {
+  if (
+    !fields.Current_Address ||
+    fields.Current_Address == "" ||
+    fields.Current_Address.length < 5
+  ) {
     errObj["Current_Address"] = "*Please Enter Current Address";
     formIsValid = false;
   }
-  if (!fields.Permanent_Address || fields.Permanent_Address == "") {
+  if (
+    !fields.Permanent_Address ||
+    fields.Permanent_Address == "" ||
+    fields.Permanent_Address.length < 5
+  ) {
     errObj["Permanent_Address"] = "*Please Enter Permanent Address";
     formIsValid = false;
   }

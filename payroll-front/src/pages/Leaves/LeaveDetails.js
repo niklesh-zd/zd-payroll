@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   console.log("empLeaveData", empLeaveData);
   const deleteLeave = (id) => {
     Swal.fire({
@@ -132,6 +133,11 @@ function LeaveDetails() {
         console.error("There was an error!", error);
       });
   }, []);
+  const filteredData = empLeaveData.filter((row) => {
+    return (
+      row.First_Name.toLowerCase().includes(searchTerm.toLowerCase()) 
+    );
+  });
   console.log("----", empLeaveData);
   return (
     <div>
@@ -139,18 +145,35 @@ function LeaveDetails() {
         <div className="ml-5 mr-5">
           <DataTable
             title={
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex" }}>
                 <h4>Leaves Details</h4>{" "}
-                <Link
+                  <Link
                   to="/settings/leave"
                   className="btn btn-primary btn-sm ml-5 mr-5"
                 >
                   Add Leave (+)
                 </Link>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
               </div>
             }
             columns={columns}
-            data={empLeaveData ? empLeaveData : []}
+            data={filteredData ? filteredData : []}
             pagination
             highlightOnHover
             search

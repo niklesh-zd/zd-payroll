@@ -84,7 +84,7 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
         {isMenuOpen && (
           <motion.div
             variants={menuAnimation}
-            initial="hidden"
+            // initial="hidden"
             animate="show"
             exit="hidden"
             className="menu_container"
