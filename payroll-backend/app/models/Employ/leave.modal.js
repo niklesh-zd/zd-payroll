@@ -23,7 +23,7 @@ const leave = Schema({
         required: true,
 
     },
-    to_date:{
+    to_date: {
         type: Date,
         required: true,
     },
@@ -31,7 +31,10 @@ const leave = Schema({
         type: String,
         required: true
     },
-
+    total_number_of_day: {
+        type: Number,
+        default: 0
+    }
 
 
 },
