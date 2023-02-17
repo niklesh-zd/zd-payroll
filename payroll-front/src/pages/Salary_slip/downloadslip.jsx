@@ -2,11 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-<<<<<<< HEAD
-
-
-=======
->>>>>>> anmol
 
 const Downloadslip = (props) => {
   console.log("props", props);
@@ -94,44 +89,6 @@ const Downloadslip = (props) => {
 
   //       // let tpd = resp.Total_Work_Days - leave + 1;
 
-<<<<<<< HEAD
-    useEffect(() => {
-        fetch('http://192.168.29.186:7071/Emp_Salary/get-one-user/' + id)
-            .then((res) => {
-                return res.json()
-            })
-            .then((resp) => {
-                console.log(resp);
-                // console.log(resp.Leave_taken);
-                const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
-                restimechange(doj);
-                // console.log('resp', resp);
-                resdatachange(resp)
-                let Tsalary = resp.base_salary
-
-
-                Settgross(Tsalary)
-                let leave = resp.Leave_taken;
-                Settotalleave(leave);
-                let TWD = resp.Total_Work_Days
-
-                const fiftyPercent = Tsalary / 2;
-                Settsalary(fiftyPercent);
-                const fortyPercent = fiftyPercent * 0.4;
-                Sethra(fortyPercent.toFixed(2));
-                const fifteenPercent = fiftyPercent * 0.15;
-                Setra(fifteenPercent.toFixed(2))
-                const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
-                Setflexib(FB.toFixed(0))
-
-                let finalsalary = resp.base_salary
-                let netp = finalsalary / TWD
-                let tpd = resp.Total_Work_Days - Number(leave) + 1
-                
-                // let netpay = leave = 0 ? finalsalary + netp : leave = leave > 0 ? netp * tpd : '' ;
-                let netpay = Number(finalsalary) + Number(netp);
-
-=======
   //       // let netpay = leave = 0 ? netp + tgross : leave = leave > 0 ? netp * tpd : '';
 
   //       let finalsalary = Tsalary;
@@ -204,7 +161,6 @@ const Downloadslip = (props) => {
       "Nineteen",
     ];
     const scales = ["Thousand", "Lakh"];
->>>>>>> anmol
 
     if (amount < 10) {
       return units[amount];
@@ -212,17 +168,6 @@ const Downloadslip = (props) => {
     if (amount < 20) {
       return teens[amount - 11];
     }
-<<<<<<< HEAD
-
-    let converter = require('number-to-words');
-    const fword = converter.toWords(Number(totalearn))
-
-
-    if (amount < 100000) {
-      return (
-        `${tens[Math.floor(amount / 10000) - 1]} ${tens ? "Thousand" : ""}` +
-        (amount % 10000 ? `  ${convertNumberToWords(amount % 10000)}` : "")
-=======
 
     if (amount < 100) {
       return (
@@ -235,7 +180,6 @@ const Downloadslip = (props) => {
       return (
         `${units[Math.floor(amount / 100)]} Hundred` +
         (amount % 100 ? ` and ${convertNumberToWords(amount % 100)}` : "")
->>>>>>> anmol
       );
     }
     // if (amount < 100000) {
@@ -244,67 +188,6 @@ const Downloadslip = (props) => {
     return "its too high";
   };
 
-<<<<<<< HEAD
-  const amount = 21000;
-  const fword = numword(amount);
-  console.log(fword);
-
-  return (
-    <div className="container">
-      <div className="row">
-        <form onSubmit={ButtonClick} href="/download">
-          {
-            <div
-              className=""
-              style={{
-                border: "1px solid black",
-                padding: "1%",
-                width: "100%",
-              }}
-            >
-              <div className="text-center lh-1 mb-2">
-                <h3 className="fw-bold" style={{ color: "#368bb5" }}>
-                  ZecData
-                </h3>{" "}
-                <h5 className="fw-bold text-dark">
-                  Payment slip for the month of{" "}
-                  {props.data.Salary_Slip_Month_Year} 2023
-                </h5>
-              </div>
-
-              <div className="row text-white">
-                <div className="col-md-6 border-top border-dark">
-                  <div className="row" style={{ backgroundColor: "#368bb5" }}>
-                    <div className="col-md-6">
-                      <div>
-                        {" "}
-                        <span className="fw-bolder">Name :</span>{" "}
-                        <small className="ms-3">
-                          {props.data.Employee_name}
-                        </small>{" "}
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div>
-                        {" "}
-                        <span className="fw-bolder">EMP Code :</span>{" "}
-                        <small className="ms-3">
-                          {props.data.Employee_code}
-                        </small>{" "}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    className="row border-top border-dark"
-                    style={{ backgroundColor: "#368bb5" }}
-                  >
-                    <div className="col-md-6">
-                      <div>
-                        {" "}
-                        <span className="fw-bolder">Designation :</span>{" "}
-                        <small className="ms-3">{props.data.designation}</small>{" "}
-=======
     if (amount < 10000) {
       return (
         `${units[Math.floor(amount / 1000)]} Thousand` +
@@ -361,21 +244,14 @@ const Downloadslip = (props) => {
                         <small className="ms-3">
                           {props.data.Employee_name}
                         </small>{" "}
->>>>>>> anmol
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div>
                         {" "}
-<<<<<<< HEAD
-                        <span className="fw-bolder">Ac No. :</span>{" "}
-                        <small className="ms-3">
-                          {props.data.Bank_Account_Number}
-=======
                         <span className="fw-bolder">EMP Code :</span>{" "}
                         <small className="ms-3">
                           {props.data.Employee_code}
->>>>>>> anmol
                         </small>{" "}
                       </div>
                     </div>
@@ -385,23 +261,6 @@ const Downloadslip = (props) => {
                     className="row border-top border-dark"
                     style={{ backgroundColor: "#368bb5" }}
                   >
-<<<<<<< HEAD
-                    <div className="col-md-6 border-bottom border-dark">
-                      <div>
-                        {" "}
-                        <span className="fw-bolder ">
-                          Date Of Joining :
-                        </span>{" "}
-                        <small className="ms-3">{doj}</small>
-                      </div>
-                    </div>
-                    <div className="col-md-6 border-bottom border-dark">
-                      <div>
-                        {" "}
-                        <span className="fw-bolder">IFSC :</span>{" "}
-                        <small className="ms-3">
-                          {props.data.Bank_IFSC_Code}
-=======
                     <div className="col-md-6">
                       <div>
                         {" "}
@@ -415,15 +274,10 @@ const Downloadslip = (props) => {
                         <span className="fw-bolder">Ac No. :</span>{" "}
                         <small className="ms-3">
                           {props.data.Bank_Account_Number}
->>>>>>> anmol
                         </small>{" "}
                       </div>
                     </div>
                   </div>
-<<<<<<< HEAD
-                </div>
-
-=======
 
                   <div
                     className="row border-top border-dark"
@@ -450,7 +304,6 @@ const Downloadslip = (props) => {
                   </div>
                 </div>
 
->>>>>>> anmol
                 <div
                   className="col-md-6"
                   style={{ backgroundColor: "#368bb5" }}
@@ -633,6 +486,5 @@ const Downloadslip = (props) => {
       </div>
     </div>
   );
-};
 
 export default Downloadslip;
