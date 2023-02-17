@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [monthName, setMonthName] = useState('')
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch("http://localhost:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -23,7 +23,7 @@ const Dashboard = () => {
   var marchHolidays = []
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/Holiday/get-holiday")
+      .fetch("http://localhost:7071/Holiday/get-holiday")
       .then((res) => {
         return res.json();
       })

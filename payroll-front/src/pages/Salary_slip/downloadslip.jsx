@@ -24,7 +24,7 @@ const Downloadslip = (props) => {
   useEffect(() => {
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://localhost:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         console.log("res", res.data.findLeave);
@@ -52,7 +52,7 @@ const Downloadslip = (props) => {
 //   useEffect(() => {
 //     axios
 //       .post(
-//         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
+//         `http://localhost:7071/Emp_Leave/get-user-leave/${props.data.userid}`
 //       )
 //       .then((res) => {
 //         console.log("res-----------", res);
@@ -65,7 +65,7 @@ const Downloadslip = (props) => {
     );
   }, [showTotalLeave]);
   // useEffect(() => {
-  //   fetch("http://192.168.29.146:7071/Emp_Salary/get-one-user/" + id)
+  //   fetch("http://localhost:7071/Emp_Salary/get-one-user/" + id)
   //     .then((res) => {
   //       return res.json();
   //     })
