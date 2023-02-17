@@ -20,7 +20,7 @@ function LeaveDetails() {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://localhost:7071/Emp_Leave/leave_dalete/" + id.id, {
+          .fetch("http://192.168.29.186:7071/Emp_Leave/leave_dalete/" + id.id, {
             method: "POST",
           })
           .then((res) => {
@@ -100,7 +100,7 @@ function LeaveDetails() {
   ];
   useEffect(() => {
     axios
-      .get("http://localhost:7071/Emp_Leave/get_leave")
+      .get("http://192.168.29.186:7071/Emp_Leave/get_leave")
       .then((response) => {
         let filteredArr = [];
         let filteredObj = {};

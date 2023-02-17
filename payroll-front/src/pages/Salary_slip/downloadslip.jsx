@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 
+
+
 const Downloadslip = () => {
     const { id } = useParams();
     const [resdata, resdatachange] = useState({});
@@ -22,20 +24,25 @@ const Downloadslip = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:7071/Emp_Salary/get-one-user/' + id)
+        fetch('http://192.168.29.186:7071/Emp_Salary/get-one-user/' + id)
             .then((res) => {
                 return res.json()
             })
             .then((resp) => {
+                console.log(resp);
+                // console.log(resp.Leave_taken);
                 const doj = new Date(resp.Date_of_Joining).toLocaleDateString('pt-PT');
                 restimechange(doj);
-                console.log('resp',resp);
+                // console.log('resp', resp);
                 resdatachange(resp)
                 let Tsalary = resp.base_salary
+
+
                 Settgross(Tsalary)
                 let leave = resp.Leave_taken;
                 Settotalleave(leave);
                 let TWD = resp.Total_Work_Days
+
                 const fiftyPercent = Tsalary / 2;
                 Settsalary(fiftyPercent);
                 const fortyPercent = fiftyPercent * 0.4;
@@ -45,16 +52,13 @@ const Downloadslip = () => {
                 const FB = Tsalary - fiftyPercent - fortyPercent - fifteenPercent;
                 Setflexib(FB.toFixed(0))
 
-
-                // let tpd = resp.Total_Work_Days - leave + 1;
+                let finalsalary = resp.base_salary
+                let netp = finalsalary / TWD
+                let tpd = resp.Total_Work_Days - Number(leave) + 1
                 
-                // let netpay = leave = 0 ? netp + tgross : leave = leave > 0 ? netp * tpd : '';
-
-                let finalsalary = Tsalary
-                let netp = Tsalary / TWD
+                // let netpay = leave = 0 ? finalsalary + netp : leave = leave > 0 ? netp * tpd : '' ;
                 let netpay = Number(finalsalary) + Number(netp);
 
-                // console.log('netpaay',Number(netpay).toFixed(0));
 
                 let npaybda = Number(netpay) / 2;
                 let npayhra = Number(npaybda) * 0.4;
@@ -84,43 +88,10 @@ const Downloadslip = () => {
             })
         })
     }
-    let numword = function convertNumberToWords(amount) {
-        const units = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-        const tens = ['Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-        const teens = ['Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-        const scales = ['Thousand', 'Lakh',];
 
-        if (amount < 10) {
-            return units[amount];
-        }
-        if (amount < 20) {
-            return teens[amount - 11];
-        }
+    let converter = require('number-to-words');
+    const fword = converter.toWords(Number(totalearn))
 
-        if (amount < 100) {
-            return tens[Math.floor(amount / 10) - 1] + (amount % 10 ? ` ${convertNumberToWords(amount % 10)}` : '');
-        }
-
-        if (amount < 1000) {
-            return `${units[Math.floor(amount / 100)]} Hundred` + (amount % 100 ? ` and ${convertNumberToWords(amount % 100)}` : '');
-        }
-
-        if (amount < 10000) {
-            return `${units[Math.floor(amount / 1000)]} Thousand` + (amount % 1000 ? ` and ${convertNumberToWords(amount % 1000)}` : '');
-        }
-        
-        if (amount < 100000) {
-            return `${tens[Math.floor(amount / 10000) - 1]} ${tens ? 'Thousand' : ""}`  + (amount % 10000 ? `  ${convertNumberToWords(amount % 10000)}` : '');
-        }
-        // if (amount < 100000) {
-        //     return `${tens[Math.floor(amount / 10000) - 1] } Thousand` + (amount % 10000 ? ` and ${convertNumberToWords(amount % 10000)}` : '');
-        // } {amount = Number(amount) = tens[Math.floor(amount / 10000) - 1] ? }${amount < 10000 ? `thousend` : ''} 
-        return 'its too high';
-    }
-
-    const amount = 21000;
-    const fword = numword(amount)
-console.log(fword);
 
     return (
         <div className="container mt-5 mb-5">

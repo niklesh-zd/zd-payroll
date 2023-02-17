@@ -99,20 +99,18 @@ function Salary() {
         Setstartdate('2023-12-01');
         Setenddate('2023-12-31');
         break;
-      default:
-        Setmonth('January')
-        setInputValue('31');
-        Setstartdate('2023-01-01');
-        Setenddate('2023-01-31');
+      
     }
   }
 
 
   function getSalaryData(data) {
     if (data) {
-      axios.post('http://localhost:7071/Emp_Salary/salary', data)
+      console.log('data',data);
+      axios.post('http://192.168.29.186:7071/Emp_Salary/salary', data)
         .then((res) => {
-          console.log('res', res);
+          console.log('res------------------', res);
+        }).then(()=>{
           navigate("/download" + id)
         })
         .catch(error => {
@@ -124,39 +122,23 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault()
-    axios.post('http://localhost:7071/Holiday/get_holiday', fields)
+    axios.post('http://192.168.29.186:7071/Holiday/get_holiday', fields)
       .then((response) => {
+        console.log('leavetaken',leavetaken);
         let holiday = response.data.length;
         let calholiday = inputValue - holiday;
         getSalaryData({ Total_Work_Days: calholiday, Leave_taken: leavetaken, ...fields })
       })
   }
-
+  
   useEffect(() => {
-    console.log('month',month);
-    setFields({ from_date: startdate, end_date: enddate, Salary_Slip_Month_Year: month, ...empdata });
-  }, [startdate, enddate, month])
-
-
-  useEffect(() => {
-    axios.post('http://localhost:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
-      const arr = res.data;
-      let total_leave = 0;
-      arr.map((e) => {
-        total_leave = total_leave + e.leave_type;
-      })
-      Setleavetaken(total_leave);
-    })
-  }, [])
-
-  useEffect(() => {
-    fetch('http://localhost:7071/emp/emp_1/' + id)
+    fetch('http://192.168.29.186:7071/emp/emp_1/' + id)
       .then((res) => {
         return res.json()
       })
       .then((resp) => {
-        console.log('resp.Present_day',resp.ADHAR);
-        let obje = { Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC, base_salary: resp.base_salary}
+        console.log('base_salary',resp.base_salary);
+        let obje = {base_salary: resp.base_salary, Employee_name: resp.First_Name, userid: resp._id, Employee_code: resp.Employee_Code, designation: resp.Position, Date_of_Joining: resp.date_of_joining, Employee_PAN: resp.PAN_No, Employee_Adhar: resp.ADHAR, Bank_Account_Number: resp.Bank_No, Bank_IFSC_Code: resp.Bank_IFSC}
         // console.log(resp._id, "userid8888-------------88");
         empdatachange(obje,)
       })
@@ -164,6 +146,26 @@ function Salary() {
         console.log(err.message)
       })
   }, [])
+  
+  useEffect(() => {
+    console.log('month',month);
+    setFields({ from_date: startdate, end_date: enddate, Salary_Slip_Month_Year: month, ...empdata });
+  }, [startdate, enddate, month])
+
+
+  useEffect(() => {
+    axios.post('http://192.168.29.186:7071/Emp_Leave/get_User_leave/' + id).then((res) => {
+      console.log(res);
+      const arr = res.data;
+      let total_leave = 0;
+      arr.map((e) => {
+        total_leave = total_leave + e.leave_type;
+
+      })
+      Setleavetaken(total_leave);
+    })
+  }, [])
+
 
 
   return (
