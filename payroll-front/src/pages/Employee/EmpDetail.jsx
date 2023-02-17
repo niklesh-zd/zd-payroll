@@ -14,7 +14,11 @@ const EmpDetail = () => {
     navigate("/settings/userleavedetails" + id);
   };
   useEffect(() => {
+<<<<<<< HEAD
     fetch("http://192.168.29.186:7071/emp/emp_1/" + id)
+=======
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+>>>>>>> anmol
       .then((res) => {
         return res.json();
       })
@@ -38,7 +42,11 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
+<<<<<<< HEAD
           .fetch("http://192.168.29.186:7071/emp/delete_emp/" + id, {
+=======
+          .fetch("http://192.168.29.146:7071/emp/delete_emp/" + id, {
+>>>>>>> anmol
             method: "POST",
           })
           .then((res) => {

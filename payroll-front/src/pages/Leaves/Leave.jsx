@@ -28,7 +28,11 @@ const Leaves = () => {
   console.log("leavesData", leavesData);
   useEffect(() => {
     window
+<<<<<<< HEAD
       .fetch("http://192.168.29.186:7071/emp/get_employ")
+=======
+      .fetch("http://192.168.29.146:7071/emp/get_employ")
+>>>>>>> anmol
       .then((res) => {
         return res.json();
       })
@@ -56,7 +60,11 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
+<<<<<<< HEAD
       .post("http://192.168.29.186:7071/Emp_Leave/leave", leavesData)
+=======
+      .post("http://192.168.29.146:7071/Emp_Leave/leave", leavesData)
+>>>>>>> anmol
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {

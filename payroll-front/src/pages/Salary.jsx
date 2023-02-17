@@ -2,6 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { getSnackbarContentUtilityClass } from "@mui/material";
+>>>>>>> anmol
 import Downloadslip from "./Salary_slip/downloadslip";
 
 function Salary() {
@@ -101,16 +105,46 @@ function Salary() {
     }
   };
 
+<<<<<<< HEAD
 
+=======
+  // function getSalaryData(data) {
+  //   if (data) {
+  //     axios
+  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
+  //       .then((res) => {
+  //         console.log("res", res);
+  //         navigate("/download" + id);
+  //       })
+  //       .catch((error) => {
+  //         console.error("There was an error!", error);
+  //       });
+  //   }
+  // }
+>>>>>>> anmol
 
   function handlesubmit(e) {
     e.preventDefault();
     axios
+<<<<<<< HEAD
       .post("http://localhost:7071/Holiday/get_holiday", fields)
+=======
+      .post("http://192.168.29.146:7071/Holiday/get_holiday", fields)
+>>>>>>> anmol
       .then((response) => {
         console.log('response',response);
         let holidays = response.data.length;
         setTotalHolydays(holidays)
+<<<<<<< HEAD
+=======
+        // setFields({ ...fields, holidays: holidays})
+        // let calholiday = inputValue - holiday;
+        // getSalaryData({
+        //   Total_Work_Days: calholiday,
+        //   Leave_taken: leavetaken,
+        //   ...fields,
+        // });
+>>>>>>> anmol
       }).then(()=>{
         setSwitchToDownload(true)
         console.log('fields',fields);
@@ -128,7 +162,11 @@ function Salary() {
   }, [startdate, enddate, month]);
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch("http://localhost:7071/emp/emp_1/" + id)
+=======
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+>>>>>>> anmol
       .then((res) => {
         return res.json();
       })

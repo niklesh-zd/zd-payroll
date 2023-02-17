@@ -51,7 +51,11 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
+<<<<<<< HEAD
         .post("http://192.168.29.186:7071/emp/add_employ", fields)
+=======
+        .post("http://192.168.29.146:7071/emp/add_employ", fields)
+>>>>>>> anmol
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -78,7 +82,11 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
+<<<<<<< HEAD
         .post("http://192.168.29.186:7071/emp/update/" + props.data._id, fields)
+=======
+        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
+>>>>>>> anmol
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
