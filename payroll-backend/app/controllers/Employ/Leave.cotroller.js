@@ -55,7 +55,20 @@ class Leave {
             else {
                 today = 0.5;
             }
+            let fromDate = new Date(from_date);
+            let toDate = new Date(to_date);
+            const diffInMs = toDate - fromDate;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+            console.log('diffInDays', diffInDays);
 
+            const leave = new LeaveModal({
+                userid,
+                leave_type: today,
+                from_date,
+                to_date,
+                reason_for_leave,
+                total_number_of_day: diffInDays
+            });
 
             // validation for two documents in mongodb for leave's date range in two month
 
@@ -175,7 +188,7 @@ class Leave {
         }
     }
     async get_user_leave_id(req, res) {
-      const   userid=req.params.id
+        const userid = req.params.id
 
         const datelFind = await LeaveModal.find({
             userid: userid

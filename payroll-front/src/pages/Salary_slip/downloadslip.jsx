@@ -2,21 +2,15 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
-  console.log("props", props);
   const { id } = useParams();
-  const [resdata, resdatachange] = useState({});
-  const [restime, restimechange] = useState("");
-  const [tsalary, Settsalary] = useState("");
   const [hra, Sethra] = useState("");
   const [ra, Setra] = useState("");
   const [flexib, Setflexib] = useState("");
-  const [Npfb, Setnpayfb] = useState("");
-  const [totalearn, Settotalearn] = useState("");
   const [basicDA, setBasicDA] = useState("");
   const [netPay, setNetPay] = useState(0);
-  const [netPayBasicDA, setNetPayBasicDA] = useState(0);
   const [showTotalLeave, setShowTotalLeave] = useState("");
   const holidays = props.holidays;
   const baseSalary = props.data.base_salary;
@@ -52,7 +46,7 @@ const Downloadslip = (props) => {
 //   useEffect(() => {
 //     axios
 //       .post(
-//         `http://localhost:7071/Emp_Leave/get-user-leave/${props.data.userid}`
+//         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
 //       )
 //       .then((res) => {
 //         console.log("res-----------", res);
@@ -65,7 +59,7 @@ const Downloadslip = (props) => {
     );
   }, [showTotalLeave]);
   // useEffect(() => {
-  //   fetch("http://localhost:7071/Emp_Salary/get-one-user/" + id)
+  //   fetch("http://192.168.29.146:7071/Emp_Salary/get-one-user/" + id)
   //     .then((res) => {
   //       return res.json();
   //     })
@@ -125,86 +119,7 @@ const Downloadslip = (props) => {
       });
     });
   };
-  let numword = function convertNumberToWords(amount) {
-    const units = [
-      "Zero",
-      "One",
-      "Two",
-      "Three",
-      "Four",
-      "Five",
-      "Six",
-      "Seven",
-      "Eight",
-      "Nine",
-    ];
-    const tens = [
-      "Ten",
-      "Twenty",
-      "Thirty",
-      "Forty",
-      "Fifty",
-      "Sixty",
-      "Seventy",
-      "Eighty",
-      "Ninety",
-    ];
-    const teens = [
-      "Eleven",
-      "Twelve",
-      "Thirteen",
-      "Fourteen",
-      "Fifteen",
-      "Sixteen",
-      "Seventeen",
-      "Eighteen",
-      "Nineteen",
-    ];
-    const scales = ["Thousand", "Lakh"];
-
-    if (amount < 10) {
-      return units[amount];
-    }
-    if (amount < 20) {
-      return teens[amount - 11];
-    }
-
-    if (amount < 100) {
-      return (
-        tens[Math.floor(amount / 10) - 1] +
-        (amount % 10 ? ` ${convertNumberToWords(amount % 10)}` : "")
-      );
-    }
-
-    if (amount < 1000) {
-      return (
-        `${units[Math.floor(amount / 100)]} Hundred` +
-        (amount % 100 ? ` and ${convertNumberToWords(amount % 100)}` : "")
-      );
-    }
-
-    if (amount < 10000) {
-      return (
-        `${units[Math.floor(amount / 1000)]} Thousand` +
-        (amount % 1000 ? ` and ${convertNumberToWords(amount % 1000)}` : "")
-      );
-    }
-
-    if (amount < 100000) {
-      return (
-        `${tens[Math.floor(amount / 10000) - 1]} ${tens ? "Thousand" : ""}` +
-        (amount % 10000 ? `  ${convertNumberToWords(amount % 10000)}` : "")
-      );
-    }
-    // if (amount < 100000) {
-    //     return `${tens[Math.floor(amount / 10000) - 1] } Thousand` + (amount % 10000 ? ` and ${convertNumberToWords(amount % 10000)}` : '');
-    // } {amount = Number(amount) = tens[Math.floor(amount / 10000) - 1] ? }${amount < 10000 ? `thousend` : ''}
-    return "its too high";
-  };
-
-  const amount = 21000;
-  const fword = numword(amount);
-  console.log(fword);
+  const fword = converter.toWords(netPay)
 
   return (
     <div className="container">
@@ -433,7 +348,7 @@ const Downloadslip = (props) => {
                             (netPay / 2 +
                               (netPay / 2) * 0.4 +
                               (netPay / 2) * 0.15))
-                        ).toFixed(2)}
+                        ).toFixed(0)}
                       </td>
                       <td>Additional</td>
                       <td>0.00</td>
