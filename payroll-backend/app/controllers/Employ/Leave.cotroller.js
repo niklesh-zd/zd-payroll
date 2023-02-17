@@ -6,7 +6,11 @@ const LeaveModal = require('../../models/Employ/leave.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model')
 const moment = require('moment');
 
-const Emp = require('../Employ/EmpInfo.cotroller')
+const Emp = require('../Employ/EmpInfo.cotroller');
+
+var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
+
+console.log(`month list length : ${month_array.length}`);
 
 class Leave {
     async Leave(req, res) {
@@ -46,10 +50,10 @@ class Leave {
                 return res.send({ message: "Please fill in all fields." });
             var today = ''
             if (leave_type == 'full') {
-                today = 1
+                today = 1;
             }
             else {
-                today = 0.5
+                today = 0.5;
             }
             let fromDate = new Date(from_date);
             let toDate = new Date(to_date);
@@ -66,8 +70,54 @@ class Leave {
                 total_number_of_day: diffInDays
             });
 
-            //STORE YOUR LOGIN DATA IN DB 
-            await leave.save();
+            // validation for two documents in mongodb for leave's date range in two month
+
+            if (moment(to_date, "YYYY-MM-DD").isAfter(moment(from_date, "YYYY-MM-DD"))){
+
+                if (Number(from_date.split("-")[0]) % 4 == 0){
+                    month_array[1] = '29'
+                }
+                else{
+                    month_array[1] = '28'
+                }
+
+                console.log(from_date.split("-"))
+                console.log(to_date.split("-"))
+                var to_date_split = to_date.split("-")[0] + "-" + from_date.split("-")[1] + "-" + month_array[moment(from_date, "YYYY-MM-DD").month()];
+                var from_date_split = from_date.split("-")[0] + "-" + to_date.split("-")[1] + "-01";
+                console.log("from date split " + from_date_split);
+                console.log("to date split " + to_date_split);
+                const leave_1 = new LeaveModal({
+                    userid,
+                    leave_type: today,
+                    from_date,
+                    to_date : to_date_split,
+                    reason_for_leave
+                });
+
+                const leave_2 = new LeaveModal({
+                    userid,
+                    leave_type: today,
+                    from_date : from_date_split,
+                    to_date,
+                    reason_for_leave
+                });
+
+                await leave_1.save();
+                await leave_2.save();
+            }
+            else{
+                const leave = new LeaveModal({
+                    userid,
+                    leave_type: today,
+                    from_date,
+                    to_date,
+                    reason_for_leave
+                });
+    
+                //STORE YOUR LOGIN DATA IN DB 
+                await leave.save();
+            }
             // console.log({ leave });
             res.status(200).send({ success: true })
 
