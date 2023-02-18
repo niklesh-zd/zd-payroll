@@ -4,6 +4,7 @@
 const express = require("express");
 const LeaveModal = require('../../models/Employ/leave.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model')
+const HolidayModal = require('../../models/Employ/Holiday.modal')
 const moment = require('moment');
 
 const Emp = require('../Employ/EmpInfo.cotroller');
@@ -55,20 +56,6 @@ class Leave {
             else {
                 today = 0.5;
             }
-            let fromDate = new Date(from_date);
-            let toDate = new Date(to_date);
-            const diffInMs = toDate - fromDate;
-            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
-            console.log('diffInDays', diffInDays);
-
-            const leave = new LeaveModal({
-                userid,
-                leave_type: today,
-                from_date,
-                to_date,
-                reason_for_leave,
-                total_number_of_day: diffInDays
-            });
 
             // validation for two documents in mongodb for leave's date range in two month
 
@@ -82,8 +69,14 @@ class Leave {
                 }
                 var to_date_split = to_date.split("-")[0] + "-" + from_date.split("-")[1] + "-" + month_array[moment(from_date, "YYYY-MM-DD").month()];
                 var from_date_split = from_date.split("-")[0] + "-" + to_date.split("-")[1] + "-01";
-                console.log("from date split " + from_date_split);
-                console.log("to date split " + to_date_split);
+
+                // calculating leaves first part
+                const holiday_1 = await HolidayModal.find({
+                    holiday_date: { $gte:from_date, $lte:to_date_split }
+                });
+                var diff_between_leaves_days_1 = (moment(to_date_split, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
+                var total_leave_1 = diff_between_leaves_days_1 - holiday_1.length
+
                 const leave_1 = new LeaveModal({
                     userid,
                     leave_type: today,
@@ -92,12 +85,20 @@ class Leave {
                     reason_for_leave
                 });
 
+                // calculating leaves second part
+                const holiday_2 = await HolidayModal.find({
+                    holiday_date: { $gte:from_date_split, $lte:to_date }
+                });
+                var diff_between_leaves_days_2 = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date_split, "YYYY-MM-DD"), "days")) + 1;
+                var total_leave_2 = diff_between_leaves_days_2 - holiday_2.length
+
                 const leave_2 = new LeaveModal({
                     userid,
                     leave_type: today,
                     from_date: from_date_split,
                     to_date,
-                    reason_for_leave
+                    reason_for_leave,
+                    total_number_of_day: total_leave_2
                 });
 
                 await leave_1.save();
@@ -109,7 +110,8 @@ class Leave {
                     leave_type: today,
                     from_date,
                     to_date,
-                    reason_for_leave
+                    reason_for_leave,
+                    total_number_of_day: total_leave
                 });
 
                 //STORE YOUR LOGIN DATA IN DB 
