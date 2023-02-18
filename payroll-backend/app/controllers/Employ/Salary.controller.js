@@ -37,7 +37,7 @@ class Salary {
                 try {
                     console.log(userid, '...........');
                     const userDelete = await SalaryModal.findByIdAndDelete(userid)
-                    console.log(userDelete,'.........');
+                    console.log(userDelete, '.........');
                     if (!userDelete) {
                         return res.status(404).send({ message: "This user not Exist." });
                     }
@@ -109,12 +109,16 @@ class Salary {
     }
 
     async get_salary(req, res, next) {
+        try {
+            SalaryModal.find({})
+                .then(function (leave) {
+                    res.send(leave);
+                }).catch(next);
 
-        SalaryModal.find({})
-            .then(function (leave) {
-                res.send(leave);
-            }).catch(next);
-
+        }
+        catch (err) {
+            res.send({ "error": err })
+        }
     }
     async update_salary(req, res) {
         console.log('update runnig');

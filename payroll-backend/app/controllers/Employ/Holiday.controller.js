@@ -39,24 +39,53 @@ class Holiday {
         }
     }
 
-    async get_Holiday_all(req, res,next) {
-
-        HolidayModal.find({}).sort({ _id: -1 })
-            .then(function (leave) {
-                res.send(leave);
-            }).catch(next);
+    async get_Holiday_all(req, res, next) {
+        try {
+            HolidayModal.find({}).sort({ _id: -1 })
+                .then(function (leave) {
+                    res.send(leave);
+                }).catch(next);
+        }
+        catch (err) {
+            res.send({ "eroor": err })
+        }
     }
     async get_holiday(req, res, next) {
-
-        var FromDate = req.body.from_date;
-        var EndDate = req.body.end_date;
-        console.log('runnnig holiday..');
-        HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
-        ).sort({ _id: -1 }).then(function (employee) {
-            res.send(employee);
-        }).catch(next);
+        try {
+            var FromDate = req.body.from_date;
+            var EndDate = req.body.end_date;
+            console.log('runnnig holiday..');
+            HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
+            ).sort({ _id: -1 }).then(function (employee) {
+                res.send(employee);
+            }).catch(next);
+        } catch (err) {
+            res.send({ "error": err })
+        }
     }
+    async get_Fastival(req, res, next) {
+        try {
+            console.log('runiin holiday');
+            var FromDate = req.body.from_date;
+            var EndDate = req.body.end_date;
+            console.log('-----------------',FromDate);
+            console.log(EndDate);
+            HolidayModal.find({
+                $and: [
+                    { holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } },
+                    { holiday_type: 'Festival'}
+                  
+                ]
+            }
+            ).sort({ _id: -1 }).then(function (employee) {
+                res.send(employee)
 
+            }).catch(next);
+        } catch (err) {
+            res.send({ "error": err })
+            console.log(err);
+        }
+    }
     async update_holiday(req, res) {
         console.log('update runnig');
         if (!req.body) {

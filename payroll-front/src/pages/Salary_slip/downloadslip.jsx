@@ -51,17 +51,16 @@ const Downloadslip = (props) => {
         Setra((baseSalary / 2) * 0.15);
         Setflexib(
           baseSalary -
-            baseSalary / 2 -
-            (baseSalary / 2) * 0.4 -
-            (baseSalary / 2) * 0.15
+          baseSalary / 2 -
+          (baseSalary / 2) * 0.4 -
+          (baseSalary / 2) * 0.15
         );
       });
   }, []);
-
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
-        (props.data.monthDays - holidays - showTotalLeave + 1)
+      (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
   
@@ -108,7 +107,7 @@ const Downloadslip = (props) => {
                         {" "}
                         <span className="fw-bolder">Name :</span>{" "}
                         <small className="ms-3">
-                          {props.data.Employee_name}
+                          {props.data.Employee_name.toUpperCase()}
                         </small>{" "}
                       </div>
                     </div>
