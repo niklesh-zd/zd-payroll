@@ -68,13 +68,24 @@ class Holiday {
             console.log('runiin holiday');
             var FromDate = req.body.from_date;
             var EndDate = req.body.end_date;
-            console.log('-----------------',FromDate);
+            console.log('-----------------', FromDate);
             console.log(EndDate);
+            $and: [
+                { age: { $gte: 25 } },
+
+            ]
             HolidayModal.find({
                 $and: [
                     { holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } },
-                    { holiday_type: 'Festival'}
-                  
+
+                    {
+                        $or: [
+                            { holiday_type: 'Festival' },
+                            { holiday_type: 'independence day' },
+                            { holiday_type: ' gandhi jayanti' }
+                        ]
+                    }
+
                 ]
             }
             ).sort({ _id: -1 }).then(function (employee) {
