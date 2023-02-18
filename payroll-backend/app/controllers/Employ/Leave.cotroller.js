@@ -8,7 +8,7 @@ const moment = require('moment');
 
 const Emp = require('../Employ/EmpInfo.cotroller');
 
-var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
+var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
 
 console.log(`month list length : ${month_array.length}`);
 
@@ -72,17 +72,14 @@ class Leave {
 
             // validation for two documents in mongodb for leave's date range in two month
 
-            if (moment(to_date, "YYYY-MM-DD").isAfter(moment(from_date, "YYYY-MM-DD"))){
+            if (moment(to_date, "YYYY-MM-DD").isAfter(moment(from_date, "YYYY-MM-DD"))) {
 
-                if (Number(from_date.split("-")[0]) % 4 == 0){
+                if (Number(from_date.split("-")[0]) % 4 == 0) {
                     month_array[1] = '29'
                 }
-                else{
+                else {
                     month_array[1] = '28'
                 }
-
-                console.log(from_date.split("-"))
-                console.log(to_date.split("-"))
                 var to_date_split = to_date.split("-")[0] + "-" + from_date.split("-")[1] + "-" + month_array[moment(from_date, "YYYY-MM-DD").month()];
                 var from_date_split = from_date.split("-")[0] + "-" + to_date.split("-")[1] + "-01";
                 console.log("from date split " + from_date_split);
@@ -91,14 +88,14 @@ class Leave {
                     userid,
                     leave_type: today,
                     from_date,
-                    to_date : to_date_split,
+                    to_date: to_date_split,
                     reason_for_leave
                 });
 
                 const leave_2 = new LeaveModal({
                     userid,
                     leave_type: today,
-                    from_date : from_date_split,
+                    from_date: from_date_split,
                     to_date,
                     reason_for_leave
                 });
@@ -106,7 +103,7 @@ class Leave {
                 await leave_1.save();
                 await leave_2.save();
             }
-            else{
+            else {
                 const leave = new LeaveModal({
                     userid,
                     leave_type: today,
@@ -114,7 +111,7 @@ class Leave {
                     to_date,
                     reason_for_leave
                 });
-    
+
                 //STORE YOUR LOGIN DATA IN DB 
                 await leave.save();
             }
@@ -129,23 +126,23 @@ class Leave {
         }
     }
 
-
-    async get_user_id(req, res) {
-
-    }
     async get_leave(req, res, next) {
-        const docs = await LeaveModal.aggregate([
-            {
-                $lookup: {
-                    from: "EmpInfo",
-                    localField: "userid",
-                    foreignField: "_id",
-                    as: "result"
+        try {
+            const docs = await LeaveModal.aggregate([
+                {
+                    $lookup: {
+                        from: "EmpInfo",
+                        localField: "userid",
+                        foreignField: "_id",
+                        as: "result"
+                    }
                 }
-            }
-        ]).sort({ _id: -1 })
-        res.send({ msg: docs })
-        console.log("docs", docs);
+            ]).sort({ _id: -1 })
+            res.send({ msg: docs })
+            console.log("docs", docs);
+        } catch (err) {
+            res.send({ "error": err })
+        }
     }
     async update_laeve(req, res) {
         console.log('update runnig');
@@ -167,7 +164,7 @@ class Leave {
             })
             .catch(err => {
                 res.status(500).send({
-                    message: "Error updating=" + id
+                    message: "Error updating=" + id, err
                 });
                 console.log(err)
             });
@@ -188,28 +185,36 @@ class Leave {
         }
     }
     async get_user_leave_id(req, res) {
-        const userid = req.params.id
+        try {
+            const userid = req.params.id
 
-        const datelFind = await LeaveModal.find({
-            userid: userid
-        })
-        if (!datelFind) {
-            return res.status(404).send({ message: "This user not Exist." });
+            const datelFind = await LeaveModal.find({
+                userid: userid
+            })
+            if (!datelFind) {
+                return res.status(404).send({ message: "This user not Exist." });
+            }
+            res.send(datelFind)
+            console.log({ datelFind });
         }
-        res.send(datelFind)
-        console.log({ datelFind });
+        catch (err) {
+            res.send({ "error": err })
+        }
 
     }
 
     async get_User_leave(req, res, next) {
-
-        const findLeave = await LeaveModal.find({
-            userid: req.query.id,
-            from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
-            to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
-        });
-        console.log("findLeave", findLeave);
-        res.send({ findLeave })
+        try {
+            const findLeave = await LeaveModal.find({
+                userid: req.query.id,
+                from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
+                to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
+            });
+            console.log("findLeave", findLeave);
+            res.send({ findLeave })
+        } catch (err) {
+            res.send({ "error": err })
+        }
     }
 }
 
