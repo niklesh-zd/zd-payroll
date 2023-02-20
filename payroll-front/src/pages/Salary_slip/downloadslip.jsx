@@ -2,9 +2,16 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+// import  { useRef } from "react";
+// import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
+import { width } from "@mui/system";
+
+// import jsPDF from 'jspdf';
 let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
+  // const selectedAreaRef = useRef(null);
   const { id } = useParams();
   const [hra, Sethra] = useState("");
   const [ra, Setra] = useState("");
@@ -64,25 +71,28 @@ const Downloadslip = (props) => {
     );
   }, [showTotalLeave]);
   
-
-  const ButtonClick = () => {
-    window.print();
-    fetch("/download.pdf").then((response) => {
-      response.blob().then((blob) => {
-        let alink = document.createElement("a");
-        alink.click();
-      });
+  const downloadPDF = () => {
+    const element = document.getElementById('pdf-download');
+    html2pdf(element, {
+      margin:       0,
+      filename:     'file.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 15,  },
+      jsPDF:        { unit: 'in', format: 'Tabloid', orientation: 'Landscape', },
     });
   };
+
+ 
+
   const fword = converter.toWords(netPay)
 
   return (
+    <div>
     <div className="container">
-      <div className="row">
-        <form onSubmit={ButtonClick} href="/download">
+      <div>
+        <form   className="mt-5" id="pdf-download">
           {
             <div
-              className=""
               style={{
                 border: "1px solid black",
                 padding: "1%",
@@ -99,8 +109,9 @@ const Downloadslip = (props) => {
                 </h5>
               </div>
 
-              <div className="row text-white">
-                <div className="col-md-6 border-top border-dark">
+              
+                <div className="row border border-dark text-white">
+                <div className="col-md-6 ">
                   <div className="row" style={{ backgroundColor: "#368bb5" }}>
                     <div className="col-md-6">
                       <div>
@@ -123,7 +134,7 @@ const Downloadslip = (props) => {
                   </div>
 
                   <div
-                    className="row border-top border-dark"
+                    className="row "
                     style={{ backgroundColor: "#368bb5" }}
                   >
                     <div className="col-md-6">
@@ -145,10 +156,10 @@ const Downloadslip = (props) => {
                   </div>
 
                   <div
-                    className="row border-top border-dark"
+                    className="row "
                     style={{ backgroundColor: "#368bb5" }}
                   >
-                    <div className="col-md-6 border-bottom border-dark">
+                    <div className="col-md-6">
                       <div>
                         {" "}
                         <span className="fw-bolder ">
@@ -157,7 +168,7 @@ const Downloadslip = (props) => {
                         <small className="ms-3">{doj}</small>
                       </div>
                     </div>
-                    <div className="col-md-6 border-bottom border-dark">
+                    <div className="col-md-6 ">
                       <div>
                         {" "}
                         <span className="fw-bolder">IFSC :</span>{" "}
@@ -173,7 +184,7 @@ const Downloadslip = (props) => {
                   className="col-md-6"
                   style={{ backgroundColor: "#368bb5" }}
                 >
-                  <div className="row border-top border-dark">
+                  <div className="row ">
                     <div className="col-md-6">
                       <div>
                         {" "}
@@ -197,7 +208,7 @@ const Downloadslip = (props) => {
                   </div>
 
                   <div
-                    className="row border-top border-dark"
+                    className="row "
                     style={{ backgroundColor: "#368bb5" }}
                   >
                     <div className="col-md-6 ">
@@ -216,14 +227,14 @@ const Downloadslip = (props) => {
                         </small>{" "}
                       </div>
                     </div>
-                    <div className="col-md-6 border-top border-bottom border-dark ">
+                    <div className="col-md-6  ">
                       <div>
                         {" "}
                         <span className="fw-bolder">Balance Days :</span>{" "}
                         <small className="ms-3">1</small>{" "}
                       </div>
                     </div>
-                    <div className="col-md-6 border-top border-bottom border-dark">
+                    <div className="col-md-6 ">
                       <div>
                         {" "}
                         <span className="fw-bolder">
@@ -236,6 +247,9 @@ const Downloadslip = (props) => {
                     </div>
                   </div>
                 </div>
+                </div>
+                <div className="text-white row">
+                
                 <table className="mt-1 table table-bordered border-dark">
                   <thead
                     className=" text-white"
@@ -327,28 +341,28 @@ const Downloadslip = (props) => {
               </div>
               <div className="row">
                 <div className="col-md-5">
-                  {" "}
-                  <br />{" "}
                   <span className="fw-bold">
                     Net Salary Payable(In Words)
                   </span>{" "}
                 </div>
-                <div className="border border-dark col-md-7">
-                  <div className="d-flex flex-column">
-                    <span className="text-danger">{fword} Only</span>
+                <div className=" col-md-7">
+                  <div className="d-flex flex-column ">
+                    <span className="text-danger ">{fword.toLocaleUpperCase()} ONLY</span>
                     <br></br>
-                    <span>
+                    <span className="">
                       *This is computer generated copy not need to stamp and
                       sign*
                     </span>{" "}
                   </div>
                 </div>
               </div>
-              <input type="submit" value={"Print"} />
+              {/* <input type="submit" value={"Print"}  onClick={downloadPDF}/> */}
             </div>
           }
         </form>
+          <button className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn p-1 text-white mt-2"style={{ backgroundColor: "#368bb5" }} onClick={downloadPDF}>Download PDF</button>
       </div>
+    </div>
     </div>
   );
 };

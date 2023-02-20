@@ -30,6 +30,7 @@ body {
 }
 
 .top_section {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -86,6 +87,7 @@ body {
   background: rgb(45, 51, 89);
 }
 .link_text {
+  cursor: pointer;
   white-space: nowrap;
   font-size: 15px;
 }

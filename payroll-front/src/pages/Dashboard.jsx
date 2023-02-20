@@ -76,7 +76,7 @@ const Dashboard = () => {
     <div id="root">
       <div className="container pt-5">
         <div className="row align-items-stretch">
-          <div className="c-dashboardInfo col-lg-3 col-md-6">
+          <a className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"  href="/settings/manageprofile">
             <div
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
@@ -91,7 +91,7 @@ const Dashboard = () => {
                 </h1>
               </div>
             </div>
-          </div>
+          </a>
 
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
