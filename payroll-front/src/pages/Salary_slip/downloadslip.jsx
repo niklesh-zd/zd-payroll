@@ -2,7 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
 let converter = require("number-to-words");
+=======
+let converter = require('number-to-words');
+>>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
 
 const Downloadslip = (props) => {
   const { id } = useParams();
@@ -18,7 +22,7 @@ const Downloadslip = (props) => {
   useEffect(() => {
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://localhost:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         console.log("res", res.data.findLeave);
@@ -38,17 +42,29 @@ const Downloadslip = (props) => {
         Setra((baseSalary / 2) * 0.15);
         Setflexib(
           baseSalary -
-            baseSalary / 2 -
-            (baseSalary / 2) * 0.4 -
-            (baseSalary / 2) * 0.15
+          baseSalary / 2 -
+          (baseSalary / 2) * 0.4 -
+          (baseSalary / 2) * 0.15
         );
       });
   }, []);
+<<<<<<< HEAD
 
+=======
+  //   useEffect(() => {
+  //     axios
+  //       .post(
+  //         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
+  //       )
+  //       .then((res) => {
+  //         console.log("res-----------", res);
+  //       });
+  //   }, []);
+>>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
-        (props.data.monthDays - holidays - showTotalLeave + 1)
+      (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
 
@@ -61,7 +77,11 @@ const Downloadslip = (props) => {
       });
     });
   };
+<<<<<<< HEAD
   const fword = converter.toWords(netPay);
+=======
+  const fword = converter.toWords(netPay)
+>>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
 
   return (
     <div className="container">
@@ -94,7 +114,7 @@ const Downloadslip = (props) => {
                         {" "}
                         <span className="fw-bolder">Name :</span>{" "}
                         <small className="ms-3">
-                          {props.data.Employee_name}
+                          {props.data.Employee_name.toUpperCase()}
                         </small>{" "}
                       </div>
                     </div>

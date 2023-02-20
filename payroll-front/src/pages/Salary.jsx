@@ -104,7 +104,7 @@ function Salary() {
   // function getSalaryData(data) {
   //   if (data) {
   //     axios
-  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
+  //       .post("http://localhost:7071/Emp_Salary/salary", data)
   //       .then((res) => {
   //         console.log("res", res);
   //         navigate("/download" + id);
@@ -118,7 +118,7 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     axios
-      .post("http://192.168.29.146:7071/Holiday/get_holiday", fields)
+      .post("http://localhost:7071/Holiday/get_holiday", fields)
       .then((response) => {
         console.log('response',response);
         let holidays = response.data.length;
@@ -147,7 +147,7 @@ function Salary() {
   }, [startdate, enddate, month]);
 
   useEffect(() => {
-    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+    fetch("http://localhost:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })

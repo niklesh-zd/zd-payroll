@@ -31,7 +31,11 @@ const Leaves = () => {
 
   useEffect(() => {
     window
+<<<<<<< HEAD
       .fetch("http://192.168.29.186:7071/emp/get_employ")
+=======
+      .fetch("http://localhost:7071/emp/get_employ")
+>>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
       .then((res) => {
         return res.json();
       })
@@ -64,7 +68,11 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
+<<<<<<< HEAD
       .post("http://192.168.29.186:7071/Emp_Leave/leave", leavesData)
+=======
+      .post("http://localhost:7071/Emp_Leave/leave", leavesData)
+>>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {

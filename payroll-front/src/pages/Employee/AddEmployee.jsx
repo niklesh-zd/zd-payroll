@@ -51,7 +51,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/add_employ", fields)
+        .post("http://localhost:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -78,7 +78,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
+        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -388,14 +388,14 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          checked={fields.gender == "Male"}
+                          defaultChecked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
                           type="radio"
                           value="Female"
                           name="gender"
-                          checked={fields.gender == "Female"}
+                          defaultChecked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -413,14 +413,14 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == "Single"}
+                          defaultChecked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
                           type="radio"
                           value="Married"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == "Married"}
+                          defaultChecked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>

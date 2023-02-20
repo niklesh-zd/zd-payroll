@@ -2,13 +2,14 @@ import '../Css/Dashbord.css'
 import { HiUserGroup } from 'react-icons/hi';
 import { BsFillEmojiLaughingFill } from 'react-icons/bs';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'
 const Dashboard = () => {
   const [totalEmployee, setTotalEmployee] = useState('')
   const [totalHoliday, setTotalHoliday] = useState('')
   const [monthName, setMonthName] = useState('')
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch("http://localhost:7072/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -22,66 +23,76 @@ const Dashboard = () => {
   }, []);
   var marchHolidays = []
   useEffect(() => {
-    window
-      .fetch("http://192.168.29.146:7071/Holiday/get-holiday")
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const firstDate = new Date(`${currentYear}-${currentMonth}-01`);
+    const startDate = firstDate.toISOString().slice(0, 10);
+    const lastDate = new Date(currentYear, currentMonth, 0);
+    const endDate = lastDate.toISOString().slice(0, 10);
+
+    const  datesobject = {from_date:"2023-11-01", end_date:"2023-11-30"}
+    axios
+      .post("http://localhost:7072/Holiday/get-fastival", datesobject)
       .then((res) => {
         return res.json();
       })
       .then((resp) => {
-        var today = new Date().toISOString()
-        resp.map((e) => {
-          if (e.holiday_date.includes("2023-02") && today.includes("2023-02")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("February")
-          }
-          if (e.holiday_date.includes("2023-03") && today.includes("2023-03")) {
-            setMonthName("March")
-            marchHolidays.push(e.holiday_date)
-          }
-          if (e.holiday_date.includes("2023-04") && today.includes("2023-04")) {
-            setMonthName("April")
-            marchHolidays.push(e.holiday_date)
-          }
-          if (e.holiday_date.includes("2023-05") && today.includes("2023-05")) {
-            setMonthName("May")
-            marchHolidays.push(e.holiday_date)
-          }
-          if (e.holiday_date.includes("2023-06") && today.includes("2023-06")) {
-            setMonthName("June")
-            marchHolidays.push(e.holiday_date)
-          }
-          if (e.holiday_date.includes("2023-07") && today.includes("2023-07")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("July")
+        console.warn('resp',resp);
+        // var today = new Date().toISOString()
+        // resp.map((e) => {
+        //   if (e.holiday_date.includes("2023-02") && today.includes("2023-02")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("February")
+        //   }
+        //   if (e.holiday_date.includes("2023-03") && today.includes("2023-03")) {
+        //     setMonthName("March")
+        //     marchHolidays.push(e.holiday_date)
+        //   }
+        //   if (e.holiday_date.includes("2023-04") && today.includes("2023-04")) {
+        //     setMonthName("April")
+        //     marchHolidays.push(e.holiday_date)
+        //   }
+        //   if (e.holiday_date.includes("2023-05") && today.includes("2023-05")) {
+        //     setMonthName("May")
+        //     marchHolidays.push(e.holiday_date)
+        //   }
+        //   if (e.holiday_date.includes("2023-06") && today.includes("2023-06")) {
+        //     setMonthName("June")
+        //     marchHolidays.push(e.holiday_date)
+        //   }
+        //   if (e.holiday_date.includes("2023-07") && today.includes("2023-07")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("July")
 
-          }
-          if (e.holiday_date.includes("2023-08") && today.includes("2023-08")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("August")
+        //   }
+        //   if (e.holiday_date.includes("2023-08") && today.includes("2023-08")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("August")
 
-          }
-          if (e.holiday_date.includes("2023-09") && today.includes("2023-09")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("September")
+        //   }
+        //   if (e.holiday_date.includes("2023-09") && today.includes("2023-09")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("September")
 
-          }
-          if (e.holiday_date.includes("2023-10") && today.includes("2023-10")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("October")
+        //   }
+        //   if (e.holiday_date.includes("2023-10") && today.includes("2023-10")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("October")
 
-          }
-          if (e.holiday_date.includes("2023-11") && today.includes("2023-11")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("November")
+        //   }
+        //   if (e.holiday_date.includes("2023-11") && today.includes("2023-11")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("November")
 
-          }
-          if (e.holiday_date.includes("2023-12") && today.includes("2023-12")) {
-            marchHolidays.push(e.holiday_date)
-            setMonthName("December")
+        //   }
+        //   if (e.holiday_date.includes("2023-12") && today.includes("2023-12")) {
+        //     marchHolidays.push(e.holiday_date)
+        //     setMonthName("December")
 
-          }
-        })
-        setTotalHoliday(marchHolidays.length)
+        //   }
+        // })
+        // setTotalHoliday(marchHolidays.length)
       })
       .catch((err) => {
         console.log(err);
