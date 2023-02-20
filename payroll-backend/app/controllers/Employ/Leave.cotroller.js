@@ -59,7 +59,7 @@ class Leave {
 
             // validation for two documents in mongodb for leave's date range in two month
 
-            if (moment(to_date, "YYYY-MM-DD").isAfter(moment(from_date, "YYYY-MM-DD"))) {
+            if (moment(to_date, "YYYY-MM-DD").month() != moment(from_date, "YYYY-MM-DD").month()) {
 
                 if (Number(from_date.split("-")[0]) % 4 == 0) {
                     month_array[1] = '29'
@@ -82,7 +82,8 @@ class Leave {
                     leave_type: today,
                     from_date,
                     to_date: to_date_split,
-                    reason_for_leave
+                    reason_for_leave,
+                    total_number_of_day : total_leave_1
                 });
 
                 // calculating leaves second part
@@ -105,6 +106,13 @@ class Leave {
                 await leave_2.save();
             }
             else {
+
+                const holiday = await HolidayModal.find({
+                    holiday_date: { $gte:from_date, $lte:to_date }
+                });
+                var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
+                var total_leave = diff_between_leaves_days - holiday.length
+
                 const leave = new LeaveModal({
                     userid,
                     leave_type: today,
@@ -198,7 +206,7 @@ class Leave {
         res.send(datelFind)
         console.log({ datelFind });
 
-    // }
+    }
 
     async get_User_leave(req, res, next) {
         try {
@@ -207,7 +215,6 @@ class Leave {
                 from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
                 to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
             });
-            console.log("findLeave", findLeave);
             res.send({ findLeave })
         } catch (err) {
             res.send({ "error": err })
@@ -245,9 +252,21 @@ class Leave {
         const emp_count = await EmpInfoModal.find()
         var absent_count = 0
         for (let i = 0; i< findLeave.length; i++){
+            console.log(moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD')))
+            console.log(moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD')))
+            console.log(today)
+
+            var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
+            var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
+
+            console.log(today.isSameOrBefore(to_date_) && today.isSameOrAfter(from_date_))
+            console.log(today.isSameOrBefore(to_date_))
+            console.log(today.isSameOrAfter(from_date_))
+            
+
             if (
-                moment(today, "YYYY-MM-DD").isSameOrBefore(findLeave[i].to_date) 
-                && moment(today, 'YYYY-MM-DD').isSameOrAfter(findLeave[i].from_date)
+                today.isSameOrBefore(to_date_) 
+                && today.isSameOrAfter(from_date_)
             ){
                 absent_count++
             }
