@@ -58,6 +58,14 @@ const EmpDetail = () => {
   };
   return (
     <div className="">
+      <div style={{ display: "flex",padding:"20px" }}>
+                  <Link
+                    to="/settings/manageprofile"
+                    className="btn btn-primary btn-bg ml-5 mr-5"
+                  >
+               Back
+                  </Link>
+                </div>
       <div className="card pt-3 pb-3 pl-10 pr-10">
         <div
           className="card-title"

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
@@ -78,6 +79,14 @@ const Downloadslip = (props) => {
 
   return (
     <div className="container">
+          <div style={{ display: "flex",padding:"20px" }}>
+                  <Link
+                    to="/settings/salary:id"
+                    className="btn btn-primary btn-bg ml-5 mr-5"
+                  >
+               Back
+                  </Link>
+                </div>
       <div className="row">
         <form onSubmit={ButtonClick} href="/download">
           {
@@ -219,7 +228,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6 border-top border-bottom border-dark ">
                       <div>
                         {" "}
-                        <span className="fw-bolder">Balance Days :</span>{" "}
+                        <span className="fw-bolder"> Balance Days :</span>{" "}
                         <small className="ms-3">1</small>{" "}
                       </div>
                     </div>

@@ -137,6 +137,14 @@ console.log(startdate,'-----',enddate);
     <Downloadslip data={fields} holidays={totalHolydays} />
   ) : (
     <div className="pt-5">
+      <div style={{ display: "flex",marginLeft:"80px"}}>
+                  <Link
+                    to="/settings/manageprofile"
+                    className="btn btn-primary btn-bg ml-5 mr-5"
+                  >
+               Back
+                  </Link>
+                </div>
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
