@@ -5,6 +5,7 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -119,20 +120,27 @@ function AddEmployee(props) {
   }, []);
   return (
     <div className="">
+        <div style={{ display: "flex",padding:"20px" }}>
+                  <Link
+                    to="/settings/manageprofile"
+                    className="btn btn-primary btn-bg ml-5 mr-5"
+                  >
+                    Back
+                  </Link>
+                </div>
       <form style={{ display: "flex" }}>
         <ToastContainer />
-
         <div className="px-4 pt-3">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
-                {props.data ? (
-                  <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div className="form-group">
-                        <label className="profile_details_text">
+                {props.data ? ( 
+                  <div className ="row">
+                    <div className ="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div className ="form-group">
+                        <label className ="profile_details_text">
                           Employee Code
                         </label>
                         <input

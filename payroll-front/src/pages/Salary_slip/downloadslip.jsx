@@ -2,16 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-// import  { useRef } from "react";
-// import html2canvas from 'html2canvas';
 import html2pdf from 'html2pdf.js';
-import { width } from "@mui/system";
-
-// import jsPDF from 'jspdf';
 let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
-  // const selectedAreaRef = useRef(null);
   const { id } = useParams();
   const [hra, Sethra] = useState("");
   const [ra, Setra] = useState("");
@@ -230,7 +224,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6  ">
                       <div>
                         {" "}
-                        <span className="fw-bolder">Balance Days :</span>{" "}
+                        <span className="fw-bolder"> Balance Days :</span>{" "}
                         <small className="ms-3">1</small>{" "}
                       </div>
                     </div>
