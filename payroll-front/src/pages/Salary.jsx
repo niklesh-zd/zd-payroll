@@ -8,103 +8,28 @@ function Salary() {
   const { id } = useParams();
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
-  const [selectedOption, setSelectedOption] = useState("January");
+  const [switchToDownload, setSwitchToDownload] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [startdate, Setstartdate] = useState("");
   const [enddate, Setenddate] = useState("");
   const [month, Setmonth] = useState("");
   const [totalHolydays, setTotalHolydays] = useState("");
-  const [switchToDownload, setSwitchToDownload] = useState(false);
+  const [prevMonths, setPrevMonths] = useState([]);
 
   const navigate = useNavigate();
   const handleOptionChange = (event) => {
-    console.log(event.target.value);
     setSelectedOption(event.target.value);
-    switch (event.target.value) {
-      case "January":
-        Setmonth("January");
-        setInputValue("31");
-        Setstartdate("2023-01-01");
-        Setenddate("2023-01-31");
-        break;
-      case "February":
-        Setmonth("February");
-        setInputValue("28");
-        Setstartdate("2023-02-01");
-        Setenddate("2023-02-28");
-        break;
-      case "March":
-        Setmonth("March");
-        setInputValue("31");
-        Setstartdate("2023-03-01");
-        Setenddate("2023-03-31");
-        break;
-      case "april":
-        Setmonth("april");
-        setInputValue("30");
-        Setstartdate("2023-04-01");
-        Setenddate("2023-04-30");
-        break;
-      case "may":
-        Setmonth("may");
-        setInputValue("31");
-        Setstartdate("2023-05-01");
-        Setenddate("2023-05-31");
-        break;
-      case "june":
-        Setmonth("june");
-        setInputValue("30");
-        Setstartdate("2023-06-01");
-        Setenddate("2023-06-30");
-        break;
-      case "july":
-        Setmonth("july");
-        setInputValue("31");
-        Setstartdate("2023-07-01");
-        Setenddate("2023-07-31");
-        break;
-      case "August":
-        Setmonth("August");
-        setInputValue("31");
-        Setstartdate("2023-08-01");
-        Setenddate("2023-08-31");
-        break;
-      case "September":
-        Setmonth("September");
-        setInputValue("30");
-        Setstartdate("2023-09-01");
-        Setenddate("2023-09-30");
-        break;
-      case "October":
-        Setmonth("October");
-        setInputValue("31");
-        Setstartdate("2023-10-01");
-        Setenddate("2023-10-31");
-        break;
-      case "november":
-        Setmonth("november");
-        setInputValue("30");
-        Setstartdate("2023-11-01");
-        Setenddate("2023-11-30");
-        break;
-      case "December":
-        Setmonth("December");
-        setInputValue("31");
-        Setstartdate("2023-12-01");
-        Setenddate("2023-12-31");
-        break;
-      default:
-        Setmonth("January");
-        setInputValue("31");
-        Setstartdate("2023-01-01");
-        Setenddate("2023-01-31");
-    }
+    // Setmonth("January");
+    // setInputValue("31");
+    Setstartdate(`${event.target.value}-01`);
+    Setenddate(`${event.target.value}-31`);
   };
-
+console.log(startdate,'-----',enddate);
   // function getSalaryData(data) {
   //   if (data) {
   //     axios
-  //       .post("http://localhost:7071/Emp_Salary/salary", data)
+  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
   //       .then((res) => {
   //         console.log("res", res);
   //         navigate("/download" + id);
@@ -114,15 +39,48 @@ function Salary() {
   //       });
   //   }
   // }
+  // Get the current month and year
+
+  const getPreviousMonths = () => {
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    let currentDate = new Date();
+    let previousMonths = [];
+
+    for (let i = 0; i < 12; i++) {
+      let date = new Date(currentDate);
+      date.setMonth(date.getMonth() - i);
+      let month = monthNames[date.getMonth()];
+      let year = date.getFullYear();
+      let format1 = `${month} ${year}`;
+      let format2 = `${year}-${('0' + (date.getMonth() + 1)).slice(-2)}`;
+      previousMonths.push({ format_1: format1, format_2: format2 });
+    }
+    setPrevMonths(previousMonths);
+    return previousMonths
+  };
 
   function handlesubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:7071/Holiday/get_holiday", fields)
+      .post("http://192.168.29.146:7071/Holiday/get_holiday", fields)
       .then((response) => {
-        console.log('response',response);
+        console.log("response", response);
         let holidays = response.data.length;
-        setTotalHolydays(holidays)
+        setTotalHolydays(holidays);
         // setFields({ ...fields, holidays: holidays})
         // let calholiday = inputValue - holiday;
         // getSalaryData({
@@ -130,10 +88,11 @@ function Salary() {
         //   Leave_taken: leavetaken,
         //   ...fields,
         // });
-      }).then(()=>{
-        setSwitchToDownload(true)
-        console.log('fields',fields);
       })
+      .then(() => {
+        setSwitchToDownload(true);
+        console.log("fields", fields);
+      });
   }
 
   useEffect(() => {
@@ -141,19 +100,21 @@ function Salary() {
       from_date: startdate,
       end_date: enddate,
       Salary_Slip_Month_Year: month,
-      monthDays:inputValue,
+      monthDays: inputValue,
       ...empdata,
     });
   }, [startdate, enddate, month]);
 
   useEffect(() => {
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    getPreviousMonths();
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
       .then((resp) => {
         let obje = {
           Employee_name: resp.First_Name,
+          Last_Name: resp.Last_Name,
           userid: resp._id,
           Employee_code: resp.Employee_Code,
           designation: resp.Position,
@@ -171,12 +132,11 @@ function Salary() {
       });
   }, []);
 
-  return (
-    switchToDownload ?
-    <Downloadslip data={fields} holidays={totalHolydays}/>
-    :
+  return switchToDownload ? (
+    <Downloadslip data={fields} holidays={totalHolydays} />
+  ) : (
     <div className="pt-5">
-      <div className="row">
+      <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
@@ -187,12 +147,12 @@ function Salary() {
                 <div className="row text-center pt-5">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                         <div>
                           {" "}
                           <span className="fw-bolder text-lg">Name :</span>{" "}
                           <small className="ms-3 text-lg fw-bolder">
-                            {empdata.Employee_name}
+                            {empdata.Employee_name + " " + empdata.Last_Name}
                           </small>{" "}
                         </div>
                       </div>
@@ -221,18 +181,16 @@ function Salary() {
                           value={selectedOption}
                           onChange={handleOptionChange}
                         >
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="april">April</option>
-                          <option value="may">may</option>
-                          <option value="june">june</option>
-                          <option value="july">july</option>
-                          <option value="August">August</option>
-                          <option value="September">September</option>
-                          <option value="October">October</option>
-                          <option value="november">november</option>
-                          <option value="December">December</option>
+                          <option selected disabled value="">
+                            please select an option
+                          </option>
+                          {prevMonths.map((month) => {
+                            return (
+                              <option key={month.format_1} value={month.format_2}>
+                                {month.format_1}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                     </div>

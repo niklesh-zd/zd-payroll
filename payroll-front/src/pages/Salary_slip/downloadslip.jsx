@@ -11,6 +11,7 @@ const Downloadslip = (props) => {
   const [flexib, Setflexib] = useState("");
   const [basicDA, setBasicDA] = useState("");
   const [netPay, setNetPay] = useState(0);
+  const [compensatoryLeaveState, setCompensatoryLeaveState] = useState(0);
   const [showTotalLeave, setShowTotalLeave] = useState("");
   const holidays = props.holidays;
   const baseSalary = props.data.base_salary;
@@ -18,19 +19,31 @@ const Downloadslip = (props) => {
   useEffect(() => {
     axios
       .post(
-        `http://localhost:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
-        console.log("res", res.data.findLeave);
         const arr = res.data.findLeave;
         let total_leave = 0;
+        let compensatoryLeave = 0;
         arr.map((e) => {
           let fromDate = new Date(e.from_date);
           let toDate = new Date(e.to_date);
-
-          const diffInMs = toDate - fromDate;
-          const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
-          total_leave = total_leave + diffInDays;
+          // if(e.reason_for_leave == "Compensatory Leave"){
+          //   compensatoryLeave = compensatoryLeave + 1;
+          //   setCompensatoryLeaveState(compensatoryLeave)
+          // }
+          if (fromDate.toISOString().slice(0, 10) == toDate.toISOString().slice(0, 10)) {
+            if(e.leave_type !== 1){
+              console.log('halfDay');
+              total_leave = total_leave + 0.5
+            }else{
+              total_leave = total_leave + 1
+            }
+          }else{
+            const diffInMs = toDate - fromDate;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+            total_leave = total_leave + diffInDays;
+          }
         });
         setShowTotalLeave(total_leave);
         setBasicDA(baseSalary / 2);
@@ -44,21 +57,13 @@ const Downloadslip = (props) => {
         );
       });
   }, []);
-  //   useEffect(() => {
-  //     axios
-  //       .post(
-  //         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
-  //       )
-  //       .then((res) => {
-  //         console.log("res-----------", res);
-  //       });
-  //   }, []);
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
       (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
+  
 
   const ButtonClick = () => {
     window.print();
@@ -225,7 +230,7 @@ const Downloadslip = (props) => {
                           Total Paid Days :
                         </span>{" "}
                         <small className="ms-3">
-                          {props.data.monthDays - holidays - showTotalLeave + 1}
+                          {props.data.monthDays - holidays - showTotalLeave + 1 + compensatoryLeaveState}
                         </small>{" "}
                       </div>
                     </div>
