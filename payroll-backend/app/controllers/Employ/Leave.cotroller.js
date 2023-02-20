@@ -235,14 +235,11 @@ class Leave {
         res.send({ "leave_count" : leave_count })
     }
 
-    async get_day_leave(req, res, next) {
-        // var today = moment()
-        var today = moment('2023-02-21', 'YYYY-MM-DD')
+    async get_today_leave(req, res, next) {
+        var today = moment(moment().utc().format('YYYY-MM-DD'))
+        // var today = moment('2023-02-21', 'YYYY-MM-DD')  // for testing purpose
         var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
         var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
-
-        console.log(from_date)
-        console.log(to_date)
 
         const findLeave = await LeaveModal.find({
             from_date: { $gte: from_date, $lte: to_date },
@@ -252,17 +249,13 @@ class Leave {
         const emp_count = await EmpInfoModal.find()
         var absent_count = 0
         for (let i = 0; i< findLeave.length; i++){
-            console.log(moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD')))
-            console.log(moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD')))
-            console.log(today)
 
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
 
-            console.log(today.isSameOrBefore(to_date_) && today.isSameOrAfter(from_date_))
-            console.log(today.isSameOrBefore(to_date_))
-            console.log(today.isSameOrAfter(from_date_))
-            
+            console.log(today)
+            console.log(from_date_)
+            console.log(to_date_)
 
             if (
                 today.isSameOrBefore(to_date_) 
@@ -279,6 +272,48 @@ class Leave {
             }
         )
     }
+
+
+    async get_yesterday_leave(req, res, next) {
+        var today = moment(moment().utc().format('YYYY-MM-DD'))
+        var yesterday = today.subtract(1, 'day')
+        var from_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-01"
+        var to_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-31"
+
+        const findLeave = await LeaveModal.find({
+            from_date: { $gte: from_date, $lte: to_date },
+            to_date: { $gte: from_date, $lte: to_date }
+        });
+
+        const emp_count = await EmpInfoModal.find()
+        var absent_count = 0
+        for (let i = 0; i< findLeave.length; i++){
+
+            var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
+            var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
+
+            console.log(today)
+            console.log(from_date_)
+            console.log(to_date_)
+            console.log("\n\n\n\n")
+
+
+            if (
+                yesterday.isSameOrBefore(to_date_) 
+                && yesterday.isSameOrAfter(from_date_)
+            ){
+                absent_count++
+            }
+        var present_count = emp_count.length - absent_count
+        }
+        res.send(
+            {
+                "present_count" : present_count,
+                "absent_count" : absent_count
+            }
+        )
+    }
+
 
 }
 

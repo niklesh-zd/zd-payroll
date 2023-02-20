@@ -5,6 +5,7 @@ import {
   BsFillEmojiHeartEyesFill,
   BsFillEmojiLaughingFill,
 } from "react-icons/bs";
+import { GiScales } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [totalEmployee, setTotalEmployee] = useState("");
   const [totalHoliday, setTotalHoliday] = useState([]);
+  const [todayPresent, setTodayPresent] = useState({});
+  const [yesterdayPresent, setYesterdayPresent] = useState({});
   const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
@@ -20,8 +23,29 @@ const Dashboard = () => {
         return res.json();
       })
       .then((resp) => {
-        // console.warn(resp);
         setTotalEmployee(resp.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://192.168.29.146:7071/Emp_Leave/get_today_leave")
+      .then((resp) => {
+        // console.log("today", resp.data);
+        setTodayPresent(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://192.168.29.146:7071/Emp_Leave/get_yesterday_leave")
+      .then((resp) => {
+        // console.log("yesterday", resp.data);
+        setYesterdayPresent(resp.data);
       })
       .catch((err) => {
         console.log(err);
@@ -74,16 +98,7 @@ const Dashboard = () => {
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <div>
-                <h4 className="">Festival Holidays</h4>
-                {totalHoliday.length > 0 ? (
-                  totalHoliday.map((e) => {
-                    return <h6>{e.holiday_name}</h6>;
-                  })
-                ) : (
-                  <h6>No Holidays This Month</h6>
-                )}
-              </div>
+              <h4 className="">Festival Holidays</h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>
                   {totalHoliday.length == 0 ? (
@@ -96,46 +111,47 @@ const Dashboard = () => {
                   {/* {totalHoliday.length} */}
                 </h1>
               </div>
+              <div>
+                {totalHoliday.length > 0 ? (
+                  totalHoliday.map((e) => {
+                    return <h6>{e.holiday_name}</h6>;
+                  })
+                ) : (
+                  <h6>No Holidays This Month</h6>
+                )}
+              </div>
             </div>
           </div>
           <div className="c-dashboardInfo col-lg-3 col-md-6">
-            <div className="wrap">
-              <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
-                Available funds
-                <svg
-                  className="MuiSvgIcon-root-19"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  role="presentation"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
-                </svg>
-              </h4>
-              <span className="hind-font caption-12 c-dashboardInfo__count">
-                €5000
-              </span>
+            <div
+              className="wrap"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <h4 className="">Today Presents</h4>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <h1>
+                  <GiScales />
+                </h1>
+              </div>
+              <h2>
+                {todayPresent.present_count}/{totalEmployee}
+              </h2>
             </div>
           </div>
           <div className="c-dashboardInfo col-lg-3 col-md-6">
-            <div className="wrap">
-              <h4 className="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
-                Rental return
-                <svg
-                  className="MuiSvgIcon-root-19"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  role="presentation"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
-                </svg>
-              </h4>
-              <span className="hind-font caption-12 c-dashboardInfo__count">
-                6,40%
-              </span>
+            <div
+              className="wrap"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <h4 className="">Yesterday Absents</h4>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <h1>
+                  <GiScales />
+                </h1>
+              </div>
+              <h2>
+                {yesterdayPresent.absent_count}/{totalEmployee}
+              </h2>
             </div>
           </div>
         </div>
