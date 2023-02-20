@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [totalEmployee, setTotalEmployee] = useState("");
   const [totalHoliday, setTotalHoliday] = useState([]);
   const [todayPresent, setTodayPresent] = useState({});
+  const [yesterdayPresent, setYesterdayPresent] = useState({});
   const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
@@ -22,7 +23,6 @@ const Dashboard = () => {
         return res.json();
       })
       .then((resp) => {
-        // console.warn(resp);
         setTotalEmployee(resp.length);
       })
       .catch((err) => {
@@ -31,10 +31,21 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://192.168.29.146:7071/Emp_Leave/get_day_leave")
+      .get("http://192.168.29.146:7071/Emp_Leave/get_today_leave")
       .then((resp) => {
-        console.log("resp", resp.data);
+        // console.log("today", resp.data);
         setTodayPresent(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://192.168.29.146:7071/Emp_Leave/get_yesterday_leave")
+      .then((resp) => {
+        // console.log("yesterday", resp.data);
+        setYesterdayPresent(resp.data);
       })
       .catch((err) => {
         console.log(err);
@@ -132,14 +143,14 @@ const Dashboard = () => {
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <h4 className="">Today Absent</h4>
+              <h4 className="">Yesterday Absents</h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>
                   <GiScales />
                 </h1>
               </div>
               <h2>
-                {todayPresent.absent_count}/{totalEmployee}
+                {yesterdayPresent.absent_count}/{totalEmployee}
               </h2>
             </div>
           </div>
