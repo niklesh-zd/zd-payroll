@@ -3,7 +3,9 @@ import { HiUserGroup } from "react-icons/hi";
 import { BsEmojiFrownFill, BsFillEmojiHeartEyesFill, BsFillEmojiLaughingFill } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 const Dashboard = () => {
+  const navigate = useNavigate()
   const [totalEmployee, setTotalEmployee] = useState("");
   const [totalHoliday, setTotalHoliday] = useState([]);
   const [monthName, setMonthName] = useState("");
@@ -27,8 +29,8 @@ const Dashboard = () => {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
     const firstDate = new Date(`${currentYear}-${currentMonth}-01`);
-    const startDate = firstDate.toISOString().slice(0, 10);
     const lastDate = new Date(currentYear, currentMonth, 0);
+    const startDate = firstDate.toISOString().slice(0, 10);
     const endDate = lastDate.toISOString().slice(0, 10);
 
     const datesobject = { from_date: startDate, end_date: endDate };
