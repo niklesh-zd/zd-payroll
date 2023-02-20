@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { getSnackbarContentUtilityClass } from "@mui/material";
 import Downloadslip from "./Salary_slip/downloadslip";
@@ -121,7 +121,7 @@ function Salary() {
     axios
       .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
       .then((response) => {
-        console.log('response',response);
+        // console.log('response',response);
         let holidays = response.data.length;
         setTotalHolydays(holidays)
         // setFields({ ...fields, holidays: holidays})
@@ -133,9 +133,10 @@ function Salary() {
         // });
       }).then(()=>{
         setSwitchToDownload(true)
-        console.log('fields',fields);
+        // console.log('fields',fields);
       })
   }
+
 
   useEffect(() => {
     setFields({
@@ -181,6 +182,7 @@ function Salary() {
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
+              <button type="button" class="btn btn-success mb-2">Back</button>
               <div className="card p-10">
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
@@ -248,6 +250,7 @@ function Salary() {
                       <input
                         type="submit"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
+                        value={'Generate'}
                       />
                     </div>
                   </div>

@@ -12,6 +12,7 @@ const Downloadslip = (props) => {
   const [basicDA, setBasicDA] = useState("");
   const [netPay, setNetPay] = useState(0);
   const [showTotalLeave, setShowTotalLeave] = useState("");
+  // const [compensatoery, setCompensatoery] = useState("");
   const holidays = props.holidays;
   const baseSalary = props.data.base_salary;
   const doj = new Date(props.data.Date_of_Joining).toLocaleDateString("pt-PT");
@@ -21,12 +22,19 @@ const Downloadslip = (props) => {
         `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
-        console.log("res", res.data.findLeave);
+        console.log(res);
+        // console.log("res", res.data.findLeave[0].reason_for_leave);
         const arr = res.data.findLeave;
         let total_leave = 0;
+        let compleave = 0;
+        
         arr.map((e) => {
           let fromDate = new Date(e.from_date);
           let toDate = new Date(e.to_date);
+          if(e.reason_for_leave == "Compensatory Leave"){
+            compleave = compleave + 1;
+          }
+          console.log(compleave);
           const diffInMs = toDate - fromDate;
           const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
           total_leave = total_leave + diffInDays;
@@ -43,7 +51,7 @@ const Downloadslip = (props) => {
         );
       });
   }, []);
-
+// console.log('compleave',compleave);
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
@@ -65,7 +73,7 @@ const Downloadslip = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <form onSubmit={ButtonClick} href="/download">
+        <form onSubmit={ButtonClick} href="/download" className="mt-5">
           {
             <div
               className=""
@@ -122,7 +130,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6">
                       <div>
                         {" "}
-                        <span className="fw-bolder">Ac No. :</span>{" "}
+                        <span className="fw-bolder">A/c No. :</span>{" "}
                         <small className="ms-3">
                           {props.data.Bank_Account_Number}
                         </small>{" "}
@@ -138,7 +146,7 @@ const Downloadslip = (props) => {
                       <div>
                         {" "}
                         <span className="fw-bolder ">
-                          Date Of Joining :
+                          Date of Joining :
                         </span>{" "}
                         <small className="ms-3">{doj}</small>
                       </div>
@@ -146,7 +154,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6 border-bottom border-dark">
                       <div>
                         {" "}
-                        <span className="fw-bolder">IFSC :</span>{" "}
+                        <span className="fw-bolder">IFSC Code :</span>{" "}
                         <small className="ms-3">
                           {props.data.Bank_IFSC_Code}
                         </small>{" "}
@@ -321,7 +329,7 @@ const Downloadslip = (props) => {
                 </div>
                 <div className="border border-dark col-md-7">
                   <div className="d-flex flex-column">
-                    <span className="text-danger">{fword} Only</span>
+                    <span className="text-danger">{fword.toUpperCase()} ONLY</span>
                     <br></br>
                     <span>
                       *This is computer generated copy not need to stamp and
