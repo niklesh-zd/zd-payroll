@@ -2,11 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-<<<<<<< HEAD
-let converter = require("number-to-words");
-=======
 let converter = require('number-to-words');
->>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
 
 const Downloadslip = (props) => {
   const { id } = useParams();
@@ -48,9 +44,6 @@ const Downloadslip = (props) => {
         );
       });
   }, []);
-<<<<<<< HEAD
-
-=======
   //   useEffect(() => {
   //     axios
   //       .post(
@@ -60,7 +53,6 @@ const Downloadslip = (props) => {
   //         console.log("res-----------", res);
   //       });
   //   }, []);
->>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
@@ -77,11 +69,7 @@ const Downloadslip = (props) => {
       });
     });
   };
-<<<<<<< HEAD
-  const fword = converter.toWords(netPay);
-=======
   const fword = converter.toWords(netPay)
->>>>>>> 2c1d4978caec72dccec902c5e53713c9f7272385
 
   return (
     <div className="container">
