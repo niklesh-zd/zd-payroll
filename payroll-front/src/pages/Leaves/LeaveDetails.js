@@ -21,11 +21,7 @@ function LeaveDetails() {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-<<<<<<< HEAD
-          .fetch("http://192.168.29.186:7071/Emp_Leave/leave_dalete/" + id.id, {
-=======
           .fetch("http://192.168.29.146:7071/Emp_Leave/leave_dalete/" + id.id, {
->>>>>>> anmol
             method: "POST",
           })
           .then((res) => {
@@ -105,11 +101,7 @@ function LeaveDetails() {
   ];
   useEffect(() => {
     axios
-<<<<<<< HEAD
-      .get("http://192.168.29.186:7071/Emp_Leave/get_leave")
-=======
       .get("http://192.168.29.146:7071/Emp_Leave/get_leave")
->>>>>>> anmol
       .then((response) => {
         let filteredArr = [];
         let filteredObj = {};

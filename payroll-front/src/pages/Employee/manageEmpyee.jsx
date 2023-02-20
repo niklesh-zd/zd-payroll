@@ -21,11 +21,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-<<<<<<< HEAD
-      .fetch("http://192.168.29.186:7071/emp/get_employ")
-=======
       .fetch("http://192.168.29.146:7071/emp/get_employ")
->>>>>>> anmol
       .then((res) => {
         return res.json();
       })

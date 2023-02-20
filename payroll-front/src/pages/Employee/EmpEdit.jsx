@@ -9,11 +9,7 @@ const Empedit = () => {
     console.log('idddd', id)
   
     useEffect(() => {
-<<<<<<< HEAD
-        fetch('http://192.168.29.186:7071/emp/emp_1/' + id)
-=======
         fetch('http://192.168.29.146:7071/emp/emp_1/' + id)
->>>>>>> anmol
           .then((res) => {
             return res.json()
           })
