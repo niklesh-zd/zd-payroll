@@ -230,6 +230,40 @@ class Leave {
         }
         res.send({ "leave_count" : leave_count })
     }
+
+    async get_day_leave(req, res, next) {
+        // var today = moment()
+        var today = moment('2023-02-21', 'YYYY-MM-DD')
+        var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
+        var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
+
+        console.log(from_date)
+        console.log(to_date)
+
+        const findLeave = await LeaveModal.find({
+            from_date: { $gte: from_date, $lte: to_date },
+            to_date: { $gte: from_date, $lte: to_date }
+        });
+
+        const emp_count = await EmpInfoModal.find()
+        var absent_count = 0
+        for (let i = 0; i< findLeave.length; i++){
+            if (
+                moment(today, "YYYY-MM-DD").isSameOrBefore(findLeave[i].to_date) 
+                && moment(today, 'YYYY-MM-DD').isSameOrAfter(findLeave[i].from_date)
+            ){
+                absent_count++
+            }
+        var present_count = emp_count.length - absent_count
+        }
+        res.send(
+            {
+                "present_count" : present_count,
+                "absent_count" : absent_count
+            }
+        )
+    }
+
 }
 
 module.exports = new Leave();
