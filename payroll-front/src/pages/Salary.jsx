@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { getSnackbarContentUtilityClass } from "@mui/material";
 import Downloadslip from "./Salary_slip/downloadslip";
 
 function Salary() {
