@@ -205,6 +205,7 @@ console.log(startdate,'-----',enddate);
                       <input
                         type="submit"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
+                        value={'Generate'}
                       />
                     </div>
                   </div>
