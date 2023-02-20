@@ -1,11 +1,15 @@
 import "../Css/Dashbord.css";
 import { HiUserGroup } from "react-icons/hi";
-import { BsEmojiFrownFill, BsFillEmojiHeartEyesFill, BsFillEmojiLaughingFill } from "react-icons/bs";
+import {
+  BsEmojiFrownFill,
+  BsFillEmojiHeartEyesFill,
+  BsFillEmojiLaughingFill,
+} from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 const Dashboard = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [totalEmployee, setTotalEmployee] = useState("");
   const [totalHoliday, setTotalHoliday] = useState([]);
   const [monthName, setMonthName] = useState("");
@@ -72,14 +76,13 @@ const Dashboard = () => {
             >
               <div>
                 <h4 className="">Festival Holidays</h4>
-                {
-                  totalHoliday.length > 0 ?
+                {totalHoliday.length > 0 ? (
                   totalHoliday.map((e) => {
-                  return <span>{e.holiday_name}</span>;
-                })
-                :
-                <span>No Holidays</span>
-                }
+                    return <h6>{e.holiday_name}</h6>;
+                  })
+                ) : (
+                  <h6>No Holidays This Month</h6>
+                )}
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>
@@ -90,7 +93,7 @@ const Dashboard = () => {
                   ) : (
                     <BsFillEmojiHeartEyesFill />
                   )}
-                  {totalHoliday.length}
+                  {/* {totalHoliday.length} */}
                 </h1>
               </div>
             </div>
