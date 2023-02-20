@@ -37,25 +37,25 @@ const Downloadslip = (props) => {
         Setra((baseSalary / 2) * 0.15);
         Setflexib(
           baseSalary -
-            baseSalary / 2 -
-            (baseSalary / 2) * 0.4 -
-            (baseSalary / 2) * 0.15
+          baseSalary / 2 -
+          (baseSalary / 2) * 0.4 -
+          (baseSalary / 2) * 0.15
         );
       });
   }, []);
-//   useEffect(() => {
-//     axios
-//       .post(
-//         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
-//       )
-//       .then((res) => {
-//         console.log("res-----------", res);
-//       });
-//   }, []);
+  //   useEffect(() => {
+  //     axios
+  //       .post(
+  //         `http://192.168.29.146:7071/Emp_Leave/get-user-leave/${props.data.userid}`
+  //       )
+  //       .then((res) => {
+  //         console.log("res-----------", res);
+  //       });
+  //   }, []);
   useEffect(() => {
     setNetPay(
       (baseSalary / (Number(props.data.monthDays) - holidays)) *
-        (props.data.monthDays - holidays - showTotalLeave + 1)
+      (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
   // useEffect(() => {
@@ -152,7 +152,7 @@ const Downloadslip = (props) => {
                         {" "}
                         <span className="fw-bolder">Name :</span>{" "}
                         <small className="ms-3">
-                          {props.data.Employee_name}
+                          {props.data.Employee_name.toUpperCase()}
                         </small>{" "}
                       </div>
                     </div>

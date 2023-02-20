@@ -115,25 +115,31 @@ class Emp {
         }
     }
     async get_user_id(req, res) {
-        const data = await EmpInfoModal.find()
-        var arr = []
-        data.forEach((Val) => {
-            arr.push(Val.id)
-        })
-        if (!arr) {
-            return res.status(404).send({ message: " user id not  Exist." });
+        try {
+            const data = await EmpInfoModal.find()
+            var arr = []
+            data.forEach((Val) => {
+                arr.push(Val.id)
+            })
+            if (!arr) {
+                return res.status(404).send({ message: " user id not  Exist." });
+            }
+
+            res.send(arr);
+        } catch (err) {
+            res.send({ "error": err })
         }
-
-        res.send(arr);
-
 
     }
     async get_emlpoy(req, res, next) {
-        EmpInfoModal.find({ is_active: 1 }).sort({ _id: -1 }).then(function (employee) {
-            res.send(employee);
-        }).catch(next);
+        try {
+            EmpInfoModal.find({ is_active: 1 }).sort({ _id: -1 }).then(function (employee) {
+                res.send(employee);
+            }).catch(next);
+        } catch (err) {
+            res.send({ "error": err })
+        }
     }
-
     async udateStatus_emlpoy(req, res, next) {
         EmpInfoModal.findByIdAndUpdate(req.body.id, { is_active: req.body.status }).then(function (employee) {
             res.send(employee);
@@ -186,7 +192,7 @@ class Emp {
             })
             .catch(err => {
                 res.status(500).send({
-                    message: "Error updating=" + id
+                    message: "Error updating=" + id, err
                 });
                 console.log(err)
             });
