@@ -11,8 +11,6 @@ const Emp = require('../Employ/EmpInfo.cotroller');
 
 var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
 
-console.log(`month list length : ${month_array.length}`);
-
 class Leave {
     async Leave(req, res) {
 
@@ -195,19 +193,19 @@ class Leave {
             res.send({ error });
         }
     }
-    async get_user_leave_id(req, res) {
-        const userid = req.params.id
+    // async get_user_leave_id(req, res) {
+    //     const userid = req.params.id
 
-        const datelFind = await LeaveModal.find({
-            userid: userid
-        })
-        if (!datelFind) {
-            return res.status(404).send({ message: "This user not Exist." });
-        }
-        res.send(datelFind)
-        console.log({ datelFind });
+    //     const datelFind = await LeaveModal.find({
+    //         userid: userid
+    //     })
+    //     if (!datelFind) {
+    //         return res.status(404).send({ message: "This user not Exist." });
+    //     }
+    //     res.send(datelFind)
+    //     console.log({ datelFind });
 
-    }
+    // }
 
     async get_User_leave(req, res, next) {
 
@@ -217,6 +215,20 @@ class Leave {
             to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
         });
         res.send({ findLeave })
+    }
+
+    async get_User_leave_count(req, res, next) {
+
+        const findLeave = await LeaveModal.find({
+            userid: req.query.id,
+            from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
+            to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
+        });
+        var leave_count = 0
+        for(let i = 0; i < findLeave.length; i++){
+            leave_count += findLeave[i].total_number_of_day
+        }
+        res.send({ "leave_count" : leave_count })
     }
 }
 
