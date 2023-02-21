@@ -804,6 +804,9 @@ function AddEmployee(props) {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
                 <div className="row">
                   <div className="submit">
                     <div className="form-group">
@@ -825,9 +828,6 @@ function AddEmployee(props) {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
         </div>
       </form>
     </div>

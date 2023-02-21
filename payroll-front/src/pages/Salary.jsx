@@ -28,21 +28,7 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-  // function getSalaryData(data) {
-  //   if (data) {
-  //     axios
-  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
-  //       .then((res) => {
-  //         console.log("res", res);
-  //         navigate("/download" + id);
-  //       })
-  //       .catch((error) => {
-  //         console.error("There was an error!", error);
-  //       });
-  //   }
-  // }
-
-  // Get the current month and year
+ 
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -83,13 +69,6 @@ function Salary() {
         console.log("response", response);
         let holidays = response.data.length;
         setTotalHolydays(holidays);
-        // setFields({ ...fields, holidays: holidays})
-        // let calholiday = inputValue - holiday;
-        // getSalaryData({
-        //   Total_Work_Days: calholiday,
-        //   Leave_taken: leavetaken,
-        //   ...fields,
-        // });
       })
       .then(() => {
         setSwitchToDownload(true);
@@ -304,7 +283,6 @@ function Salary() {
                         type="submit"
                         value="Generate"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
-                        value={'Generate'}
                       />
                     </div>
                   </div>
