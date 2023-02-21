@@ -70,8 +70,8 @@ const Downloadslip = (props) => {
       margin: 0,
       filename: 'ZecData_Technology.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 15, },
-      jsPDF: { unit: 'in', format: 'Tabloid', orientation: 'Landscape', },
+      html2canvas: { scale: 5, },
+      jsPDF: { unit: 'in', format: 'Legal', orientation: 'Landscape', },
     });
     setIsLoading(false);
   };
@@ -87,38 +87,39 @@ const Downloadslip = (props) => {
                 style={{
                   border: "1px solid black",
                   padding: "1%",
-                  width: "100%",
+                  width: "60%",
+                  marginLeft: '19%'
                 }}
               >
                 <div className="text-center lh-1 mb-2">
                   <h3 className="fw-bold" style={{ color: "#368bb5" }}>
                     ZecData
-                  </h3>{" "}
+                  </h3>
                   <h5 className="fw-bold text-dark">
-                    Payment slip for the month of{" "}
+                    Payment slip for the month of
                     {props.data.Salary_Slip_Month_Year} 2023
                   </h5>
                 </div>
 
                 <div className="row border border-dark text-white">
-                  <div className="col-md-6 ">
+                  <div className="col-md-12 border border-dark ">
                     <div className="row" style={{ backgroundColor: "#368bb5" }}>
                       <div className="col-md-6">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">Name :</span>{" "}
+                          
+                          <span className="fw-bolder">Name :</span>
                           <small className="ms-3">
                             {props.data.Employee_name.toUpperCase()}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">EMP Code :</span>{" "}
+                          
+                          <span className="fw-bolder">EMP Code :</span>
                           <small className="ms-3">
                             {props.data.Employee_code}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                     </div>
@@ -129,18 +130,18 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">Designation :</span>{" "}
-                          <small className="ms-3">{props.data.designation}</small>{" "}
+                         
+                          <span className="fw-bolder">Designation :</span>
+                          <small className="ms-3">{props.data.designation}</small>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">Ac No. :</span>{" "}
+                         
+                          <span className="fw-bolder">Ac No. :</span>
                           <small className="ms-3">
                             {props.data.Bank_Account_Number}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                     </div>
@@ -151,48 +152,53 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6">
                         <div>
-                          {" "}
+                         
                           <span className="fw-bolder ">
                             Date Of Joining :
-                          </span>{" "}
+                          </span>
                           <small className="ms-3">{doj}</small>
                         </div>
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">IFSC :</span>{" "}
+                         
+                          <span className="fw-bolder">IFSC :</span>
                           <small className="ms-3">
                             {props.data.Bank_IFSC_Code}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                     </div>
                   </div>
 
+
+
+
+
+
                   <div
-                    className="col-md-6"
+                    className="col-md-12"
                     style={{ backgroundColor: "#368bb5" }}
                   >
-                    <div className="row ">
+                    <div className="row">
                       <div className="col-md-6">
                         <div>
-                          {" "}
+                         
                           <span className="fw-bolder">
                             Leave (Balance) :
-                          </span>{" "}
-                          <small className="ms-3">1</small>{" "}
+                          </span>
+                          <small className="ms-3">1</small>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div>
-                          {" "}
+                         
                           <span className="fw-bolder">
                             Total Working Days :
-                          </span>{" "}
+                          </span>
                           <small className="ms-3">
                             {Number(props.data.monthDays) - holidays}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                     </div>
@@ -203,47 +209,46 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6 ">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">Leave Taken :</span>{" "}
-                          <small className="ms-3">{showTotalLeave}</small>{" "}
+                         
+                          <span className="fw-bolder">Leave Taken :</span>
+                          <small className="ms-3">{showTotalLeave}</small>
                         </div>
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          {" "}
-                          <span className="fw-bolder ">Present Days :</span>{" "}
+                         
+                          <span className="fw-bolder ">Present Days :</span>
                           <small className="ms-3">
                             {props.data.monthDays - holidays - showTotalLeave}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                       <div className="col-md-6  ">
                         <div>
-                          {" "}
-                          <span className="fw-bolder">Balance Days :</span>{" "}
-                          <small className="ms-3">1</small>{" "}
+                         
+                          <span className="fw-bolder">Balance Days :</span>
+                          <small className="ms-3">1</small>
                         </div>
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          {" "}
+                         
                           <span className="fw-bolder">
                             Total Paid Days :
-                          </span>{" "}
+                          </span>
                           <small className="ms-3">
                             {props.data.monthDays - holidays - showTotalLeave + 1 + compensatoryLeaveState}
-                          </small>{" "}
+                          </small>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="text-white row">
+                <div className="row">
 
                   <table className="mt-1 table table-bordered border-dark">
                     <thead
-                      className=" text-white"
-                      style={{ backgroundColor: "#368bb5" }}
+                      
                     >
                       <tr>
                         <th scope="col">Gross</th>
@@ -254,11 +259,11 @@ const Downloadslip = (props) => {
                         <th scope="col">Amount</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{color: '#19536f'}}>
                       <tr>
                         <th scope="row">Basic & DA</th>
                         <td>{basicDA}</td>
-                        <td>Basic & DA</td>
+                        <th scope="row">Basic & DA</th>
                         <td>{(netPay / 2).toFixed(2)}</td>
                         <td>PF</td>
                         <td>0.00</td>
@@ -266,15 +271,15 @@ const Downloadslip = (props) => {
                       <tr>
                         <th scope="row">HRA</th>
                         <td>{hra}</td>
-                        <td>HRA</td>
+                        <th scope="row">HRA</th>
                         <td>{((netPay / 2) * 0.4).toFixed(2)}</td>
                         <td>Professional tax</td>
                         <td>0.00</td>
                       </tr>
                       <tr>
-                        <th scope="row">RA</th>
+                        <th scope="row" >RA</th>
                         <td>{ra}</td>
-                        <td>RA</td>
+                        <th scope="row" >RA</th>
                         <td>{((netPay / 2) * 0.15).toFixed(2)}</td>
                         <td>TDS</td>
                         <td>0.00</td>
@@ -282,7 +287,7 @@ const Downloadslip = (props) => {
                       <tr>
                         <th scope="row">FLEXI Benefits</th>
                         <td>{flexib}</td>
-                        <td>FLEXI Benifits</td>
+                        <th scope="row">FLEXI Benefits</th>
                         <td>
                           {(
                             netPay -
@@ -294,8 +299,8 @@ const Downloadslip = (props) => {
                         <td>ARRS</td>
                         <td>0.00</td>
                       </tr>
-                      <tr>
-                        <th scope="row">Total Gross</th>
+                      <tr style={{ backgroundColor: "#368bb5", color: 'white' }}>
+                        <th scope="row" >Total Gross</th>
                         <td>{baseSalary}</td>
                         <td>Total Earn</td>
                         <td>
@@ -318,7 +323,7 @@ const Downloadslip = (props) => {
                         <td></td>
                         <td></td>
                       </tr>
-                      <tr>
+                      <tr style={{ backgroundColor: "#368bb5", color: 'white' }}>
                         <th scope="row">Net Pay</th>
                         <td>{netPay.toFixed(2)}</td>
                         <td></td>
@@ -329,27 +334,28 @@ const Downloadslip = (props) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="row">
-                  <div className="col-md-5">
+                <div className="row border border-dark">
+                  <div className="col-md-5 ">
                     <span className="fw-bold">
                       Net Salary Payable(In Words)
-                    </span>{" "}
+                    </span>
                   </div>
                   <div className=" col-md-7">
                     <div className="d-flex flex-column ">
                       <span className="text-danger ">{fword.toLocaleUpperCase()} ONLY</span>
                       <br></br>
-                      <span className="">
-                        *This is computer generated copy not need to stamp and
-                        sign*
-                      </span>{" "}
                     </div>
                   </div>
+
                 </div>
+                      <span className="col-md-12">
+                        *This is computer generated copy not need to stamp and
+                        sign*
+                      </span>
               </div>
             }
           </form>
-          <button className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn p-1 text-white mt-2 text-align-center" style={{ backgroundColor: "#368bb5", alignItems: "center !important", display: 'flex', justifyContent: 'center' }} onClick={downloadPDF} disabled={isLoading}>{isLoading ? <RotatingLines 
+          <button className="col-lg-8 col-md-8 col-sm-8 col-xs-8 btn p-1 text-white mt-2 text-align-center " style={{ backgroundColor: "#368bb5", alignItems: "center !important", display: 'flex', justifyContent: 'center',marginLeft: '16%' }} onClick={downloadPDF} disabled={isLoading}>{isLoading ? <RotatingLines 
           className='text-center'
           strokeColor="black"
           strokeWidth="8"
