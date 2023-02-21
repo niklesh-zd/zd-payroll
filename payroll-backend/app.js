@@ -32,7 +32,7 @@ app.post('/slip', (req, res) =>{
   res.send("file downloaded successfully")
 })
 
-const port = 7072;
+const port = 7071;
 
 // Server start
 app.listen(port, () =>
