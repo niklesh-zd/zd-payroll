@@ -11,6 +11,7 @@ function AddEmployee(props) {
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
+  const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,19 +21,23 @@ function AddEmployee(props) {
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
-
     setFields(fieldObj);
+
   }
+
+
+
+
   console.log("fields", fields);
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-        ? "Pan Number already exiest"
-        : message == "alredy exist emails."
-        ? "Email already exiest"
-        : null,
+          ? "Pan Number already exiest"
+          : message == "alredy exist emails."
+            ? "Email already exiest"
+            : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -117,12 +122,20 @@ function AddEmployee(props) {
       dojDateInputRef.current.setAttribute("min", oneMonthAgo);
     }
   }, []);
+
+  const handleInput = (event) => {
+    const { value, selectionStart, selectionEnd } = event.target;
+    const sanitizedValue = value.replace(/[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g, "");
+    event.target.value = sanitizedValue;
+    event.target.setSelectionRange(selectionStart, selectionEnd);
+  };
+
   return (
     <div className="">
       <form style={{ display: "flex" }}>
         <ToastContainer />
 
-        <div className="px-4 pt-3">
+        <div className="px-4 pt-5">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
@@ -156,6 +169,8 @@ function AddEmployee(props) {
                         First Name
                       </label>
                       <input
+                        pattern="[a-zA-Z0-9\s]*"
+                        onInput={handleInput}
                         type="text"
                         style={{ textTransform: "capitalize" }}
                         name="First_Name"
@@ -182,6 +197,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Last Name"
                         style={{ textTransform: "capitalize" }}
+                        onInput={handleInput}
                         value={fields.Last_Name}
                         onChange={(e) => handleChange(e)}
                       />
@@ -202,6 +218,7 @@ function AddEmployee(props) {
                         maxLength="50"
                         value={fields.fatherName}
                         onChange={(e) => handleChange(e)}
+                        onInput={handleInput}
                         className="form-control"
                         placeholder="Father's Name"
                         style={{ textTransform: "capitalize" }}
@@ -573,6 +590,7 @@ function AddEmployee(props) {
                           name="STREAM"
                           value={fields.STREAM}
                           onChange={(e) => handleChange(e)}
+                          onInput={handleInput}
                           className="form-control"
                           placeholder="Enter Stream"
                         ></input>
@@ -807,27 +825,27 @@ function AddEmployee(props) {
               </div>
             </div>
           </div>
-                <div className="row">
-                  <div className="submit">
-                    <div className="form-group">
-                      {props.data ? (
-                        <input
-                          type="submit"
-                          value="Update"
-                          className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
-                          onClick={(e) => updateUserDetails(e)}
-                        />
-                      ) : (
-                        <input
-                          type="submit"
-                          value="Submit"
-                          className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
-                          onClick={(e) => submituserRegistrationForm(e)}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
+          <div className="row">
+            <div className="submit">
+              <div className="form-group text-center">
+                {props.data ? (
+                  <input
+                    type="submit"
+                    value="Update"
+                    className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
+                    onClick={(e) => updateUserDetails(e)}
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
+                    onClick={(e) => submituserRegistrationForm(e)}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
