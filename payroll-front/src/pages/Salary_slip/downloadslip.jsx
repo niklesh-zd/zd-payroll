@@ -32,10 +32,6 @@ const Downloadslip = (props) => {
         arr.map((e) => {
           let fromDate = new Date(e.from_date);
           let toDate = new Date(e.to_date);
-          // if(e.reason_for_leave == "Compensatory Leave"){
-          //   compensatoryLeave = compensatoryLeave + 1;
-          //   setCompensatoryLeaveState(compensatoryLeave)
-          // }
           if (fromDate.toISOString().slice(0, 10) == toDate.toISOString().slice(0, 10)) {
             if (e.leave_type !== 1) {
               console.log('halfDay');
@@ -67,23 +63,18 @@ const Downloadslip = (props) => {
       (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
-
-
   const downloadPDF = async () => {
     setIsLoading(true);
     const element = document.getElementById('pdf-download');
     await html2pdf(element, {
       margin: 0,
-      filename: 'file.pdf',
+      filename: 'ZecData_Technology.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 15, },
       jsPDF: { unit: 'in', format: 'Tabloid', orientation: 'Landscape', },
     });
     setIsLoading(false);
   };
-
-
-
   const fword = converter.toWords(netPay)
 
   return (
@@ -108,7 +99,6 @@ const Downloadslip = (props) => {
                     {props.data.Salary_Slip_Month_Year} 2023
                   </h5>
                 </div>
-
 
                 <div className="row border border-dark text-white">
                   <div className="col-md-6 ">
