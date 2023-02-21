@@ -9,6 +9,7 @@ function Salary() {
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
   const [switchToDownload, setSwitchToDownload] = useState(false);
+  const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [startdate, Setstartdate] = useState("");
@@ -17,7 +18,6 @@ function Salary() {
   const [totalHolydays, setTotalHolydays] = useState("");
   const [prevMonths, setPrevMonths] = useState([]);
 
-  const navigate = useNavigate();
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     // Setmonth("January");
@@ -25,7 +25,9 @@ function Salary() {
     Setstartdate(`${event.target.value}-01`);
     Setenddate(`${event.target.value}-31`);
   };
-console.log(startdate,'-----',enddate);
+  const handleToggleAdvance = (e) => {
+    setSwitchToAdvance((prev) => !prev);
+  };
   // function getSalaryData(data) {
   //   if (data) {
   //     axios
@@ -39,8 +41,8 @@ console.log(startdate,'-----',enddate);
   //       });
   //   }
   // }
-  // Get the current month and year
 
+  // Get the current month and year
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -66,11 +68,11 @@ console.log(startdate,'-----',enddate);
       let month = monthNames[date.getMonth()];
       let year = date.getFullYear();
       let format1 = `${month} ${year}`;
-      let format2 = `${year}-${('0' + (date.getMonth() + 1)).slice(-2)}`;
+      let format2 = `${year}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
       previousMonths.push({ format_1: format1, format_2: format2 });
     }
     setPrevMonths(previousMonths);
-    return previousMonths
+    return previousMonths;
   };
 
   function handlesubmit(e) {
@@ -152,7 +154,7 @@ console.log(startdate,'-----',enddate);
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
                 </div>
-                <div className="row text-center pt-5">
+                <div className="row text-center pt-3">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <div className="col-md-12">
@@ -177,41 +179,138 @@ console.log(startdate,'-----',enddate);
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-4">
-                      <div className="form-group">
-                        <label>Select the month</label>
-                        <select
-                          min="2"
-                          max="50"
-                          name="Salary_Slip_Month_Year"
-                          className="form-control "
-                          value={selectedOption}
-                          onChange={handleOptionChange}
-                        >
-                          <option selected disabled value="">
-                            please select an option
-                          </option>
-                          {prevMonths.map((month) => {
-                            return (
-                              <option key={month.format_1} value={month.format_2}>
-                                {month.format_1}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      </div>
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-4">
+                    <div className="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        className="custom-control-input"
+                        id="customSwitches"
+                        onChange={(e) => handleToggleAdvance(e)}
+                      />
+                      <label
+                        className="custom-control-label px-3"
+                        for="customSwitches"
+                      >
+                        advance options
+                      </label>
                     </div>
                   </div>
                 </div>
-                <div className="row"></div>
-                <div className="row"></div>
-                <div className="row"></div>
+                {switchToAdvance ? (
+                  <div>
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div className="form-group">
+                          <label className="profile_details_text">ARRS</label>
+                          <input
+                            type="text"
+                            style={{ textTransform: "capitalize" }}
+                            name="arrs"
+                            minLength="2"
+                            maxLength="50"
+                            className="form-control"
+                            placeholder="ARRS"
+                            // value={fields.First_Name}
+                            // onChange={(e) => handleChange(e)}
+                          />
+                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div className="form-group">
+                          <label className="profile_details_text">
+                            Additional
+                          </label>
+                          <input
+                            type="text"
+                            style={{ textTransform: "capitalize" }}
+                            name="additional"
+                            minLength="2"
+                            maxLength="50"
+                            className="form-control"
+                            placeholder="Additional Amount"
+                            // value={fields.First_Name}
+                            // onChange={(e) => handleChange(e)}
+                          />
+                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div className="form-group">
+                          <label className="profile_details_text">
+                            ARRS Comment
+                          </label>
+                          <textarea
+                            className="form-control"
+                            name="arrs_comment"
+                            rows="3"
+                            cols="35"
+                            placeholder="Write Comment Here"
+                            // value={fields.Current_Address}
+                            // onChange={(e) => handleChange(e)}
+                          ></textarea>
+                          <div className="errorMsg">
+                            {/* {errors.Current_Address} */}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div className="form-group">
+                          <label className="profile_details_text">
+                          Additional Comment
+                          </label>
+                          <textarea
+                            className="form-control"
+                            name="additional_comment"
+                            rows="3"
+                            cols="35"
+                            placeholder="Write Comment Here"
+                            // value={fields.Current_Address}
+                            // onChange={(e) => handleChange(e)}
+                          ></textarea>
+                          <div className="errorMsg">
+                            {/* {errors.Current_Address} */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                <div className="row">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-4">
+                    <div className="form-group">
+                      <label>Select the month</label>
+                      <select
+                        min="2"
+                        max="50"
+                        name="Salary_Slip_Month_Year"
+                        className="form-control "
+                        value={selectedOption}
+                        onChange={handleOptionChange}
+                      >
+                        <option selected disabled value="">
+                          please select an option
+                        </option>
+                        {prevMonths.map((month) => {
+                          return (
+                            <option key={month.format_1} value={month.format_2}>
+                              {month.format_1}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="submit pt-8">
                     <div className="form-group">
                       <input
                         type="submit"
+                        value="Generate"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>

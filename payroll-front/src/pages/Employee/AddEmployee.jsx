@@ -161,7 +161,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        First Name:
+                        First Name
                       </label>
                       <input
                         type="text"
@@ -170,7 +170,7 @@ function AddEmployee(props) {
                         minLength="2"
                         maxLength="50"
                         className="form-control"
-                        placeholder="First_Name"
+                        placeholder="First Name"
                         value={fields.First_Name}
                         onChange={(e) => handleChange(e)}
                       />
@@ -180,7 +180,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Last Name:{" "}
+                        Last Name{" "}
                       </label>
                       <input
                         type="text"
@@ -287,7 +287,7 @@ function AddEmployee(props) {
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">
-                        Date of Birth:
+                        Date of Birth
                       </label>
                       <input
                         ref={dobDateInputRef}
@@ -299,7 +299,6 @@ function AddEmployee(props) {
                           fields.date_of_birth
                         ).toLocaleDateString("en-CA")}
                         onChange={(e) => handleChange(e)}
-                        // onChange={(e) => ValidateDOB(e.target.value)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
                       <span
@@ -390,7 +389,7 @@ function AddEmployee(props) {
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label className="profile_details_text">Gender:</label>
+                      <label className="profile_details_text">Gender</label>
                       <div onChange={(e) => handleChange(e)}>
                         <input
                           type="radio"
@@ -403,6 +402,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Female"
                           name="gender"
+                          className="ml-2"
                           defaultChecked={fields.gender == "Female"}
                         />{" "}
                         Female
@@ -428,6 +428,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Married"
                           name="Marital_Status"
+                          className="ml-2"
                           defaultChecked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
