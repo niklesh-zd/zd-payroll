@@ -3,10 +3,37 @@
 "use strict";
 const express = require("express");
 const SalaryModal = require('../../models/Employ/Salary.modal')
+const EmpInfoModal = require('../../models/Employ/Employ.model');
 const ObjectId = require("mongodb").ObjectId;
+const moment = require("moment");
 
 // const info = Emp.add_employ().employee
 class Salary {
+
+    async salary_(req, res){
+
+        if (moment().date() <= 5){
+
+            const EmpInfoModal = await EmpInfoModal.find({
+                _id : req.query.userid
+            })
+            
+            const Salary = new SalaryModal({
+                Employee_name : EmpInfoModal.First_Name,
+                userid : req.query.userid,
+                Employee_code : EmpInfoModal.Employee_Code,
+                designation : EmpInfoModal.Position,
+                Salary_Slip_Month_Year : moment().month(),
+                // Date_of_Joining : 
+    
+            })
+
+        }
+    }
+
+
+
+
     async salary(req, res) {
 
         console.log("Run ok");
