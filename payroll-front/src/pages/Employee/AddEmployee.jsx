@@ -5,7 +5,7 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { FaBackward } from "react-icons/fa";
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
@@ -132,9 +132,8 @@ function AddEmployee(props) {
 
   return (
     <div className="">
+       <FaBackward className="" style={{marginRight: '0px'}}/>
       <form style={{ display: "flex" }}>
-        <ToastContainer />
-
         <div className="px-4 pt-5">
           <div className="row gx-12">
             <div className="col-4 edit_information">
@@ -656,7 +655,9 @@ function AddEmployee(props) {
                 </div>
               </div>
             </div>
+
             <div className="col-4 edit_information">
+             
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />

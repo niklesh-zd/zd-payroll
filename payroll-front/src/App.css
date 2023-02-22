@@ -1,3 +1,5 @@
+import 
+
 * {
   margin: 0;
   padding: 0;
@@ -92,13 +94,13 @@ body {
 
 .link:hover {
   border-right: 4px solid white;
-  background: rgba(23,31,35,.075);
+  background: rgba(23, 31, 35, .075);
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 .active {
   border-right: 4px solid white;
-  background: rgba(23,31,35,.075);
+  background: rgba(23, 31, 35, .075);
 }
 
 .link_text {
@@ -145,7 +147,17 @@ main {
 .sidebar {
   background: #3075BA;
   position: relative;
-  /* border-right: 2px solid black; */
   color: white;
   min-height: calc(101vh - 10px);
+}
+
+.cover-content {
+  background-image: url('../public/profile-cover.jpg');
+  background-size: cover;
+  background-position: center center; 
+  display: block;
+}
+.pmd-list-subtitle {
+  color: rgba(23, 31, 35, .64);
+  font-size: .875rem;
 }
