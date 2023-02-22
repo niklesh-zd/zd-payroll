@@ -142,7 +142,7 @@ const Downloadslip = (props) => {
                     </div>
 
                     <div
-                      className="row"
+                      className="row p-2"
                       style={{ backgroundColor: "#368bb5" }}
                     >
                       <div className="col-md-6">
@@ -172,7 +172,7 @@ const Downloadslip = (props) => {
                     </div>
 
                     <div
-                      className="row "
+                      className="row p-2"
                       style={{ backgroundColor: "#368bb5" }}
                     >
                       <div className="col-md-6">
@@ -232,7 +232,7 @@ const Downloadslip = (props) => {
                     </div>
 
                     <div
-                      className="row "
+                      className="row p-2"
                       style={{ backgroundColor: "#368bb5" }}
                     >
                       <div className="col-md-6 ">
