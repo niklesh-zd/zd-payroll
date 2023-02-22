@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import utils from "./../utils"
 const EmpDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -14,7 +15,7 @@ const EmpDetail = () => {
     navigate("/settings/userleavedetails" + id);
   };
   useEffect(() => {
-    fetch("http://192.168.29.186:7071/emp/emp_1/" + id)
+    fetch(`/emp/emp_1/` + id)
       .then((res) => {
         return res.json();
       })
@@ -38,7 +39,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://192.168.29.186:7071/emp/delete_emp/" + id, {
+          .fetch(`${utils}/emp/delete_emp/` + id, {
             method: "POST",
           })
           .then((res) => {
@@ -242,10 +243,10 @@ const EmpDetail = () => {
                 <h5>Contact Details</h5>
                 <div
                   className="flex"
-                  style={{ width: "70%", justifyContent: "space-between"  }}
+                  style={{ width: "70%", justifyContent: "space-between" }}
                 >
                   <h6>Contact Number</h6>
-                  <p style={{alignSelf:"left"}}>{empdata.Contact_Number}</p>
+                  <p style={{ alignSelf: "left" }}>{empdata.Contact_Number}</p>
                 </div>
                 <div
                   className="flex"

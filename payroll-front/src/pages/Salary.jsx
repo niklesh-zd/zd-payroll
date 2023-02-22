@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
-
+import utils from "./utils"
+console.warn(utils,'....................');
 function Salary() {
   const { id } = useParams();
   const [empdata, empdatachange] = useState({});

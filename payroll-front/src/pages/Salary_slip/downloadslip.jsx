@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import utils from "./../utils"
 let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
@@ -20,7 +21,7 @@ const Downloadslip = (props) => {
   useEffect(() => {
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `${utils}/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         const arr = res.data.findLeave;
@@ -34,13 +35,13 @@ const Downloadslip = (props) => {
           //   setCompensatoryLeaveState(compensatoryLeave)
           // }
           if (fromDate.toISOString().slice(0, 10) == toDate.toISOString().slice(0, 10)) {
-            if(e.leave_type !== 1){
+            if (e.leave_type !== 1) {
               console.log('halfDay');
               total_leave = total_leave + 0.5
-            }else{
+            } else {
               total_leave = total_leave + 1
             }
-          }else{
+          } else {
             const diffInMs = toDate - fromDate;
             const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
             total_leave = total_leave + diffInDays;
@@ -64,7 +65,7 @@ const Downloadslip = (props) => {
       (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
-  
+
 
   const ButtonClick = () => {
     window.print();
