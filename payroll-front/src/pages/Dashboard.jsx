@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch("http://192.168.29.186:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })

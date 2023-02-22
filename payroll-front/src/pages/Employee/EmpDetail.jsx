@@ -14,7 +14,7 @@ const EmpDetail = () => {
     navigate("/settings/userleavedetails" + id);
   };
   useEffect(() => {
-    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+    fetch("http://192.168.29.186:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
@@ -38,7 +38,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://192.168.29.146:7071/emp/delete_emp/" + id, {
+          .fetch("http://192.168.29.186:7071/emp/delete_emp/" + id, {
             method: "POST",
           })
           .then((res) => {

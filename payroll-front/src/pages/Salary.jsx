@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
 
@@ -31,7 +31,7 @@ function Salary() {
   // function getSalaryData(data) {
   //   if (data) {
   //     axios
-  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
+  //       .post("http://192.168.29.186:7071/Emp_Salary/salary", data)
   //       .then((res) => {
   //         console.log("res", res);
   //         navigate("/download" + id);
@@ -78,7 +78,7 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     axios
-      .post("http://192.168.29.146:7071/Holiday/get_holiday", fields)
+      .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
       .then((response) => {
         console.log("response", response);
         let holidays = response.data.length;
@@ -96,6 +96,7 @@ function Salary() {
         console.log("fields", fields);
       });
   }
+
 
   useEffect(() => {
     setFields({
@@ -142,6 +143,7 @@ function Salary() {
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
+              <button type="button" class="btn btn-success mb-2">Back</button>
               <div className="card p-10">
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
@@ -304,6 +306,7 @@ function Salary() {
                         type="submit"
                         value="Generate"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
+                        value={'Generate'}
                       />
                     </div>
                   </div>
