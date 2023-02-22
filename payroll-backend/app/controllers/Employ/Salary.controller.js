@@ -4,30 +4,114 @@
 const express = require("express");
 const SalaryModal = require('../../models/Employ/Salary.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model');
+const HolidayModal = require('../../models/Employ/Holiday.modal')
+const LeaveModal = require('../../models/Employ/leave.modal')
 const ObjectId = require("mongodb").ObjectId;
 const moment = require("moment");
+const { request } = require("express");
+var convertRupeesIntoWords = require('convert-rupees-into-words');
+
+var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
 
 // const info = Emp.add_employ().employee
 class Salary {
 
-    async salary_(req, res){
+    async salary_(req, res, next){
 
-        if (moment().date() <= 5){
+        var Salary_Modal = await SalaryModal.find({
+            userid : req.query.userid,
+            Salary_Slip_Year: Number(req.query.year),
+            Salary_Slip_Month : Number(req.query.month)
+        })
+        if (Salary_Modal.length != 0){
+            return res.send(Salary_Modal[0])
+        }
 
-            const EmpInfoModal = await EmpInfoModal.find({
+        else if (Salary_Modal.length == 0 && moment().date() <= 5){
+
+            var empinfo_modal = await EmpInfoModal.find({
                 _id : req.query.userid
             })
-            
-            const Salary = new SalaryModal({
-                Employee_name : EmpInfoModal.First_Name,
-                userid : req.query.userid,
-                Employee_code : EmpInfoModal.Employee_Code,
-                designation : EmpInfoModal.Position,
-                Salary_Slip_Month_Year : moment().month(),
-                // Date_of_Joining : 
-    
-            })
+            empinfo_modal = empinfo_modal[0]
 
+            const holiday = await HolidayModal.find({
+                holiday_date: { 
+                    $gte: moment().year() + moment().month() + '01', 
+                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                }
+            });
+
+            const findLeave = await LeaveModal.find({
+                userid: req.query.id,
+                from_date: {
+                    $gte: moment().year() + moment().month() + '01', 
+                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                },
+                to_date: {
+                    $gte: moment().year() + moment().month() + '01', 
+                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                }
+            });
+            var leave_taken = 0
+            for(let i = 0; i < findLeave.length; i++){
+                leave_taken += findLeave[i].total_number_of_day
+            }
+
+            var working_days = Number(month_array[moment().month()]) - holiday.length
+            var balance_days = 1 - leave_taken
+            var present_days = working_days - leave_taken
+            var total_paid_days = present_days + 1
+            var gross_basic_da = Math.round(empinfo_modal.base_salary / 2)
+            var gross_hra = Math.round((gross_basic_da * 40) / 100)
+            var gross_ra = Math.round((gross_basic_da * 15) / 100)
+            var gross_flexi_benifits =  Math.round(empinfo_modal.base_salary - gross_basic_da - gross_hra - gross_ra)
+            var earned_basic_da = Math.round((gross_basic_da / working_days) * total_paid_days)
+            var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
+            var earned_ra = Math.round((gross_ra/ working_days) * total_paid_days)
+            var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
+            var net_pay_in_number = (empinfo_modal.base_salary / working_days) * total_paid_days
+            net_pay_in_number = Math.round(net_pay_in_number * 100) / 100
+            var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
+
+            const salary = new SalaryModal({
+                Employee_name : empinfo_modal.First_Name + empinfo_modal.Last_Name,
+                userid : empinfo_modal._id,
+                Employee_code : empinfo_modal.Employee_Code,
+                designation : empinfo_modal.Position,
+                Salary_Slip_Month : moment().month(),
+                Salary_Slip_Year : moment().year(),
+                Date_of_Joining : empinfo_modal.date_of_joining,
+                Bank_Account_Number : empinfo_modal.Bank_No,
+                Bank_IFSC_Code : empinfo_modal.Bank_IFSC,
+                Total_Work_Days : working_days,
+                Leave_balence : 1,
+                Leave_taken :leave_taken,
+                Balence_days : balance_days,
+                Present_day : present_days,
+                Total_paid_day : total_paid_days,
+                Gross_Basic_DA : gross_basic_da,
+                Gross_HRA : gross_hra,
+                Gross_RA : gross_ra,
+                Gross_Flext_benefits : gross_flexi_benifits,
+                Gross_total : gross_basic_da + gross_hra + gross_ra + gross_flexi_benifits,
+                Earned_Basic_DA : earned_basic_da,
+                Earned_HRA : earned_hra,
+                Earned_RA : earned_ra,
+                Earned_Flext_benefits : earned_flexi_benifits,
+                Total_earn : earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits,
+                Net_pay_in_number : net_pay_in_number,
+                Net_pay_in_words : net_pay_in_word
+    
+            });
+
+            await salary.save();
+            console.log({ salary });
+            res.status(200).send({ success: true, 'salary' : salary })          
+
+        }
+
+        else{
+            return res.send({message : "Either salary slip of this user don't exist or trying to generate salary slip befor 1st or 5th date."})
         }
     }
 

@@ -7,8 +7,8 @@ const Salary = Schema({
     Employee_name
         : {
         type: String,
-        required: [true, "Please enter  name!"],
-        trim: [true, "space not allow"],
+        // required: [true, "Please enter  name!"],
+        // trim: [true, "space not allow"],
     },
     userid: {
         type: String,
@@ -22,8 +22,12 @@ const Salary = Schema({
         type: String,
         // required: [true, "Please enter  name!"],
     },
-    Salary_Slip_Month_Year: {
-        type: String,
+    Salary_Slip_Month: {
+        type: Number,
+        // required: true,
+    },
+    Salary_Slip_Year: {
+        type: Number,
         // required: true,
     },
     Date_of_Joining: {
@@ -114,9 +118,6 @@ const Salary = Schema({
         // required: true
 
     },
-    base_salary: {
-        type: String
-    }
 },
     {
         timestamps: true
