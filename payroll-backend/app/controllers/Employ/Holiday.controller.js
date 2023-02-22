@@ -54,6 +54,8 @@ class Holiday {
         try {
             var FromDate = req.body.from_date;
             var EndDate = req.body.end_date;
+            console.log(FromDate)
+            console.log(EndDate)
             console.log('runnnig holiday..');
             HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
             ).sort({ _id: -1 }).then(function (employee) {

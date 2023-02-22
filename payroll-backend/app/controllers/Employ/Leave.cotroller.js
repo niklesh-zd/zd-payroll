@@ -9,7 +9,7 @@ const moment = require('moment');
 
 const Emp = require('../Employ/EmpInfo.cotroller');
 
-var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
+var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
 
 console.log(`month list length : ${month_array.length}`);
 
@@ -59,7 +59,7 @@ class Leave {
 
             // validation for two documents in mongodb for leave's date range in two month
 
-            if (moment(to_date, "YYYY-MM-DD").isAfter(moment(from_date, "YYYY-MM-DD"))) {
+            if (moment(to_date, "YYYY-MM-DD").month() != moment(from_date, "YYYY-MM-DD").month()) {
 
                 if (Number(from_date.split("-")[0]) % 4 == 0) {
                     month_array[1] = '29'
@@ -82,7 +82,8 @@ class Leave {
                     leave_type: today,
                     from_date,
                     to_date: to_date_split,
-                    reason_for_leave
+                    reason_for_leave,
+                    total_number_of_day : total_leave_1
                 });
 
                 // calculating leaves second part
@@ -105,6 +106,13 @@ class Leave {
                 await leave_2.save();
             }
             else {
+
+                const holiday = await HolidayModal.find({
+                    holiday_date: { $gte:from_date, $lte:to_date }
+                });
+                var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
+                var total_leave = diff_between_leaves_days - holiday.length
+
                 const leave = new LeaveModal({
                     userid,
                     leave_type: today,
@@ -187,21 +195,16 @@ class Leave {
         }
     }
     async get_user_leave_id(req, res) {
-        try {
-            const userid = req.params.id
+        const userid = req.params.id
 
-            const datelFind = await LeaveModal.find({
-                userid: userid
-            })
-            if (!datelFind) {
-                return res.status(404).send({ message: "This user not Exist." });
-            }
-            res.send(datelFind)
-            console.log({ datelFind });
+        const datelFind = await LeaveModal.find({
+            userid: userid
+        })
+        if (!datelFind) {
+            return res.status(404).send({ message: "This user not Exist." });
         }
-        catch (err) {
-            res.send({ "error": err })
-        }
+        res.send(datelFind)
+        console.log({ datelFind });
 
     }
 
@@ -212,12 +215,106 @@ class Leave {
                 from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
                 to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
             });
-            console.log("findLeave", findLeave);
             res.send({ findLeave })
         } catch (err) {
             res.send({ "error": err })
         }
     }
+
+    async get_User_leave_count(req, res, next) {
+
+        const findLeave = await LeaveModal.find({
+            userid: req.query.id,
+            from_date: { $gte: req.query.from_date, $lte: req.query.to_date },
+            to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
+        });
+        var leave_count = 0
+        for(let i = 0; i < findLeave.length; i++){
+            leave_count += findLeave[i].total_number_of_day
+        }
+        res.send({ "leave_count" : leave_count })
+    }
+
+    async get_today_leave(req, res, next) {
+        var today = moment(moment().utc().format('YYYY-MM-DD'))
+        // var today = moment('2023-02-21', 'YYYY-MM-DD')  // for testing purpose
+        var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
+        var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
+
+        const findLeave = await LeaveModal.find({
+            from_date: { $gte: from_date, $lte: to_date },
+            to_date: { $gte: from_date, $lte: to_date }
+        });
+
+        const emp_count = await EmpInfoModal.find()
+        var absent_count = 0
+        for (let i = 0; i< findLeave.length; i++){
+
+            var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
+            var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
+
+            console.log(today)
+            console.log(from_date_)
+            console.log(to_date_)
+
+            if (
+                today.isSameOrBefore(to_date_) 
+                && today.isSameOrAfter(from_date_)
+            ){
+                absent_count++
+            }
+        var present_count = emp_count.length - absent_count
+        }
+        res.send(
+            {
+                "present_count" : present_count,
+                "absent_count" : absent_count
+            }
+        )
+    }
+
+
+    async get_yesterday_leave(req, res, next) {
+        var today = moment(moment().utc().format('YYYY-MM-DD'))
+        var yesterday = today.subtract(1, 'day')
+        var from_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-01"
+        var to_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-31"
+
+        const findLeave = await LeaveModal.find({
+            from_date: { $gte: from_date, $lte: to_date },
+            to_date: { $gte: from_date, $lte: to_date }
+        });
+
+        const emp_count = await EmpInfoModal.find()
+        var absent_count = 0
+        for (let i = 0; i< findLeave.length; i++){
+
+            var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
+            var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
+
+            console.log(today)
+            console.log(from_date_)
+            console.log(to_date_)
+            console.log("\n\n\n\n")
+
+
+            if (
+                yesterday.isSameOrBefore(to_date_) 
+                && yesterday.isSameOrAfter(from_date_)
+            ){
+                absent_count++
+            }
+        var present_count = emp_count.length - absent_count
+        }
+        res.send(
+            {
+                "present_count" : present_count,
+                "absent_count" : absent_count
+            }
+        )
+    }
+
+
 }
 
 module.exports = new Leave();
