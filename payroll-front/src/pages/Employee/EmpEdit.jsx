@@ -8,7 +8,7 @@ const Empedit = () => {
     console.log('idddd', id)
   
     useEffect(() => {
-        fetch('http://localhost:7072/emp/emp_1/' + id)
+        fetch('http://localhost:7071/emp/emp_1/' + id)
           .then((res) => {
             return res.json()
           })

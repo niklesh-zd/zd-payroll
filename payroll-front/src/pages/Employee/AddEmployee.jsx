@@ -4,10 +4,9 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaBackward } from "react-icons/fa";
-import { IoArrowBackCircle } from "react-icons/io5";
+import { TiArrowBack } from "react-icons/ti";
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -59,7 +58,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7072/emp/add_employ", fields)
+        .post("http://localhost:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -86,7 +85,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7072/emp/update/" + props.data._id, fields)
+        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -132,19 +131,12 @@ function AddEmployee(props) {
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
-
   return (
     <div className="">
-                  <Link
-                  to="/settings/manageprofile">
-                 <button
-                  className="btn mr-2 ms-md-5"
-                
-                >
-                  <IoArrowBackCircle size={25}/>
-       </button>      
-                
-                </Link>
+      <Link
+        to="/settings/manageprofile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <form style={{ display: "flex" }}>
         <div className="px-4 pt-5">
           <div className="row gx-12">
@@ -684,7 +676,7 @@ function AddEmployee(props) {
             </div>
 
             <div className="col-4 edit_information">
-             
+
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />

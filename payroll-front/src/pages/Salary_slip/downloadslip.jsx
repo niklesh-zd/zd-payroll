@@ -7,6 +7,7 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { IoArrowBackCircle } from "react-icons/io5";
+import { TiArrowBack } from "react-icons/ti";
 let converter = require("number-to-words");
 
 export const Downloadslip = (props) => {
@@ -24,22 +25,22 @@ export const Downloadslip = (props) => {
   const doj = new Date(props.data.Date_of_Joining).toLocaleDateString("pt-PT");
 
 
-  
-useEffect(() => {
-  const element = document.getElementById("pdf-download");
-  html2pdf(element, {
-    margin: 0,
-    filename: "ZecData_Technology.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 5 },
-    jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-  });
-},[]);
+
+  useEffect(() => {
+    const element = document.getElementById("pdf-download");
+    html2pdf(element, {
+      margin: 0,
+      filename: "ZecData_Technology.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 5 },
+      jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+    });
+  }, []);
 
   useEffect(() => {
     axios
       .post(
-        `http://192.168.29.146:7072/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         const arr = res.data.findLeave;
@@ -100,19 +101,11 @@ useEffect(() => {
 
   return (
     <div>
+        <Link
+          to="/settings/manageprofile" className="btn text-dark">
+          <TiArrowBack size={30} />
+        </Link>
       <div className="container">
-        <div className="flex" 
-      >
-                  <a
-                    href="/settings/salary:id">
-                 <button
-                  className="btn mr-2 ml-5 mr-5"
-                >
-                  <IoArrowBackCircle size={30}/>
-       </button>      
-                
-                </a>
-                </div>
         <div>
           <form className="mt-5" id="pdf-download">
             {
