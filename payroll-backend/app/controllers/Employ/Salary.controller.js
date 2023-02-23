@@ -27,7 +27,7 @@ class Salary {
             return res.send(Salary_Modal[0])
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() <= 5){
+        else if (Salary_Modal.length == 0 && moment().date() >= 5){
 
             var empinfo_modal = await EmpInfoModal.find({
                 _id : req.query.userid
