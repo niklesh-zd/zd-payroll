@@ -7,8 +7,8 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 let converter = require("number-to-words");
 
-const Downloadslip = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const Downloadslip = (props) => {
+  // const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const [hra, Sethra] = useState("");
   const [ra, Setra] = useState("");
@@ -20,6 +20,20 @@ const Downloadslip = (props) => {
   const holidays = props.holidays;
   const baseSalary = props.data.base_salary;
   const doj = new Date(props.data.Date_of_Joining).toLocaleDateString("pt-PT");
+
+
+  
+useEffect(() => {
+  const element = document.getElementById("pdf-download");
+  html2pdf(element, {
+    margin: 0,
+    filename: "ZecData_Technology.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 5 },
+    jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+  });
+},[]);
+
   useEffect(() => {
     axios
       .post(
@@ -66,29 +80,32 @@ const Downloadslip = (props) => {
       (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
-  const downloadPDF = async () => {
-    setIsLoading(true);
-    const element = document.getElementById("pdf-download");
-    await html2pdf(element, {
-      margin: 0,
-      filename: "ZecData_Technology.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 5 },
-      jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-    });
-    setIsLoading(false);
-  };
+
+  // const downloadPDF = () => {
+  //   // setIsLoading(true);
+  //   const element = document.getElementById("pdf-download");
+  //   html2pdf(element, {
+  //     margin: 0,
+  //     filename: "ZecData_Technology.pdf",
+  //     image: { type: "jpeg", quality: 0.98 },
+  //     html2canvas: { scale: 5 },
+  //     jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+  //   });
+  //   // setIsLoading(false);
+  // };
+
   const fword = converter.toWords(netPay);
 
   return (
     <div>
-      <button className="btn text-white ml-5 mt-2 d-flex" style={{ backgroundColor: "#368bb5", lineHeight: '19px' }} onClick={downloadPDF} disabled={isLoading}>{isLoading ? <RotatingLines
-        className='text-center'
-        strokeColor="black"
-        strokeWidth="8"
-        animationDuration="0.75"
-        width="26"
-        visible={true} /> : 'Download Pdf'}<FaFileDownload style={{ width: '25px' }} /></button>
+      {/* <button className="btn text-white ml-5 mt-2 d-flex" style={{ backgroundColor: "#368bb5", lineHeight: '19px' }}
+         disabled={isLoading}>{isLoading ? <RotatingLines
+          className='text-center'
+          strokeColor="black"
+          strokeWidth="8"
+          animationDuration="0.75"
+          width="26"
+          visible={true} /> : 'Download Pdf'}<FaFileDownload style={{ width: '25px' }} /></button> */}
       <div className="container">
         <div>
           <form className="mt-5" id="pdf-download">
@@ -116,7 +133,7 @@ const Downloadslip = (props) => {
                     <div className="row" style={{ backgroundColor: "#368bb5" }}>
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="fw-bolder">Name </span>
                           <span style={{ marginLeft: "110px" }}>{":"}</span>
                           <small
@@ -129,7 +146,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="fw-bolder">EMP Code </span>
                           <span style={{ marginLeft: "87px" }}>{":"}</span>
                           <small
@@ -147,7 +164,7 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="fw-bolder">Designation </span>
                           <span style={{ marginLeft: "55px" }}>{":"}</span>
                           <small
@@ -159,7 +176,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6">
                         <div>
-                           
+
                           <span className="fw-bolder">Ac No. </span>
                           <span style={{ marginLeft: "115px" }}>{":"}</span>
                           <small
@@ -177,7 +194,7 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="fw-bolder ">
                             Date Of Joining
                           </span>
@@ -188,7 +205,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          
+
                           <span className="fw-bolder">IFSC </span>
                           <span style={{ marginLeft: "130px" }}>{":"}</span>
                           <small style={{ marginLeft: "40px" }}
@@ -207,7 +224,7 @@ const Downloadslip = (props) => {
                     <div className="row">
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="fw-bolder">
                             Leave (Balance)
                           </span>
@@ -218,7 +235,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6">
                         <div>
-                          
+
                           <span className="lder">
                             Total Working Days
                           </span>
@@ -237,7 +254,7 @@ const Downloadslip = (props) => {
                     >
                       <div className="col-md-6 ">
                         <div>
-                          
+
                           <span className="fw-bolder">Leave Taken </span>
                           <span style={{ marginLeft: "55px" }}>{":"}</span>
                           <small style={{ marginLeft: "80px" }}
@@ -246,7 +263,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          
+
                           <span className="fw-bolder ">
                             Present Days
                           </span>
@@ -259,7 +276,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6  ">
                         <div>
-                          
+
                           <span className="fw-bolder">Balance Days</span>
                           <span style={{ marginLeft: "50px" }}>{":"}</span>
                           <small style={{ marginLeft: "80px" }}
@@ -268,7 +285,7 @@ const Downloadslip = (props) => {
                       </div>
                       <div className="col-md-6 ">
                         <div>
-                          
+
                           <span className="fw-bolder">
                             Total Paid Days
                           </span>
@@ -379,20 +396,20 @@ const Downloadslip = (props) => {
                 </div>
                 <div className="row border border-dark">
                   <div className="col-md-5 ">
-                    <span style={{color:"#368bb5",fontWeight:"bold"}}>
+                    <span style={{ color: "#368bb5", fontWeight: "bold" }}>
                       Net Salary Payable(In Words)
                     </span>
                   </div>
                   <div className=" col-md-7">
                     <div className="d-flex flex-column ">
-                      <span  style={{color:"#368bb5",fontWeight:"bold"}}>
+                      <span style={{ color: "#368bb5", fontWeight: "bold" }}>
                         {fword.toLocaleUpperCase()} ONLY
                       </span>
                       <br></br>
                     </div>
                   </div>
                 </div>
-                <span className="col-md-12"  style={{color:"#368bb5"}}>
+                <span className="col-md-12" style={{ color: "#368bb5" }}>
                   This is computer generated copy not need to stamp and sign
                 </span>
               </div>
@@ -404,4 +421,7 @@ const Downloadslip = (props) => {
   );
 };
 
-export default Downloadslip;
+
+// export { downloadPDF as downloadPDF };
+// export default {downloadPDF};
+// export default Downloadslip;

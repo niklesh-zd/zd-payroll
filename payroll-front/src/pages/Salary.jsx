@@ -2,7 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Downloadslip from "./Salary_slip/downloadslip";
+import { Downloadslip } from "./Salary_slip/downloadslip";
+
+
 
 function Salary() {
   const { id } = useParams();
@@ -60,7 +62,6 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
-
   function handlesubmit(e) {
     e.preventDefault();
     axios
@@ -75,7 +76,6 @@ function Salary() {
         console.log("fields", fields);
       });
   }
-
   useEffect(() => {
     setFields({
       from_date: startdate,
@@ -120,7 +120,7 @@ function Salary() {
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
-            <form className="container" onSubmit={(e) => handlesubmit(e)}>
+            <form className="container" onSubmit={(e) => handlesubmit(e)} >
               <div className="card p-10">
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
