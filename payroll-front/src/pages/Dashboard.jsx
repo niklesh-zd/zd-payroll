@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch("http://localhost:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -31,7 +31,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://192.168.29.146:7071/Emp_Leave/get_today_leave")
+      .get("http://localhost:7071/Emp_Leave/get_today_leave")
       .then((resp) => {
         // console.log("today", resp.data);
         setTodayPresent(resp.data);
@@ -42,7 +42,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://192.168.29.146:7071/Emp_Leave/get_yesterday_leave")
+      .get("http://localhost:7071/Emp_Leave/get_yesterday_leave")
       .then((resp) => {
         // console.log("yesterday", resp.data);
         setYesterdayPresent(resp.data);
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
     const datesobject = { from_date: startDate, end_date: endDate };
     axios
-      .post("http://192.168.29.146:7071/Holiday/get-fastival", datesobject)
+      .post("http://localhost:7071/Holiday/get-fastival", datesobject)
       .then((res) => {
         console.log("resp", res.data);
         setTotalHoliday(res.data);
