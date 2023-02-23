@@ -75,7 +75,6 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
-
   function handlesubmit(e) {
     e.preventDefault();
     axios
@@ -84,13 +83,6 @@ function Salary() {
         console.log("response", response);
         let holidays = response.data.length;
         setTotalHolydays(holidays);
-        // setFields({ ...fields, holidays: holidays})
-        // let calholiday = inputValue - holiday;
-        // getSalaryData({
-        //   Total_Work_Days: calholiday,
-        //   Leave_taken: leavetaken,
-        //   ...fields,
-        // });
       })
       .then(() => {
         setSwitchToDownload(true);
@@ -111,7 +103,7 @@ function Salary() {
 
   useEffect(() => {
     getPreviousMonths();
-    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+    fetch("http://localhost:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })

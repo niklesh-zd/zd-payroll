@@ -30,6 +30,7 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+
   useEffect(() => {
     axios
       .get(`${utils}/Emp_Leave/get_today_leave`)
@@ -41,6 +42,9 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+
+
+
   useEffect(() => {
     axios
       .get(`${utils}/Emp_Leave/get_yesterday_leave`)
@@ -52,7 +56,6 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
-  var marchHolidays = [];
   useEffect(() => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -61,7 +64,6 @@ const Dashboard = () => {
     const lastDate = new Date(currentYear, currentMonth, 0);
     const startDate = firstDate.toISOString().slice(0, 10);
     const endDate = lastDate.toISOString().slice(0, 10);
-
     const datesobject = { from_date: startDate, end_date: endDate };
     axios
       .post(`${utils}/Holiday/get-fastival`, datesobject)
@@ -77,7 +79,7 @@ const Dashboard = () => {
     <div id="root">
       <div className="container pt-5">
         <div className="row align-items-stretch">
-          <div className="c-dashboardInfo col-lg-3 col-md-6">
+          <a className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"  href="/settings/manageprofile">
             <div
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
@@ -92,7 +94,7 @@ const Dashboard = () => {
                 </h1>
               </div>
             </div>
-          </div>
+          </a>
 
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
@@ -109,7 +111,6 @@ const Dashboard = () => {
                   ) : (
                     <BsFillEmojiHeartEyesFill />
                   )}
-                  {/* {totalHoliday.length} */}
                 </h1>
               </div>
               <div>
@@ -123,6 +124,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+
+
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
@@ -139,6 +143,9 @@ const Dashboard = () => {
               </h2>
             </div>
           </div>
+
+
+
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"

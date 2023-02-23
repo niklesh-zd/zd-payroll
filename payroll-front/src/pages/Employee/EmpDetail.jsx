@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { HiUserGroup } from 'react-icons/hi';
+import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
 import utils from "./../utils"
 const EmpDetail = () => {
@@ -11,9 +14,9 @@ const EmpDetail = () => {
   const LoadEdit = () => {
     navigate("/settings/EmpEdit" + id);
   };
-  const leaveNavigate = () => {
-    navigate("/settings/userleavedetails" + id);
-  };
+  // const leaveNavigate = () => {
+  //   navigate("/settings/userleavedetails" + id);
+  // };
   useEffect(() => {
     fetch(`/emp/emp_1/` + id)
       .then((res) => {
@@ -27,6 +30,7 @@ const EmpDetail = () => {
         console.log(err.message);
       });
   }, []);
+  const img = emo
   const Removefunction = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -57,154 +61,34 @@ const EmpDetail = () => {
       }
     });
   };
+
   return (
-    <div className="">
-      <div className="card pt-3 pb-3 pl-10 pr-10">
-        <div
-          className="card-title"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <div className="flex">
-            <h3>Employee Details</h3>
-          </div>
-          <div className="flex">
-            <button
-              className="btn btn-sm btn-primary mr-2"
-              onClick={() => LoadEdit()}
-            >
-              Update Details
-            </button>
-            <button
-              className="btn btn-sm btn-primary mr-2"
-              onClick={() => leaveNavigate()}
-            >
-              Leaves
-            </button>
-            <button
-              className="btn btn-sm btn-danger"
-              onClick={() => Removefunction()}
-            >
-              Delete Employee
-            </button>
-          </div>
-        </div>
+    <div className="mt-5 " >
+
+      <div className="card">
+
         {empdata && (
-          <div className="">
-            <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <h5>Personal Details</h5>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
+          <div className="cover-content">
+            <div
+              className="card-title float-end"
+              style={{
+                marginTop: '-2.5rem',
+                color: 'rgba(23,31,35,.64)'
+              }}
+            >
+              <div className="flex">
+                <button
+                  className="btn mr-2"
+                  onClick={() => LoadEdit()}
                 >
-                  <h6>Employee Code</h6>
-                  <p>{empdata.Employee_Code}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
+                  <MdOutlineEditCalendar className="text-primary fs-3" />
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => Removefunction()}
                 >
-                  <h6>Name</h6>
-                  <p>{empdata.First_Name + " " + empdata.Last_Name}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Position</h6>
-                  <p>{empdata.Position}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Email Address</h6>
-                  <p>{empdata.email}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Father's Name</h6>
-                  <p>{empdata.fatherName}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Date of Birth</h6>
-                  <p>
-                    {new Date(empdata.date_of_birth).toLocaleDateString(
-                      "pt-PT"
-                    )}
-                  </p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Gender</h6>
-                  <p>{empdata.gender}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Blood Group</h6>
-                  <p>{empdata.Blood_Group}</p>
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <h5>Educational Details</h5>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Degree</h6>
-                  <p>{empdata.DEGREE}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Stream</h6>
-                  <p>{empdata.STREAM}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Passed/Appearing</h6>
-                  <p>{empdata.PASSED}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Year of Passing</h6>
-                  <p>{empdata.YEAR_OF_PASSING}</p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Date of Joinig</h6>
-                  <p>
-                    {new Date(empdata.date_of_joining).toLocaleDateString(
-                      "pt-PT"
-                    )}
-                  </p>
-                </div>
-                <div
-                  className="flex"
-                  style={{ width: "70%", justifyContent: "space-between" }}
-                >
-                  <h6>Marital Status</h6>
-                  <p>{empdata.Marital_Status}</p>
-                </div>
+                  <MdDelete className="text-danger fs-3" />
+                </button>
               </div>
             </div>
             <div className="row">
@@ -295,6 +179,132 @@ const EmpDetail = () => {
           </div>
         )}
       </div>
+
+      {empdata && (
+        <div className="card">
+          <div className="container mt-3">
+            <div className="row view-basic-card">
+              <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Basic Information</h3>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Employee Code</label>
+                <p className="pmd-list-title"><small>{empdata.Employee_Code}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">First Name</label><br />
+                <small>{empdata.First_Name}</small>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Last Name</label>
+                <p className="pmd-list-title">{empdata.Last_Name}</p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Date of Joinig</label>
+                <p className="pmd-list-title"><small>{new Date(empdata.date_of_joining).toLocaleDateString(
+                  "pt-PT"
+                )}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Personal Email</label>
+                <p className="pmd-list-title"><small href="" title="">{empdata.email}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Date of Birth</label>
+                <p className="pmd-list-title"><small>{new Date(empdata.date_of_birth).toLocaleDateString(
+                  "pt-PT"
+                )}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Gender</label>
+                <p className="pmd-list-title"><small>{empdata.gender}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Marital Status</label>
+                <p className="pmd-list-title"><small>{empdata.Marital_Status}</small></p>
+              </div>
+            </div>
+            <hr />
+            <div className="row view-basic-card">
+              <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Education Details</h3>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Degree</label>
+                <p className="pmd-list-title"><small>{empdata.DEGREE}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Stream</label><br />
+                <small>{empdata.STREAM}</small>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Passed/Appearing</label>
+                <p className="pmd-list-title">{empdata.PASSED}</p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Year of Passing</label>
+                <p className="pmd-list-title"><small>{empdata.YEAR_OF_PASSING}</small></p>
+              </div>
+              {/* <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Date of Joinig</label>
+                <p className="pmd-list-title"><small>{new Date(empdata.date_of_joining).toLocaleDateString(
+                      "pt-PT"
+                    )}</small></p>
+              </div> */}
+            </div>
+            <hr />
+            <div className="row view-basic-card">
+              <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Bank Details</h3>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Aadhar Number</label>
+                <p className="pmd-list-title"><small>{empdata.ADHAR}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Pan Number</label><br />
+                <small>{empdata.PAN_No}</small>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Bank A/C No.</label>
+                <p className="pmd-list-title">{empdata.Bank_No}</p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Bank IFSC Code</label>
+                <p className="pmd-list-title"><small>{empdata.Bank_IFSC}</small></p>
+              </div>
+
+            </div>
+            <hr />
+            <div className="row view-basic-card">
+              <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Contact Details</h3>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Contact Number</label>
+                <p className="pmd-list-title"><small>{empdata.Contact_Number}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Alternate Contact No.</label><br />
+                <small>{empdata.Alternate_Contact_number}</small>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Home Contact No.</label>
+                <p className="pmd-list-title">{empdata.Contact_Number_Home}</p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">State</label>
+                <p className="pmd-list-title"><small href="" title="">mp</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">City</label>
+                <p className="pmd-list-title"><small>Indore</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Current Address</label>
+                <p className="pmd-list-title"><small>{empdata.Current_Address}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Permanent Address</label>
+                <p className="pmd-list-title"><small>{empdata.Permanent_Address}</small></p>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
