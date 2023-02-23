@@ -18,7 +18,11 @@ const EmpDetail = () => {
   //   navigate("/settings/userleavedetails" + id);
   // };
   useEffect(() => {
+<<<<<<< HEAD
     fetch(`/emp/emp_1/` + id)
+=======
+    fetch("http://localhost:7071/emp/emp_1/" + id)
+>>>>>>> 301da64a0d0fc2e3bd9f7eed536ecbd18222874e
       .then((res) => {
         return res.json();
       })

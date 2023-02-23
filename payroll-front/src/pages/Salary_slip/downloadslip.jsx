@@ -364,7 +364,7 @@ useEffect(() => {
           </form>
         </div>
       </div>
-    </div>
+  
   );
 };
 
