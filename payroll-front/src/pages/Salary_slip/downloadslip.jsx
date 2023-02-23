@@ -1,11 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FaFileDownload } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
-let converter = require("number-to-words");
+import { Link } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 const Downloadslip = (props) => {
   console.log("props", props);
@@ -15,18 +15,9 @@ const Downloadslip = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
-  // const downloadPDF = async () => {
-  //   setIsLoading(true);
-  //   const element = document.getElementById("pdf-download");
-  //   await html2pdf(element, {
-  //     margin: 0,
-  //     filename: "ZecData_Technology.pdf",
-  //     image: { type: "jpeg", quality: 0.98 },
-  //     html2canvas: { scale: 5 },
-  //     jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-  //   });
-  //   setIsLoading(false);
-  // };
+  // useEffect(() => {
+
+  // }, [fields]);
   useEffect(() => {
     axios
       .post(
@@ -37,10 +28,22 @@ const Downloadslip = (props) => {
         if (response.data.success) {
           setFields(response.data.salary);
           setIsLoading(false);
+          return response.data.salary
         } else {
           setFields(response.data);
           setIsLoading(false);
+          return response.data
         }
+      })
+      .then((response) => {
+        const element = document.getElementById("pdf-download");
+        html2pdf(element, {
+          margin: 0,
+          filename: `${response.Employee_name}.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 5 },
+          jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+        });
       })
       .catch((err) => {
         console.log("Somthing Went Wrong", err);
@@ -49,6 +52,9 @@ const Downloadslip = (props) => {
 
   return (
     <div>
+      <Link to="/settings/manageprofile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <div className="container">
         <div>
           <form
@@ -106,7 +112,7 @@ const Downloadslip = (props) => {
                     </div>
                     <div className="row mt-1">
                       <div className="col-md-5">
-                        <span className="fw-bolder ">Date of Joining:</span>
+                        <span className="fw-bolder ">Date of Joining</span>
                       </div>
                       <div className="col-md-7">
                         <small>
@@ -293,5 +299,4 @@ const Downloadslip = (props) => {
     </div>
   );
 };
-
 export default Downloadslip;

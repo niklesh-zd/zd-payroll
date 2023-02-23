@@ -4,6 +4,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaBackward } from "react-icons/fa";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 const Leaves = () => {
   let navigate = useNavigate();
@@ -86,6 +88,16 @@ const Leaves = () => {
 
   return (
     <div>
+         <Link
+                  to="/settings/leavedetails">
+                 <button
+                  className="btn mr-2 ms-md-5"
+                
+                >
+                  <IoArrowBackCircle size={25}/>
+       </button>      
+                
+                </Link>
       <div className="offset-lg-2 col-lg-8">
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>

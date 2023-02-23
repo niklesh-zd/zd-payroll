@@ -1,8 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import Downloadslip from "./Salary_slip/downloadslip";
 
+import { Link, useParams } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
   console.log("id----", id);
@@ -62,12 +63,10 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
-
   function handlesubmit(e) {
     e.preventDefault();
     setSwitchToDownload(true);
   }
-
 
   useEffect(() => {
     getPreviousMonths();
@@ -100,19 +99,14 @@ function Salary() {
     <Downloadslip year={salaryYear} month={salaryMonthNumber} />
   ) : (
     <div className="pt-5">
-      <div style={{ display: "flex", marginLeft: "80px" }}>
-        <Link
-          to="/settings/manageprofile"
-          className="btn btn-primary btn-bg ml-5 mr-5"
-        >
-          Back
-        </Link>
-      </div>
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
-              <div className="card p-10">
+              <div className="card m-5 p-3 " >
+                <Link to="/settings/manageprofile">
+                  <TiArrowBack size={25} />
+                </Link>
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
                 </div>
@@ -172,8 +166,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.First_Name}
+                          // onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -191,8 +185,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.First_Name}
+                          // onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -210,8 +204,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.Current_Address}
+                          // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -229,8 +223,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.Current_Address}
+                          // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}

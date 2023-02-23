@@ -5,6 +5,8 @@ import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
+
+
 function UserLeaveDetails() {
   const { id } = useParams();
   const [empLeaveData, setEmpLeaveData] = useState([]);

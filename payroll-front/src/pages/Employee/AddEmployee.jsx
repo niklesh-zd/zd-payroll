@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaBackward } from "react-icons/fa";
+import { TiArrowBack } from "react-icons/ti";
+
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
@@ -129,10 +131,12 @@ function AddEmployee(props) {
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
-
   return (
     <div className="">
-       <FaBackward className="" style={{marginRight: '0px'}}/>
+      <Link
+        to="/settings/manageprofile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <form style={{ display: "flex" }}>
         <div className="px-4 pt-5">
           <div className="row gx-12">
@@ -672,7 +676,7 @@ function AddEmployee(props) {
             </div>
 
             <div className="col-4 edit_information">
-             
+
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />

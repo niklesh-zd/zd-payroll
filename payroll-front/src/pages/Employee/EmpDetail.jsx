@@ -4,6 +4,8 @@ import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
+import { IoArrowBackCircle } from "react-icons/io5";
+import { TiArrowBack } from "react-icons/ti";
 const EmpDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -75,30 +77,41 @@ const EmpDetail = () => {
                 color: 'rgba(23,31,35,.64)'
               }}
             >
-              <div className="flex">
-                <button
-                  className="btn mr-2"
-                  onClick={() => LoadEdit()}
-                >
-                  <MdOutlineEditCalendar className="text-primary fs-3" />
-                </button>
-                <button
-                  className="btn"
-                  onClick={() => Removefunction()}
-                >
-                  <MdDelete className="text-danger fs-3" />
-                </button>
+              <div className="flex"
+              >
+                <div className="flex">
+                  <Link
+                    to="/settings/manageprofile" className="btn text-primary">
+                    <TiArrowBack size={30} />
+                  </Link>
+                </div>
+
+                <div className="flex">
+                  <button
+                    className="btn"
+                    onClick={() => LoadEdit()}
+                  >
+                    <MdOutlineEditCalendar className="text-primary fs-3" />
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => Removefunction()}
+                  >
+                    <MdDelete className="text-danger fs-3" />
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="page-content">
-              <div className="d-flex d-flex-row align-items-center mobile-view">
-                <img alt="Profile-Pic" src={img} style={{ width: '9rem' }} className="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-4" width="180" />
+
+            {/* <img alt="Profile-Pic" src={img} style={{ width: '9rem' }} className="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-4" width="180" /> */}
+            <div className="container">
+              <div className="d-flex d-flex-row align-items-center">
                 <div className="media-body">
-                  <h1 style={{ color: '#3075BA' }}>{empdata.First_Name + " " + empdata.Last_Name}</h1>
-                  <p className="pmd-list-subtitle">{empdata.Position}</p>
+                  <h1 className="mb-3 mt-5" style={{ color: '#3075BA' }}>{empdata.First_Name + " " + empdata.Last_Name}</h1>
+                  <p className=" mb-5">{empdata.Position}</p>
                   <p style={{
                     color: 'rgba(23,31,35,.64)'
-                  }}>ZecData Technology</p>
+                  }}></p>
 
                 </div>
               </div>
@@ -229,7 +242,6 @@ const EmpDetail = () => {
               </div>
             </div>
             <hr />
-
           </div>
         </div>
       )}
