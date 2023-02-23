@@ -34,11 +34,12 @@ const Downloadslip = (props) => {
       )
       .then((response) => {
         console.log("response", response.data);
-        if (response.data) {
-          setFields(response.data);
+        if (response.data.success) {
+          setFields(response.data.salary);
           setIsLoading(false);
         } else {
-          console.log("No Response");
+          setFields(response.data);
+          setIsLoading(false);
         }
       })
       .catch((err) => {
