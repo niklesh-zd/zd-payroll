@@ -6,29 +6,31 @@ import Downloadslip from "./Salary_slip/downloadslip";
 
 function Salary() {
   const { id } = useParams();
+  console.log("id----", id);
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
   const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [startdate, Setstartdate] = useState("");
-  const [enddate, Setenddate] = useState("");
+  const [salaryYear, setSalaryYear] = useState(0);
+  const [salaryMonthNumber, setSalaryMonthNumber] = useState(0);
   const [month, Setmonth] = useState("");
   const [totalHolydays, setTotalHolydays] = useState("");
   const [prevMonths, setPrevMonths] = useState([]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    // Setmonth("January");
-    // setInputValue("31");
-    Setstartdate(`${event.target.value}-01`);
-    Setenddate(`${event.target.value}-31`);
+    let salaryMonth = event.target.value;
+    let yearStr = salaryMonth.substring(0, 4); 
+    let monthStr = salaryMonth.substring(4);
+    setSalaryYear(yearStr);
+    setSalaryMonthNumber(monthStr);
   };
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
- 
+
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -54,37 +56,36 @@ function Salary() {
       let month = monthNames[date.getMonth()];
       let year = date.getFullYear();
       let format1 = `${month} ${year}`;
-      let format2 = `${year}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
-      previousMonths.push({ format_1: format1, format_2: format2 });
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
+      previousMonths.push({
+        format_1: format1,
+        year: year.toString(),
+        month: monthNumber,
+      });
     }
     setPrevMonths(previousMonths);
     return previousMonths;
   };
 
+  // function handlesubmit(e) {
+  //   e.preventDefault();
+  //   axios
+  //     .post("http://localhost:7071/Holiday/get_holiday", fields)
+  //     .then((response) => {
+  //       console.log("response", response);
+  //       let holidays = response.data.length;
+  //       setTotalHolydays(holidays);
+  //     })
+  //     .then(() => {
+  //       setSwitchToDownload(true);
+  //       console.log("fields", fields);
+  //     });
+  // }
   function handlesubmit(e) {
     e.preventDefault();
-    axios
-      .post("http://localhost:7071/Holiday/get_holiday", fields)
-      .then((response) => {
-        console.log("response", response);
-        let holidays = response.data.length;
-        setTotalHolydays(holidays);
-      })
-      .then(() => {
-        setSwitchToDownload(true);
-        console.log("fields", fields);
-      });
+    setSwitchToDownload(true);
   }
 
-  useEffect(() => {
-    setFields({
-      from_date: startdate,
-      end_date: enddate,
-      Salary_Slip_Month_Year: month,
-      monthDays: inputValue,
-      ...empdata,
-    });
-  }, [startdate, enddate, month]);
 
   useEffect(() => {
     getPreviousMonths();
@@ -114,17 +115,17 @@ function Salary() {
   }, []);
 
   return switchToDownload ? (
-    <Downloadslip data={fields} holidays={totalHolydays} />
+    <Downloadslip year={salaryYear} month={salaryMonthNumber} />
   ) : (
     <div className="pt-5">
-      <div style={{ display: "flex",marginLeft:"80px"}}>
-                  <Link
-                    to="/settings/manageprofile"
-                    className="btn btn-primary btn-bg ml-5 mr-5"
-                  >
-               Back
-                  </Link>
-                </div>
+      <div style={{ display: "flex", marginLeft: "80px" }}>
+        <Link
+          to="/settings/manageprofile"
+          className="btn btn-primary btn-bg ml-5 mr-5"
+        >
+          Back
+        </Link>
+      </div>
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
@@ -238,7 +239,7 @@ function Salary() {
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
                           <label className="profile_details_text">
-                          Additional Comment
+                            Additional Comment
                           </label>
                           <textarea
                             className="form-control"
@@ -275,7 +276,10 @@ function Salary() {
                         </option>
                         {prevMonths.map((month) => {
                           return (
-                            <option key={month.format_1} value={month.format_2}>
+                            <option
+                              key={month.format_1}
+                              value={month.year + month.month}
+                            >
                               {month.format_1}
                             </option>
                           );
