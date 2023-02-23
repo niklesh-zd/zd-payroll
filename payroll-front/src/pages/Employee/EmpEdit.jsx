@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import AddEmployee from "./AddEmployee";
 
 const Empedit = () => {
@@ -9,7 +8,7 @@ const Empedit = () => {
     console.log('idddd', id)
   
     useEffect(() => {
-        fetch('http://192.168.29.146:7071/emp/emp_1/' + id)
+        fetch('http://localhost:7071/emp/emp_1/' + id)
           .then((res) => {
             return res.json()
           })
@@ -26,7 +25,6 @@ const Empedit = () => {
     return ( 
         empdata ?
         <AddEmployee data={empdata}/>
-
         :
         <h3>Loading....</h3>
      );

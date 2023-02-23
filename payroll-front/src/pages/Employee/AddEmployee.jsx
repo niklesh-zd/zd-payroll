@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
+  const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,19 +23,23 @@ function AddEmployee(props) {
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
-
     setFields(fieldObj);
+
   }
+
+
+
+
   console.log("fields", fields);
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-        ? "Pan Number already exiest"
-        : message == "alredy exist emails."
-        ? "Email already exiest"
-        : null,
+          ? "Pan Number already exiest"
+          : message == "alredy exist emails."
+            ? "Email already exiest"
+            : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -52,7 +58,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/add_employ", fields)
+        .post("http://localhost:7071/emp/add_employ", fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -79,7 +85,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
+        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -118,19 +124,21 @@ function AddEmployee(props) {
       dojDateInputRef.current.setAttribute("min", oneMonthAgo);
     }
   }, []);
+
+  const handleInput = (event) => {
+    const { value, selectionStart, selectionEnd } = event.target;
+    const sanitizedValue = value.replace(/[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g, "");
+    event.target.value = sanitizedValue;
+    event.target.setSelectionRange(selectionStart, selectionEnd);
+  };
   return (
     <div className="">
-        <div style={{ display: "flex",padding:"20px" }}>
-                  <Link
-                    to="/settings/manageprofile"
-                    className="btn btn-primary btn-bg ml-5 mr-5"
-                  >
-                    Back
-                  </Link>
-                </div>
+      <Link
+        to="/settings/manageprofile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <form style={{ display: "flex" }}>
-        <ToastContainer />
-        <div className="px-4 pt-3">
+        <div className="px-4 pt-5">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
@@ -164,6 +172,8 @@ function AddEmployee(props) {
                         First Name
                       </label>
                       <input
+                        pattern="[a-zA-Z0-9\s]*"
+                        onInput={handleInput}
                         type="text"
                         style={{ textTransform: "capitalize" }}
                         name="First_Name"
@@ -190,6 +200,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Last Name"
                         style={{ textTransform: "capitalize" }}
+                        onInput={handleInput}
                         value={fields.Last_Name}
                         onChange={(e) => handleChange(e)}
                       />
@@ -210,6 +221,7 @@ function AddEmployee(props) {
                         maxLength="50"
                         value={fields.fatherName}
                         onChange={(e) => handleChange(e)}
+                        onInput={handleInput}
                         className="form-control"
                         placeholder="Father's Name"
                         style={{ textTransform: "capitalize" }}
@@ -503,7 +515,8 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label>Base Salary</label>
                       <input
@@ -513,6 +526,20 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Enter Base Salary"
+                      ></input>
+                      <div className="errorMsg">{errors.base_salary}</div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="form-group">
+                      <label>Effective Date</label>
+                      <input
+                        type="date"
+                        name="Effective-date"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Efffective Date"
                       ></input>
                       <div className="errorMsg">{errors.base_salary}</div>
                     </div>
@@ -581,6 +608,7 @@ function AddEmployee(props) {
                           name="STREAM"
                           value={fields.STREAM}
                           onChange={(e) => handleChange(e)}
+                          onInput={handleInput}
                           className="form-control"
                           placeholder="Enter Stream"
                         ></input>
@@ -646,7 +674,9 @@ function AddEmployee(props) {
                 </div>
               </div>
             </div>
+
             <div className="col-4 edit_information">
+
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />
@@ -812,27 +842,27 @@ function AddEmployee(props) {
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="submit">
-                    <div className="form-group">
-                      {props.data ? (
-                        <input
-                          type="submit"
-                          value="Update"
-                          className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
-                          onClick={(e) => updateUserDetails(e)}
-                        />
-                      ) : (
-                        <input
-                          type="submit"
-                          value="Submit"
-                          className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
-                          onClick={(e) => submituserRegistrationForm(e)}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="submit">
+              <div className="form-group text-center">
+                {props.data ? (
+                  <input
+                    type="submit"
+                    value="Update"
+                    className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
+                    onClick={(e) => updateUserDetails(e)}
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
+                    onClick={(e) => submituserRegistrationForm(e)}
+                  />
+                )}
               </div>
             </div>
           </div>
