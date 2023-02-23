@@ -23,7 +23,7 @@ class Emp {
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
                 permanent_city,
                 current_state, is_active, permanent_pin_code,
-                current_city, current_pin_code
+                current_city, current_pin_code, Eeffective_date
             } = req.body;
 
             const errors = validationResult(req)
@@ -97,7 +97,8 @@ class Emp {
                     PERCENTAGE_OF_MARKS,
                     permanent_pin_code,
                     current_pin_code,
-                    YEAR_OF_PASSING
+                    YEAR_OF_PASSING,
+                    Eeffective_date: date_of_joining
                     // file,
                 });
                 //STORE YOUR LOGIN DATA IN DB 

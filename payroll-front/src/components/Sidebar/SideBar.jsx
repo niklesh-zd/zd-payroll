@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaBars, FaHome, FaLock, FaMoneyBill, FaUser } from "react-icons/fa";
+import { FaBars, FaHome, FaUser, FaCalendarCheck,FaHospitalUser,FaRupeeSign,FaClipboardList,FaClipboard } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BiAnalyse, BiSearch } from "react-icons/bi";
 import { BiCog } from "react-icons/bi";
@@ -13,6 +13,7 @@ const routes = [
     icon: <FaHome />,
   },
   {
+    className: 'pointer',
     path: "/Employees",
     name: "Employees",
     icon: <FaUser />,
@@ -33,29 +34,29 @@ const routes = [
   {
     path: "/settings/leavedetails",
     name: "Leaves",
-    icon: <MdMessage />,
+    icon: <FaCalendarCheck />,
     subRoutes: [
       {
         path: "/settings/leave",
         name: "Add Leave",
-        icon: <MdMessage />,
+        icon: <FaClipboardList />,
       },
       {
         path: "/settings/leavedetails",
         name: "Manage leaves",
-        icon: <MdMessage />,
+        icon: <FaClipboard />,
       },
     ],
   },
   {
     path: "/salary",
     name: "Payroll",
-    icon: <BiAnalyse />,
+    icon: <FaHospitalUser />,
     subRoutes: [
       {
         path: "/settings/salary",
         name: "Salary Receipt",
-        icon: <MdMessage />,
+        icon: <FaRupeeSign />,
       },
       // {
       //   path: "/settings/salarydetails",
@@ -118,7 +119,7 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar `}
         >
-          <div className="top_section">
+          <div className="top_section pointer">
             <AnimatePresence>
               {isOpen && (
                 <motion.h1

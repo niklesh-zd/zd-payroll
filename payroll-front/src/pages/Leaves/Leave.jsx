@@ -12,6 +12,7 @@ const Leaves = () => {
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
 
+
   const handleChange = (e) => {
     let leavesObj = { ...leavesData };
     leavesObj[e.target.name] = e.target.value;
@@ -26,9 +27,11 @@ const Leaves = () => {
     setLeavesData(leavesObj);
   };
   console.log("leavesData", leavesData);
+
+
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch("http://192.168.29.146:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -40,6 +43,8 @@ const Leaves = () => {
         console.log(err.message);
       });
   }, []);
+
+
   const notify = (message) => {
     toast("Leave already added..!", {
       position: "top-center",
@@ -52,11 +57,14 @@ const Leaves = () => {
       theme: "light",
     });
   };
+
+
+
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("0000");
     axios
-      .post("http://localhost:7071/Emp_Leave/leave", leavesData)
+      .post("http://192.168.29.146:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {
@@ -75,6 +83,9 @@ const Leaves = () => {
         console.error("There was an error!", error);
       });
   };
+  
+
+
 
   return (
     <div>
@@ -179,22 +190,6 @@ const Leaves = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div className="form-group pt-2">
-                    <label>Total Days Of Request</label>
-                    <input
-                      type="number"
-                      min="2"
-                      max="50"
-                      name=""
-                      //   value={fields.STREAM}
-                      //   onChange={(e) => handleChange(e)}
-                      className="form-control"
-                    ></input>
-                  </div>
-                </div>
-              </div> */}
             <div className="row">
               <div className="submit pt-8">
                 <div className="form-group">

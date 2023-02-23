@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import utils from "./../utils"
 let converter = require('number-to-words');
 
 const Downloadslip = (props) => {
@@ -13,13 +14,14 @@ const Downloadslip = (props) => {
   const [netPay, setNetPay] = useState(0);
   const [compensatoryLeaveState, setCompensatoryLeaveState] = useState(0);
   const [showTotalLeave, setShowTotalLeave] = useState("");
+  // const [compensatoery, setCompensatoery] = useState("");
   const holidays = props.holidays;
   const baseSalary = props.data.base_salary;
   const doj = new Date(props.data.Date_of_Joining).toLocaleDateString("pt-PT");
   useEffect(() => {
     axios
       .post(
-        `http://localhost:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         const arr = res.data.findLeave;
@@ -33,13 +35,13 @@ const Downloadslip = (props) => {
           //   setCompensatoryLeaveState(compensatoryLeave)
           // }
           if (fromDate.toISOString().slice(0, 10) == toDate.toISOString().slice(0, 10)) {
-            if(e.leave_type !== 1){
+            if (e.leave_type !== 1) {
               console.log('halfDay');
               total_leave = total_leave + 0.5
-            }else{
+            } else {
               total_leave = total_leave + 1
             }
-          }else{
+          } else {
             const diffInMs = toDate - fromDate;
             const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
             total_leave = total_leave + diffInDays;
@@ -63,7 +65,7 @@ const Downloadslip = (props) => {
       (props.data.monthDays - holidays - showTotalLeave + 1)
     );
   }, [showTotalLeave]);
-  
+
 
   const ButtonClick = () => {
     window.print();
@@ -79,7 +81,7 @@ const Downloadslip = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <form onSubmit={ButtonClick} href="/download">
+        <form onSubmit={ButtonClick} href="/download" className="mt-5">
           {
             <div
               className=""
@@ -136,7 +138,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6">
                       <div>
                         {" "}
-                        <span className="fw-bolder">Ac No. :</span>{" "}
+                        <span className="fw-bolder">A/c No. :</span>{" "}
                         <small className="ms-3">
                           {props.data.Bank_Account_Number}
                         </small>{" "}
@@ -152,7 +154,7 @@ const Downloadslip = (props) => {
                       <div>
                         {" "}
                         <span className="fw-bolder ">
-                          Date Of Joining :
+                          Date of Joining :
                         </span>{" "}
                         <small className="ms-3">{doj}</small>
                       </div>
@@ -160,7 +162,7 @@ const Downloadslip = (props) => {
                     <div className="col-md-6 border-bottom border-dark">
                       <div>
                         {" "}
-                        <span className="fw-bolder">IFSC :</span>{" "}
+                        <span className="fw-bolder">IFSC Code :</span>{" "}
                         <small className="ms-3">
                           {props.data.Bank_IFSC_Code}
                         </small>{" "}
@@ -335,7 +337,7 @@ const Downloadslip = (props) => {
                 </div>
                 <div className="border border-dark col-md-7">
                   <div className="d-flex flex-column">
-                    <span className="text-danger">{fword} Only</span>
+                    <span className="text-danger">{fword.toUpperCase()} ONLY</span>
                     <br></br>
                     <span>
                       *This is computer generated copy not need to stamp and
