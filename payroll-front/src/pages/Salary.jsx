@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 import Downloadslip from "./Salary_slip/downloadslip";
 
 function Salary() {
@@ -12,11 +11,8 @@ function Salary() {
   const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [inputValue, setInputValue] = useState("");
   const [salaryYear, setSalaryYear] = useState(0);
   const [salaryMonthNumber, setSalaryMonthNumber] = useState(0);
-  const [month, Setmonth] = useState("");
-  const [totalHolydays, setTotalHolydays] = useState("");
   const [prevMonths, setPrevMonths] = useState([]);
 
   const handleOptionChange = (event) => {
@@ -67,20 +63,6 @@ function Salary() {
     return previousMonths;
   };
 
-  // function handlesubmit(e) {
-  //   e.preventDefault();
-  //   axios
-  //     .post("http://localhost:7071/Holiday/get_holiday", fields)
-  //     .then((response) => {
-  //       console.log("response", response);
-  //       let holidays = response.data.length;
-  //       setTotalHolydays(holidays);
-  //     })
-  //     .then(() => {
-  //       setSwitchToDownload(true);
-  //       console.log("fields", fields);
-  //     });
-  // }
   function handlesubmit(e) {
     e.preventDefault();
     setSwitchToDownload(true);
@@ -169,7 +151,7 @@ function Salary() {
                       />
                       <label
                         className="custom-control-label px-3"
-                        for="customSwitches"
+                        htmlFor="customSwitches"
                       >
                         advance options
                       </label>
