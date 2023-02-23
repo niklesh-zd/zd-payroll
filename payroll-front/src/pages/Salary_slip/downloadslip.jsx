@@ -219,7 +219,7 @@ const Downloadslip = (props) => {
                       <div className="col-md-6">
                         <div>
                           
-                          <span className="fw-bolder">
+                          <span className="lder">
                             Total Working Days
                           </span>
                           <span style={{ marginLeft: "20px" }}>{":"}</span>

@@ -511,7 +511,8 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label>Base Salary</label>
                       <input
@@ -521,6 +522,20 @@ function AddEmployee(props) {
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Enter Base Salary"
+                      ></input>
+                      <div className="errorMsg">{errors.base_salary}</div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div className="form-group">
+                      <label>Effective Date</label>
+                      <input
+                        type="date"
+                        name="Effective-date"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="Efffective Date"
                       ></input>
                       <div className="errorMsg">{errors.base_salary}</div>
                     </div>
