@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Downloadslip } from "./Salary_slip/downloadslip";
-
-
+import { IoArrowBackCircle } from "react-icons/io5";
 
 function Salary() {
   const { id } = useParams();
@@ -30,7 +29,7 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
- 
+
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -65,7 +64,7 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:7071/Holiday/get_holiday", fields)
+      .post("http://localhost:7072/Holiday/get_holiday", fields)
       .then((response) => {
         console.log("response", response);
         let holidays = response.data.length;
@@ -88,7 +87,7 @@ function Salary() {
 
   useEffect(() => {
     getPreviousMonths();
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch("http://localhost:7072/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
@@ -117,10 +116,21 @@ function Salary() {
     <Downloadslip data={fields} holidays={totalHolydays} />
   ) : (
     <div className="pt-5">
+      <div class="row">
+        <div class="col-sm-11 ms-md-5">
+          <p class="float-end">
+            <a href="/settings/manageprofile">
+              <button className="btn mr-2 ms-md-5 float-md-right">
+                <IoArrowBackCircle size={25} />
+              </button>
+            </a>
+          </p>
+        </div>
+      </div>
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
-            <form className="container" onSubmit={(e) => handlesubmit(e)} >
+            <form className="container" onSubmit={(e) => handlesubmit(e)}>
               <div className="card p-10">
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
@@ -230,7 +240,7 @@ function Salary() {
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
                           <label className="profile_details_text">
-                          Additional Comment
+                            Additional Comment
                           </label>
                           <textarea
                             className="form-control"

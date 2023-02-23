@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
+import { Link } from "react-router-dom";
+import { IoArrowBackCircle } from "react-icons/io5";
 let converter = require("number-to-words");
 
 export const Downloadslip = (props) => {
@@ -98,15 +100,19 @@ useEffect(() => {
 
   return (
     <div>
-      {/* <button className="btn text-white ml-5 mt-2 d-flex" style={{ backgroundColor: "#368bb5", lineHeight: '19px' }}
-         disabled={isLoading}>{isLoading ? <RotatingLines
-          className='text-center'
-          strokeColor="black"
-          strokeWidth="8"
-          animationDuration="0.75"
-          width="26"
-          visible={true} /> : 'Download Pdf'}<FaFileDownload style={{ width: '25px' }} /></button> */}
       <div className="container">
+        <div className="flex" 
+      >
+                  <a
+                    href="/settings/salary:id">
+                 <button
+                  className="btn mr-2 ml-5 mr-5"
+                >
+                  <IoArrowBackCircle size={30}/>
+       </button>      
+                
+                </a>
+                </div>
         <div>
           <form className="mt-5" id="pdf-download">
             {

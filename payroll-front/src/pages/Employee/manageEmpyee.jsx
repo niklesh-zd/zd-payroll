@@ -21,7 +21,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch("http://localhost:7072/emp/get_employ")
       .then((res) => {
         return res.json();
       })
