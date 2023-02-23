@@ -98,7 +98,7 @@ class Emp {
                     permanent_pin_code,
                     current_pin_code,
                     YEAR_OF_PASSING,
-                    Eeffective_date
+                    Eeffective_date: date_of_joining
                     // file,
                 });
                 //STORE YOUR LOGIN DATA IN DB 
