@@ -100,7 +100,11 @@ class Salary {
                 Earned_Flext_benefits : earned_flexi_benifits,
                 Total_earn : earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits,
                 Net_pay_in_number : net_pay_in_number,
-                Net_pay_in_words : net_pay_in_word
+                Net_pay_in_words : net_pay_in_word,
+                ARRS,
+                Additional,
+                ARRS_Comment,
+                Additional_Comment
     
             });
 

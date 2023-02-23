@@ -120,16 +120,21 @@ const Salary = Schema({
     },
 
     ARRS: {
-        type: Number
+        type: Number,
+        default:0
+
     },
     Additional: {
-        type: Number
+        type: Number,
+        default:0
     },
     ARRS_Comment: {
-        type: String
+        type: String,
+        default:""
     },
     Additional_Comment: {
-        type: String
+        type: String,
+        default:""
     }
 },
     {
