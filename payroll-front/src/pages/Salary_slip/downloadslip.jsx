@@ -22,17 +22,17 @@ export const Downloadslip = (props) => {
   const doj = new Date(props.data.Date_of_Joining).toLocaleDateString("pt-PT");
 
 
-  
-useEffect(() => {
-  const element = document.getElementById("pdf-download");
-  html2pdf(element, {
-    margin: 0,
-    filename: "ZecData_Technology.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 5 },
-    jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-  });
-},[]);
+
+  useEffect(() => {
+    const element = document.getElementById("pdf-download");
+    html2pdf(element, {
+      margin: 0,
+      filename: "ZecData_Technology.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 5 },
+      jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+    });
+  }, []);
 
   useEffect(() => {
     axios

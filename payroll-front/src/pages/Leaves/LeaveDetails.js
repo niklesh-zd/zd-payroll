@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { FaBackward } from "react-icons/fa";
+
 function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
@@ -142,6 +144,7 @@ function LeaveDetails() {
   return (
     <div>
       <div>
+      
         <div className="ml-5 mr-5">
           <DataTable
             title={

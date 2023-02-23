@@ -18,11 +18,7 @@ const EmpDetail = () => {
   //   navigate("/settings/userleavedetails" + id);
   // };
   useEffect(() => {
-<<<<<<< HEAD
     fetch(`/emp/emp_1/` + id)
-=======
-    fetch("http://localhost:7071/emp/emp_1/" + id)
->>>>>>> 301da64a0d0fc2e3bd9f7eed536ecbd18222874e
       .then((res) => {
         return res.json();
       })
@@ -80,19 +76,29 @@ const EmpDetail = () => {
                 color: 'rgba(23,31,35,.64)'
               }}
             >
-              <div className="flex">
-                <button
-                  className="btn mr-2"
-                  onClick={() => LoadEdit()}
-                >
-                  <MdOutlineEditCalendar className="text-primary fs-3" />
-                </button>
-                <button
-                  className="btn"
-                  onClick={() => Removefunction()}
-                >
-                  <MdDelete className="text-danger fs-3" />
-                </button>
+              <div className="flex"
+              >
+                <div className="flex">
+                  <Link
+                    to="/settings/manageprofile" className="btn text-primary">
+                    <TiArrowBack size={30} />
+                  </Link>
+                </div>
+
+                <div className="flex">
+                  <button
+                    className="btn"
+                    onClick={() => LoadEdit()}
+                  >
+                    <MdOutlineEditCalendar className="text-primary fs-3" />
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => Removefunction()}
+                  >
+                    <MdDelete className="text-danger fs-3" />
+                  </button>
+                </div>
               </div>
             </div>
             <div className="row">

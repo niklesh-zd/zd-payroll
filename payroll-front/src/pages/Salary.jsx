@@ -132,6 +132,7 @@ function Salary() {
     <Downloadslip data={fields} holidays={totalHolydays} />
   ) : (
     <div className="pt-5">
+
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
@@ -197,8 +198,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.First_Name}
+                          // onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -216,8 +217,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.First_Name}
+                          // onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -235,8 +236,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.Current_Address}
+                          // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -246,7 +247,7 @@ function Salary() {
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
                           <label className="profile_details_text">
-                          Additional Comment
+                            Additional Comment
                           </label>
                           <textarea
                             className="form-control"
@@ -254,8 +255,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                          // value={fields.Current_Address}
+                          // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
