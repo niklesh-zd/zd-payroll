@@ -98,7 +98,7 @@ const EmpDetail = () => {
                   <p className="pmd-list-subtitle">{empdata.Position}</p>
                   <p style={{
                     color: 'rgba(23,31,35,.64)'
-                  }}>Amorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nibh nisl. Cras etitikis mauris eget lorem ultricies ferme ntum a inti diam. Amorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nibh nisl. Cras etitikis mauris eget lorem ultricies ferme ntum a inti diam.</p>
+                  }}>ZecData Technology</p>
 
                 </div>
               </div>

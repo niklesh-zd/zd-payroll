@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import AddEmployee from "./AddEmployee";
 
 const Empedit = () => {
@@ -26,7 +25,6 @@ const Empedit = () => {
     return ( 
         empdata ?
         <AddEmployee data={empdata}/>
-
         :
         <h3>Loading....</h3>
      );

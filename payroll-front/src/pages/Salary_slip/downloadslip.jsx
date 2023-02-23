@@ -23,7 +23,7 @@ const Downloadslip = (props) => {
   useEffect(() => {
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
+        `http://192.168.29.146:7072/Emp_Leave/get_User_leave?id=${props.data.userid}&from_date=${props.data.from_date}&to_date=${props.data.end_date}`
       )
       .then((res) => {
         const arr = res.data.findLeave;
@@ -149,9 +149,9 @@ const Downloadslip = (props) => {
                         <div>
                           
                           <span className="fw-bolder">Designation </span>
-                          <span style={{ marginLeft: "60px" }}>{":"}</span>
+                          <span style={{ marginLeft: "55px" }}>{":"}</span>
                           <small
-                            style={{ marginLeft: "30px" }}
+                            style={{ marginLeft: "10px" }}
                           >
                             {props.data.designation}
                           </small>
@@ -211,7 +211,7 @@ const Downloadslip = (props) => {
                           <span className="fw-bolder">
                             Leave (Balance)
                           </span>
-                          <span style={{ marginLeft: "32px" }}>{":"}</span>
+                          <span style={{ marginLeft: "40px" }}>{":"}</span>
                           <small style={{ marginLeft: "80px" }}
                           >1</small>
                         </div>
@@ -239,7 +239,7 @@ const Downloadslip = (props) => {
                         <div>
                           
                           <span className="fw-bolder">Leave Taken </span>
-                          <span style={{ marginLeft: "58px" }}>{":"}</span>
+                          <span style={{ marginLeft: "55px" }}>{":"}</span>
                           <small style={{ marginLeft: "80px" }}
                           >{showTotalLeave}</small>
                         </div>
@@ -379,20 +379,20 @@ const Downloadslip = (props) => {
                 </div>
                 <div className="row border border-dark">
                   <div className="col-md-5 ">
-                    <span className="fw-bold">
+                    <span style={{color:"#368bb5",fontWeight:"bold"}}>
                       Net Salary Payable(In Words)
                     </span>
                   </div>
                   <div className=" col-md-7">
                     <div className="d-flex flex-column ">
-                      <span className="text-danger ">
+                      <span  style={{color:"#368bb5",fontWeight:"bold"}}>
                         {fword.toLocaleUpperCase()} ONLY
                       </span>
                       <br></br>
                     </div>
                   </div>
                 </div>
-                <span className="col-md-12">
+                <span className="col-md-12"  style={{color:"#368bb5"}}>
                   This is computer generated copy not need to stamp and sign
                 </span>
               </div>
