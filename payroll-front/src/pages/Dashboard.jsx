@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch("http://localhost:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -29,9 +29,10 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+
   useEffect(() => {
     axios
-      .get("http://192.168.29.146:7071/Emp_Leave/get_today_leave")
+      .get("http://localhost:7071/Emp_Leave/get_today_leave")
       .then((resp) => {
         // console.log("today", resp.data);
         setTodayPresent(resp.data);
@@ -40,9 +41,12 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+
+
+
   useEffect(() => {
     axios
-      .get("http://192.168.29.146:7071/Emp_Leave/get_yesterday_leave")
+      .get("http://localhost:7071/Emp_Leave/get_yesterday_leave")
       .then((resp) => {
         // console.log("yesterday", resp.data);
         setYesterdayPresent(resp.data);
@@ -51,7 +55,6 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
-  var marchHolidays = [];
   useEffect(() => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -60,10 +63,9 @@ const Dashboard = () => {
     const lastDate = new Date(currentYear, currentMonth, 0);
     const startDate = firstDate.toISOString().slice(0, 10);
     const endDate = lastDate.toISOString().slice(0, 10);
-
     const datesobject = { from_date: startDate, end_date: endDate };
     axios
-      .post("http://192.168.29.146:7071/Holiday/get-fastival", datesobject)
+      .post("http://localhost:7071/Holiday/get-fastival", datesobject)
       .then((res) => {
         console.log("resp", res.data);
         setTotalHoliday(res.data);
@@ -108,7 +110,6 @@ const Dashboard = () => {
                   ) : (
                     <BsFillEmojiHeartEyesFill />
                   )}
-                  {/* {totalHoliday.length} */}
                 </h1>
               </div>
               <div>
@@ -122,6 +123,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+
+
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
@@ -138,6 +142,9 @@ const Dashboard = () => {
               </h2>
             </div>
           </div>
+
+
+
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
