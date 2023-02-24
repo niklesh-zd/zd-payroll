@@ -4,10 +4,9 @@ import { FaFileDownload } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import utils from "./../utils"
-let converter = require('number-to-words');
+import converter from 'number-to-words';
 import html2pdf from "html2pdf.js";
-
-export const Downloadslip = (props) => {
+ const Downloadslip = (props) => {
   // const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const [hra, Sethra] = useState("");
@@ -101,7 +100,7 @@ export const Downloadslip = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <form onSubmit={ButtonClick} href="/download" className="mt-5">
+        <form href="/download" className="mt-5">
           {
             <div
               className=""
