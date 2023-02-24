@@ -15,9 +15,7 @@ const Downloadslip = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
-  // useEffect(() => {
-
-  // }, [fields]);
+  
   useEffect(() => {
     axios
       .post(
