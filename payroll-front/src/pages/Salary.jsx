@@ -7,7 +7,12 @@ function Salary() {
   const { id } = useParams();
   let navigate = useNavigate();
   const [empdata, empdatachange] = useState({});
-  const [fields, setFields] = useState({});
+  const [fields, setFields] = useState({
+    arrear: 0,
+    additional: 0,
+    arrear_comment: "",
+    additional_comment: "",
+  });
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [salaryYear, setSalaryYear] = useState(0);
@@ -25,11 +30,11 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
-  }
+  };
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -68,7 +73,7 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     navigate("/download" + id, {
-      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber },
+      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber, fields: fields },
     });
   }
 
@@ -163,12 +168,12 @@ function Salary() {
                           <input
                             type="text"
                             style={{ textTransform: "capitalize" }}
-                            name="arrs"
+                            name="arrear"
                             minLength="2"
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                            value={fields.arrs}
+                            value={fields.arrear}
                             onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
@@ -202,11 +207,11 @@ function Salary() {
                           </label>
                           <textarea
                             className="form-control"
-                            name="arrs_comment"
+                            name="arrear_comment"
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            value={fields.arrs_comment}
+                            value={fields.arrear_comment}
                             onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">

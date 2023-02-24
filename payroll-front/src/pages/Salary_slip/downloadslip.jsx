@@ -11,6 +11,7 @@ const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = location.state.salaryYear;
   const salaryMonthNumber = location.state.salaryMonthNumber;
+  const data = location.state.fields;
 
   const navigate = useNavigate();
 
@@ -32,12 +33,13 @@ const Downloadslip = () => {
     "December",
   ];
   useEffect(() => {
+    console.log("data", data);
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
+        `http://192.168.29.146:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
-        // console.log("response", response.data);
+        console.log("response", response.data);
         if (response.data.message) {
           setIsLoading(false);
           navigate("/settings/salary" + id);
@@ -58,7 +60,9 @@ const Downloadslip = () => {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${allMonthsName[fields.Salary_Slip_Month]}.pdf`,
+            filename: `${response.Employee_name}_${
+              allMonthsName[fields.Salary_Slip_Month]
+            }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
             jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
@@ -263,7 +267,7 @@ const Downloadslip = () => {
                         <th scope="row">FLEXI Benefits</th>
                         <td>{fields.Earned_Flext_benefits}</td>
                         <td>ARRS</td>
-                        <td>0.00</td>
+                        <td>{fields.ARRS}</td>
                       </tr>
                       <tr
                         style={{ backgroundColor: "#368bb5", color: "white" }}
@@ -273,7 +277,7 @@ const Downloadslip = () => {
                         <td>Total Earn</td>
                         <td>{fields.Total_earn}</td>
                         <td>Additional</td>
-                        <td>0.00</td>
+                        <td>{fields.Additional}</td>
                       </tr>
                       <tr>
                         <th scope="row"></th>
