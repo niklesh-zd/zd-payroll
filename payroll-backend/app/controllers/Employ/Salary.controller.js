@@ -37,8 +37,8 @@ class Salary {
 
             const holiday = await HolidayModal.find({
                 holiday_date: { 
-                    $gte: moment().year() + moment().month() + '01', 
-                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                    $gte: String(moment().year()) + "-" + String(moment().month() + 1) + '-01', 
+                    $lte: String(moment().year()) + "-" + String(moment().month() + 1) + "-" + month_array[moment().month()] 
                 }
             });
 
