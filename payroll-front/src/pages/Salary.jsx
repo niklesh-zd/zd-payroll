@@ -1,30 +1,28 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
-import utils from "./utils"
-console.warn(utils,'....................');
+
+import { Link, useParams } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
+  console.log("id----", id);
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
   const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [startdate, Setstartdate] = useState("");
-  const [enddate, Setenddate] = useState("");
-  const [month, Setmonth] = useState("");
-  const [totalHolydays, setTotalHolydays] = useState("");
+  const [salaryYear, setSalaryYear] = useState(0);
+  const [salaryMonthNumber, setSalaryMonthNumber] = useState(0);
   const [prevMonths, setPrevMonths] = useState([]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    // Setmonth("January");
-    // setInputValue("31");
-    Setstartdate(`${event.target.value}-01`);
-    Setenddate(`${event.target.value}-31`);
+    let salaryMonth = event.target.value;
+    let yearStr = salaryMonth.substring(0, 4); 
+    let monthStr = salaryMonth.substring(4);
+    setSalaryYear(yearStr);
+    setSalaryMonthNumber(monthStr);
   };
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
@@ -69,37 +67,20 @@ function Salary() {
       let month = monthNames[date.getMonth()];
       let year = date.getFullYear();
       let format1 = `${month} ${year}`;
-      let format2 = `${year}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
-      previousMonths.push({ format_1: format1, format_2: format2 });
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
+      previousMonths.push({
+        format_1: format1,
+        year: year.toString(),
+        month: monthNumber,
+      });
     }
     setPrevMonths(previousMonths);
     return previousMonths;
   };
   function handlesubmit(e) {
     e.preventDefault();
-    axios
-      .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
-      .then((response) => {
-        console.log("response", response);
-        let holidays = response.data.length;
-        setTotalHolydays(holidays);
-      })
-      .then(() => {
-        setSwitchToDownload(true);
-        console.log("fields", fields);
-      });
+    setSwitchToDownload(true);
   }
-
-
-  useEffect(() => {
-    setFields({
-      from_date: startdate,
-      end_date: enddate,
-      Salary_Slip_Month_Year: month,
-      monthDays: inputValue,
-      ...empdata,
-    });
-  }, [startdate, enddate, month]);
 
   useEffect(() => {
     getPreviousMonths();
@@ -129,7 +110,7 @@ function Salary() {
   }, []);
 
   return switchToDownload ? (
-    <Downloadslip data={fields} holidays={totalHolydays} />
+    <Downloadslip year={salaryYear} month={salaryMonthNumber} />
   ) : (
     <div className="pt-5">
       <div>
@@ -176,7 +157,7 @@ function Salary() {
                       />
                       <label
                         className="custom-control-label px-3"
-                        for="customSwitches"
+                        htmlFor="customSwitches"
                       >
                         advance options
                       </label>
@@ -283,7 +264,10 @@ function Salary() {
                         </option>
                         {prevMonths.map((month) => {
                           return (
-                            <option key={month.format_1} value={month.format_2}>
+                            <option
+                              key={month.format_1}
+                              value={month.year + month.month}
+                            >
                               {month.format_1}
                             </option>
                           );
