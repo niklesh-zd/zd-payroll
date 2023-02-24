@@ -321,7 +321,8 @@ const Downloadslip = () => {
           </form>
         </div>
       </div>
-    </div>
+      </div>
+  
   );
 };
 export default Downloadslip;
