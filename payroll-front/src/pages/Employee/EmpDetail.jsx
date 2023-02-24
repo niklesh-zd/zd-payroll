@@ -4,8 +4,8 @@ import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
-import utils from "./../utils";
-import {TiArrowBack} from "react-icons/ti" 
+import utils from "./../utils"
+import {TiArrowBack} from "react-icons/ti"
 
 const EmpDetail = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const EmpDetail = () => {
   //   navigate("/settings/userleavedetails" + id);
   // };
   useEffect(() => {
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch(`/emp/emp_1/` + id)
       .then((res) => {
         return res.json();
       })

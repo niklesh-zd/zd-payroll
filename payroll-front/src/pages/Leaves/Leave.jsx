@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaBackward } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
 
 const Leaves = () => {

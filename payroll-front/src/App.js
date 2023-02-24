@@ -11,7 +11,8 @@ import EmpDetail from "./pages/Employee/EmpDetail";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
-import Downloadslip  from "./pages/Salary_slip/downloadslip.jsx";
+// import Downloadslip  from "./pages/Salary_slip/downloadslip";
+import Downloadslip from "./pages/Salary_slip/downloadslip"
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 
 function App() {
