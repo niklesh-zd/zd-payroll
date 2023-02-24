@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import utils from "./../utils"
 let converter = require('number-to-words');
+import html2pdf from "html2pdf.js";
 
 export const Downloadslip = (props) => {
   // const [isLoading, setIsLoading] = useState(false);
@@ -371,4 +372,4 @@ export const Downloadslip = (props) => {
 
 // export { downloadPDF as downloadPDF };
 // export default {downloadPDF};
-// export default Downloadslip;
+export default Downloadslip;
