@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaBackward } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
 
 const Leaves = () => {
@@ -13,7 +12,6 @@ const Leaves = () => {
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
-
 
   const handleChange = (e) => {
     let leavesObj = { ...leavesData };
@@ -30,10 +28,9 @@ const Leaves = () => {
   };
   console.log("leavesData", leavesData);
 
-
   useEffect(() => {
     window
-      .fetch("http://192.168.29.186:7071/emp/get_employ")
+      .fetch("http://192.168.29.146:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -46,9 +43,8 @@ const Leaves = () => {
       });
   }, []);
 
-
   const notify = (message) => {
-    toast("Leave already added..!", {
+    toast("Leave already Taken On This Date!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -60,13 +56,11 @@ const Leaves = () => {
     });
   };
 
-
-
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("0000");
     axios
-      .post("http://192.168.29.186:7071/Emp_Leave/leave", leavesData)
+      .post("http://192.168.29.146:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {
@@ -88,16 +82,11 @@ const Leaves = () => {
 
   return (
     <div>
-         <Link
-                  to="/settings/leavedetails">
-                 <button
-                  className="btn mr-2 ms-md-5"
-                
-                >
-                  <IoArrowBackCircle size={25}/>
-       </button>      
-                
-                </Link>
+      <Link to="/settings/leavedetails">
+        <button className="btn mr-2 ms-md-5">
+          <IoArrowBackCircle size={25} />
+        </button>
+      </Link>
       <div className="offset-lg-2 col-lg-8">
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>

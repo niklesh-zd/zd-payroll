@@ -1,49 +1,69 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 
-const Downloadslip = (props) => {
-  console.log("props", props);
-  const salaryYear = props.year;
-  const salaryMonthNumber = props.month;
+const Downloadslip = () => {
+  let location = useLocation();
+  const salaryYear = location.state.salaryYear;
+  const salaryMonthNumber = location.state.salaryMonthNumber;
+
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
-  // useEffect(() => {
-
-  // }, [fields]);
+  var allMonthsName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   useEffect(() => {
     axios
       .post(
-        `http://localhost:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
+        `http://192.168.29.146:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
       )
       .then((response) => {
-        console.log("response", response.data);
-        if (response.data.success) {
-          setFields(response.data.salary);
+        // console.log("response", response.data);
+        if (response.data.message) {
           setIsLoading(false);
-          return response.data.salary
+          navigate("/settings/salary" + id);
         } else {
-          setFields(response.data);
-          setIsLoading(false);
-          return response.data
+          if (response.data.success) {
+            setFields(response.data.salary);
+            setIsLoading(false);
+            return response.data.salary;
+          } else {
+            setFields(response.data);
+            setIsLoading(false);
+            return response.data;
+          }
         }
       })
       .then((response) => {
-        const element = document.getElementById("pdf-download");
-        html2pdf(element, {
-          margin: 0,
-          filename: `${response.Employee_name}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 5 },
-          jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-        });
+        if (response) {
+          const element = document.getElementById("pdf-download");
+          html2pdf(element, {
+            margin: 0,
+            filename: `${response.Employee_name}_${allMonthsName[fields.Salary_Slip_Month]}.pdf`,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 5 },
+            jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+          });
+        }
       })
       .catch((err) => {
         console.log("Somthing Went Wrong", err);
@@ -84,8 +104,9 @@ const Downloadslip = (props) => {
                     ZecData
                   </h3>
                   <h5 className="fw-bold text-dark">
-                    Payment slip for the month of
-                    {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
+                    Payment slip for the month of{" "}
+                    {allMonthsName[fields.Salary_Slip_Month]}{" "}
+                    {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 

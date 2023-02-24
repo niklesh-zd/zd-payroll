@@ -21,7 +21,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch("http://192.168.29.146:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -36,7 +36,6 @@ const ManageEmpyee = () => {
         arr.map((e) => {
           experience = experienceCalculator(e.date_of_joining);
           DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
-          console.log("experience", experience);
           finalArr.push({ ...e, DOJ: DOJ, experience: experience });
         });
         empdatachange(finalArr);

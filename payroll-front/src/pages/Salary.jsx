@@ -1,15 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Downloadslip from "./Salary_slip/downloadslip";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
-  console.log("id----", id);
+  let navigate = useNavigate();
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
-  const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [salaryYear, setSalaryYear] = useState(0);
@@ -19,7 +17,7 @@ function Salary() {
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     let salaryMonth = event.target.value;
-    let yearStr = salaryMonth.substring(0, 4); 
+    let yearStr = salaryMonth.substring(0, 4);
     let monthStr = salaryMonth.substring(4);
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
@@ -27,7 +25,11 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-
+  const handleChange = (e) =>{
+    let fieldObj = { ...fields };
+    fieldObj[e.target.name] = e.target.value;
+    setFields(fieldObj);
+  }
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -65,12 +67,14 @@ function Salary() {
   };
   function handlesubmit(e) {
     e.preventDefault();
-    setSwitchToDownload(true);
+    navigate("/download" + id, {
+      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber },
+    });
   }
 
   useEffect(() => {
     getPreviousMonths();
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })
@@ -95,15 +99,13 @@ function Salary() {
       });
   }, []);
 
-  return switchToDownload ? (
-    <Downloadslip year={salaryYear} month={salaryMonthNumber} />
-  ) : (
+  return (
     <div className="pt-5">
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
-              <div className="card m-5 p-3 " >
+              <div className="card m-5 p-3 ">
                 <Link to="/settings/manageprofile">
                   <TiArrowBack size={25} />
                 </Link>
@@ -166,8 +168,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                          // value={fields.First_Name}
-                          // onChange={(e) => handleChange(e)}
+                            value={fields.arrs}
+                            onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -185,8 +187,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                          // value={fields.First_Name}
-                          // onChange={(e) => handleChange(e)}
+                            value={fields.additional}
+                            onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -204,8 +206,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          // value={fields.Current_Address}
-                          // onChange={(e) => handleChange(e)}
+                            value={fields.arrs_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -223,8 +225,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          // value={fields.Current_Address}
-                          // onChange={(e) => handleChange(e)}
+                            value={fields.additional_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
