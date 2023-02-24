@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { Downloadslip } from "./Salary_slip/downloadslip";
-// import { IoArrowBackCircle } from "react-icons/io5";
-import { TiArrowBack } from "react-icons/ti";
+import Downloadslip from "./Salary_slip/downloadslip";
+import utils from "./utils"
+console.warn(utils,'....................');
 function Salary() {
   const { id } = useParams();
   const [empdata, empdatachange] = useState({});
@@ -29,7 +29,21 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
+  // function getSalaryData(data) {
+  //   if (data) {
+  //     axios
+  //       .post("http://192.168.29.186:7071/Emp_Salary/salary", data)
+  //       .then((res) => {
+  //         console.log("res", res);
+  //         navigate("/download" + id);
+  //       })
+  //       .catch((error) => {
+  //         console.error("There was an error!", error);
+  //       });
+  //   }
+  // }
 
+  // Get the current month and year
   const getPreviousMonths = () => {
     const monthNames = [
       "Jan",
@@ -64,7 +78,7 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:7071/Holiday/get_holiday", fields)
+      .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
       .then((response) => {
         console.log("response", response);
         let holidays = response.data.length;
@@ -75,6 +89,8 @@ function Salary() {
         console.log("fields", fields);
       });
   }
+
+
   useEffect(() => {
     setFields({
       from_date: startdate,
@@ -120,10 +136,8 @@ function Salary() {
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
-              <div className="card m-5 p-3 " >
-                <Link to="/settings/manageprofile">
-                  <TiArrowBack size={25} />
-                </Link>
+              <button type="button" class="btn btn-success mb-2">Back</button>
+              <div className="card p-10">
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
                 </div>

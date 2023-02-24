@@ -4,8 +4,9 @@ import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
-import { IoArrowBackCircle } from "react-icons/io5";
-import { TiArrowBack } from "react-icons/ti";
+import utils from "./../utils";
+import {TiArrowBack} from "react-icons/ti" 
+
 const EmpDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -44,7 +45,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://localhost:7071/emp/delete_emp/" + id, {
+          .fetch(`${utils}/emp/delete_emp/` + id, {
             method: "POST",
           })
           .then((res) => {
@@ -102,17 +103,88 @@ const EmpDetail = () => {
                 </div>
               </div>
             </div>
-
-            {/* <img alt="Profile-Pic" src={img} style={{ width: '9rem' }} className="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-4" width="180" /> */}
-            <div className="container">
-              <div className="d-flex d-flex-row align-items-center">
-                <div className="media-body">
-                  <h1 className="mb-3 mt-5" style={{ color: '#3075BA' }}>{empdata.First_Name + " " + empdata.Last_Name}</h1>
-                  <p className=" mb-5">{empdata.Position}</p>
-                  <p style={{
-                    color: 'rgba(23,31,35,.64)'
-                  }}></p>
-
+            <div className="row">
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h5>Bank Details</h5>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Aadhar Number</h6>
+                  <p>{empdata.ADHAR}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Pan Number</h6>
+                  <p>{empdata.PAN_No}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Bank A/C No.</h6>
+                  <p>{empdata.Bank_No}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Bank IFSC Code</h6>
+                  <p>{empdata.Bank_IFSC}</p>
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h5>Contact Details</h5>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Contact Number</h6>
+                  <p style={{ alignSelf: "left" }}>{empdata.Contact_Number}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Alternate Contact No.</h6>
+                  <p>{empdata.Alternate_Contact_number}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Home Contact No.</h6>
+                  <p>{empdata.Contact_Number_Home}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>State</h6>
+                  <p>Mp</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>City</h6>
+                  <p>Khategaon</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Current Address</h6>
+                  <p>{empdata.Current_Address}</p>
+                </div>
+                <div
+                  className="flex"
+                  style={{ width: "70%", justifyContent: "space-between" }}
+                >
+                  <h6>Permanent Address</h6>
+                  <p>{empdata.Permanent_Address}</p>
                 </div>
               </div>
             </div>

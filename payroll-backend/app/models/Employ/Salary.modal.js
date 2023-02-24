@@ -7,8 +7,8 @@ const Salary = Schema({
     Employee_name
         : {
         type: String,
-        required: [true, "Please enter  name!"],
-        trim: [true, "space not allow"],
+        // required: [true, "Please enter  name!"],
+        // trim: [true, "space not allow"],
     },
     userid: {
         type: String,
@@ -22,28 +22,19 @@ const Salary = Schema({
         type: String,
         // required: [true, "Please enter  name!"],
     },
-    Salary_Slip_Month_Year: {
-        type: String,
+    Salary_Slip_Month: {
+        type: Number,
+        // required: true,
+    },
+    Salary_Slip_Year: {
+        type: Number,
         // required: true,
     },
     Date_of_Joining: {
         type: Date,
         // required: true,
     },
-    Employee_PAN: {
-        type: String,
-        // required: true,
-        // unique: true,
-        // minimum: [10, '10 digit are required'],
-        // maximum: [10, '10 digit are required'],
-    },
-    Employee_Adhar: {
-        type: Number,
-        // required: true,
-        // minimum: [12, '12 digit are required'],
-        // maximum: [12, '12 digit are required'],
-        // unique: true
-    },
+
     Bank_Account_Number: {
         type: String,
         // required: true
@@ -54,10 +45,6 @@ const Salary = Schema({
     },
 
     Total_Work_Days: {
-        type: Number,
-        // required: true
-    },
-    Number_of_Leaves: {
         type: Number,
         // required: true
     },
@@ -81,19 +68,39 @@ const Salary = Schema({
         type: Number,
         // required: true
     },
-    Basic_DA: {
+    Gross_Basic_DA: {
         type: Number,
         // required: true
     },
-    HRA: {
+    Gross_HRA: {
         type: Number,
         // required: true
     },
-    RA: {
+    Gross_RA: {
         type: Number,
         // required: true
     },
-    Flext_benefits: {
+    Gross_Flext_benefits: {
+        type: Number,
+        // required: true
+    },
+    Gross_total: {
+        type: Number,
+        required: true
+    },
+    Earned_Basic_DA: {
+        type: Number,
+        // required: true
+    },
+    Earned_HRA: {
+        type: Number,
+        // required: true
+    },
+    Earned_RA: {
+        type: Number,
+        // required: true
+    },
+    Earned_Flext_benefits: {
         type: Number,
         // required: true
     },
@@ -111,8 +118,23 @@ const Salary = Schema({
         // required: true
 
     },
-    base_salary: {
-        type: String
+
+    ARRS: {
+        type: Number,
+        default:0
+
+    },
+    Additional: {
+        type: Number,
+        default:0
+    },
+    ARRS_Comment: {
+        type: String,
+        default:""
+    },
+    Additional_Comment: {
+        type: String,
+        default:""
     }
 },
     {

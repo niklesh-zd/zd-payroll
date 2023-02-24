@@ -6,8 +6,9 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TiArrowBack } from "react-icons/ti";
-
+import {TiArrowBack} from "react-icons/ti" 
+ 
+import utils from "./../utils"
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
@@ -58,7 +59,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/add_employ", fields)
+        .post(`${utils}/emp/add_employ`, fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -85,7 +86,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
+        .post(`${utils}/emp/update/` + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -390,7 +391,7 @@ function AddEmployee(props) {
                         <option>Principal Software Engineer</option>
                         <option>Senior Software Developer</option>
                         <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
+                        <option>Jr.Software Developer</option>
                         <option>Intern Software Developer</option>
                         <option>Other</option>
                       </select>
