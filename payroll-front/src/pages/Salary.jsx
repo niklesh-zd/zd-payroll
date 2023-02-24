@@ -74,7 +74,7 @@ function Salary() {
 
   useEffect(() => {
     getPreviousMonths();
-    fetch("http://192.168.29.146:7071/emp/emp_1/" + id)
+    fetch("http://localhost:7071/emp/emp_1/" + id)
       .then((res) => {
         return res.json();
       })

@@ -86,7 +86,7 @@ const Salary = Schema({
     },
     Gross_total: {
         type: Number,
-        required : true
+        required: true
     },
     Earned_Basic_DA: {
         type: Number,
@@ -118,6 +118,24 @@ const Salary = Schema({
         // required: true
 
     },
+
+    ARRS: {
+        type: Number,
+        default:0
+
+    },
+    Additional: {
+        type: Number,
+        default:0
+    },
+    ARRS_Comment: {
+        type: String,
+        default:""
+    },
+    Additional_Comment: {
+        type: String,
+        default:""
+    }
 },
     {
         timestamps: true

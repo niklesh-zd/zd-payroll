@@ -161,8 +161,11 @@ const EmpInfo = Schema({
     },
     current_pin_code: {
         type: Number,
-    }
+    },
 
+    Eeffective_date: {
+        type: Date
+    }
 
 },
     {
