@@ -6,8 +6,12 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import utils from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
+=======
+import { TiArrowBack } from "react-icons/ti";
+>>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -28,10 +32,6 @@ function AddEmployee(props) {
 
   }
 
-
-
-
-  console.log("fields", fields);
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
@@ -59,9 +59,12 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
+<<<<<<< HEAD
         .post(`${utils}/emp/add_employ`, fields)
+=======
+        .post("http://192.168.29.146:7071/emp/add_employ", fields)
+>>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
         .then((response) => {
-          console.log("success", response.data.message);
           if (response.data.message == "Success ") {
             Swal.fire({
               icon: "success",
@@ -86,9 +89,12 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
+<<<<<<< HEAD
         .post(`${utils}/emp/update/` + props.data._id, fields)
+=======
+        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
+>>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
         .then((response) => {
-          console.log("success", response);
           if (response.data.message == "updated successfully.") {
             Swal.fire({
               icon: "success",
@@ -145,11 +151,11 @@ function AddEmployee(props) {
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
-                {props.data ? (
-                  <div className="row">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div className="form-group">
-                        <label className="profile_details_text">
+                {props.data ? ( 
+                  <div className ="row">
+                    <div className ="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div className ="form-group">
+                        <label className ="profile_details_text">
                           Employee Code
                         </label>
                         <input
@@ -408,7 +414,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          defaultChecked={fields.gender == "Male"}
+                          checked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -416,7 +422,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          defaultChecked={fields.gender == "Female"}
+                          checked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -434,7 +440,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          defaultChecked={fields.Marital_Status == "Single"}
+                          checked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -442,7 +448,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          defaultChecked={fields.Marital_Status == "Married"}
+                          checked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -531,18 +537,17 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.base_salary}</div>
                     </div>
                   </div>
-
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label>Effective Date</label>
                       <input
                         type="date"
-                        name="Effective-date"
+                        name="effective_date"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Efffective Date"
                       ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
+                      <div className="errorMsg">{errors.effective_date}</div>
                     </div>
                   </div>
                 </div>

@@ -29,7 +29,6 @@ const Leaves = () => {
   };
   console.log("leavesData", leavesData);
 
-
   useEffect(() => {
     window
       .fetch("http://192.168.29.186:7071/emp/get_employ")
@@ -45,9 +44,8 @@ const Leaves = () => {
       });
   }, []);
 
-
   const notify = (message) => {
-    toast("Leave already added..!", {
+    toast("Leave already Taken On This Date!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -58,8 +56,6 @@ const Leaves = () => {
       theme: "light",
     });
   };
-
-
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -90,16 +86,11 @@ const Leaves = () => {
 
   return (
     <div>
-         <Link
-                  to="/settings/leavedetails">
-                 <button
-                  className="btn mr-2 ms-md-5"
-                
-                >
-                  <IoArrowBackCircle size={25}/>
-       </button>      
-                
-                </Link>
+      <Link to="/settings/leavedetails">
+        <button className="btn mr-2 ms-md-5">
+          <IoArrowBackCircle size={25} />
+        </button>
+      </Link>
       <div className="offset-lg-2 col-lg-8">
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>

@@ -68,7 +68,6 @@ const Dashboard = () => {
     axios
       .post(`${utils}/Holiday/get-fastival`, datesobject)
       .then((res) => {
-        console.log("resp", res.data);
         setTotalHoliday(res.data);
       })
       .catch((err) => {

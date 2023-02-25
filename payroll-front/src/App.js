@@ -14,6 +14,7 @@ import LeaveDetails from "./pages/Leaves/LeaveDetails";
 // import Downloadslip  from "./pages/Salary_slip/downloadslip";
 import Downloadslip from "./pages/Salary_slip/downloadslip"
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
+import Downloadslip from "./pages/Salary_slip/downloadslip";
 
 function App() {
   return (
