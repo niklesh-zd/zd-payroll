@@ -1,16 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
+
+import Downloadslip from "./Salary_slip/downloadslip";
+
+import { Link, useParams } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
+
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
 import utils from "./utils"
 console.warn(utils,'....................');
-=======
-
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { TiArrowBack } from "react-icons/ti";
->>>>>>> 81674a3744e2c7630779472f8ebf4f3acedee088
+>>>>>>>>> Temporary merge branch 2
 function Salary() {
   const { id } = useParams();
   let navigate = useNavigate();
@@ -80,10 +81,34 @@ function Salary() {
   };
   function handlesubmit(e) {
     e.preventDefault();
-    navigate("/download" + id, {
-      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber, fields: fields },
-    });
+<<<<<<<<< Temporary merge branch 1
+    setSwitchToDownload(true);
   }
+=========
+    axios
+      .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
+      .then((response) => {
+        console.log("response", response);
+        let holidays = response.data.length;
+        setTotalHolydays(holidays);
+      })
+      .then(() => {
+        setSwitchToDownload(true);
+        console.log("fields", fields);
+      });
+  }
+
+
+  useEffect(() => {
+    setFields({
+      from_date: startdate,
+      end_date: enddate,
+      Salary_Slip_Month_Year: month,
+      monthDays: inputValue,
+      ...empdata,
+    });
+  }, [startdate, enddate, month]);
+>>>>>>>>> Temporary merge branch 2
 
   useEffect(() => {
     getPreviousMonths();
