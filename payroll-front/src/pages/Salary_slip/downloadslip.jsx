@@ -17,41 +17,31 @@ const Downloadslip = (props) => {
   const [fields, setFields] = useState({});
 
   useEffect(() => {
-    console.log("data", data);
     axios
       .post(
-        `http://localhost:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
+        `http://localhost:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
       )
       .then((response) => {
         console.log("response", response.data);
-        if (response.data.message) {
+        if (response.data.success) {
+          setFields(response.data.salary);
           setIsLoading(false);
-          navigate("/settings/salary" + id);
+          return response.data.salary
         } else {
-          if (response.data.success) {
-            setFields(response.data.salary);
-            setIsLoading(false);
-            return response.data.salary;
-          } else {
-            setFields(response.data);
-            setIsLoading(false);
-            return response.data;
-          }
+          setFields(response.data);
+          setIsLoading(false);
+          return response.data
         }
       })
       .then((response) => {
-        if (response) {
-          const element = document.getElementById("pdf-download");
-          html2pdf(element, {
-            margin: 0,
-            filename: `${response.Employee_name}_${
-              allMonthsName[fields.Salary_Slip_Month]
-            }.pdf`,
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 5 },
-            jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-          });
-        }
+        const element = document.getElementById("pdf-download");
+        html2pdf(element, {
+          margin: 0,
+          filename: `${response.Employee_name}.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 5 },
+          jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+        });
       })
       .catch((err) => {
         console.log("Somthing Went Wrong", err);
