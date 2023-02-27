@@ -21,37 +21,39 @@ class Salary {
         var Salary_Modal = await SalaryModal.find({
             userid : req.query.userid,
             Salary_Slip_Year: Number(req.query.year),
-            Salary_Slip_Month : Number(req.query.month)
+            Salary_Slip_Month : Number(req.query.month),
         })
         if (Salary_Modal.length != 0){
             return res.send(Salary_Modal[0])
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() >= 5){
+        else if (Salary_Modal.length == 0 && moment().date() > 5){
 
             var empinfo_modal = await EmpInfoModal.find({
                 _id : req.query.userid
             })
+
             empinfo_modal = empinfo_modal[0]
 
             const holiday = await HolidayModal.find({
                 holiday_date: { 
-                    $gte: moment().year() + moment().month() + '01', 
-                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                    $gte: String(moment().year()) + "-" + String(moment().month() + 1) + '-01', 
+                    $lte: String(moment().year()) + "-" + String(moment().month() + 1) + "-" + month_array[moment().month()] 
                 }
             });
 
             const findLeave = await LeaveModal.find({
-                userid: req.query.id,
+                userid: req.query.userid,
                 from_date: {
-                    $gte: moment().year() + moment().month() + '01', 
-                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                    $gte: String(moment().year()) + "-" + String(moment().month() + 1) + '-01', 
+                    $lte: String(moment().year()) + "-" + String(moment().month() + 1) + "-" + month_array[moment().month()] 
                 },
                 to_date: {
-                    $gte: moment().year() + moment().month() + '01', 
-                    $lte: moment().year() + moment().month() + month_array[moment().month()] 
+                    $gte: String(moment().year()) + "-" + String(moment().month() + 1) + '-01', 
+                    $lte: String(moment().year()) + "-" + String(moment().month() + 1) + "-" + month_array[moment().month()] 
                 }
             });
+
             var leave_taken = 0
             for(let i = 0; i < findLeave.length; i++){
                 leave_taken += findLeave[i].total_number_of_day
@@ -70,11 +72,11 @@ class Salary {
             var earned_ra = Math.round((gross_ra/ working_days) * total_paid_days)
             var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
             var net_pay_in_number = (empinfo_modal.base_salary / working_days) * total_paid_days
-            net_pay_in_number = Math.round(net_pay_in_number * 100) / 100
+            net_pay_in_number = (Math.round(net_pay_in_number * 100) / 100) + Number(req.query.arrear) + Number(req.query.additional)
             var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
 
             const salary = new SalaryModal({
-                Employee_name : empinfo_modal.First_Name + empinfo_modal.Last_Name,
+                Employee_name : empinfo_modal.First_Name + " " + empinfo_modal.Last_Name,
                 userid : empinfo_modal._id,
                 Employee_code : empinfo_modal.Employee_Code,
                 designation : empinfo_modal.Position,
@@ -100,7 +102,11 @@ class Salary {
                 Earned_Flext_benefits : earned_flexi_benifits,
                 Total_earn : earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits,
                 Net_pay_in_number : net_pay_in_number,
-                Net_pay_in_words : net_pay_in_word
+                Net_pay_in_words : net_pay_in_word,
+                ARRS : Number(req.query.arrear),
+                Additional : Number(req.query.additional),
+                ARRS_Comment : req.query.arrear_comment,
+                Additional_Comment : req.query.additional_comment,
     
             });
 

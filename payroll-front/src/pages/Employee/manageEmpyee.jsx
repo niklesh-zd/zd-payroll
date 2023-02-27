@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
+import utils from "./../utils"
 const ManageEmpyee = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,7 +37,6 @@ const ManageEmpyee = () => {
         arr.map((e) => {
           experience = experienceCalculator(e.date_of_joining);
           DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
-          console.log("experience", experience);
           finalArr.push({ ...e, DOJ: DOJ, experience: experience });
         });
         empdatachange(finalArr);

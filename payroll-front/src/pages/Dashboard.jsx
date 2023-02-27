@@ -9,6 +9,7 @@ import { GiScales } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import utils from "./utils"
 const Dashboard = () => {
   const navigate = useNavigate();
   const [totalEmployee, setTotalEmployee] = useState("");
@@ -67,7 +68,6 @@ const Dashboard = () => {
     axios
       .post("http://localhost:7071/Holiday/get-fastival", datesobject)
       .then((res) => {
-        console.log("resp", res.data);
         setTotalHoliday(res.data);
       })
       .catch((err) => {
