@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoArrowBackCircle } from "react-icons/io5";
+import host from "../utils";
 
 const Leaves = () => {
   let navigate = useNavigate();
@@ -31,7 +32,7 @@ const Leaves = () => {
 
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch(`${host}/emp/get_employ`)
       .then((res) => {
         return res.json();
       })
@@ -61,7 +62,7 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
-      .post("http://192.168.29.146:7071/Emp_Leave/leave", leavesData)
+      .post(`${host}/Emp_Leave/leave`, leavesData)
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {

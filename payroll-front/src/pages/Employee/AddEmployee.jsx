@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TiArrowBack } from "react-icons/ti";
+import host from "../utils";
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -54,7 +55,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/add_employ", fields)
+        .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
           if (response.data.message == "Success ") {
             Swal.fire({
@@ -80,7 +81,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
+        .post(`${host}/emp/update/` + props.data._id, fields)
         .then((response) => {
           if (response.data.message == "updated successfully.") {
             Swal.fire({

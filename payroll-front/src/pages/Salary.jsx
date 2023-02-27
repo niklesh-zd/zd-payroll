@@ -24,6 +24,7 @@ function Salary() {
     let salaryMonth = event.target.value;
     let yearStr = salaryMonth.substring(0, 4);
     let monthStr = salaryMonth.substring(4);
+    console.log("salaryMonth", salaryMonth);
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
@@ -36,36 +37,24 @@ function Salary() {
     setFields(fieldObj);
   };
   const getPreviousMonths = () => {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+    const currentDate = new Date(); // get the current date
+    const previousMonths = []; // initialize an empty array to hold the month objects
 
-    let currentDate = new Date();
-    let previousMonths = [];
-
-    for (let i = 0; i < 12; i++) {
-      let date = new Date(currentDate);
-      date.setMonth(date.getMonth() - i);
-      let month = monthNames[date.getMonth()];
-      let year = date.getFullYear();
-      let format1 = `${month} ${year}`;
-      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
-      previousMonths.push({
-        format_1: format1,
-        year: year.toString(),
-        month: monthNumber,
-      });
+    for (let i = 1; i <= 12; i++) {
+      const prevMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - i,
+        1
+      );
+      const monthObj = {
+        format1:
+          prevMonth.toLocaleString("default", { month: "short" }) +
+          " " +
+          prevMonth.getFullYear(),
+        year: prevMonth.getFullYear().toString(),
+        monthNumber: ("0" + (prevMonth.getMonth() + 1)).slice(-2) - 1,
+      };
+      previousMonths.push(monthObj);
     }
     setPrevMonths(previousMonths);
     return previousMonths;
@@ -73,7 +62,11 @@ function Salary() {
   function handlesubmit(e) {
     e.preventDefault();
     navigate("/download" + id, {
-      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber, fields: fields },
+      state: {
+        salaryYear: salaryYear,
+        salaryMonthNumber: salaryMonthNumber,
+        fields: fields,
+      },
     });
   }
 
@@ -260,10 +253,10 @@ function Salary() {
                         {prevMonths.map((month) => {
                           return (
                             <option
-                              key={month.format_1}
-                              value={month.year + month.month}
+                              key={month.format1}
+                              value={month.year + month.monthNumber}
                             >
-                              {month.format_1}
+                              {month.format1}
                             </option>
                           );
                         })}
