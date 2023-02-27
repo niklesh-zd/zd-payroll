@@ -1,16 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
 import utils from "./utils"
 console.warn(utils,'....................');
-=======
-
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { TiArrowBack } from "react-icons/ti";
->>>>>>> 81674a3744e2c7630779472f8ebf4f3acedee088
 function Salary() {
   const { id } = useParams();
   let navigate = useNavigate();
