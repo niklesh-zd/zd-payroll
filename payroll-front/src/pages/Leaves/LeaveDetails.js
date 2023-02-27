@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-
+import utils from "./../utils"
 function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
@@ -22,7 +22,7 @@ function LeaveDetails() {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch("http://192.168.29.186:7071/Emp_Leave/leave_dalete/" + id.id, {
+          .fetch(`${utils}/Emp_Leave/leave_dalete/` + id.id, {
             method: "POST",
           })
           .then((res) => {
@@ -102,7 +102,7 @@ function LeaveDetails() {
   ];
   useEffect(() => {
     axios
-      .get("http://192.168.29.186:7071/Emp_Leave/get_leave")
+      .get(utils+"/Emp_Leave/get_leave")
       .then((response) => {
         let filteredArr = [];
         let filteredObj = {};

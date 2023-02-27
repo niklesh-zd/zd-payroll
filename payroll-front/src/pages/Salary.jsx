@@ -81,7 +81,7 @@ function Salary() {
 
   useEffect(() => {
     getPreviousMonths();
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch(`${utils}/emp/emp_1/` + id)
       .then((res) => {
         return res.json();
       })

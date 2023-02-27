@@ -6,12 +6,8 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
 import utils from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
-=======
-import { TiArrowBack } from "react-icons/ti";
->>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -59,11 +55,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-<<<<<<< HEAD
         .post(`${utils}/emp/add_employ`, fields)
-=======
-        .post("http://192.168.29.146:7071/emp/add_employ", fields)
->>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
         .then((response) => {
           if (response.data.message == "Success ") {
             Swal.fire({
@@ -89,11 +81,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-<<<<<<< HEAD
         .post(`${utils}/emp/update/` + props.data._id, fields)
-=======
-        .post("http://192.168.29.146:7071/emp/update/" + props.data._id, fields)
->>>>>>> 5e8f9bc556eb44a3e21f7c8095ca9aef5506efd9
         .then((response) => {
           if (response.data.message == "updated successfully.") {
             Swal.fire({

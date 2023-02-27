@@ -7,7 +7,7 @@ const Empedit = () => {
     const [empdata, empdatachange] = useState({});
   
     useEffect(() => {
-        fetch('http://192.168.29.146:7071/emp/emp_1/' + id)
+        fetch(`${utils}/emp/emp_1/` + id)
           .then((res) => {
             return res.json()
           })

@@ -6,7 +6,7 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
-
+import utils from "./../utils"
 const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = location.state.salaryYear;
@@ -36,7 +36,7 @@ const Downloadslip = () => {
     console.log("data", data);
     axios
       .post(
-        `http://192.168.29.146:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
+        `${utils}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
         console.log("response", response.data);
