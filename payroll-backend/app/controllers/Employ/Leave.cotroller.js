@@ -9,7 +9,7 @@ const moment = require('moment');
 
 const Emp = require('../Employ/EmpInfo.cotroller');
 
-var month_array = ['31','28','31','30','31','30','31','31','30','31','30','31'];
+var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
 
 console.log(`month list length : ${month_array.length}`);
 
@@ -36,7 +36,9 @@ class Leave {
                 if (
                     moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
                     && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
-                ) {
+                ) 
+                {
+                    console.log(user_data[i].from_date, '...............');
                     return res.send({ message: "applied date range already exist." })
                 }
             }
@@ -79,7 +81,7 @@ class Leave {
 
                 // calculating leaves first part
                 const holiday_1 = await HolidayModal.find({
-                    holiday_date: { $gte:from_date, $lte:to_date_split }
+                    holiday_date: { $gte: from_date, $lte: to_date_split }
                 });
                 var diff_between_leaves_days_1 = (moment(to_date_split, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave_1 = diff_between_leaves_days_1 - holiday_1.length
@@ -90,12 +92,12 @@ class Leave {
                     from_date,
                     to_date: to_date_split,
                     reason_for_leave,
-                    total_number_of_day : total_leave_1
+                    total_number_of_day: total_leave_1
                 });
 
                 // calculating leaves second part
                 const holiday_2 = await HolidayModal.find({
-                    holiday_date: { $gte:from_date_split, $lte:to_date }
+                    holiday_date: { $gte: from_date_split, $lte: to_date }
                 });
                 var diff_between_leaves_days_2 = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date_split, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave_2 = diff_between_leaves_days_2 - holiday_2.length
@@ -114,7 +116,9 @@ class Leave {
             }
             else {
 
-             
+                const holiday = await HolidayModal.find({
+                    holiday_date: { $gte: from_date_split, $lte: to_date }
+                });
                 var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave = diff_between_leaves_days - holiday.length
 
@@ -234,7 +238,7 @@ class Leave {
             to_date: { $gte: req.query.from_date, $lte: req.query.to_date }
         });
         var leave_count = 0
-        for(let i = 0; i < findLeave.length; i++){
+        for (let i = 0; i < findLeave.length; i++) {
             leave_count += findLeave[i].total_number_of_day
         }
         res.send({ "leave_count" : leave_count})
@@ -253,7 +257,7 @@ class Leave {
 
         const emp_count = await EmpInfoModal.find()
         var absent_count = 0
-        for (let i = 0; i< findLeave.length; i++){
+        for (let i = 0; i < findLeave.length; i++) {
 
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
@@ -263,17 +267,17 @@ class Leave {
             console.log(to_date_)
 
             if (
-                today.isSameOrBefore(to_date_) 
+                today.isSameOrBefore(to_date_)
                 && today.isSameOrAfter(from_date_)
-            ){
+            ) {
                 absent_count++
             }
-        var present_count = emp_count.length - absent_count
+            var present_count = emp_count.length - absent_count
         }
         res.send(
             {
-                "present_count" : present_count,
-                "absent_count" : absent_count
+                "present_count": present_count,
+                "absent_count": absent_count
             }
         )
     }
@@ -292,7 +296,7 @@ class Leave {
 
         const emp_count = await EmpInfoModal.find()
         var absent_count = 0
-        for (let i = 0; i< findLeave.length; i++){
+        for (let i = 0; i < findLeave.length; i++) {
 
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
@@ -304,17 +308,17 @@ class Leave {
 
 
             if (
-                yesterday.isSameOrBefore(to_date_) 
+                yesterday.isSameOrBefore(to_date_)
                 && yesterday.isSameOrAfter(from_date_)
-            ){
+            ) {
                 absent_count++
             }
-        var present_count = emp_count.length - absent_count
+            var present_count = emp_count.length - absent_count
         }
         res.send(
             {
-                "present_count" : present_count,
-                "absent_count" : absent_count
+                "present_count": present_count,
+                "absent_count": absent_count
             }
         )
     }
