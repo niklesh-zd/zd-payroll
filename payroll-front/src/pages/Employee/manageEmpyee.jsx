@@ -37,7 +37,6 @@ const ManageEmpyee = () => {
         arr.map((e) => {
           experience = experienceCalculator(e.date_of_joining);
           DOJ = new Date(e.date_of_joining).toLocaleDateString("pt-PT");
-          console.log("experience", experience);
           finalArr.push({ ...e, DOJ: DOJ, experience: experience });
         });
         empdatachange(finalArr);

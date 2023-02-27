@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 const Leaves = () => {
   let navigate = useNavigate();
@@ -28,7 +29,6 @@ const Leaves = () => {
   };
   console.log("leavesData", leavesData);
 
-
   useEffect(() => {
     window
       .fetch("http://localhost:7071/emp/get_employ")
@@ -44,9 +44,8 @@ const Leaves = () => {
       });
   }, []);
 
-
   const notify = (message) => {
-    toast("Leave already added..!", {
+    toast("Leave already Taken On This Date!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -57,8 +56,6 @@ const Leaves = () => {
       theme: "light",
     });
   };
-
-
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -89,6 +86,11 @@ const Leaves = () => {
 
   return (
     <div>
+      <Link to="/settings/leavedetails">
+        <button className="btn mr-2 ms-md-5">
+          <IoArrowBackCircle size={25} />
+        </button>
+      </Link>
       <div className="offset-lg-2 col-lg-8">
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>

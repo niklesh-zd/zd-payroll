@@ -1,30 +1,31 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import Downloadslip from "./Salary_slip/downloadslip";
-import utils from "./utils"
-console.warn(utils,'....................');
+
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
+  let navigate = useNavigate();
   const [empdata, empdatachange] = useState({});
-  const [fields, setFields] = useState({});
-  const [switchToDownload, setSwitchToDownload] = useState(false);
+  const [fields, setFields] = useState({
+    arrear: 0,
+    additional: 0,
+    arrear_comment: "",
+    additional_comment: "",
+  });
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [startdate, Setstartdate] = useState("");
-  const [enddate, Setenddate] = useState("");
-  const [month, Setmonth] = useState("");
-  const [totalHolydays, setTotalHolydays] = useState("");
+  const [salaryYear, setSalaryYear] = useState(0);
+  const [salaryMonthNumber, setSalaryMonthNumber] = useState(0);
   const [prevMonths, setPrevMonths] = useState([]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    // Setmonth("January");
-    // setInputValue("31");
-    Setstartdate(`${event.target.value}-01`);
-    Setenddate(`${event.target.value}-31`);
+    let salaryMonth = event.target.value;
+    let yearStr = salaryMonth.substring(0, 4);
+    let monthStr = salaryMonth.substring(4);
+    setSalaryYear(yearStr);
+    setSalaryMonthNumber(monthStr);
   };
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
@@ -32,7 +33,7 @@ function Salary() {
   // function getSalaryData(data) {
   //   if (data) {
   //     axios
-  //       .post("http://localhost:7071/Emp_Salary/salary", data)
+  //       .post("http://192.168.29.146:7071/Emp_Salary/salary", data)
   //       .then((res) => {
   //         console.log("res", res);
   //         navigate("/download" + id);
@@ -69,45 +70,22 @@ function Salary() {
       let month = monthNames[date.getMonth()];
       let year = date.getFullYear();
       let format1 = `${month} ${year}`;
-      let format2 = `${year}-${("0" + (date.getMonth() + 1)).slice(-2)}`;
-      previousMonths.push({ format_1: format1, format_2: format2 });
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
+      previousMonths.push({
+        format_1: format1,
+        year: year.toString(),
+        month: monthNumber,
+      });
     }
     setPrevMonths(previousMonths);
     return previousMonths;
   };
-
   function handlesubmit(e) {
     e.preventDefault();
-    axios
-      .post("http://localhost:7071/Holiday/get_holiday", fields)
-      .then((response) => {
-        console.log("response", response);
-        let holidays = response.data.length;
-        setTotalHolydays(holidays);
-        // setFields({ ...fields, holidays: holidays})
-        // let calholiday = inputValue - holiday;
-        // getSalaryData({
-        //   Total_Work_Days: calholiday,
-        //   Leave_taken: leavetaken,
-        //   ...fields,
-        // });
-      })
-      .then(() => {
-        setSwitchToDownload(true);
-        console.log("fields", fields);
-      });
-  }
-
-
-  useEffect(() => {
-    setFields({
-      from_date: startdate,
-      end_date: enddate,
-      Salary_Slip_Month_Year: month,
-      monthDays: inputValue,
-      ...empdata,
+    navigate("/download" + id, {
+      state: { salaryYear: salaryYear, salaryMonthNumber: salaryMonthNumber, fields: fields },
     });
-  }, [startdate, enddate, month]);
+  }
 
   useEffect(() => {
     getPreviousMonths();
@@ -136,16 +114,16 @@ function Salary() {
       });
   }, []);
 
-  return switchToDownload ? (
-    <Downloadslip data={fields} holidays={totalHolydays} />
-  ) : (
+  return (
     <div className="pt-5">
       <div>
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
-              <button type="button" class="btn btn-success mb-2">Back</button>
-              <div className="card p-10">
+              <div className="card m-5 p-3 ">
+                <Link to="/settings/manageprofile">
+                  <TiArrowBack size={25} />
+                </Link>
                 <div className="card-title" style={{ textAlign: "center" }}>
                   <h2 className="text-red-900">Generate Salary Receipt</h2>
                 </div>
@@ -184,7 +162,7 @@ function Salary() {
                       />
                       <label
                         className="custom-control-label px-3"
-                        for="customSwitches"
+                        htmlFor="customSwitches"
                       >
                         advance options
                       </label>
@@ -200,13 +178,13 @@ function Salary() {
                           <input
                             type="text"
                             style={{ textTransform: "capitalize" }}
-                            name="arrs"
+                            name="arrear"
                             minLength="2"
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                            value={fields.arrear}
+                            onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -224,8 +202,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                            // value={fields.First_Name}
-                            // onChange={(e) => handleChange(e)}
+                            value={fields.additional}
+                            onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -239,12 +217,12 @@ function Salary() {
                           </label>
                           <textarea
                             className="form-control"
-                            name="arrs_comment"
+                            name="arrear_comment"
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                            value={fields.arrear_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -254,7 +232,7 @@ function Salary() {
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
                           <label className="profile_details_text">
-                          Additional Comment
+                            Additional Comment
                           </label>
                           <textarea
                             className="form-control"
@@ -262,8 +240,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                            // value={fields.Current_Address}
-                            // onChange={(e) => handleChange(e)}
+                            value={fields.additional_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -291,7 +269,10 @@ function Salary() {
                         </option>
                         {prevMonths.map((month) => {
                           return (
-                            <option key={month.format_1} value={month.format_2}>
+                            <option
+                              key={month.format_1}
+                              value={month.year + month.month}
+                            >
                               {month.format_1}
                             </option>
                           );

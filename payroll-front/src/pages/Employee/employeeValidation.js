@@ -103,6 +103,10 @@ export function validateForm(fields) {
     errObj["base_salary"] = "*Please Enter Base Salary";
     formIsValid = false;
   }
+  if (!fields.effective_date || fields.effective_date == "") {
+    errObj["effective_date"] = "*Please Enter Effective Date";
+    formIsValid = false;
+  }
   if (!fields.Bank_IFSC || fields.Bank_IFSC.length != 11) {
     errObj["Bank_IFSC"] = "*Please Enter Bank IFSC.";
     formIsValid = false;

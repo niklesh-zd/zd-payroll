@@ -6,6 +6,8 @@ import { BiCog } from "react-icons/bi";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
+import { HiUserGroup } from 'react-icons/hi';
+import  zecimg  from "./zecdata.png";
 const routes = [
   {
     path: "/",
@@ -16,7 +18,7 @@ const routes = [
     className: 'pointer',
     path: "/Employees",
     name: "Employees",
-    icon: <FaUser />,
+    icon: <HiUserGroup />,
     exact: true,
     subRoutes: [
       {
@@ -119,6 +121,9 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar `}
         >
+          <div className="bg-white d-flex justify-content-center align-items-center" style={{height: '50px'}}>
+              <img src={zecimg}/>
+          </div>
           <div className="top_section pointer">
             <AnimatePresence>
               {isOpen && (
@@ -129,11 +134,9 @@ const SideBar = ({ children }) => {
                   exit="hidden"
                   className="logo"
                 >
-                 ZecData
                 </motion.h1>
               )}
             </AnimatePresence>
-
             <div className="bars">
               <FaBars onClick={toggle} />
             </div>
