@@ -22,11 +22,7 @@ const Downloadslip = (props) => {
     console.log("data", data);
     axios
       .post(
-<<<<<<< HEAD
         `${utils}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
-=======
-        `http://localhost:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
->>>>>>> 65c58cf9a445be82da0a23489081ad7b01347892
       )
       .then((response) => {
         console.log("response", response.data);
@@ -46,7 +42,6 @@ const Downloadslip = (props) => {
         }
       })
       .then((response) => {
-<<<<<<< HEAD
         if (response) {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
@@ -58,16 +53,6 @@ const Downloadslip = (props) => {
             jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
           });
         }
-=======
-        const element = document.getElementById("pdf-download");
-        html2pdf(element, {
-          margin: 0,
-          filename: `${response.Employee_name}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 5 },
-          jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-        });
->>>>>>> 65c58cf9a445be82da0a23489081ad7b01347892
       })
       .catch((err) => {
         console.log("Somthing Went Wrong", err);
@@ -337,11 +322,6 @@ const Downloadslip = (props) => {
         </div>
       </div>
     </div>
-<<<<<<< HEAD
   )
 }
-=======
-  );
-};
->>>>>>> 65c58cf9a445be82da0a23489081ad7b01347892
 export default Downloadslip;

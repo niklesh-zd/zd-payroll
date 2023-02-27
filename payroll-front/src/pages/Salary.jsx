@@ -1,18 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
-
-import Downloadslip from "./Salary_slip/downloadslip";
-
-import { Link, useParams } from "react-router-dom";
-import { TiArrowBack } from "react-icons/ti";
-
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState} from "react";
+import {  useParams } from "react-router-dom";
 import axios from "axios";
 import Downloadslip from "./Salary_slip/downloadslip";
 import utils from "./utils"
 console.warn(utils,'....................');
->>>>>>>>> Temporary merge branch 2
-function Salary() {
+     function Salary() {
   const { id } = useParams();
   let navigate = useNavigate();
   const [empdata, empdatachange] = useState({});
@@ -24,8 +17,6 @@ function Salary() {
   });
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [salaryYear, setSalaryYear] = useState(0);
-  const [salaryMonthNumber, setSalaryMonthNumber] = useState(0);
   const [prevMonths, setPrevMonths] = useState([]);
 
   const handleOptionChange = (event) => {
@@ -81,10 +72,9 @@ function Salary() {
   };
   function handlesubmit(e) {
     e.preventDefault();
-<<<<<<<<< Temporary merge branch 1
     setSwitchToDownload(true);
   }
-=========
+
     axios
       .post("http://192.168.29.186:7071/Holiday/get_holiday", fields)
       .then((response) => {
@@ -96,7 +86,7 @@ function Salary() {
         setSwitchToDownload(true);
         console.log("fields", fields);
       });
-  }
+  
 
 
   useEffect(() => {
@@ -108,7 +98,6 @@ function Salary() {
       ...empdata,
     });
   }, [startdate, enddate, month]);
->>>>>>>>> Temporary merge branch 2
 
   useEffect(() => {
     getPreviousMonths();
