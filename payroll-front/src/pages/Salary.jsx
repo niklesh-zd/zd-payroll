@@ -29,7 +29,6 @@ function Salary() {
   };
 
 
-
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
@@ -62,7 +61,6 @@ function Salary() {
       date.setMonth(date.getMonth() - i - 1);
       let month = monthNames[date.getMonth()];
       console.log('mont--------h =',month);
-
       let year = date.getFullYear();
 
       let format1 = `${month} ${year}`;
