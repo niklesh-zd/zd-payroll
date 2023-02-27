@@ -323,7 +323,14 @@ const Downloadslip = () => {
           </form>
         </div>
       </div>
+<<<<<<< HEAD
     </div>
   )
 }
+=======
+      </div>
+  
+  );
+};
+>>>>>>> 81674a3744e2c7630779472f8ebf4f3acedee088
 export default Downloadslip;
