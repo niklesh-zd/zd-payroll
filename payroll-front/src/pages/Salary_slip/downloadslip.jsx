@@ -6,7 +6,6 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
-
 const Downloadslip = (props) => {
   console.log("props", props);
   const salaryYear = props.year;
@@ -19,26 +18,20 @@ const Downloadslip = (props) => {
 
   // }, [fields]);
   useEffect(() => {
-    console.log("data", data);
     axios
       .post(
         `${utils}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
         console.log("response", response.data);
-        if (response.data.message) {
+        if (response.data.success) {
+          setFields(response.data.salary);
           setIsLoading(false);
-          navigate("/settings/salary" + id);
+          return response.data.salary
         } else {
-          if (response.data.success) {
-            setFields(response.data.salary);
-            setIsLoading(false);
-            return response.data.salary;
-          } else {
-            setFields(response.data);
-            setIsLoading(false);
-            return response.data;
-          }
+          setFields(response.data);
+          setIsLoading(false);
+          return response.data
         }
       })
       .then((response) => {
