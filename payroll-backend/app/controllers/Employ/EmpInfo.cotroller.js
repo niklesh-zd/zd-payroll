@@ -84,7 +84,7 @@ class Emp {
                     permanent_city,
                     current_state,
                     current_city,
-                    base_salary,
+                    base_salary_list : [{salary_ : base_salary, effective_date : Eeffective_date}],
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,
@@ -98,7 +98,6 @@ class Emp {
                     permanent_pin_code,
                     current_pin_code,
                     YEAR_OF_PASSING,
-                    Eeffective_date: date_of_joining
                     // file,
                 });
                 //STORE YOUR LOGIN DATA IN DB 
@@ -176,6 +175,20 @@ class Emp {
     }
     async emp_update(req, res) {
         console.log('update api runnig');
+
+        const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
+            Contact_Number, Contact_Number_Home, Permanent_Address,
+            Current_Address, email,
+            fatherName, base_salary,
+            Blood_Group, Marital_Status, PAN_No,
+            ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
+            Position, DEGREE, STREAM, YEAR_OF_PASSING
+            , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
+            permanent_city,
+            current_state, is_active, permanent_pin_code,
+            current_city, current_pin_code, Eeffective_date
+        } = req.body;
+
         if (!req.body) {
             return res.status(400).send({
                 message: "Data to update can not be empty!"
@@ -183,7 +196,46 @@ class Emp {
         }
 
         const id = req.params.id;
-        EmpInfoModal.findByIdAndUpdate(id, req.body).sort({ _id: -1 })
+        EmpInfoModal.findByIdAndUpdate(
+            id, 
+            {
+                First_Name: First_Name.charAt(0).toUpperCase() + First_Name.slice(1),
+                Last_Name: Last_Name.charAt(0).toUpperCase() + Last_Name.slice(1),
+                date_of_birth,
+                date_of_joining,
+                gender,
+                Contact_Number,
+                Contact_Number_Home,
+                Permanent_Address,
+                Current_Address,
+                email,
+                fatherName,
+                Alternate_Contact_number,
+                Blood_Group,
+                Marital_Status,
+                PAN_No,
+                permanent_state,
+                permanent_city,
+                current_state,
+                current_city,
+                // base_salary : [{salary_ : base_salary, effective_date : Eeffective_date}],
+                $push: {"base_salary_list": {salary_ : base_salary, effective_date : Eeffective_date}},
+                ADHAR,
+                Bank_No,
+                Bank_IFSC,
+                Position,
+                Employee_Code: next_emp_code,
+                DEGREE,
+                STREAM,
+                is_active,
+                PASSED,
+                PERCENTAGE_OF_MARKS,
+                permanent_pin_code,
+                current_pin_code,
+                YEAR_OF_PASSING,
+                Eeffective_date: Eeffective_date                
+            }
+            ).sort({ _id: -1 })
             .then(data => {
                 if (!data) {
                     res.status(404).send({

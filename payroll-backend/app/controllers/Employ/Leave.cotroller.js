@@ -25,7 +25,14 @@ class Leave {
 
             //date range validation
             const user_data = await LeaveModal.find({ userid: userid });
+            console.log(user_data)
             for (let i = 0; i < user_data.length; i++) {
+
+                console.log(moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
+                console.log(moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
+                console.log(moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
+                && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
+
                 if (
                     moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
                     && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
@@ -232,7 +239,7 @@ class Leave {
         for(let i = 0; i < findLeave.length; i++){
             leave_count += findLeave[i].total_number_of_day
         }
-        res.send({ "leave_count" : leave_count })
+        res.send({ "leave_count" : leave_count})
     }
 
     async get_today_leave(req, res, next) {
