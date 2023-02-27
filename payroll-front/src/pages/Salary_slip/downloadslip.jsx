@@ -6,6 +6,9 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
+import { MdDownload } from 'react-icons/md';
+
+import utils from "./../utils"
 const Downloadslip = (props) => {
   console.log("props", props);
   const salaryYear = props.year;
@@ -15,7 +18,7 @@ const Downloadslip = (props) => {
   const { id } = useParams();
   const [fields, setFields] = useState({});
   // useEffect(() => {
-
+var data
   // }, [fields]);
   useEffect(() => {
     axios
@@ -35,6 +38,7 @@ const Downloadslip = (props) => {
         }
       })
       .then((response) => {
+        var allMonthsName
         if (response) {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
