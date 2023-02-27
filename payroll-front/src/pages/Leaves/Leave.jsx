@@ -31,7 +31,7 @@ const Leaves = () => {
 
   useEffect(() => {
     window
-      .fetch(`${utils}/emp/get_employ`)
+      .fetch("http://192.168.29.186:7071/emp/get_employ")
       .then((res) => {
         return res.json();
       })
@@ -61,7 +61,7 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
-      .post(`${utils}/Emp_Leave/leave`, leavesData)
+      .post("http://192.168.29.186:7071/Emp_Leave/leave", leavesData)
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {
