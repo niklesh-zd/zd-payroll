@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoArrowBackCircle } from "react-icons/io5";
-import utils from "./../utils"
+import host from "./../utils"
 const Leaves = () => {
   let navigate = useNavigate();
   const toDateInputRef = useRef(null);

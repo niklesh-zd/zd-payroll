@@ -69,6 +69,9 @@ const Downloadslip = () => {
       });
   }, []);
 
+  const Navigate = () =>{
+    navigate('/settings/salary' + id)
+  }
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {

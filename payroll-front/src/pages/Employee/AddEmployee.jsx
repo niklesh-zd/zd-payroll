@@ -6,7 +6,7 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import utils from "./../utils"
+import host from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
 
 function AddEmployee(props) {
