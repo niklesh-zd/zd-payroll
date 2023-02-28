@@ -223,7 +223,6 @@ class Emp {
                 Bank_No,
                 Bank_IFSC,
                 Position,
-                Employee_Code: next_emp_code,
                 DEGREE,
                 STREAM,
                 is_active,

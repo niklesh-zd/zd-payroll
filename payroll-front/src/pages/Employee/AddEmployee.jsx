@@ -34,6 +34,10 @@ function AddEmployee(props) {
 
   }
 
+
+
+
+  console.log("fields", fields);
   const notify = (message) => {
     setEdharerrors(message)
     toast(
@@ -64,6 +68,7 @@ function AddEmployee(props) {
       axios
         .post(`${utils}/emp/add_employ`, fields)
         .then((response) => {
+          console.log("success", response.data.message);
           if (response.data.message == "Success ") {
             Swal.fire({
               icon: "success",
@@ -90,6 +95,7 @@ function AddEmployee(props) {
       axios
         .post(`${utils}/emp/update/` + props.data._id, fields)
         .then((response) => {
+          console.log("success", response);
           if (response.data.message == "updated successfully.") {
             Swal.fire({
               icon: "success",
@@ -392,7 +398,7 @@ function AddEmployee(props) {
                         <option>Principal Software Engineer</option>
                         <option>Senior Software Developer</option>
                         <option>Software Developer</option>
-                        <option>Jr.Software Developer</option>
+                        <option>Junior Software Developer</option>
                         <option>Intern Software Developer</option>
                         <option>Other</option>
                       </select>
@@ -409,7 +415,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          checked={fields.gender == "Male"}
+                          defaultChecked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -417,7 +423,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          checked={fields.gender == "Female"}
+                          defaultChecked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -435,7 +441,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == "Single"}
+                          defaultChecked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -443,7 +449,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          checked={fields.Marital_Status == "Married"}
+                          defaultChecked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -532,17 +538,18 @@ function AddEmployee(props) {
                       <div className="errorMsg">{errors.base_salary}</div>
                     </div>
                   </div>
+
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label>Effective Date</label>
                       <input
                         type="date"
-                        name="effective_date"
+                        name="Effective-date"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Efffective Date"
                       ></input>
-                      <div className="errorMsg">{errors.effective_date}</div>
+                      <div className="errorMsg">{errors.base_salary}</div>
                     </div>
                   </div>
                 </div>
