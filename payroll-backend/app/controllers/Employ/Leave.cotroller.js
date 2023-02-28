@@ -38,10 +38,26 @@ class Leave {
                     && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
                 ) 
                 {
-                    console.log(user_data[i].from_date, '...............');
                     return res.send({ message: "applied date range already exist." })
                 }
             }
+            let dates = [];
+            for (let i = 0; i < user_data.length; i++) {
+                const leave_from_date = user_data[i].from_date
+                const leave_to_date = user_data[i].to_date
+                console.log('leave_from_date',leave_from_date);
+                console.log('leave_to_date',leave_to_date);
+
+                let currentDate = new Date(leave_from_date);
+                let endDate = new Date(leave_to_date);
+              
+                while (currentDate <= endDate) {
+                  dates.push(currentDate.toISOString().slice(0,10));
+                  currentDate.setDate(currentDate.getDate() + 1);
+                }
+            }
+            console.log('dates',dates);
+            // return
 
             const datelFind = await LeaveModal.findOne({
                 $and: [
