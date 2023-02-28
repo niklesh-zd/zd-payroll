@@ -38,6 +38,7 @@ function Salary() {
 
     for (let i = 0; i < 12; i++) {
       let date = new Date(currentDate);
+      let monthNames
       date.setMonth(date.getMonth() - i - 1);
       let month = monthNames[date.getMonth()];
       console.log('mont--------h =',month);

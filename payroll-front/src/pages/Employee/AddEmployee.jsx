@@ -6,13 +6,8 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
 import utils from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
-=======
-import { TiArrowBack } from "react-icons/ti";
-import host from "../utils";
->>>>>>> 8d1d83f521e54825a9c0302eb2fecc61e4abf85e
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
