@@ -20,41 +20,22 @@ const Downloadslip = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
-  var allMonthsName = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+
   useEffect(() => {
-    console.log("data", data);
     axios
       .post(
         `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
         console.log("response", response.data);
-        if (response.data.message) {
+        if (response.data.success) {
+          setFields(response.data.salary);
           setIsLoading(false);
-          navigate("/settings/salary" + id);
+          return response.data.salary
         } else {
-          if (response.data.success) {
-            setFields(response.data.salary);
-            setIsLoading(false);
-            return response.data.salary;
-          } else {
-            setFields(response.data);
-            setIsLoading(false);
-            return response.data;
-          }
+          setFields(response.data);
+          setIsLoading(false);
+          return response.data
         }
       })
       .then((response) => {
@@ -76,9 +57,22 @@ const Downloadslip = () => {
       });
   }, []);
 
+  const Pdfdownload = () => {
+    const element = document.getElementById("pdf-download");
+    html2pdf(element, {
+      margin: 0,
+      filename: `${fields.Employee_name}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 5 },
+      jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+    });
+  }
   return (
     <div>
-      <Link to="/settings/manageprofile" className="btn text-dark">
+      <div className="btn float-end text-primary">
+        <MdDownload onClick={Pdfdownload} size={30} />
+      </div>
+      <Link to="/settings/salary:id" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <div className="container">
@@ -109,10 +103,9 @@ const Downloadslip = () => {
                   <h3 className="fw-bold" style={{ color: "#368bb5" }}>
                     ZecData
                   </h3>
-                  <h5 className="fw-bold text-dark">
-                    Payment slip for the month of{" "}
-                    {allMonthsName[fields.Salary_Slip_Month]}{" "}
-                    {fields.Salary_Slip_Year}
+                  <h5 className="fw-bold text-dark p-2">
+                    Payment slip for the month of
+                    {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 
@@ -155,7 +148,7 @@ const Downloadslip = () => {
                         <small>{fields.Leave_balence}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="row mt-1 p-2">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave Taken </span>
                       </div>
@@ -163,7 +156,7 @@ const Downloadslip = () => {
                         <small>{fields.Leave_taken}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="row mt-1 p-2">
                       <div className="col-md-5">
                         <span className="fw-bolder">Balance Days</span>
                       </div>
@@ -309,7 +302,7 @@ const Downloadslip = () => {
                   <div className=" col-md-7">
                     <div className="d-flex flex-column ">
                       <span style={{ color: "#368bb5", fontWeight: "bold" }}>
-                        {fields.Net_pay_in_words} ONLY
+                        {fields.Net_pay_in_words} Only
                       </span>
                       <br></br>
                     </div>

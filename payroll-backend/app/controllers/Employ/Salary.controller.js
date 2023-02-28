@@ -27,14 +27,15 @@ class Salary {
             return res.send(Salary_Modal[0])
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() > 5){
+        else if (Salary_Modal.length == 0 && moment().date() >= 5){
 
             var empinfo_modal = await EmpInfoModal.find({
                 _id : req.query.userid
             })
-
+            console.log(empinfo_modal)
+            console.log("======================")
             empinfo_modal = empinfo_modal[0]
-
+            console.log(empinfo_modal)
             const holiday = await HolidayModal.find({
                 holiday_date: { 
                     $gte: String(moment().year()) + "-" + String(moment().month() + 1) + '-01', 
@@ -74,7 +75,7 @@ class Salary {
             var net_pay_in_number = (empinfo_modal.base_salary / working_days) * total_paid_days
             net_pay_in_number = (Math.round(net_pay_in_number * 100) / 100) + Number(req.query.arrear) + Number(req.query.additional)
             var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
-
+            console.log(gross_basic_da)
             const salary = new SalaryModal({
                 Employee_name : empinfo_modal.First_Name + " " + empinfo_modal.Last_Name,
                 userid : empinfo_modal._id,
