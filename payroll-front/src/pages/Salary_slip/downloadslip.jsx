@@ -5,39 +5,53 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { TiArrowBack } from "react-icons/ti";
-import { MdDownload } from 'react-icons/md';
+import { MdDownload } from "react-icons/md";
+import host from "../utils";
 
-import utils from "./../utils"
-const Downloadslip = (props) => {
-  console.log("props", props);
-  const salaryYear = props.year;
-  const salaryMonthNumber = props.month;
+const Downloadslip = () => {
+  let location = useLocation();
+  const salaryYear = location.state.salaryYear;
+  const salaryMonthNumber = location.state.salaryMonthNumber;
+  const data = location.state.fields;
+
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
-  // useEffect(() => {
-var data
-  // }, [fields]);
+  var allMonthsName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   useEffect(() => {
     axios
       .post(
-        `${utils}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
+        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
         console.log("response", response.data);
         if (response.data.success) {
           setFields(response.data.salary);
           setIsLoading(false);
-          return response.data.salary
+          return response.data.salary;
         } else {
           setFields(response.data);
           setIsLoading(false);
-          return response.data
+          return response.data;
         }
       })
       .then((response) => {
-        var allMonthsName
         if (response) {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
@@ -64,9 +78,6 @@ var data
       html2canvas: { scale: 5 },
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
-  }
-  const Navigate = () => {
-    navigate("/settings/salary" + id);
   };
   return (
     <div>

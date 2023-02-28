@@ -48,7 +48,7 @@ const EmpDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch(`${utils}/emp/delete_emp/` + id, {
+          .fetch(`${host}/emp/delete_emp/` + id, {
             method: "POST",
           })
           .then((res) => {

@@ -23,7 +23,7 @@ function LeaveDetails() {
     }).then((result) => {
       if (result.isConfirmed) {
         window
-          .fetch(`${utils}/Emp_Leave/leave_dalete/` + id.id, {
+          .fetch(`${host}/Emp_Leave/leave_dalete/` + id.id, {
             method: "POST",
           })
           .then((res) => {
@@ -103,7 +103,7 @@ function LeaveDetails() {
   ];
   useEffect(() => {
     axios
-      .get(utils+"/Emp_Leave/get_leave")
+      .get(`${host}/Emp_Leave/get_leave`)
       .then((response) => {
         let filteredArr = [];
         let filteredObj = {};

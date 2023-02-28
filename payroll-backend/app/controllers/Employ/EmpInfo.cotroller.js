@@ -22,7 +22,7 @@ class Emp {
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
                 permanent_city,
                 current_state, is_active, permanent_pin_code,
-                current_city, current_pin_code, Eeffective_date
+                current_city, current_pin_code, effective_date
             } = req.body;
 
             const errors = validationResult(req)
@@ -83,7 +83,7 @@ class Emp {
                     permanent_city,
                     current_state,
                     current_city,
-                    base_salary_list : [{salary_ : base_salary, effective_date : Eeffective_date}],
+                    base_salary_list : [{salary_ : base_salary, effective_date : effective_date}],
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,
@@ -185,7 +185,7 @@ class Emp {
             , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
             permanent_city,
             current_state, is_active, permanent_pin_code,
-            current_city, current_pin_code, Eeffective_date
+            current_city, current_pin_code, effective_date
         } = req.body;
 
         if (!req.body) {
@@ -217,8 +217,8 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                // base_salary : [{salary_ : base_salary, effective_date : Eeffective_date}],
-                $push: {"base_salary_list": {salary_ : base_salary, effective_date : Eeffective_date}},
+                // base_salary : [{salary_ : base_salary, effective_date : effective_date}],
+                $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
                 ADHAR,
                 Bank_No,
                 Bank_IFSC,
@@ -231,7 +231,7 @@ class Emp {
                 permanent_pin_code,
                 current_pin_code,
                 YEAR_OF_PASSING,
-                Eeffective_date: Eeffective_date                
+                effective_date: effective_date                
             }
             ).sort({ _id: -1 })
             .then(data => {
