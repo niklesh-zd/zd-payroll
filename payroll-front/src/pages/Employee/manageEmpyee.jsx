@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaRupeeSign } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
@@ -106,15 +107,14 @@ const ManageEmpyee = () => {
           >
             <CgMoreO />
           </span>
-          <span
-            className="btn btn-sm btn-success"
-            style={{ padding: "2px" }}
+          <p
+            className="btn btn-sm btn-primary d-flex "
             onClick={() => {
               generateSalary(row._id);
             }}
           >
             Payslip
-          </span>
+        </p>
         </>
       ),
 

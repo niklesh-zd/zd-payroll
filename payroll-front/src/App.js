@@ -15,7 +15,7 @@ import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip"
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 
-function App() {
+function App() {  
   return (
     <Router>
       <SideBar>
@@ -31,8 +31,6 @@ function App() {
           <Route path="/settings/leavedetails" element={<LeaveDetails />} />
           <Route path="/settings/userleavedetails:id" element={<UserLeaveDetails />} />
           <Route path="/download:id" element={<Downloadslip />} />
-         
-          
         </Routes>
       </SideBar>
     </Router>
