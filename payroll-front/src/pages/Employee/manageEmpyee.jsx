@@ -6,6 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
 import utils from "./../utils"
+import host from "./../utils";
 const ManageEmpyee = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +23,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://192.168.29.146:7071/emp/get_employ")
+      .fetch(`${host}/emp/get_employ`)
       .then((res) => {
         return res.json();
       })
