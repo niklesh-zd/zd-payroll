@@ -7,6 +7,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
 import utils from "./../utils"
+import host from "./../utils";
 const ManageEmpyee = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");

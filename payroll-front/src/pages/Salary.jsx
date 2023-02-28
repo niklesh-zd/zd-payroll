@@ -21,6 +21,7 @@ function Salary() {
     let salaryMonth = event.target.value;
     let yearStr = salaryMonth.substring(0, 4); 
     let monthStr = salaryMonth.substring(4);
+    console.log("salaryMonth", salaryMonth);
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
@@ -31,20 +32,6 @@ function Salary() {
   };
 
   const getPreviousMonths = () => {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
 
     let currentDate = new Date();
     let previousMonths = [];
@@ -261,10 +248,10 @@ function Salary() {
                         {prevMonths.map((month) => {
                           return (
                             <option
-                              key={month.format_1}
-                              value={month.year + month.month}
+                              key={month.format1}
+                              value={month.year + month.monthNumber}
                             >
-                              {month.format_1}
+                              {month.format1}
                             </option>
                           );
                         })}

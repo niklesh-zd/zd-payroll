@@ -110,7 +110,6 @@ function LeaveDetails() {
         let responseArr = response.data.msg;
         console.log("responseArr", responseArr);
         responseArr.map((e) => {
-          console.log("e", e);
           e.result.map((w) => {
             filteredObj = {
               First_Name: w.First_Name,
