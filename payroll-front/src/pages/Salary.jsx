@@ -284,7 +284,8 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Download_slip"
+                        // value="Download_slip"
+                        value="Generated"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>
