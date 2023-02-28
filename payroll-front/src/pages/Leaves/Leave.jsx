@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { TiArrowBack } from "react-icons/ti";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoArrowBackCircle } from "react-icons/io5";
-
+import host from "./../utils"
 const Leaves = () => {
   let navigate = useNavigate();
   const toDateInputRef = useRef(null);
@@ -31,7 +32,7 @@ const Leaves = () => {
 
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch(`${host}/emp/get_employ`)
       .then((res) => {
         return res.json();
       })
@@ -61,7 +62,7 @@ const Leaves = () => {
     e.preventDefault();
     console.log("0000");
     axios
-      .post("http://localhost:7071/Emp_Leave/leave", leavesData)
+      .post(`${host}/Emp_Leave/leave`, leavesData)
       .then((response) => {
         console.log("success", response.data.success);
         if (response.data.success) {
@@ -80,21 +81,19 @@ const Leaves = () => {
         console.error("There was an error!", error);
       });
   };
-  
+
 
 
 
   return (
     <div>
-      <Link to="/settings/leavedetails">
-        <button className="btn mr-2 ms-md-5">
-          <IoArrowBackCircle size={25} />
-        </button>
-      </Link>
       <div className="offset-lg-2 col-lg-8">
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>
-          <div className="card p-10">
+          <div className="card m-5 p-3">
+            <Link to="/settings/leavedetails">
+              <TiArrowBack size={25} />
+            </Link>
             <div className="card-title" style={{ textAlign: "center" }}>
               <h2 className="text-red-900">Apply Leave</h2>
             </div>

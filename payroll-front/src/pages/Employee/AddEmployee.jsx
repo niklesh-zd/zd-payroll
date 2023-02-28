@@ -6,7 +6,8 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TiArrowBack } from "react-icons/ti";
+import host from "./../utils"
+import {TiArrowBack} from "react-icons/ti"
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -14,6 +15,9 @@ function AddEmployee(props) {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const [inputValue, setInputValue] = useState("");
+  const [adharerrors, setEdharerrors] = useState('');
+  const [panerrors, setPanerrors] = useState('');
+  const [emailerrors, setEmailerrors] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,33 +28,20 @@ function AddEmployee(props) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
-
   }
-
-
 
 
   console.log("fields", fields);
   const notify = (message) => {
-    toast(
-      message == "alredy exist ADHAR."
-        ? "Aadhar already exiest"
-        : message == "alredy exist PAN_NO."
-          ? "Pan Number already exiest"
-          : message == "alredy exist emails."
-            ? "Email already exiest"
-            : null,
-      {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
+    if(message == "alredy exist ADHAR."){
+      setEdharerrors(message)
+    }
+    if(message == "alredy exist PAN_NO."){
+      setPanerrors(message)
+    }
+    if(message == "alredy exist emails."){
+      setEmailerrors(message)
+    }
   };
   function submituserRegistrationForm(e) {
     e.preventDefault();
@@ -58,7 +49,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/add_employ", fields)
+        .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
           console.log("success", response.data.message);
           if (response.data.message == "Success ") {
@@ -85,7 +76,7 @@ function AddEmployee(props) {
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
       axios
-        .post("http://localhost:7071/emp/update/" + props.data._id, fields)
+        .post(`${host}/emp/update/` + props.data._id, fields)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -293,7 +284,7 @@ function AddEmployee(props) {
                         value={fields.email}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{errors.email}</div>
+                      <div className="errorMsg">{emailerrors ? 'Email id is' + ' ' + emailerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -403,7 +394,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          defaultChecked={fields.gender == "Male"}
+                          checked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -411,7 +402,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          defaultChecked={fields.gender == "Female"}
+                          checked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -429,7 +420,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          defaultChecked={fields.Marital_Status == "Single"}
+                          checked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -437,7 +428,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          defaultChecked={fields.Marital_Status == "Married"}
+                          checked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -492,7 +483,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Pan Number"
                       ></input>
-                      <div className="errorMsg">{errors.PAN_No}</div>
+                      <div className="errorMsg">{panerrors ?'Pan No. is' + ' ' + panerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -506,7 +497,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Aadhar"
                       ></input>
-                      <div className="errorMsg">{errors.ADHAR}</div>
+                      <div className="errorMsg">{adharerrors ?'Aadhar No. is' + ' ' + adharerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                 </div>
@@ -532,12 +523,13 @@ function AddEmployee(props) {
                       <label>Effective Date</label>
                       <input
                         type="date"
-                        name="Effective-date"
+                        name="effective_date"
+                        value={fields.effective_date}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Efffective Date"
                       ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
+                      <div className="errorMsg">{errors.effective_date}</div>
                     </div>
                   </div>
                 </div>

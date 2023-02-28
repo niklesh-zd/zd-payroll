@@ -2,11 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Downloadslip from "./Salary_slip/downloadslip";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
-  console.log("id----", id);
+  let navigate = useNavigate()
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
   const [switchToDownload, setSwitchToDownload] = useState(false);
@@ -21,39 +21,31 @@ function Salary() {
     let salaryMonth = event.target.value;
     let yearStr = salaryMonth.substring(0, 4); 
     let monthStr = salaryMonth.substring(4);
+    console.log("salaryMonth", salaryMonth);
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
+
+
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
 
   const getPreviousMonths = () => {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
 
     let currentDate = new Date();
     let previousMonths = [];
 
     for (let i = 0; i < 12; i++) {
       let date = new Date(currentDate);
-      date.setMonth(date.getMonth() - i);
+      let monthNames
+      date.setMonth(date.getMonth() - i - 1);
       let month = monthNames[date.getMonth()];
+      console.log('mont--------h =',month);
       let year = date.getFullYear();
+
       let format1 = `${month} ${year}`;
-      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 2;
       previousMonths.push({
         format_1: format1,
         year: year.toString(),
@@ -63,9 +55,19 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
+
+
+
+
   function handlesubmit(e) {
     e.preventDefault();
-    setSwitchToDownload(true);
+    navigate("/download" + id, {
+      state: {
+        salaryYear: salaryYear,
+        salaryMonthNumber: salaryMonthNumber,
+        fields: fields,
+      },
+    });
   }
 
   useEffect(() => {
@@ -169,8 +171,8 @@ function Salary() {
                           // value={fields.First_Name}
                           // onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
+                        
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
@@ -188,7 +190,7 @@ function Salary() {
                           // value={fields.First_Name}
                           // onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
+                         
                         </div>
                       </div>
                     </div>
@@ -208,7 +210,7 @@ function Salary() {
                           // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -227,7 +229,7 @@ function Salary() {
                           // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -253,10 +255,10 @@ function Salary() {
                         {prevMonths.map((month) => {
                           return (
                             <option
-                              key={month.format_1}
-                              value={month.year + month.month}
+                              key={month.format1}
+                              value={month.year + month.monthNumber}
                             >
-                              {month.format_1}
+                              {month.format1}
                             </option>
                           );
                         })}
@@ -269,7 +271,7 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Generate"
+                        value="Download_slip"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>

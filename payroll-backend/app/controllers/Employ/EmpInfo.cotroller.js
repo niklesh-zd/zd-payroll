@@ -2,7 +2,6 @@
 const express = require("express");
 const { findOne } = require("../../models/Employ/Employ.model");
 const EmpInfoModal = require('../../models/Employ/Employ.model');
-const DeleteEmpInfo = require('../../models/Employ/DeleteEmployee')
 const { validationResult } = require('express-validator/check');
 
 const ObjectId = require("mongodb").ObjectId;

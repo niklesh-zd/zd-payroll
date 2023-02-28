@@ -1,53 +1,77 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams,Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
-import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 import { MdDownload } from "react-icons/md";
-import Salary from "../Salary";
-const Downloadslip = (props) => {
-  console.log("props", props);
-  const salaryYear = props.year;
-  const salaryMonthNumber = props.month;
+import host from "../utils";
+
+const Downloadslip = () => {
+  let location = useLocation();
+  const salaryYear = location.state.salaryYear;
+  const salaryMonthNumber = location.state.salaryMonthNumber;
+  const data = location.state.fields;
+
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
+  var allMonthsName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   useEffect(() => {
     axios
       .post(
-        `http://localhost:7071/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`
+        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
       )
       .then((response) => {
         console.log("response", response.data);
         if (response.data.success) {
           setFields(response.data.salary);
           setIsLoading(false);
-          return response.data.salary
+          return response.data.salary;
         } else {
           setFields(response.data);
           setIsLoading(false);
-          return response.data
+          return response.data;
         }
       })
       .then((response) => {
-        const element = document.getElementById("pdf-download");
-        html2pdf(element, {
-          margin: 0,
-          filename: `${response.Employee_name}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 5 },
-          jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
-        });
+        if (response) {
+          const element = document.getElementById("pdf-download");
+          html2pdf(element, {
+            margin: 0,
+            filename: `${response.Employee_name}_${allMonthsName[fields.Salary_Slip_Month]
+              }.pdf`,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 5 },
+            jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
+          });
+        }
       })
       .catch((err) => {
         console.log("Somthing Went Wrong", err);
       });
   }, []);
 
+  const Navigate = () =>{
+    navigate('/settings/salary' + id)
+  }
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {
@@ -57,17 +81,19 @@ const Downloadslip = (props) => {
       html2canvas: { scale: 5 },
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
-  }
+  };
   return (
     <div>
       <div className="btn float-end text-primary">
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
-      <Link to="/settings/salary:id" className="btn text-dark">
-        <TiArrowBack size={30} />
-      </Link>
+      <div  className="btn text-dark">
+        <TiArrowBack onClick={Navigate} size={30} />
+      </div>
       <div className="container">
         <div>
+
+
           <form
             className="my-2"
             id="pdf-download"
@@ -94,7 +120,7 @@ const Downloadslip = (props) => {
                   <h3 className="fw-bold" style={{ color: "#368bb5" }}>
                     ZecData
                   </h3>
-                  <h5 className="fw-bold text-dark p-2">
+                  <h5 className="fw-bold text-dark">
                     Payment slip for the month of
                     {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
                   </h5>
@@ -139,7 +165,7 @@ const Downloadslip = (props) => {
                         <small>{fields.Leave_balence}</small>
                       </div>
                     </div>
-                    <div className="row mt-1 p-2">
+                    <div className="row mt-2">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave Taken </span>
                       </div>
@@ -199,7 +225,7 @@ const Downloadslip = (props) => {
                         <small>{fields.Present_day}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="row mt-3">
                       <div className="col-md-6">
                         <span className="fw-bolder">Total Paid Days</span>
                       </div>
@@ -303,11 +329,12 @@ const Downloadslip = (props) => {
                   This is computer generated copy not need to stamp and sign
                 </span>
               </div>
+
             )}
           </form>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 export default Downloadslip;

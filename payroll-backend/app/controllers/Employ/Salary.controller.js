@@ -135,6 +135,12 @@ class Salary {
             else{
                 return res.send({message : "api is in progress for this condition"})
             }
+            var userid 
+            const date = new Date();
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const currentMonthName = monthNames[date.getMonth()];
+            console.log(currentMonthName);
+            const user_id = await SalaryModal.findOne({ userid: userid })
 
             // else{
 

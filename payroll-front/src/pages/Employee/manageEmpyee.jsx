@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaRupeeSign } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
@@ -6,6 +7,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
 import utils from "./../utils"
+import host from "./../utils";
 const ManageEmpyee = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +24,7 @@ const ManageEmpyee = () => {
   };
   useEffect(() => {
     window
-      .fetch("http://localhost:7071/emp/get_employ")
+      .fetch(`${host}/emp/get_employ`)
       .then((res) => {
         return res.json();
       })
@@ -106,15 +108,15 @@ const ManageEmpyee = () => {
           >
             <CgMoreO />
           </span>
-          <span
-            className="btn btn-sm btn-success"
-            style={{ padding: "2px" }}
+          <p
+          style={{marginBottom: '-0px'}}
+            className="btn btn-sm btn-primary d-flex "
             onClick={() => {
               generateSalary(row._id);
             }}
           >
-            Receipt
-          </span>
+            Payslip
+        </p>
         </>
       ),
 
