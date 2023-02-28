@@ -15,6 +15,8 @@ function AddEmployee(props) {
   const [errors, setErrors] = useState({});
   const [inputValue, setInputValue] = useState("");
   const [adharerrors, setEdharerrors] = useState('');
+  const [panerrors, setPanerrors] = useState('');
+  const [emailerrors, setEmailerrors] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,30 +27,18 @@ function AddEmployee(props) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
-
   }
 
   const notify = (message) => {
-    setEdharerrors(message)
-    toast(
-      message == "alredy exist ADHAR."
-        ? "Aadhar already exiest"
-        : message == "alredy exist PAN_NO."
-          ? "Pan Number already exiest"
-          : message == "alredy exist emails."
-            ? "Email already exiest"
-            : null,
-      {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
+    if(message == "alredy exist ADHAR."){
+      setEdharerrors(message)
+    }
+    if(message == "alredy exist PAN_NO."){
+      setPanerrors(message)
+    }
+    if(message == "alredy exist emails."){
+      setEmailerrors(message)
+    }
   };
   function submituserRegistrationForm(e) {
     e.preventDefault();
@@ -289,7 +279,7 @@ function AddEmployee(props) {
                         value={fields.email}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
+                      <div className="errorMsg">{emailerrors ? 'Email id is' + ' ' + emailerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -492,7 +482,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Pan Number"
                       ></input>
-                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
+                      <div className="errorMsg">{panerrors ?'Pan No. is' + ' ' + panerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -506,7 +496,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Aadhar"
                       ></input>
-                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
+                      <div className="errorMsg">{adharerrors ?'Aadhar No. is' + ' ' + adharerrors.slice(0,12): ''}</div>
                     </div>
                   </div>
                 </div>
