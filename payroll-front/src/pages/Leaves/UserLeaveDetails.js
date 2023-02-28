@@ -81,7 +81,7 @@ function UserLeaveDetails() {
   useEffect(() => {
     axios
       .post(
-        `${utils}/Emp_Leave/get_User_leave/?id=${id}&from_date=${firstDay}&to_date=${lastDay}`
+        `${host}/Emp_Leave/get_User_leave/?id=${id}&from_date=${firstDay}&to_date=${lastDay}`
       )
       .then((response) => {
         console.log(response);
