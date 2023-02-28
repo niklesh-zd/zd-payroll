@@ -24,6 +24,8 @@ function Salary() {
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
+
+
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
@@ -49,11 +51,13 @@ function Salary() {
 
     for (let i = 0; i < 12; i++) {
       let date = new Date(currentDate);
-      date.setMonth(date.getMonth() - i);
+      date.setMonth(date.getMonth() - i - 1);
       let month = monthNames[date.getMonth()];
+      console.log('mont--------h =',month);
       let year = date.getFullYear();
+
       let format1 = `${month} ${year}`;
-      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 1;
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 2;
       previousMonths.push({
         format_1: format1,
         year: year.toString(),
@@ -63,6 +67,10 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
+
+
+
+
   function handlesubmit(e) {
     e.preventDefault();
     setSwitchToDownload(true);
@@ -269,7 +277,7 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Generate"
+                        value="Download_slip"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>

@@ -4,7 +4,6 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
-import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 import { MdDownload } from 'react-icons/md';
 
@@ -66,14 +65,17 @@ var data
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
   }
+  const Navigate = () => {
+    navigate("/settings/salary" + id);
+  };
   return (
     <div>
       <div className="btn float-end text-primary">
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
-      <Link to="/settings/salary:id" className="btn text-dark">
-        <TiArrowBack size={30} />
-      </Link>
+      <div  className="btn text-dark">
+        <TiArrowBack onClick={Navigate} size={30} />
+      </div>
       <div className="container">
         <div>
 
@@ -149,7 +151,7 @@ var data
                         <small>{fields.Leave_balence}</small>
                       </div>
                     </div>
-                    <div className="row mt-1 p-2">
+                    <div className="row mt-2">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave Taken </span>
                       </div>
@@ -209,7 +211,7 @@ var data
                         <small>{fields.Present_day}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="row mt-3">
                       <div className="col-md-6">
                         <span className="fw-bolder">Total Paid Days</span>
                       </div>
