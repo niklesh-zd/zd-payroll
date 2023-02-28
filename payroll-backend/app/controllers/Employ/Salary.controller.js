@@ -59,6 +59,12 @@ class Salary {
             for(let i = 0; i < findLeave.length; i++){
                 leave_taken += findLeave[i].total_number_of_day
             }
+            var userid 
+            const date = new Date();
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const currentMonthName = monthNames[date.getMonth()];
+            console.log(currentMonthName);
+            const user_id = await SalaryModal.findOne({ userid: userid })
 
             var working_days = Number(month_array[moment().month()]) - holiday.length
             var balance_days = 1 - leave_taken

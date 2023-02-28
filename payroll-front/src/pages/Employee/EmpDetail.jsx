@@ -4,7 +4,7 @@ import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
-import utils from "./../utils"
+import host from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
 
 const EmpDetail = () => {
