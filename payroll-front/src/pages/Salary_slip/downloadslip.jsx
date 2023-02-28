@@ -9,7 +9,7 @@ import { TiArrowBack } from "react-icons/ti";
 import host from "../utils";
 
 const Downloadslip = () => {
-  
+
   let location = useLocation();
   const salaryYear = location.state.salaryYear;
   const salaryMonthNumber = location.state.salaryMonthNumber;
@@ -63,7 +63,7 @@ const Downloadslip = () => {
           html2pdf(element, {
             margin: 0,
             filename: `${response.Employee_name}_${
-              allMonthsName[fields.Salary_Slip_Month]
+              allMonthsName[response.Salary_Slip_Month]
             }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
