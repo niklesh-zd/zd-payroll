@@ -25,10 +25,7 @@ function AddEmployee(props) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
-
   }
-
-
 
 
   console.log("fields", fields);
@@ -408,7 +405,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          defaultChecked={fields.gender == "Male"}
+                          checked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -416,7 +413,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          defaultChecked={fields.gender == "Female"}
+                          checked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -434,7 +431,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          defaultChecked={fields.Marital_Status == "Single"}
+                          checked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -442,7 +439,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          defaultChecked={fields.Marital_Status == "Married"}
+                          checked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -537,12 +534,13 @@ function AddEmployee(props) {
                       <label>Effective Date</label>
                       <input
                         type="date"
-                        name="Effective-date"
+                        name="effective_date"
+                        value={fields.effective_date}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Efffective Date"
                       ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
+                      <div className="errorMsg">{errors.effective_date}</div>
                     </div>
                   </div>
                 </div>

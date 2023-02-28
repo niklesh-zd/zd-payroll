@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import AddEmployee from "./AddEmployee";
-import utils from "./../utils"
 import host from "./../utils";
 const Empedit = () => {
     const { id } = useParams();

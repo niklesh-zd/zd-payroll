@@ -2,11 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Downloadslip from "./Salary_slip/downloadslip";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
-  console.log("id----", id);
+  let navigate = useNavigate()
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({});
   const [switchToDownload, setSwitchToDownload] = useState(false);

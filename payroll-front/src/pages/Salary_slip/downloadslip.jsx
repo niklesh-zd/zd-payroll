@@ -6,10 +6,10 @@ import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
+import { MdDownload } from "react-icons/md";
 import host from "../utils";
 
 const Downloadslip = () => {
-
   let location = useLocation();
   const salaryYear = location.state.salaryYear;
   const salaryMonthNumber = location.state.salaryMonthNumber;
@@ -20,6 +20,20 @@ const Downloadslip = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [fields, setFields] = useState({});
+  var allMonthsName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   useEffect(() => {
     axios
@@ -31,11 +45,11 @@ const Downloadslip = () => {
         if (response.data.success) {
           setFields(response.data.salary);
           setIsLoading(false);
-          return response.data.salary
+          return response.data.salary;
         } else {
           setFields(response.data);
           setIsLoading(false);
-          return response.data
+          return response.data;
         }
       })
       .then((response) => {
@@ -66,7 +80,7 @@ const Downloadslip = () => {
       html2canvas: { scale: 5 },
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
-  }
+  };
   return (
     <div>
       <div className="btn float-end text-primary">
