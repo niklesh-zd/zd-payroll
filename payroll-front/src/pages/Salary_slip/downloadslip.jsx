@@ -7,11 +7,22 @@ import { RotatingLines } from "react-loader-spinner";
 import { TiArrowBack } from "react-icons/ti";
 import { MdDownload } from 'react-icons/md';
 
+<<<<<<< HEAD
 import utils from "./../utils"
 const Downloadslip = (props) => {
   console.log("props", props);
   const salaryYear = props.year;
   const salaryMonthNumber = props.month;
+=======
+const Downloadslip = () => {
+
+  let location = useLocation();
+  const salaryYear = location.state.salaryYear;
+  const salaryMonthNumber = location.state.salaryMonthNumber;
+  const data = location.state.fields;
+
+  const navigate = useNavigate();
+>>>>>>> 791010fb2b167990f13af18ab663f8ead698a6b5
 
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
