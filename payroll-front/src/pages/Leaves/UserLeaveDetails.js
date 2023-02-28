@@ -4,8 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import host from "../utils";
-
+import host from "./../utils"
 
 
 function UserLeaveDetails() {

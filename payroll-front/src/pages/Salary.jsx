@@ -25,33 +25,40 @@ function Salary() {
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
+
+
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
 
   const getPreviousMonths = () => {
-    const currentDate = new Date(); // get the current date
-    const previousMonths = []; // initialize an empty array to hold the month objects
 
-    for (let i = 1; i <= 12; i++) {
-      const prevMonth = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() - i,
-        1
-      );
-      const monthObj = {
-        format1:
-          prevMonth.toLocaleString("default", { month: "short" }) +
-          " " +
-          prevMonth.getFullYear(),
-        year: prevMonth.getFullYear().toString(),
-        monthNumber: ("0" + (prevMonth.getMonth() + 1)).slice(-2) - 1,
-      };
-      previousMonths.push(monthObj);
+    let currentDate = new Date();
+    let previousMonths = [];
+
+    for (let i = 0; i < 12; i++) {
+      let date = new Date(currentDate);
+      let monthNames
+      date.setMonth(date.getMonth() - i - 1);
+      let month = monthNames[date.getMonth()];
+      console.log('mont--------h =',month);
+      let year = date.getFullYear();
+
+      let format1 = `${month} ${year}`;
+      let monthNumber = ("0" + (date.getMonth() + 1)).slice(-2) - 2;
+      previousMonths.push({
+        format_1: format1,
+        year: year.toString(),
+        month: monthNumber,
+      });
     }
     setPrevMonths(previousMonths);
     return previousMonths;
   };
+
+
+
+
   function handlesubmit(e) {
     e.preventDefault();
     navigate("/download" + id, {
@@ -164,8 +171,8 @@ function Salary() {
                           // value={fields.First_Name}
                           // onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
+                        
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
@@ -183,7 +190,7 @@ function Salary() {
                           // value={fields.First_Name}
                           // onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
+                         
                         </div>
                       </div>
                     </div>
@@ -203,7 +210,7 @@ function Salary() {
                           // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -222,7 +229,7 @@ function Salary() {
                           // onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -264,7 +271,7 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Generate"
+                        value="Download_slip"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>

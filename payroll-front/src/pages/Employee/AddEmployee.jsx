@@ -6,8 +6,8 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { TiArrowBack } from "react-icons/ti";
-import host from "../utils";
+import utils from "./../utils"
+import {TiArrowBack} from "react-icons/ti"
 
 function AddEmployee(props) {
   const dobDateInputRef = useRef(null);
@@ -15,6 +15,7 @@ function AddEmployee(props) {
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const [inputValue, setInputValue] = useState("");
+  const [adharerrors, setEdharerrors] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function AddEmployee(props) {
 
   console.log("fields", fields);
   const notify = (message) => {
+    setEdharerrors(message)
     toast(
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
@@ -291,7 +293,7 @@ function AddEmployee(props) {
                         value={fields.email}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{errors.email}</div>
+                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -494,7 +496,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Pan Number"
                       ></input>
-                      <div className="errorMsg">{errors.PAN_No}</div>
+                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -508,7 +510,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Aadhar"
                       ></input>
-                      <div className="errorMsg">{errors.ADHAR}</div>
+                      <div className="errorMsg">{adharerrors.slice(0,12)}</div>
                     </div>
                   </div>
                 </div>
