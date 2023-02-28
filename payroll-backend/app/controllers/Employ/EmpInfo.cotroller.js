@@ -2,7 +2,6 @@
 const express = require("express");
 const { findOne } = require("../../models/Employ/Employ.model");
 const EmpInfoModal = require('../../models/Employ/Employ.model');
-const DeleteEmpInfo = require('../../models/Employ/DeleteEmployee')
 const { validationResult } = require('express-validator/check');
 
 const ObjectId = require("mongodb").ObjectId;
@@ -218,7 +217,7 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                // base_salary : [{salary_ : base_salary, effective_date : effective_date}],
+                // base_salary : [{salary_ : base_salary, effective_date : Eeffective_date}],
                 $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
                 ADHAR,
                 Bank_No,
@@ -231,8 +230,7 @@ class Emp {
                 PERCENTAGE_OF_MARKS,
                 permanent_pin_code,
                 current_pin_code,
-                YEAR_OF_PASSING,
-                effective_date: effective_date                
+                YEAR_OF_PASSING,               
             }
             ).sort({ _id: -1 })
             .then(data => {

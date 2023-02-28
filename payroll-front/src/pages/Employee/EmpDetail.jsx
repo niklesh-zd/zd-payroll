@@ -4,9 +4,9 @@ import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
-import { IoArrowBackCircle } from "react-icons/io5";
-import { TiArrowBack } from "react-icons/ti";
-import host from "../utils";
+import host from "./../utils"
+import {TiArrowBack} from "react-icons/ti"
+
 const EmpDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -32,6 +32,9 @@ const EmpDetail = () => {
         console.log(err.message);
       });
   }, []);
+  // const leaveNavigate = () => {
+  //   navigate("/settings/userleavedetails" + id);
+  // };
   const img = emo
   const Removefunction = () => {
     Swal.fire({
@@ -102,9 +105,8 @@ const EmpDetail = () => {
                   </button>
                 </div>
               </div>
-            </div>
-
             {/* <img alt="Profile-Pic" src={img} style={{ width: '9rem' }} className="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-4" width="180" /> */}
+            </div>
             <div className="container">
               <div className="d-flex d-flex-row align-items-center">
                 <div className="media-body">

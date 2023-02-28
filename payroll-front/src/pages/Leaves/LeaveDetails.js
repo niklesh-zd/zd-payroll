@@ -1,12 +1,11 @@
 import axios from "axios";
+import { TiArrowBack } from "react-icons/ti";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { FaBackward } from "react-icons/fa";
-import host from "../utils";
-
+import host from "./../utils"
 function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
@@ -137,14 +136,19 @@ function LeaveDetails() {
   }, []);
   const filteredData = empLeaveData.filter((row) => {
     return (
-      row.First_Name.toLowerCase().includes(searchTerm.toLowerCase()) 
+      row.First_Name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
   console.log("----", empLeaveData);
   return (
     <div>
+
+      <Link
+        to="/settings/manageprofile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <div>
-      
+
         <div className="ml-5 mr-5">
           <DataTable
             title={
@@ -156,13 +160,13 @@ function LeaveDetails() {
                 }}
               >
                 <div style={{ display: "flex" }}>
-                <h4>Leaves Details</h4>{" "}
+                  <h4>Leaves Details</h4>{" "}
                   <Link
-                  to="/settings/leave"
-                  className="btn btn-primary btn-sm ml-5 mr-5"
-                >
-                  Add Leave (+)
-                </Link>
+                    to="/settings/leave"
+                    className="btn btn-primary btn-sm ml-5 mr-5"
+                  >
+                    Add Leave (+)
+                  </Link>
                 </div>
                 <div>
                   <input

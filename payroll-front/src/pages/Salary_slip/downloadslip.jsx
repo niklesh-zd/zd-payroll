@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams,Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import { RotatingLines } from "react-loader-spinner";
-import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 import { MdDownload } from "react-icons/md";
 import host from "../utils";
@@ -12,7 +11,7 @@ import host from "../utils";
 const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = Number(location.state.salaryYear);
-  const salaryMonthNumber = Number(location.state.salaryMonthNumber);
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber) + 1;
   const data = location.state.fields;
 
   const navigate = useNavigate();
@@ -57,9 +56,8 @@ const Downloadslip = () => {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${
-              allMonthsName[response.Salary_Slip_Month]
-            }.pdf`,
+            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month]
+              }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
             jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
@@ -71,6 +69,9 @@ const Downloadslip = () => {
       });
   }, []);
 
+  const Navigate = () =>{
+    navigate('/settings/salary' + id)
+  }
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {
@@ -86,11 +87,11 @@ const Downloadslip = () => {
       <div className="btn float-end text-primary">
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
-      <Link to="/settings/salary:id" className="btn text-dark">
         <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
-      </Link>
       <div className="container">
         <div>
+
+
           <form
             className="my-2"
             id="pdf-download"
@@ -117,7 +118,7 @@ const Downloadslip = () => {
                   <h3 className="fw-bold" style={{ color: "#368bb5" }}>
                     ZecData
                   </h3>
-                  <h5 className="fw-bold text-dark p-2">
+                  <h5 className="fw-bold text-dark">
                     Payment slip for the month of
                     {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
                   </h5>
@@ -162,7 +163,7 @@ const Downloadslip = () => {
                         <small>{fields.Leave_balence}</small>
                       </div>
                     </div>
-                    <div className="row mt-1 p-2">
+                    <div className="row mt-2">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave Taken </span>
                       </div>
@@ -175,7 +176,7 @@ const Downloadslip = () => {
                         <span className="fw-bolder">Balance Days</span>
                       </div>
                       <div className="col-md-7">
-                        <small>1</small>
+                        <small>{fields.Balence_days}</small>
                       </div>
                     </div>
                   </div>
@@ -222,7 +223,7 @@ const Downloadslip = () => {
                         <small>{fields.Present_day}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="row mt-3">
                       <div className="col-md-6">
                         <span className="fw-bolder">Total Paid Days</span>
                       </div>
@@ -326,11 +327,12 @@ const Downloadslip = () => {
                   This is computer generated copy not need to stamp and sign
                 </span>
               </div>
+
             )}
           </form>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 export default Downloadslip;

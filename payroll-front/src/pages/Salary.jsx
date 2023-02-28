@@ -38,7 +38,7 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-
+  // var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const getPreviousMonths = () => {
     const currentDate = new Date(); // get the current date
     const previousMonths = []; // initialize an empty array to hold the month objects
@@ -62,6 +62,7 @@ function Salary() {
     setPrevMonths(previousMonths);
     return previousMonths;
   };
+
   function handlesubmit(e) {
     e.preventDefault();
     navigate("/download" + id, {
@@ -174,8 +175,8 @@ function Salary() {
                           value={fields.arrear}
                           onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
+                        
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
@@ -193,7 +194,7 @@ function Salary() {
                           value={fields.additional}
                           onChange={(e) => handleChange(e)}
                           />
-                          {/* <div className="errorMsg">{errors.First_Name}</div> */}
+                         
                         </div>
                       </div>
                     </div>
@@ -213,7 +214,7 @@ function Salary() {
                           onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -232,7 +233,7 @@ function Salary() {
                           onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
-                            {/* {errors.Current_Address} */}
+                            {/ {errors.Current_Address} /}
                           </div>
                         </div>
                       </div>
@@ -274,7 +275,7 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Generate"
+                        value="Download_slip"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>
