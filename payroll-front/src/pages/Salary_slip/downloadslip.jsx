@@ -11,8 +11,8 @@ import host from "../utils";
 
 const Downloadslip = () => {
   let location = useLocation();
-  const salaryYear = location.state.salaryYear;
-  const salaryMonthNumber = location.state.salaryMonthNumber;
+  const salaryYear = Number(location.state.salaryYear);
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber);
   const data = location.state.fields;
 
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ const Downloadslip = () => {
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
       <Link to="/settings/salary:id" className="btn text-dark">
-        <TiArrowBack size={30} />
+        <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
       </Link>
       <div className="container">
         <div>

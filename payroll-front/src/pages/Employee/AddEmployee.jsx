@@ -4,12 +4,14 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TiArrowBack } from "react-icons/ti";
 import host from "../utils";
 
 function AddEmployee(props) {
+  console.log("props", props);
+  var propsObject = props.data;
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
@@ -18,8 +20,19 @@ function AddEmployee(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    props.data && setFields(props.data);
-  }, [props.data]);
+    if (propsObject && propsObject !== {} && propsObject !== undefined) {
+      const lastIndex = propsObject.base_salary_list?.length - 1;
+      const effective_date = new Date(
+        propsObject.base_salary_list[lastIndex].effective_date
+      ).toLocaleDateString("en-CA");
+      propsObject = {
+        base_salary: propsObject.base_salary_list[lastIndex].salary_,
+        effective_date: effective_date,
+        ...propsObject,
+      };
+      propsObject && setFields(propsObject);
+    }
+  }, [propsObject]);
 
   function handleChange(e) {
     let fieldObj = { ...fields };
@@ -27,17 +40,16 @@ function AddEmployee(props) {
     setFields(fieldObj);
   }
 
-
   console.log("fields", fields);
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-          ? "Pan Number already exiest"
-          : message == "alredy exist emails."
-            ? "Email already exiest"
-            : null,
+        ? "Pan Number already exiest"
+        : message == "alredy exist emails."
+        ? "Email already exiest"
+        : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -125,28 +137,31 @@ function AddEmployee(props) {
 
   const handleInput = (event) => {
     const { value, selectionStart, selectionEnd } = event.target;
-    const sanitizedValue = value.replace(/[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g, "");
+    const sanitizedValue = value.replace(
+      /[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g,
+      ""
+    );
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
   return (
     <div className="">
-      <Link
-        to="/settings/manageprofile" className="btn text-dark">
+      <Link to="/settings/manageprofile" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <form style={{ display: "flex" }}>
+        <ToastContainer />
         <div className="px-4 pt-5">
           <div className="row gx-12">
             <div className="col-4 edit_information">
               <div className="Account-details">
                 <h5 className="text-left"> Personal Details</h5>
                 <hr style={{ margin: "0px" }} />
-                {props.data ? ( 
-                  <div className ="row">
-                    <div className ="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div className ="form-group">
-                        <label className ="profile_details_text">
+                {props.data ? (
+                  <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div className="form-group">
+                        <label className="profile_details_text">
                           Employee Code
                         </label>
                         <input
@@ -166,9 +181,7 @@ function AddEmployee(props) {
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label className="profile_details_text">
-                        First Name
-                      </label>
+                      <label className="profile_details_text">First Name</label>
                       <input
                         pattern="[a-zA-Z0-9\s]*"
                         onInput={handleInput}
@@ -187,9 +200,7 @@ function AddEmployee(props) {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div className="form-group">
-                      <label className="profile_details_text">
-                        Last Name{" "}
-                      </label>
+                      <label className="profile_details_text">Last Name </label>
                       <input
                         type="text"
                         name="Last_Name"
@@ -513,7 +524,6 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label>Base Salary</label>
@@ -675,7 +685,6 @@ function AddEmployee(props) {
             </div>
 
             <div className="col-4 edit_information">
-
               <div className="Account-details">
                 <h5 className="text-left">Address Details</h5>{" "}
                 <hr style={{ margin: "0px" }} />

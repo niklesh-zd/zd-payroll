@@ -8,7 +8,12 @@ function Salary() {
   const { id } = useParams();
   let navigate = useNavigate()
   const [empdata, empdatachange] = useState({});
-  const [fields, setFields] = useState({});
+  const [fields, setFields] = useState({
+    arrear: 0,
+    additional: 0,
+    arrear_comment: "",
+    additional_comment: "",
+  });
   const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
@@ -25,6 +30,11 @@ function Salary() {
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
+  function handleChange(e) {
+    let fieldObj = { ...fields };
+    fieldObj[e.target.name] = e.target.value;
+    setFields(fieldObj);
+  }
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
@@ -156,13 +166,13 @@ function Salary() {
                           <input
                             type="text"
                             style={{ textTransform: "capitalize" }}
-                            name="arrs"
+                            name="arrear"
                             minLength="2"
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                          // value={fields.First_Name}
-                          // onChange={(e) => handleChange(e)}
+                          value={fields.arrear}
+                          onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -180,8 +190,8 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                          // value={fields.First_Name}
-                          // onChange={(e) => handleChange(e)}
+                          value={fields.additional}
+                          onChange={(e) => handleChange(e)}
                           />
                           {/* <div className="errorMsg">{errors.First_Name}</div> */}
                         </div>
@@ -195,12 +205,12 @@ function Salary() {
                           </label>
                           <textarea
                             className="form-control"
-                            name="arrs_comment"
+                            name="arrear_comment"
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          // value={fields.Current_Address}
-                          // onChange={(e) => handleChange(e)}
+                          value={fields.arrear_comment}
+                          onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}
@@ -218,8 +228,8 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          // value={fields.Current_Address}
-                          // onChange={(e) => handleChange(e)}
+                          value={fields.additional_comment}
+                          onChange={(e) => handleChange(e)}
                           ></textarea>
                           <div className="errorMsg">
                             {/* {errors.Current_Address} */}

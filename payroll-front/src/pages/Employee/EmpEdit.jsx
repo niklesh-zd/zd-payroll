@@ -4,7 +4,7 @@ import AddEmployee from "./AddEmployee";
 import host from "./../utils";
 const Empedit = () => {
     const { id } = useParams();
-    const [empdata, empdatachange] = useState({});
+    const [empdata, empdatachange] = useState();
   
     useEffect(() => {
         fetch(`${host}/emp/emp_1/` + id)
@@ -12,13 +12,17 @@ const Empedit = () => {
             return res.json()
           })
           .then((resp) => {
+            console.log('resp',resp);
             empdatachange(resp)
           })
           .catch((err) => {
             console.log(err.message)
           })
       }, [])
+      useEffect(()=>{
 
+        console.log('empdata',empdata);
+      },[empdata])
     return ( 
         empdata ?
         <AddEmployee data={empdata}/>
