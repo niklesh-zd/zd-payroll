@@ -20,7 +20,7 @@ const EmpDetail = () => {
   //   navigate("/settings/userleavedetails" + id);
   // };
   useEffect(() => {
-    fetch(`/emp/emp_1/` + id)
+    fetch(`${host}/emp/emp_1/` + id)
       .then((res) => {
         return res.json();
       })

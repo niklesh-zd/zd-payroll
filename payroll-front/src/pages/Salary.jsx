@@ -61,7 +61,13 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault();
-    setSwitchToDownload(true);
+    navigate("/download" + id, {
+      state: {
+        salaryYear: salaryYear,
+        salaryMonthNumber: salaryMonthNumber,
+        fields: fields,
+      },
+    });
   }
 
   useEffect(() => {

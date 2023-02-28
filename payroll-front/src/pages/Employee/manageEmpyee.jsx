@@ -109,6 +109,7 @@ const ManageEmpyee = () => {
             <CgMoreO />
           </span>
           <p
+          style={{marginBottom: '-0px'}}
             className="btn btn-sm btn-primary d-flex "
             onClick={() => {
               generateSalary(row._id);
