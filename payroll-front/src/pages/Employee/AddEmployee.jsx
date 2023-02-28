@@ -307,9 +307,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control small_date"
                         placeholder="Date of Birth"
-                        value={new Date(
-                          fields.date_of_birth
-                        ).toLocaleDateString("en-CA")}
+                        value={fields.date_of_birth}
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
@@ -336,9 +334,7 @@ function AddEmployee(props) {
                         name="date_of_joining"
                         className="form-control small_date"
                         placeholder="Date Of Joining"
-                        value={new Date(
-                          fields.date_of_joining
-                        ).toLocaleDateString("en-CA")}
+                        value={fields.date_of_joining}
                         onChange={(e) => handleChange(e)}
                       />
                     </div>
