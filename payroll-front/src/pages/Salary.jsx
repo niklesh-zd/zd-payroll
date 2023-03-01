@@ -4,6 +4,7 @@ import Downloadslip from "./Salary_slip/downloadslip";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
+import host from "./utils";
 function Salary() {
   const { id } = useParams();
   let navigate = useNavigate();
@@ -43,29 +44,38 @@ function Salary() {
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-  
-  const getPreviousMonths = () => {
-    const currentDate = new Date(); // get the current date
-    const previousMonths = []; // initialize an empty array to hold the month objects
 
-    for (let i = 1; i <= 12; i++) {
-      const prevMonth = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() - i,
-        1
-      );
-      const monthObj = {
-        format1:
-          prevMonth.toLocaleString("default", { month: "short" }) +
-          " " +
-          prevMonth.getFullYear(),
-        year: prevMonth.getFullYear().toString(),
-        monthNumber: ("0" + (prevMonth.getMonth() + 1)).slice(-2) - 1,
-      };
-      previousMonths.push(monthObj);
+  const getPreviousMonths = (empDetailObject) => {
+    const dateOfJoining = new Date(empDetailObject.Date_of_Joining);
+    const doj = dateOfJoining;
+    const current = new Date();
+    const startMonth = new Date(doj).getMonth();
+    const startYear = new Date(doj).getFullYear();
+    const endMonth = new Date(current).getMonth();
+    const endYear = new Date(current).getFullYear();
+    const months = [];
+
+    for (let year = endYear; year >= startYear; year--) {
+      const monthStart = year === endYear ? endMonth - 1 : 11;
+      const monthEnd = year === startYear ? startMonth : 0;
+      for (let month = monthStart; month >= monthEnd; month--) {
+        const format1 = new Date(year, month).toLocaleString("en-us", {
+          month: "short",
+          year: "numeric",
+        });
+        const monthNumber = month + 1;
+        months.push({ format1, year, monthNumber });
+        if (months.length >= 12) {
+          break;
+        }
+      }
+      if (months.length >= 12) {
+        break;
+      }
     }
-    setPrevMonths(previousMonths);
-    return previousMonths;
+    console.log("months", months);
+    setPrevMonths(months);
+    return months;
   };
 
   function handlesubmit(e) {
@@ -80,8 +90,7 @@ function Salary() {
   }
 
   useEffect(() => {
-    getPreviousMonths();
-    fetch("http://localhost:7071/emp/emp_1/" + id)
+    fetch(`${host}/emp/emp_1/` + id)
       .then((res) => {
         return res.json();
       })
@@ -99,6 +108,7 @@ function Salary() {
           Bank_IFSC_Code: resp.Bank_IFSC,
           base_salary: resp.base_salary,
         };
+        getPreviousMonths(obje);
         empdatachange(obje);
       })
       .catch((err) => {
@@ -170,7 +180,7 @@ function Salary() {
                         <div className="form-group">
                           <label className="profile_details_text">ARRS</label>
                           <input
-                            type="text"
+                            type="number"
                             style={{ textTransform: "capitalize" }}
                             name="arrear"
                             minLength="2"
@@ -264,8 +274,6 @@ function Salary() {
                     <div className="form-group">
                       <label>Select the month</label>
                       <select
-                        min="2"
-                        max="50"
                         name="Salary_Slip_Month_Year"
                         className="form-control "
                         value={selectedOption}
@@ -293,7 +301,7 @@ function Salary() {
                     <div className="form-group">
                       <input
                         type="submit"
-                        value="Download_slip"
+                        value="Download Slip"
                         className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
                       />
                     </div>

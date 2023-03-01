@@ -53,6 +53,7 @@ const Downloadslip = () => {
       })
       .then((response) => {
         if (response) {
+          console.log("reponse",response);
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
@@ -69,9 +70,7 @@ const Downloadslip = () => {
       });
   }, []);
 
-  const Navigate = () =>{
-    navigate('/settings/salary' + id)
-  }
+  console.log('fields',fields);
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {
@@ -120,7 +119,7 @@ const Downloadslip = () => {
                   </h3>
                   <h5 className="fw-bold text-dark">
                     Payment slip for the month of
-                    {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
+                    {" "+allMonthsName[fields.Salary_Slip_Month]} {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 
