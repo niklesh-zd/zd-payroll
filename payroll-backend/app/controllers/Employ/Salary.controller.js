@@ -90,7 +90,7 @@ class Salary {
                 console.log("====================================================")
                 const holiday = await HolidayModal.find({
                     holiday_date: { 
-                        $gte: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date, 
+                        $gte: req.query.year + "-" + req.query.month + '-01', 
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1] 
                     }
                 });
@@ -135,9 +135,9 @@ class Salary {
                 var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
                 var earned_ra = Math.round((gross_ra/ working_days) * total_paid_days)
                 var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
-                var net_pay_in_number = (salary_emp / working_days) * total_paid_days
-                net_pay_in_number = (Math.round(net_pay_in_number * 100) / 100) + Number(req.query.arrear) + Number(req.query.additional)
-                var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
+                var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.query.arrear) + Number(req.query.additional)
+                net_pay_in_number = Math.round(net_pay_in_number)
+                var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
 
                 console.log(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits)
                 console.log(earned_basic_da)
