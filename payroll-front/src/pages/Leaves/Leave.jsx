@@ -6,14 +6,13 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoArrowBackCircle } from "react-icons/io5";
-import host from "./../utils"
+import host from "./../utils";
 const Leaves = () => {
   let navigate = useNavigate();
   const toDateInputRef = useRef(null);
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
-
 
   const handleChange = (e) => {
     let leavesObj = { ...leavesData };
@@ -46,7 +45,7 @@ const Leaves = () => {
   }, []);
 
   const notify = (message) => {
-    toast("Leave already Taken On This Date!", {
+    toast(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -82,9 +81,6 @@ const Leaves = () => {
       });
   };
 
-
-
-
   return (
     <div>
       <div className="offset-lg-2 col-lg-8">
@@ -110,7 +106,7 @@ const Leaves = () => {
                     placeholder="Select Employee"
                     onChange={(e) => handleChange(e)}
                   >
-                    <option disabled={true} selected={true}>
+                    <option value="" disabled={true} selected={true}>
                       select Employee
                     </option>
                     {users.map((u) => {
