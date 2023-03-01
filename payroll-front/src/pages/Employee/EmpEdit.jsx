@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import AddEmployee from "./AddEmployee";
-import utils from "./../utils"
+import host from "./../utils";
 const Empedit = () => {
     const { id } = useParams();
-    const [empdata, empdatachange] = useState({});
+    const [empdata, empdatachange] = useState();
   
     useEffect(() => {
-        fetch('http://localhost:7071/emp/emp_1/' + id)
+        fetch(`${host}/emp/emp_1/` + id)
           .then((res) => {
             return res.json()
           })
           .then((resp) => {
+            console.log('resp',resp);
             empdatachange(resp)
           })
           .catch((err) => {
             console.log(err.message)
           })
       }, [])
+      useEffect(()=>{
 
+        console.log('empdata',empdata);
+      },[empdata])
     return ( 
         empdata ?
         <AddEmployee data={empdata}/>

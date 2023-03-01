@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-
+import host from "./../utils"
 
 
 function UserLeaveDetails() {
@@ -81,7 +81,7 @@ function UserLeaveDetails() {
   useEffect(() => {
     axios
       .post(
-        `http://localhost:7071/Emp_Leave/get_User_leave/?id=${id}&from_date=${firstDay}&to_date=${lastDay}`
+        `${host}/Emp_Leave/get_User_leave/?id=${id}&from_date=${firstDay}&to_date=${lastDay}`
       )
       .then((response) => {
         console.log(response);
