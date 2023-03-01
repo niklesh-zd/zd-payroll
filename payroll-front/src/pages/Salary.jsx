@@ -116,9 +116,7 @@ function Salary() {
       });
   }, []);
 
-  return switchToDownload ? (
-    <Downloadslip year={salaryYear} month={salaryMonthNumber} />
-  ) : (
+  return(
     <div className="pt-5">
       <div>
         <div className="offset-lg-2 col-lg-8">
@@ -278,6 +276,7 @@ function Salary() {
                         className="form-control "
                         value={selectedOption}
                         onChange={handleOptionChange}
+                        required
                       >
                         <option selected disabled value="">
                           please select an option
@@ -286,7 +285,7 @@ function Salary() {
                           return (
                             <option
                               key={month.format1}
-                              value={month.year + month.monthNumber}
+                              value={month.year.toString() + month.monthNumber.toString()}
                             >
                               {month.format1}
                             </option>
