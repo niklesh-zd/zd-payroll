@@ -298,8 +298,8 @@ class Leave {
             ) {
                 absent_count++
             }
-            var present_count = emp_count.length - absent_count
         }
+        var present_count = emp_count.length - absent_count
         res.send(
             {
                 "present_count": present_count,
@@ -339,8 +339,8 @@ class Leave {
             ) {
                 absent_count++
             }
-            var present_count = emp_count.length - absent_count
         }
+        var present_count = emp_count.length - absent_count
         res.send(
             {
                 "present_count": present_count,

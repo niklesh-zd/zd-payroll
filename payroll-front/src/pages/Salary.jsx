@@ -6,13 +6,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 function Salary() {
   const { id } = useParams();
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [empdata, empdatachange] = useState({});
   const [fields, setFields] = useState({
     arrear: 0,
     additional: 0,
     arrear_comment: "",
     additional_comment: "",
+    overwrite_payslip: false,
   });
   const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
@@ -24,21 +25,25 @@ function Salary() {
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
     let salaryMonth = event.target.value;
-    let yearStr = salaryMonth.substring(0, 4); 
+    let yearStr = salaryMonth.substring(0, 4);
     let monthStr = salaryMonth.substring(4);
-    console.log("salaryMonth", salaryMonth);
     setSalaryYear(yearStr);
     setSalaryMonthNumber(monthStr);
   };
   function handleChange(e) {
     let fieldObj = { ...fields };
-    fieldObj[e.target.name] = e.target.value;
+    if (e.target.name == "overwrite_payslip") {
+      fieldObj["overwrite_payslip"] = !fieldObj["overwrite_payslip"];
+    } else {
+      fieldObj[e.target.name] = e.target.value;
+    }
+    console.log("fieldObj", fieldObj);
     setFields(fieldObj);
   }
   const handleToggleAdvance = (e) => {
     setSwitchToAdvance((prev) => !prev);
   };
-  // var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
   const getPreviousMonths = () => {
     const currentDate = new Date(); // get the current date
     const previousMonths = []; // initialize an empty array to hold the month objects
@@ -109,7 +114,7 @@ function Salary() {
         <div className="offset-lg-2 col-lg-8">
           {empdata && (
             <form className="container" onSubmit={(e) => handlesubmit(e)}>
-              <div className="card m-5 p-3 " >
+              <div className="card m-5 p-3 ">
                 <Link to="/settings/manageprofile">
                   <TiArrowBack size={25} />
                 </Link>
@@ -172,11 +177,10 @@ function Salary() {
                             maxLength="50"
                             className="form-control"
                             placeholder="ARRS"
-                          value={fields.arrear}
-                          onChange={(e) => handleChange(e)}
+                            value={fields.arrear}
+                            onChange={(e) => handleChange(e)}
                           />
                         </div>
-                        
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="form-group">
@@ -184,17 +188,16 @@ function Salary() {
                             Additional
                           </label>
                           <input
-                            type="text"
+                            type="number"
                             style={{ textTransform: "capitalize" }}
                             name="additional"
                             minLength="2"
                             maxLength="50"
                             className="form-control"
                             placeholder="Additional Amount"
-                          value={fields.additional}
-                          onChange={(e) => handleChange(e)}
+                            value={fields.additional}
+                            onChange={(e) => handleChange(e)}
                           />
-                         
                         </div>
                       </div>
                     </div>
@@ -210,12 +213,10 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          value={fields.arrear_comment}
-                          onChange={(e) => handleChange(e)}
+                            value={fields.arrear_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
-                          <div className="errorMsg">
-                            {/ {errors.Current_Address} /}
-                          </div>
+                          <div className="errorMsg"></div>
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -229,12 +230,29 @@ function Salary() {
                             rows="3"
                             cols="35"
                             placeholder="Write Comment Here"
-                          value={fields.additional_comment}
-                          onChange={(e) => handleChange(e)}
+                            value={fields.additional_comment}
+                            onChange={(e) => handleChange(e)}
                           ></textarea>
-                          <div className="errorMsg">
-                            {/ {errors.Current_Address} /}
-                          </div>
+                          <div className="errorMsg"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 pt-2">
+                        <div className="custom-control custom-switch">
+                          <input
+                            type="checkbox"
+                            name="overwrite_payslip"
+                            className="custom-control-input"
+                            value={fields.overwrite_payslip}
+                            onChange={(e) => handleChange(e)}
+                          />
+                          <label
+                            className="custom-control-label px-3"
+                            htmlFor="customSwitches"
+                          >
+                            select for overwrite payslip
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -242,7 +260,7 @@ function Salary() {
                 ) : null}
 
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-4">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pt-2">
                     <div className="form-group">
                       <label>Select the month</label>
                       <select
