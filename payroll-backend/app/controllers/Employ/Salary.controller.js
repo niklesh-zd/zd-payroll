@@ -79,8 +79,8 @@ class Salary {
                 var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
                 var earned_ra = Math.round((gross_ra/ working_days) * total_paid_days)
                 var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
-                var net_pay_in_number = (salary_emp / working_days) * total_paid_days
-                net_pay_in_number = (Math.round(net_pay_in_number * 100) / 100) + Number(req.query.arrear) + Number(req.query.additional)
+                var net_pay_in_number = ((salary_emp / working_days) * total_paid_days) + Number(req.query.arrear) + Number(req.query.additional)
+                net_pay_in_number = Math.round(net_pay_in_number) 
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
 
 
@@ -236,17 +236,12 @@ class Salary {
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var working_days_1 = moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() - 1 - holiday_1.length
                 var working_days_2 = Number(month_array[Number(req.query.month) - 1]) - holiday_2.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1
-                console.log(working_days)
-                console.log(working_days_1);
-                console.log(working_days_2);
 
                 var month_days_1 = moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() - 1
                 var month_days_2 = Number(month_array[Number(req.query.month) - 1]) - month_days_1
-                console.log(month_days_1);
-                console.log(month_days_2);
 
-                var salary_emp_1 = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
-                var salary_emp_2 = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 2].salary_)
+                var salary_emp_1 = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 2].salary_)
+                var salary_emp_2 = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
 
                 var balance_days = 1 - leave_taken
 
@@ -259,9 +254,6 @@ class Salary {
                 var gross_basic_da_1 = Math.round(((salary_emp_1 / 2 )/ Number(month_array[Number(req.query.month) - 1])) * month_days_1)
                 var gross_basic_da_2 = Math.round(((salary_emp_2 / 2 )/ Number(month_array[Number(req.query.month) - 1])) * month_days_2)
                 var gross_basic_da = gross_basic_da_1 + gross_basic_da_2
-                console.log(gross_basic_da_1);
-                console.log(gross_basic_da_2);
-                console.log(gross_basic_da);
 
                 var gross_hra_1 = Math.round((gross_basic_da_1 * 40) / 100)
                 var gross_hra_2 = Math.round((gross_basic_da_2 * 40) / 100)
