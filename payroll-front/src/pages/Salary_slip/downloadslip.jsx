@@ -10,8 +10,8 @@ import host from "../utils";
 
 const Downloadslip = () => {
   let location = useLocation();
-  const salaryYear = location.state.salaryYear;
-  const salaryMonthNumber = location.state.salaryMonthNumber;
+  const salaryYear = Number(location.state.salaryYear);
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber) + 1;
   const data = location.state.fields;
 
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Downloadslip = () => {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${allMonthsName[fields.Salary_Slip_Month]
+            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month]
               }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
@@ -87,9 +87,7 @@ const Downloadslip = () => {
       <div className="btn float-end text-primary">
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
-      <div  className="btn text-dark">
-        <TiArrowBack onClick={Navigate} size={30} />
-      </div>
+        <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
       <div className="container">
         <div>
 
@@ -178,7 +176,7 @@ const Downloadslip = () => {
                         <span className="fw-bolder">Balance Days</span>
                       </div>
                       <div className="col-md-7">
-                        <small>1</small>
+                        <small>{fields.Balence_days}</small>
                       </div>
                     </div>
                   </div>

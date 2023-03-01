@@ -297,7 +297,7 @@ class Leave {
                 && today.isSameOrAfter(from_date_)
             ) {
                 absent_count++
-            } 
+            }
         }
         var present_count = emp_count.length - absent_count
         res.send(
