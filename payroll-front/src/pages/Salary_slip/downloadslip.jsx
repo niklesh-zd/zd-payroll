@@ -11,9 +11,9 @@ import host from "../utils";
 const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = Number(location.state.salaryYear);
-  const salaryMonthNumber = Number(location.state.salaryMonthNumber) + 1;
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber);
   const data = location.state.fields;
-
+  
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +57,7 @@ const Downloadslip = () => {
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month]
+            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month - 1]
               }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
@@ -119,7 +119,7 @@ const Downloadslip = () => {
                   </h3>
                   <h5 className="fw-bold text-dark">
                     Payment slip for the month of
-                    {" "+allMonthsName[fields.Salary_Slip_Month]} {fields.Salary_Slip_Year}
+                    {" "+allMonthsName[fields.Salary_Slip_Month - 1]} {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 
