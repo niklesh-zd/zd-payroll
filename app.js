@@ -3,6 +3,7 @@ require('./app/utils/mongooseConnecter.util')
 const express = require("express");
 const app = express();
 const pdf_genearation = require("./pdf_generator/pdfGenerator")
+const path = require('path')
 
 const cors = require('cors');
 app.use(cors())
@@ -30,6 +31,12 @@ app.post('/slip', (req, res) =>{
   pdf_genearation()
   console.log("button clicked")
   res.send("file downloaded successfully")
+})
+
+// read static files
+app.use(express.static(path.join(__dirname, './payroll-front/build')))
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, './payroll-front/build/index.html'))
 })
 
 const port = 7071;
