@@ -7,17 +7,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoArrowBackCircle } from "react-icons/io5";
 import host from "./../utils";
+import Select from 'react-select';
 const Leaves = () => {
   let navigate = useNavigate();
   const toDateInputRef = useRef(null);
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
-
+  const [searchTerm, setSearchTerm] = useState('');
+var leavesObj = {}
   const handleChange = (e) => {
-    let leavesObj = { ...leavesData };
+    leavesObj = { ...leavesData };
     leavesObj[e.target.name] = e.target.value;
-    console.log("leave", leavesObj);
     if (leavesObj.from_date) {
       setDisableToDate(false);
       if (toDateInputRef.current) {
@@ -27,7 +28,11 @@ const Leaves = () => {
     }
     setLeavesData(leavesObj);
   };
-  console.log("leavesData", leavesData);
+  const handleSelectChange = (e) =>{
+    leavesObj = { ...leavesData, userid: e.value };
+    setLeavesData(leavesObj);
+  }
+  console.log("leave", leavesData);
 
   useEffect(() => {
     window
@@ -36,7 +41,7 @@ const Leaves = () => {
         return res.json();
       })
       .then((resp) => {
-        console.log("res", resp);
+        // console.log("res", resp);
         setUsers(resp);
       })
       .catch((err) => {
@@ -81,6 +86,10 @@ const Leaves = () => {
       });
   };
 
+  // console.log('------------users',users);
+  const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name }));
+  // console.log('------------userid',selectOptions.value);
+
   return (
     <div>
       <div className="offset-lg-2 col-lg-8">
@@ -99,7 +108,7 @@ const Leaves = () => {
                   <label className="profile_details_text">
                     Select Employee Name
                   </label>
-                  <select
+                  {/* <select
                     name="userid"
                     className="form-control"
                     value={leavesData.userid}
@@ -116,7 +125,11 @@ const Leaves = () => {
                         </option>
                       );
                     })}
-                  </select>
+                    
+                  </select> */}
+
+                    <Select options={selectOptions} isSearchable={true} placeholder="Select Employee" onChange={(e) => handleSelectChange(e)}
+                    />
                 </div>
               </div>
             </div>
@@ -200,7 +213,8 @@ const Leaves = () => {
             </div>
           </div>
           <div>
-    </div>
+
+          </div>
         </form>
       </div>
     </div>

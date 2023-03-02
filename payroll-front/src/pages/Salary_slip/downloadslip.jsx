@@ -258,7 +258,7 @@ const Downloadslip = () => {
                     <tbody style={{ color: "#19536f" }}>
                       <tr>
                         <th scope="row">Basic & DA</th>
-                        <td>{fields.Gross_Basic_DA}</td>
+                        <td className="float-end border-none">{fields.Gross_Basic_DA}</td>
                         <th scope="row">Basic & DA</th>
                         <td>{fields.Earned_Basic_DA}</td>
                         <td>PF</td>
@@ -266,17 +266,17 @@ const Downloadslip = () => {
                       </tr>
                       <tr>
                         <th scope="row">HRA</th>
-                        <td>{fields.Gross_HRA}</td>
+                        <td className="float-end border-none">{fields.Gross_HRA}</td>
                         <th scope="row">HRA</th>
-                        <td>{fields.Earned_HRA}</td>
+                        <td className="float-end border-none">{fields.Earned_HRA}</td>
                         <td>Professional tax</td>
-                        <td>0</td>
+                        <td className="float-end border-none">0</td>
                       </tr>
                       <tr>
                         <th scope="row">RA</th>
-                        <td>{fields.Gross_RA}</td>
+                        <td className="float-end border-none">{fields.Gross_RA}</td>
                         <th scope="row">RA</th>
-                        <td>{fields.Earned_RA}</td>
+                        <td className="float-end border-none">{fields.Earned_RA}</td>
                         <td>TDS</td>
                         <td>0</td>
                       </tr>
@@ -307,8 +307,8 @@ const Downloadslip = () => {
                       <tr
                         style={{ backgroundColor: "#3d85c6", color: "white" }}
                       >
-                        <th scope="row">Net Pay</th>
-                        <td>{fields.Net_pay_in_number}</td>
+                        <th scope="">Net Pay</th>
+                        <td className="float-end">{fields.Net_pay_in_number}</td>
                         <td></td>
                         <td></td>
                         <th>Total Deduction</th>
@@ -318,15 +318,15 @@ const Downloadslip = () => {
                   </table>
                 
                 <div className="border border-dark d-flex " style={{borderLeft: 'hidden', borderRight: 'hidden'}}>
-                  <div className="col-md-5 mt-2.5">
+                  <div className="col-md-4 mt-2.5">
                     <span  style={{ color: "#3d85c6", fontWeight: "bold" }} >
                       Net Salary Payable(In Words)
                     </span>
                   </div>
-                  <div className="border-start border-dark" style={{marginLeft: '-4rem'}}></div>
+                  <div className="border-start border-dark"></div>
                   <div className=" col-md-7">
                     <div className="d-flex flex-column mt-2.5 ml-1">
-                      <span style={{ color: "#3d85c6", fontWeight: "bold" }}>
+                      <span style={{ color: "#3d85c6", ontWeight: "bold" }}>
                         {fields.Net_pay_in_words} Only
                       </span>
                       <br></br>
