@@ -22,6 +22,7 @@ class Salary {
         if (!req.query.userid || !req.query.year || !req.query.month ){
             return res.send({ message: "Please fill in all fields." });
         }
+        
 
         var Salary_Modal = await SalaryModal.find({
             userid : req.query.userid,
@@ -29,18 +30,25 @@ class Salary {
             Salary_Slip_Month : req.query.month,
         })
 
+        var empinfo_modal = await EmpInfoModal.find({
+            _id : req.query.userid
+        })
+
+        empinfo_modal = empinfo_modal[0]
+
+        if (
+            moment(empinfo_modal.date_of_joining).month() + 1 > req.query.month
+            || moment(empinfo_modal.date_of_joining).year() > req.query.year
+            ){
+                return res.send({message : "You are trying to generate salary slip before joining date"})
+            }
+
+
         if (Salary_Modal.length != 0 && !req.body.overwrite_slip){
             return res.send(Salary_Modal[0])
         }
 
-        else if (Salary_Modal.length != 0 && req.body.overwrite_slip){
-
-            var empinfo_modal = await EmpInfoModal.find({
-                _id : req.query.userid
-            })
-
-            empinfo_modal = empinfo_modal[0]
-            
+        else if (Salary_Modal.length != 0 && req.body.overwrite_slip){            
 
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)){
 
@@ -328,14 +336,7 @@ class Salary {
             res.status(200).send({ success: true, 'salary' : salary }) 
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() <= 5){
-
-            var empinfo_modal = await EmpInfoModal.find({
-                _id : req.query.userid
-            })
-
-            empinfo_modal = empinfo_modal[0]
-            
+        else if (Salary_Modal.length == 0 && moment().date() <= 5){            
 
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)){
 
