@@ -525,7 +525,7 @@ class Salary {
     
                 var leave_taken_2 = 0
                 for(let i = 0; i < findLeave_2.length; i++){
-                    leave_taken += findLeave_2[i].total_number_of_day
+                    leave_taken_2 += findLeave_2[i].total_number_of_day
                     console.log(leave_taken_2)
                 }
 
