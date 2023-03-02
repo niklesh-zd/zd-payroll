@@ -2,10 +2,8 @@
 "use strict"
 
 const router = require("express").Router()
-const { salary,salary_, get_salary, update_salary, salary_delete, get_one_emp, get_salary_id } = require('../../controllers/Employ/Salary.controller')
+const {salary_, get_salary, update_salary, salary_delete, get_one_emp, get_salary_id } = require('../../controllers/Employ/Salary.controller')
 
-
-router.post('/salary', salary)
 router.post('/salary_', salary_)
 router.get('/get_salary', get_salary)
 router.post('/update/:id', update_salary)
