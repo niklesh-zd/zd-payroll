@@ -143,7 +143,7 @@ class Leave {
             else {
 
                 const holiday = await HolidayModal.find({
-                    holiday_date: { $gte: from_date_split, $lte: to_date }
+                    holiday_date: { $gte: from_date, $lte: to_date }
                 });
                 var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave = diff_between_leaves_days - holiday.length
