@@ -11,9 +11,9 @@ import host from "../utils";
 const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = Number(location.state.salaryYear);
-  const salaryMonthNumber = Number(location.state.salaryMonthNumber) + 1;
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber);
   const data = location.state.fields;
-
+  
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -53,10 +53,11 @@ const Downloadslip = () => {
       })
       .then((response) => {
         if (response) {
+          console.log("reponse",response);
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month]
+            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month - 1]
               }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
@@ -69,9 +70,7 @@ const Downloadslip = () => {
       });
   }, []);
 
-  const Navigate = () =>{
-    navigate('/settings/salary' + id)
-  }
+  console.log('fields',fields);
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {
@@ -94,7 +93,7 @@ const Downloadslip = () => {
       </div>
         <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
           <div
-            className="d-flex mt-1 container"
+            className="d-flex mt-5 container"
             id="pdf-download"
             style={{ justifyContent: "center" }}
           >
@@ -121,7 +120,7 @@ const Downloadslip = () => {
                   </h3>
                   <h5 className="fw-bold text-dark">
                     Payment slip for the month of
-                    {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
+                    {" "+allMonthsName[fields.Salary_Slip_Month - 1]} {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 
@@ -145,7 +144,7 @@ const Downloadslip = () => {
                       <div className="col-md-5">
                         <span className="fw-bolder">Designation </span>
                       </div>
-                      <div className="col-md-5">
+                      <div className="col-md-7">
                         <small>{fields.designation}</small>
                       </div>
                     </div>
@@ -260,9 +259,9 @@ const Downloadslip = () => {
                         <th scope="row">Basic & DA</th>
                         <td className="float-end border-none">{fields.Gross_Basic_DA}</td>
                         <th scope="row">Basic & DA</th>
-                        <td>{fields.Earned_Basic_DA}</td>
+                        <td className="float-end border-none">{fields.Earned_Basic_DA}</td>
                         <td>PF</td>
-                        <td>0</td>
+                        <td className="float-end border-none">0</td>
                       </tr>
                       <tr>
                         <th scope="row">HRA</th>
@@ -278,25 +277,25 @@ const Downloadslip = () => {
                         <th scope="row">RA</th>
                         <td className="float-end border-none">{fields.Earned_RA}</td>
                         <td>TDS</td>
-                        <td>0</td>
+                        <td className="float-end border-none">0</td>
                       </tr>
                       <tr>
                         <th scope="row">FLEXI Benefits</th>
-                        <td>{fields.Gross_Flext_benefits}</td>
+                        <td className="float-end border-none">{fields.Gross_Flext_benefits}</td>
                         <th scope="row">FLEXI Benefits</th>
-                        <td>{fields.Earned_Flext_benefits}</td>
+                        <td className="float-end border-none">{fields.Earned_Flext_benefits}</td>
                         <td>ARRS</td>
-                        <td>{fields.ARRS}</td>
+                        <td className="float-end border-none">{fields.ARRS}</td>
                       </tr>
                       <tr
                         style={{ backgroundColor: "#3d85c6", color: "white" }}
                       >
                         <th scope="row">Total Gross</th>
-                        <td>{fields.Gross_total}</td>
+                        <td className="float-end border-none">{fields.Gross_total}</td>
                         <th>Total Earn</th>
-                        <td>{fields.Total_earn}</td>
+                        <td className="float-end border-none">{fields.Total_earn}</td>
                         <th>Additional</th>
-                        <td>{fields.Additional}</td>
+                        <td className="float-end border-none">{fields.Additional}</td>
                       </tr>
                       <tr>
                         <th scope="row"></th>
@@ -308,27 +307,27 @@ const Downloadslip = () => {
                         style={{ backgroundColor: "#3d85c6", color: "white" }}
                       >
                         <th scope="">Net Pay</th>
-                        <td className="float-end">{fields.Net_pay_in_number}</td>
+                        <td className="float-end border-none">{fields.Net_pay_in_number}</td>
                         <td></td>
                         <td></td>
                         <th>Total Deduction</th>
-                        <td>0</td>
+                        <td className="float-end border-none">0</td>
                       </tr>
                     </tbody>
                   </table>
                 
                 <div className="border border-dark d-flex " style={{borderLeft: 'hidden', borderRight: 'hidden'}}>
                   <div className="col-md-4 mt-2.5">
-                    <span  style={{ color: "#3d85c6", fontWeight: "bold" }} >
+                    <small  style={{ color: "#3d85c6", fontWeight: "bold" }} >
                       Net Salary Payable(In Words)
-                    </span>
+                    </small>
                   </div>
                   <div className="border-start border-dark"></div>
-                  <div className=" col-md-7">
-                    <div className="d-flex flex-column mt-2.5 ml-1">
-                      <span style={{ color: "#3d85c6", ontWeight: "bold" }}>
+                  <div className=" col-md-8 mt-2.5">
+                    <div className="d-flex flex-column ml-1">
+                      <small style={{ color: "#3d85c6", fontWeight: "bold" }}>
                         {fields.Net_pay_in_words} Only
-                      </span>
+                      </small>
                       <br></br>
                     </div>
                   </div>

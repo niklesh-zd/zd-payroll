@@ -5,7 +5,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IoArrowBackCircle } from "react-icons/io5";
 import host from "./../utils";
 import Select from 'react-select';
 const Leaves = () => {
@@ -14,8 +13,7 @@ const Leaves = () => {
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-var leavesObj = {}
+  var leavesObj = {}
   const handleChange = (e) => {
     leavesObj = { ...leavesData };
     leavesObj[e.target.name] = e.target.value;
@@ -32,7 +30,8 @@ var leavesObj = {}
     leavesObj = { ...leavesData, userid: e.value };
     setLeavesData(leavesObj);
   }
-  console.log("leave", leavesData);
+
+  console.log("leavesData", leavesData);
 
   useEffect(() => {
     window
@@ -85,10 +84,9 @@ var leavesObj = {}
         console.error("There was an error!", error);
       });
   };
-
-  // console.log('------------users',users);
   const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name }));
-  // console.log('------------userid',selectOptions.value);
+
+
 
   return (
     <div>
@@ -125,11 +123,13 @@ var leavesObj = {}
                         </option>
                       );
                     })}
-                    
                   </select> */}
-
-                    <Select options={selectOptions} isSearchable={true} placeholder="Select Employee" onChange={(e) => handleSelectChange(e)}
-                    />
+                  <Select
+                    options={selectOptions}
+                    isSearchable={true}
+                    placeholder="Select Employee"
+                    onChange={(e) => handleSelectChange(e)}
+                  />
                 </div>
               </div>
             </div>
