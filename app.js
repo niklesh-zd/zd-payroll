@@ -43,7 +43,7 @@ const port = 7071;
 
 // Server start
 app.listen(port, () =>
-  console.log(`Server is running on http://0.0.0.0:${port}`)
+  console.log(`Server is running on ${port}`)
 );
 
 
