@@ -8,8 +8,6 @@ const ObjectId = require("mongodb").ObjectId;
 
 class Emp {
     async add_employ(req, res, next) {
-
-        console.log("Run ok");
         try {
 
             const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
@@ -38,7 +36,6 @@ class Emp {
             var next_emp_code;
             if (last_emp) {
                 const last_emp_code = last_emp[0].Employee_Code;
-                console.log(`last emp code : ${last_emp_code}`);
                 const splitted_emp_code = last_emp_code.split("-");
                 var emp_code = Number(splitted_emp_code[1]) + 1;
                 emp_code = emp_code.toString();
@@ -49,7 +46,6 @@ class Emp {
             else {
                 next_emp_code = "A-0001";
             }
-            console.log(`next emp code : ${next_emp_code}`);
 
             if (adhar) {
                 return res.send({ message: "alredy exist ADHAR." })
@@ -146,7 +142,6 @@ class Emp {
     }
 
     async get_one_emp(req, res, next) {
-        console.log('----------', { id: req.params.id });
         EmpInfoModal.findById(req.params.id).then((employee) => {
             console.log("data:", employee);
             if (!employee) {
@@ -160,7 +155,6 @@ class Emp {
     }
     async emp_delete(req, res) {
         try {
-            console.log(req.params.id);
             const userDelete = await EmpInfoModal.findByIdAndDelete(req.params.id)
             if (!userDelete) {
                 return res.status(404).send({ message: "This user not Exist." });
@@ -173,7 +167,6 @@ class Emp {
         }
     }
     async emp_update(req, res) {
-        console.log('update api runnig');
 
         const { First_Name, Last_Name, date_of_birth, date_of_joining, gender,
             Contact_Number, Contact_Number_Home, Permanent_Address,
@@ -217,7 +210,6 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                // base_salary : [{salary_ : base_salary, effective_date : Eeffective_date}],
                 $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
                 ADHAR,
                 Bank_No,

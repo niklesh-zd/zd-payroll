@@ -64,12 +64,11 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
+
     
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
                 const holiday = await HolidayModal.find({
@@ -125,12 +124,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
     
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
 
@@ -150,14 +147,6 @@ class Salary {
                 var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
-
-                console.log(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits)
-                console.log(earned_basic_da)
-                console.log(earned_hra)
-                console.log(earned_ra)
-                console.log(earned_flexi_benifits)
-
-
 
             }
             else{
@@ -195,12 +184,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
 
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
                 const findLeave_1 = await LeaveModal.find({
@@ -214,12 +201,10 @@ class Salary {
                         $lt: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date  
                     }
                 });
-                console.log(findLeave_1)
     
                 var leave_taken_1 = 0
                 for(let i = 0; i < findLeave_1.length; i++){
                     leave_taken_1 += findLeave_1[i].total_number_of_day
-                    console.log(leave_taken_1)
                 }
 
 
@@ -234,12 +219,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave_2)
     
                 var leave_taken_2 = 0
                 for(let i = 0; i < findLeave_2.length; i++){
                     leave_taken += findLeave_2[i].total_number_of_day
-                    console.log(leave_taken_2)
                 }
 
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
@@ -352,12 +335,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
     
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
                 const holiday = await HolidayModal.find({
@@ -413,12 +394,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
     
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
 
@@ -438,14 +417,6 @@ class Salary {
                 var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
-
-                console.log(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits)
-                console.log(earned_basic_da)
-                console.log(earned_hra)
-                console.log(earned_ra)
-                console.log(earned_flexi_benifits)
-
-
 
             }
             else{
@@ -483,12 +454,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave)
 
                 var leave_taken = 0
                 for(let i = 0; i < findLeave.length; i++){
                     leave_taken += findLeave[i].total_number_of_day
-                    console.log(leave_taken)
                 }
 
                 const findLeave_1 = await LeaveModal.find({
@@ -502,12 +471,10 @@ class Salary {
                         $lt: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date  
                     }
                 });
-                console.log(findLeave_1)
     
                 var leave_taken_1 = 0
                 for(let i = 0; i < findLeave_1.length; i++){
                     leave_taken_1 += findLeave_1[i].total_number_of_day
-                    console.log(leave_taken_1)
                 }
 
 
@@ -522,12 +489,10 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]  
                     }
                 });
-                console.log(findLeave_2)
     
                 var leave_taken_2 = 0
                 for(let i = 0; i < findLeave_2.length; i++){
                     leave_taken_2 += findLeave_2[i].total_number_of_day
-                    console.log(leave_taken_2)
                 }
 
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
@@ -644,7 +609,6 @@ class Salary {
         }
     }
     async update_salary(req, res) {
-        console.log('update runnig');
         if (!req.body) {
             return res.status(400).send({
                 message: "Data to update can not be empty!"
@@ -670,7 +634,6 @@ class Salary {
     }
     async salary_delete(req, res) {
         try {
-            console.log(req.params.id);
             const userDelete = await SalaryModal.findByIdAndDelete(req.params.id)
             if (!userDelete) {
                 return res.status(404).send({ message: "This user not Exist." });
@@ -683,7 +646,6 @@ class Salary {
         }
     }
     async get_salary_id(req, res) {
-        console.log('get-salart');
         const data = await SalaryModal.find()
         var arr = []
         data.forEach((Val) => {
