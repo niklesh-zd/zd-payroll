@@ -11,9 +11,9 @@ import host from "../utils";
 const Downloadslip = () => {
   let location = useLocation();
   const salaryYear = Number(location.state.salaryYear);
-  const salaryMonthNumber = Number(location.state.salaryMonthNumber) + 1;
+  const salaryMonthNumber = Number(location.state.salaryMonthNumber);
   const data = location.state.fields;
-
+  
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +37,8 @@ const Downloadslip = () => {
   useEffect(() => {
     axios
       .post(
-        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
+        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`,
+        data
       )
       .then((response) => {
         console.log("response", response.data);
@@ -53,10 +54,11 @@ const Downloadslip = () => {
       })
       .then((response) => {
         if (response) {
+          console.log("reponse",response);
           const element = document.getElementById("pdf-download");
           html2pdf(element, {
             margin: 0,
-            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month]
+            filename: `${response.Employee_name}_${allMonthsName[response.Salary_Slip_Month - 1]
               }.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 5 },
@@ -69,18 +71,21 @@ const Downloadslip = () => {
       });
   }, []);
 
-  const Navigate = () =>{
-    navigate('/settings/salary' + id)
-  }
+  console.log('fields',fields);
   const Pdfdownload = () => {
     const element = document.getElementById("pdf-download");
     html2pdf(element, {
       margin: 0,
       filename: `${fields.Employee_name}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 5 },
+      html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
+  };
+  const formatDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-');
+    let newDate = `${day}-${month}-${year}`;
+    return newDate;
   };
   return (
     <div>
@@ -88,14 +93,10 @@ const Downloadslip = () => {
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
         <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
-      <div className="container">
-        <div>
-
-
-          <form
-            className="my-2"
+          <div
+            className="d-flex mt-1 container"
             id="pdf-download"
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ justifyContent: "center" }}
           >
             {isLoading ? (
               <RotatingLines
@@ -110,34 +111,37 @@ const Downloadslip = () => {
               <div
                 style={{
                   border: "1px solid black",
-                  padding: "1%",
-                  width: "75%",
+                  width: "60%",
+                  height: '41rem'
                 }}
               >
-                <div className="text-center lh-1 mb-2">
-                  <h3 className="fw-bold" style={{ color: "#368bb5" }}>
+                <div className="text-center">
+                  <h3 className="fw-bold" style={{ color: "#3d85c6" }}>
                     ZecData
                   </h3>
                   <h5 className="fw-bold text-dark">
                     Payment slip for the month of
-                    {fields.Salary_Slip_Month} {fields.Salary_Slip_Year}
+                    {" "+allMonthsName[fields.Salary_Slip_Month - 1]} {fields.Salary_Slip_Year}
                   </h5>
                 </div>
 
                 <div
-                  className="row text-white"
-                  style={{ backgroundColor: "#368bb5" }}
+                  className="text-white d-flex h-40"
+                  style={{ backgroundColor: "#3d85c6" }}
                 >
-                  <div className="row col-md-6">
-                    <div className="row mt-1">
+                  <div className="col-md-6">
+
+
+                    <div className="border-bottom h-20">
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder">Name </span>
                       </div>
-                      <div className="col-md-7">
+                      <div className="col-md-5">
                         <small>{fields.Employee_name}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder">Designation </span>
                       </div>
@@ -145,68 +149,74 @@ const Downloadslip = () => {
                         <small>{fields.designation}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder ">Date of Joining</span>
                       </div>
-                      <div className="col-md-7">
-                        <small>
-                          {fields.Date_of_Joining?.substring(0, 10)}
+                      <div className="col-md-5">
+                        <small >
+                          {formatDate(fields.Date_of_Joining?.substring(0, 10))}
                         </small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    </div>
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave (Balance)</span>
                       </div>
-                      <div className="col-md-7">
-                        <small>{fields.Leave_balence}</small>
+                      <div className="col-md-5">
+                        <span className="fw-bolder">{fields.Leave_balence}</span>
                       </div>
                     </div>
-                    <div className="row mt-2">
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder">Leave Taken </span>
                       </div>
-                      <div className="col-md-7">
-                        <small>{fields.Leave_taken}</small>
+                      <div className="col-md-5">
+                        <span className="fw-bolder">{fields.Leave_taken}</span>
                       </div>
                     </div>
-                    <div className="row mt-1 p-2">
+                    <div className="d-flex ml-5">
                       <div className="col-md-5">
                         <span className="fw-bolder">Balance Days</span>
                       </div>
-                      <div className="col-md-7">
-                        <small>{fields.Balence_days}</small>
+                      <div className="col-md-5">
+                        <span className="fw-bolder">{fields.Balence_days}</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="col-md-6">
-                    <div className="row mt-1">
+
+                  <div className="border-bottom h-20">
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder">EMP Code </span>
                       </div>
                       <div className="col-md-6">
-                        <small>{fields.Employee_code}</small>
+                        <small className="fw-bolder">{fields.Employee_code}</small>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder">Ac No. </span>
-                      </div>
+                      </div>  
                       <div className="col-md-6">
-                        <small>{fields.Bank_Account_Number}</small>
+                        <sapn className="fw-bolder">{fields.Bank_Account_Number}</sapn>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder">IFSC </span>
                       </div>
                       <div className="col-md-6">
-                        <small>{fields.Bank_IFSC_Code}</small>
+                        <sapn className="fw-bolder">{fields.Bank_IFSC_Code}</sapn>
                       </div>
                     </div>
-                    <div className="row mt-1">
+                  </div>
+
+
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder">Total Working Days</span>
                       </div>
@@ -214,8 +224,7 @@ const Downloadslip = () => {
                         <small>{fields.Total_Work_Days}</small>
                       </div>
                     </div>
-
-                    <div className="row mt-1">
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder ">Present Days</span>
                       </div>
@@ -223,7 +232,7 @@ const Downloadslip = () => {
                         <small>{fields.Present_day}</small>
                       </div>
                     </div>
-                    <div className="row mt-3">
+                    <div className="d-flex ml-5">
                       <div className="col-md-6">
                         <span className="fw-bolder">Total Paid Days</span>
                       </div>
@@ -232,12 +241,12 @@ const Downloadslip = () => {
                       </div>
                     </div>
                   </div>
+                  
                 </div>
 
-                <div className="row">
-                  <table className="mt-1 table table-bordered border-dark">
+                  <table className="table table-bordered  border-dark m-0"style={{borderLeft: 'hidden', borderRight: 'hidden'}}>
                     <thead>
-                      <tr>
+                      <tr style={{ color: "#19536f" }}>
                         <th scope="col">Gross</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Earning</th>
@@ -253,7 +262,7 @@ const Downloadslip = () => {
                         <th scope="row">Basic & DA</th>
                         <td>{fields.Earned_Basic_DA}</td>
                         <td>PF</td>
-                        <td>0.00</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <th scope="row">HRA</th>
@@ -261,7 +270,7 @@ const Downloadslip = () => {
                         <th scope="row">HRA</th>
                         <td>{fields.Earned_HRA}</td>
                         <td>Professional tax</td>
-                        <td>0.00</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <th scope="row">RA</th>
@@ -269,7 +278,7 @@ const Downloadslip = () => {
                         <th scope="row">RA</th>
                         <td>{fields.Earned_RA}</td>
                         <td>TDS</td>
-                        <td>0.00</td>
+                        <td>0</td>
                       </tr>
                       <tr>
                         <th scope="row">FLEXI Benefits</th>
@@ -280,13 +289,13 @@ const Downloadslip = () => {
                         <td>{fields.ARRS}</td>
                       </tr>
                       <tr
-                        style={{ backgroundColor: "#368bb5", color: "white" }}
+                        style={{ backgroundColor: "#3d85c6", color: "white" }}
                       >
                         <th scope="row">Total Gross</th>
                         <td>{fields.Gross_total}</td>
-                        <td>Total Earn</td>
+                        <th>Total Earn</th>
                         <td>{fields.Total_earn}</td>
-                        <td>Additional</td>
+                        <th>Additional</th>
                         <td>{fields.Additional}</td>
                       </tr>
                       <tr>
@@ -296,43 +305,41 @@ const Downloadslip = () => {
                         <td></td>
                       </tr>
                       <tr
-                        style={{ backgroundColor: "#368bb5", color: "white" }}
+                        style={{ backgroundColor: "#3d85c6", color: "white" }}
                       >
                         <th scope="row">Net Pay</th>
                         <td>{fields.Net_pay_in_number}</td>
                         <td></td>
                         <td></td>
-                        <td>Total Deduction</td>
+                        <th>Total Deduction</th>
                         <td>0</td>
                       </tr>
                     </tbody>
                   </table>
-                </div>
-                <div className="row border border-dark">
-                  <div className="col-md-5 ">
-                    <span style={{ color: "#368bb5", fontWeight: "bold" }}>
+                
+                <div className="border border-dark d-flex " style={{borderLeft: 'hidden', borderRight: 'hidden'}}>
+                  <div className="col-md-4 mt-2.5">
+                    <small  style={{ color: "#3d85c6", fontWeight: "bold" }} >
                       Net Salary Payable(In Words)
-                    </span>
+                    </small>
                   </div>
-                  <div className=" col-md-7">
-                    <div className="d-flex flex-column ">
-                      <span style={{ color: "#368bb5", fontWeight: "bold" }}>
+                  <div className="border-start border-dark"></div>
+                  <div className=" col-md-8 mt-2.5">
+                    <div className="d-flex flex-column ml-1">
+                      <small style={{ color: "#3d85c6", fontWeight: "bold" }}>
                         {fields.Net_pay_in_words} Only
-                      </span>
+                      </small>
                       <br></br>
                     </div>
                   </div>
                 </div>
-                <span className="col-md-12" style={{ color: "#368bb5" }}>
-                  This is computer generated copy not need to stamp and sign
+                <span className="col-md-12" style={{ color: "#3d85c6" }}>
+                  *This is computer generated copy not need to stamp and sign
                 </span>
               </div>
-
             )}
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
   )
 }
 export default Downloadslip;
