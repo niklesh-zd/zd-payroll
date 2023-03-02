@@ -16,7 +16,6 @@ function Salary() {
     additional_comment: "",
     overwrite_payslip: false,
   });
-  const [switchToDownload, setSwitchToDownload] = useState(false);
   const [switchToAdvance, setSwitchToAdvance] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [salaryYear, setSalaryYear] = useState(0);
