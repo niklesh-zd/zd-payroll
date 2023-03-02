@@ -37,7 +37,8 @@ const Downloadslip = () => {
   useEffect(() => {
     axios
       .post(
-        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}&arrear=${data.arrear}&additional=${data.additional}&arrear_comment=${data.arrear_comment}&additional_comment=${data.additional_comment}`
+        `${host}/Emp_Salary/salary_?userid=${id}&year=${salaryYear}&month=${salaryMonthNumber}`,
+        data
       )
       .then((response) => {
         console.log("response", response.data);
