@@ -398,7 +398,7 @@ function AddEmployee(props) {
                         <option>Principal Software Engineer</option>
                         <option>Senior Software Developer</option>
                         <option>Software Developer</option>
-                        <option>Junior Software Developer</option>
+                        <option>jr Software Developer</option>
                         <option>Intern Software Developer</option>
                         <option>Other</option>
                       </select>
