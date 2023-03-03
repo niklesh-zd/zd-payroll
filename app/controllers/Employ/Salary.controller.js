@@ -38,7 +38,7 @@ class Salary {
 
         if (
             moment(empinfo_modal.date_of_joining).month() + 1 > req.query.month
-            || moment(empinfo_modal.date_of_joining).year() > req.query.year
+            || moment(empinfo_modal.date_of_joining).year() < req.query.year
             ){
                 return res.send({message : "You are trying to generate salary slip before joining date"})
             }
