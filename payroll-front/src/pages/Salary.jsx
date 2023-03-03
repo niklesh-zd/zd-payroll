@@ -79,7 +79,7 @@ function Salary() {
 
   function handlesubmit(e) {
     e.preventDefault();
-    navigate("/download" + id, {
+    navigate("/download/" + id, {
       state: {
         salaryYear: salaryYear,
         salaryMonthNumber: salaryMonthNumber,

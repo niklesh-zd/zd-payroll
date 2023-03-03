@@ -28,7 +28,6 @@ function App() {
       ) : (
         <SideBar>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
             <Route path="/settings/salary/:id" element={<Salary />} />
             <Route path="/settings/profile" element={<AddEmployee />} />
             <Route path="/settings/manageprofile" element={<ManageEmpyee />} />
@@ -38,6 +37,7 @@ function App() {
             <Route path="/settings/leavedetails" element={<LeaveDetails />} />
             <Route path="/settings/userleavedetails/:id" element={<UserLeaveDetails />} />
             <Route path="/download/:id" element={<Downloadslip />} />
+            <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>
       )}

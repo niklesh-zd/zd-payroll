@@ -2,23 +2,32 @@ import React, { useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./loginpage.css";
+import axios from "axios";
+import host from "../pages/utils";
 
-function LoginPage({onLogin}) {
+function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
 
   const handleLogin = (event) => {
-    event.preventDefault();
     // handle login logic here
-    if (email === "admin@gmail.com" && password === "admin@123") {
-      // redirect to home page or do something else
-      onLogin();
-    } else {
-      // show error message
-      setShowError(true);
-    }
-
+    event.preventDefault();
+    axios
+      .post(`${host}/login/login/`, { email, password })
+      .then((res) => {
+        console.log("response", res.data);
+        if (res.data.message == "welcome admin") {
+            // redirect to home page or do something else
+            onLogin();
+        }else{
+          setShowError(true);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setShowError(true);
+      });
   };
 
   return (
