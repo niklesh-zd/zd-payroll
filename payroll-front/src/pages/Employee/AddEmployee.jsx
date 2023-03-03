@@ -16,10 +16,6 @@ function AddEmployee(props) {
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
-  const [inputValue, setInputValue] = useState("");
-  const [adharerrors, setEdharerrors] = useState('');
-  const [panerrors, setPanerrors] = useState('');
-  const [emailerrors, setEmailerrors] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -305,7 +301,7 @@ function AddEmployee(props) {
                         value={fields.email}
                         onChange={(e) => handleChange(e)}
                       />
-                      <div className="errorMsg">{emailerrors ? 'Email id is' + ' ' + emailerrors.slice(0,12): ''}</div>
+                      <div className="errorMsg">{errors.email}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -314,7 +310,7 @@ function AddEmployee(props) {
                         Date of Birth
                       </label>
                       <input
-                        // ref={dobDateInputRef}
+                        ref={dobDateInputRef}
                         type="date"
                         name="date_of_birth"
                         className="form-control small_date"
@@ -504,7 +500,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Pan Number"
                       ></input>
-                      <div className="errorMsg">{panerrors ?'Pan No. is' + ' ' + panerrors.slice(0,12): ''}</div>
+                      <div className="errorMsg">{errors.PAN_No}</div>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -518,7 +514,7 @@ function AddEmployee(props) {
                         className="form-control"
                         placeholder="Enter Aadhar"
                       ></input>
-                      <div className="errorMsg">{adharerrors ?'Aadhar No. is' + ' ' + adharerrors.slice(0,12): ''}</div>
+                      <div className="errorMsg">{errors.ADHAR}</div>
                     </div>
                   </div>
                 </div>

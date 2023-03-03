@@ -3,6 +3,7 @@ require('./app/utils/mongooseConnecter.util')
 const express = require("express");
 const app = express();
 const pdf_genearation = require("./pdf_generator/pdfGenerator")
+const path = require('path')
 
 const cors = require('cors');
 app.use(cors())
@@ -32,11 +33,17 @@ app.post('/slip', (req, res) =>{
   res.send("file downloaded successfully")
 })
 
+// read static files
+app.use(express.static(path.join(__dirname, './payroll-front/build')))
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, './payroll-front/build/index.html'))
+})
+
 const port = 7071;
 
 // Server start
 app.listen(port, () =>
-  console.log(`Server is running on http://0.0.0.0:${port}`)
+  console.log(`Server is running on ${port}`)
 );
 
 
