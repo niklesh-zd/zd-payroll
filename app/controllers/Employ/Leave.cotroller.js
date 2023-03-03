@@ -11,12 +11,9 @@ const Emp = require('../Employ/EmpInfo.cotroller');
 
 var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
 
-console.log(`month list length : ${month_array.length}`);
-
 class Leave {
     async Leave(req, res) {
 
-        console.log("Run ok");
         try {
 
             var { userid, leave_type, from_date,
@@ -25,49 +22,14 @@ class Leave {
 
             //date range validation
             const user_data = await LeaveModal.find({ userid: userid });
-            console.log(user_data)
             for (let i = 0; i < user_data.length; i++) {
-
-                console.log(moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
-                console.log(moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
-                console.log(moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
-                    && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD")))
-
                 if (
                     moment(from_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
-                    && moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
+                    || moment(to_date, "YYYY-MM-DD").isBetween(moment(user_data[i].from_date, "YYYY-MM-DD"), moment(user_data[i].to_date, "YYYY-MM-DD"))
                 ) {
                     return res.send({ message: "applied date range already exist." })
                 }
             }
-            let dates = [];
-            for (let i = 0; i < user_data.length; i++) {
-                const leave_from_date = user_data[i].from_date
-                const leave_to_date = user_data[i].to_date
-                console.log('leave_from_date', leave_from_date);
-                console.log('leave_to_date', leave_to_date);
-
-                let currentDate = new Date(leave_from_date);
-                let endDate = new Date(leave_to_date);
-
-                while (currentDate <= endDate) {
-                    const ifDuplicate = currentDate.toISOString().slice(0, 10)
-                    if (dates.includes(ifDuplicate)) {
-                        console.log('--------YES DUPLICATES', ifDuplicate);
-                        res.send({ message: "alredy exist  date." })
-                    }
-                    else {
-                        res.send({ message1: "alredy exist  date." })
-                    }
-                    dates.push(ifDuplicate);
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-                // console.log('dates',dates);
-            }
-            if (dates.includes()) {
-                res.send({ message: "alredy exist  date." })
-            }
-            // return
 
             const datelFind = await LeaveModal.findOne({
                 $and: [
@@ -143,7 +105,7 @@ class Leave {
             else {
 
                 const holiday = await HolidayModal.find({
-                    holiday_date: { $gte: from_date_split, $lte: to_date }
+                    holiday_date: { $gte: from_date, $lte: to_date }
                 });
                 var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave = diff_between_leaves_days - holiday.length
@@ -158,9 +120,9 @@ class Leave {
                 });
 
                 //STORE YOUR LOGIN DATA IN DB 
+                console.log(leave)
                 await leave.save();
             }
-            // console.log({ leave });
             res.status(200).send({ success: true })
 
         }
@@ -190,7 +152,6 @@ class Leave {
         }
     }
     async update_laeve(req, res) {
-        console.log('update runnig');
         if (!req.body) {
             return res.status(400).send({
                 message: "Data to update can not be empty!"
@@ -217,7 +178,6 @@ class Leave {
 
     async leave_delete(req, res) {
         try {
-            console.log(req.params.id);
             const userDelete = await LeaveModal.findByIdAndDelete(req.params.id)
             if (!userDelete) {
                 return res.status(404).send({ message: "This user not Exist." });
@@ -288,10 +248,6 @@ class Leave {
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
 
-            console.log(today)
-            console.log(from_date_)
-            console.log(to_date_)
-
             if (
                 today.isSameOrBefore(to_date_)
                 && today.isSameOrAfter(from_date_)
@@ -326,12 +282,6 @@ class Leave {
 
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
-
-            console.log(today)
-            console.log(from_date_)
-            console.log(to_date_)
-            console.log("\n\n\n\n")
-
 
             if (
                 yesterday.isSameOrBefore(to_date_)

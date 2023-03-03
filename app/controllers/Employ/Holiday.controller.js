@@ -7,8 +7,6 @@ const moment = require("moment")
 
 class Holiday {
     async holiday(req, res) {
-
-        console.log("Run ok");
         try {
 
             var { holiday_name, holiday_type, holiday_date,
@@ -54,9 +52,6 @@ class Holiday {
         try {
             var FromDate = req.body.from_date;
             var EndDate = req.body.end_date;
-            console.log(FromDate)
-            console.log(EndDate)
-            console.log('runnnig holiday..');
             HolidayModal.find({ holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } }
             ).sort({ _id: -1 }).then(function (employee) {
                 res.send(employee);
@@ -67,11 +62,8 @@ class Holiday {
     }
     async get_Fastival(req, res, next) {
         try {
-            console.log('runiin holiday');
             var FromDate = req.body.from_date;
             var EndDate = req.body.end_date;
-            console.log('-----------------', FromDate);
-            console.log(EndDate);
             $and: [
                 { age: { $gte: 25 } },
 
@@ -100,7 +92,6 @@ class Holiday {
         }
     }
     async update_holiday(req, res) {
-        console.log('update runnig');
         if (!req.body) {
             return res.status(400).send({
                 message: "Data to update can not be empty!"
@@ -126,7 +117,6 @@ class Holiday {
     }
     async holiday_delete(req, res) {
         try {
-            console.log(req.params.id);
             const userDelete = await HolidayModal.findByIdAndDelete(req.params.id)
 
             res.status(201).json({ message: "delete successfuly" });
