@@ -92,7 +92,7 @@ const Downloadslip = () => {
       <div className="btn float-end text-primary">
         <MdDownload onClick={Pdfdownload} size={30} />
       </div>
-        <TiArrowBack onClick={()=>{navigate("/settings/salary" + id)}} size={30} />
+        <TiArrowBack onClick={()=>{navigate("/settings/salary/" + id)}} size={30} />
           <div
             className="d-flex mt-1 container"
             id="pdf-download"

@@ -5,7 +5,6 @@ import DataTable from "react-data-table-component";
 import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
-import utils from "./../utils"
 import host from "./../utils";
 const ManageEmpyee = () => {
   const { id } = useParams();
@@ -13,13 +12,13 @@ const ManageEmpyee = () => {
   const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
   const LoadDetail = (_id) => {
-    navigate("/settings/EmpDetail" + _id);
+    navigate("/settings/EmpDetail/" + _id);
   };
   const generateSalary = (_id) => {
-    navigate("/settings/salary" + _id);
+    navigate("/settings/salary/" + _id);
   };
   const LoadEdit = (_id) => {
-    navigate("/settings/EmpEdit" + _id);
+    navigate("/settings/EmpEdit/" + _id);
   };
   useEffect(() => {
     window
