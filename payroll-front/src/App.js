@@ -13,6 +13,9 @@ import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
+import Loginpage from "./Auth/login";
+
+
 
 function App() {
   return (

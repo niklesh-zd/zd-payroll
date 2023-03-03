@@ -82,11 +82,13 @@ const Downloadslip = () => {
       jsPDF: { unit: "in", format: "Tabloid", orientation: "Landscape" },
     });
   };
+
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split('-');
     let newDate = `${day}-${month}-${year}`;
     return newDate;
   };
+
   return (
     <div>
       <div className="btn float-end text-primary">
@@ -119,7 +121,7 @@ const Downloadslip = () => {
                   <h3 className="fw-bold" style={{ color: "#3d85c6" }}>
                     ZecData
                   </h3>
-                  <h5 className="fw-bold text-dark">
+                  <h5 className="fw-bold text-dark h-8">
                     Payment slip for the month of
                     {" "+allMonthsName[fields.Salary_Slip_Month - 1]} {fields.Salary_Slip_Year}
                   </h5>
@@ -138,7 +140,7 @@ const Downloadslip = () => {
                         <span className="fw-bolder">Name </span>
                       </div>
                       <div className="col-md-5">
-                        <small>{fields.Employee_name}</small>
+                        <small>{fields.Employee_name.toUpperCase()}</small>
                       </div>
                     </div>
                     <div className="d-flex ml-5">
@@ -191,7 +193,7 @@ const Downloadslip = () => {
                   <div className="border-bottom h-20">
                     <div className="d-flex ml-5">
                       <div className="col-md-6">
-                        <span className="fw-bolder">EMP Code </span>
+                        <span className="fw-bolder">Employee Code. </span>
                       </div>
                       <div className="col-md-6">
                         <small className="fw-bolder">{fields.Employee_code}</small>
@@ -199,7 +201,7 @@ const Downloadslip = () => {
                     </div>
                     <div className="d-flex ml-5">
                       <div className="col-md-6">
-                        <span className="fw-bolder">Ac No. </span>
+                        <span className="fw-bolder">Bank A/c No. </span>
                       </div>  
                       <div className="col-md-6">
                         <sapn className="fw-bolder">{fields.Bank_Account_Number}</sapn>
@@ -327,7 +329,7 @@ const Downloadslip = () => {
                   <div className=" col-md-8 mt-2.5">
                     <div className="d-flex flex-column ml-1">
                       <small style={{ color: "#3d85c6", fontWeight: "bold" }}>
-                        {fields.Net_pay_in_words} Only
+                        {fields.Net_pay_in_words.toUpperCase()} ONLY
                       </small>
                       <br></br>
                     </div>
