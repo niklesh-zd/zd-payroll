@@ -14,10 +14,11 @@ const User_Schema = Schema({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
 
-    user_pass :{
+    user_password : {
         type: String,
-        required: 'password is required'
-    },
+        required: 'password is required',
+        minlength: 6,
+      },
 
 },
     {
