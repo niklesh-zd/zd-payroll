@@ -139,7 +139,7 @@ const Downloadslip = () => {
                       <div className="col-md-5">
                         <span className="fw-bolder">Name </span>
                       </div>
-                      <div className="col-md-5">
+                      <div className="col-md-7">
                         <small>{fields.Employee_name.toUpperCase()}</small>
                       </div>
                     </div>

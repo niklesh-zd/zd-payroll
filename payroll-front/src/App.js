@@ -13,8 +13,6 @@ import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
-import Loginpage from "./Auth/login";
-
 
 
 function App() {
@@ -33,8 +31,6 @@ function App() {
           <Route path="/settings/leavedetails" element={<LeaveDetails />} />
           <Route path="/settings/userleavedetails:id" element={<UserLeaveDetails />} />
           <Route path="/download:id" element={<Downloadslip />} />
-         
-          
         </Routes>
       </SideBar>
     </Router>

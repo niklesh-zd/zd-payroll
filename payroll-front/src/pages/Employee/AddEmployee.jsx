@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils"
-import {TiArrowBack} from "react-icons/ti"
+import { TiArrowBack } from "react-icons/ti"
 
 function AddEmployee(props) {
   console.log("props", props);
@@ -45,10 +45,10 @@ function AddEmployee(props) {
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-        ? "Pan Number already exiest"
-        : message == "alredy exist emails."
-        ? "Email already exiest"
-        : null,
+          ? "Pan Number already exiest"
+          : message == "alredy exist emails."
+            ? "Email already exiest"
+            : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -571,6 +571,7 @@ function AddEmployee(props) {
                             Choose Degree
                           </option>
                           <option>BCA</option>
+                          <option>MCA</option>
                           <option>B.Arch</option>
                           <option>BE/B.TECH</option>
                           <option>B.Sc</option>
@@ -609,6 +610,8 @@ function AddEmployee(props) {
                           type="text"
                           min="2"
                           max="50"
+                          style={{ textTransform: "capitalize" }}
+                          pattern="[a-zA-Z0-9\s]*"
                           name="STREAM"
                           value={fields.STREAM}
                           onChange={(e) => handleChange(e)}
