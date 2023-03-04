@@ -16,6 +16,8 @@ import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 
 function App() {
+  const token = localStorage.getItem('token');
+  console.log('---Token---',token);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
@@ -23,7 +25,7 @@ function App() {
   };
   return (
     <Router>
-      {!loggedIn ? (
+      {!token ? (
         <LoginPage onLogin={handleLogin} />
       ) : (
         <SideBar>
