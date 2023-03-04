@@ -17,8 +17,9 @@ function LoginPage({ onLogin }) {
       .post(`${host}/login/login/`, { email, password })
       .then((res) => {
         console.log("response", res.data);
-        if (res.data.message == "welcome admin") {
+        if (res.data.token) {
             // redirect to home page or do something else
+            localStorage.setItem('token', res.data.token);
             onLogin();
         }else{
           setShowError(true);

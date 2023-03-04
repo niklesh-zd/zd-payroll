@@ -36,6 +36,7 @@ const EmpDetail = () => {
   //   navigate("/settings/userleavedetails" + id);
   // };
   const img = emo
+  console.log('----empdata',empdata);
   const Removefunction = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -228,16 +229,24 @@ const EmpDetail = () => {
                 <p className="pmd-list-title">{empdata.Contact_Number_Home}</p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
-                <label className="pmd-list-subtitle">State</label>
-                <p className="pmd-list-title"><small href="" title="">mp</small></p>
+                <label className="pmd-list-subtitle">Current City</label>
+                <p className="pmd-list-title"><small>{empdata.current_city}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
-                <label className="pmd-list-subtitle">City</label>
-                <p className="pmd-list-title"><small>Indore</small></p>
+                <label className="pmd-list-subtitle">Current State</label>
+                <p className="pmd-list-title"><small>{empdata.current_state}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
                 <label className="pmd-list-subtitle">Current Address</label>
                 <p className="pmd-list-title"><small>{empdata.Current_Address}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Permanent City</label>
+                <p className="pmd-list-title"><small>{empdata.permanent_city}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Permanent State</label>
+                <p className="pmd-list-title"><small>{empdata.permanent_state}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
                 <label className="pmd-list-subtitle">Permanent Address</label>
