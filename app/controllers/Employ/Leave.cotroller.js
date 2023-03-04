@@ -72,7 +72,7 @@ class Leave {
                     holiday_date: { $gte: from_date, $lte: to_date_split }
                 });
                 var diff_between_leaves_days_1 = (moment(to_date_split, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
-                var total_leave_1 = diff_between_leaves_days_1 - holiday_1.length
+                var total_leave_1 = (diff_between_leaves_days_1 - holiday_1.length) * today
 
                 const leave_1 = new LeaveModal({
                     userid,
@@ -88,7 +88,7 @@ class Leave {
                     holiday_date: { $gte: from_date_split, $lte: to_date }
                 });
                 var diff_between_leaves_days_2 = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date_split, "YYYY-MM-DD"), "days")) + 1;
-                var total_leave_2 = diff_between_leaves_days_2 - holiday_2.length
+                var total_leave_2 = (diff_between_leaves_days_2 - holiday_2.length) * today
 
                 const leave_2 = new LeaveModal({
                     userid,
@@ -108,7 +108,7 @@ class Leave {
                     holiday_date: { $gte: from_date, $lte: to_date }
                 });
                 var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
-                var total_leave = diff_between_leaves_days - holiday.length
+                var total_leave = (diff_between_leaves_days - holiday.length) * today
 
                 const leave = new LeaveModal({
                     userid,
