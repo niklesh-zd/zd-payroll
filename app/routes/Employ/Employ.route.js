@@ -4,7 +4,7 @@
 const router = require("express").Router()
 const { add_employ, get_emlpoy, emp_delete,
     emp_update, get_one_emp, get_user_id
-    , udateStatus_emlpoy
+    , udateStatus_emlpoy,emp_soft_delete
 } = require('../../controllers/Employ/EmpInfo.cotroller')
 const { check } = require('express-validator');
 
@@ -26,7 +26,9 @@ check('Bank_No', 'Bank_No is required').not().isEmpty()
 
 router.get('/get_employ', get_emlpoy)
 
-router.post('/delete_emp/:id', emp_delete)
+router.post('/delete_emp/:id', emp_delete) // delete permanently
+
+router.post('/soft_delete_emp/:id', emp_soft_delete) // delete from main table but save in archieve table 
 
 router.post('/update/:id', emp_update)
 
