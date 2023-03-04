@@ -18,7 +18,6 @@ const Downloadslip = () => {
   const salaryYear = Number(location.state.salaryYear);
   const salaryMonthNumber = Number(location.state.salaryMonthNumber);
   const data = location.state.fields;
-
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);

@@ -35,12 +35,17 @@ class Salary {
         })
 
         empinfo_modal = empinfo_modal[0]
+        
+        console.log(req.body.overwrite_payslip)
 
-        if (Salary_Modal.length != 0 && !req.body.overwrite_slip){
+        console.log(Salary_Modal.length != 0 && !req.body.overwrite_payslip)
+        console.log(Salary_Modal.length != 0 && req.body.overwrite_payslip)
+
+        if (Salary_Modal.length != 0 && !req.body.overwrite_payslip){
             return res.send(Salary_Modal[0])
         }
-
-        else if (Salary_Modal.length != 0 && req.body.overwrite_slip){            
+        
+        else if (Salary_Modal.length != 0 && req.body.overwrite_payslip){            
 
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)){
 
