@@ -4,7 +4,7 @@ const { findOne } = require("../../models/Employ/Employ.model");
 const EmpInfoModal = require('../../models/Employ/Employ.model');
 const Emp_archInfoModal = require('../../models/Employ/Employ_arch_model')
 const { validationResult } = require('express-validator/check');
-
+const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
 
 class Emp {
@@ -30,6 +30,12 @@ class Emp {
                 console.log("err=>", errors.array());
                 res.send({ message: errors.array() })
             }
+
+            if (moment(date_of_joining).isAfter(effective_date)){
+                return res.send({message: "effective date is before date of joining"})
+            }
+
+
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
             const adhar = await EmpInfoModal.findOne({ ADHAR: ADHAR })
@@ -240,6 +246,10 @@ class Emp {
             return res.status(400).send({
                 message: "Data to update can not be empty!"
             });
+        }
+
+        if (moment(date_of_joining).isAfter(effective_date)){
+            return res.send({message: "effective date is before date of joining"})
         }
 
         const id = req.params.id;
