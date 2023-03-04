@@ -131,7 +131,7 @@ const Dashboard = () => {
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <h4 className="">Today Presents</h4>
+              <h4 className="">Today Present</h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>
                   <GiScales />
@@ -142,15 +142,12 @@ const Dashboard = () => {
               </h2>
             </div>
           </div>
-
-
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
             >
-              <h4 className="">Yesterday Absents</h4>
+              <h4 className="">Yesterday Absent</h4>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <h1>
                   <GiScales />

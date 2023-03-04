@@ -15,6 +15,7 @@ import Downloadslip from "./pages/Salary_slip/downloadslip";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -23,24 +24,21 @@ function App() {
   };
   return (
     <Router>
-      {!loggedIn ? (
-        <LoginPage onLogin={handleLogin} />
-      ) : (
-        <SideBar>
-          <Routes>
-            <Route path="/settings/salary/:id" element={<Salary />} />
-            <Route path="/settings/profile" element={<AddEmployee />} />
-            <Route path="/settings/manageprofile" element={<ManageEmpyee />} />
-            <Route path="/settings/EmpEdit/:id" element={<EmpEdit />} />
-            <Route path="/settings/EmpDetail/:id" element={<EmpDetail />} />
-            <Route path="/settings/leave" element={<Leaves />} />
-            <Route path="/settings/leavedetails" element={<LeaveDetails />} />
-            <Route path="/settings/userleavedetails/:id" element={<UserLeaveDetails />} />
-            <Route path="/download/:id" element={<Downloadslip />} />
-            <Route path="/" element={<Dashboard />} />
-          </Routes>
-        </SideBar>
-      )}
+      <SideBar>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/settings" element={<Logout />} />
+          <Route path="/settings/salary:id" element={<Salary/>} />
+          <Route path="/settings/profile" element={<AddEmployee/>} />
+          <Route path="/settings/manageprofile" element={<ManageEmpyee/>} />
+          <Route path="/settings/EmpEdit:id" element={<EmpEdit />} />
+          <Route path="/settings/EmpDetail:id" element={<EmpDetail/>} />
+          <Route path="/settings/leave" element={<Leaves />} />
+          <Route path="/settings/leavedetails" element={<LeaveDetails />} />
+          <Route path="/settings/userleavedetails:id" element={<UserLeaveDetails />} />
+          <Route path="/download:id" element={<Downloadslip />} />
+        </Routes>
+      </SideBar>
     </Router>
   );
 }
