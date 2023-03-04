@@ -14,7 +14,7 @@ const EmpDetail = () => {
   const [empdata, empdatachange] = useState({});
 
   const LoadEdit = () => {
-    navigate("/settings/EmpEdit" + id);
+    navigate("/settings/EmpEdit/" + id);
   };
   // const leaveNavigate = () => {
   //   navigate("/settings/userleavedetails" + id);
