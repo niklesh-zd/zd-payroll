@@ -67,10 +67,27 @@ const routes = [
       // },
     ],
   },
+  {
+    path: "/holiydays",
+    name: "Holydays",
+    icon: <FaCalendarCheck />,
+    subRoutes: [
+      {
+        path: "/add/holiyday",
+        name: "Add Holiydays",
+        icon: <FaClipboardList />,
+      },
+      {
+        path: "/holiydays",
+        name: "Holydays",
+        icon: <FaClipboard />,
+      },
+    ],
+  },
 ];
 
 const SideBar = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const inputAnimation = {
     hidden: {
