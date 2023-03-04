@@ -13,13 +13,13 @@ const ManageEmpyee = () => {
   const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
   const LoadDetail = (_id) => {
-    navigate("/settings/EmpDetail" + _id);
+    navigate("/employee/EmpDetail" + _id);
   };
   const generateSalary = (_id) => {
-    navigate("/settings/salary" + _id);
+    navigate("/employee/salary" + _id);
   };
   const LoadEdit = (_id) => {
-    navigate("/settings/EmpEdit" + _id);
+    navigate("/employee/EmpEdit" + _id);
   };
   useEffect(() => {
     window
@@ -148,7 +148,7 @@ const ManageEmpyee = () => {
                 <div style={{ display: "flex" }}>
                   <h4>Employees</h4>{" "}
                   <Link
-                    to="/settings/profile"
+                    to="/employee/profile"
                     className="btn btn-primary btn-sm ml-5 mr-5"
                   >
                     Add New (+)

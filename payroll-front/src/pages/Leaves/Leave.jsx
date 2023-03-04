@@ -80,7 +80,7 @@ const Leaves = () => {
             title: "Successful",
             text: "Leave Added Successfully!",
           }).then(() => {
-            navigate("/settings/leavedetails");
+            navigate("/employee/leavedetails");
           });
         } else {
           notify(response.data.message);
@@ -90,7 +90,7 @@ const Leaves = () => {
         console.error("There was an error!", error);
       });
   };
-  const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name,option:option.date_of_joining}));
+  const selectOptions = users.map(option => ({ value: option._id, label: `${option.First_Name} ${option.Employee_Code}`  ,option:option.date_of_joining}));
 
 //   const dojOptions = Doj.map(dojoption => ({ dateOfBirth: dojoption.Date_of_Joining}));
 // console.log('dojOptions',dojOptions);
@@ -102,7 +102,7 @@ const Leaves = () => {
         <ToastContainer />
         <form className="container" onSubmit={handlesubmit}>
           <div className="card m-5 p-3">
-            <Link to="/settings/leavedetails">
+            <Link to="/employee/leavedetails">
               <TiArrowBack size={25} />
             </Link>
             <div className="card-title" style={{ textAlign: "center" }}>

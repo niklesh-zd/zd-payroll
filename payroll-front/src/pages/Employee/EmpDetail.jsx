@@ -14,10 +14,10 @@ const EmpDetail = () => {
   const [empdata, empdatachange] = useState({});
 
   const LoadEdit = () => {
-    navigate("/settings/EmpEdit" + id);
+    navigate("/employee/EmpEdit" + id);
   };
   // const leaveNavigate = () => {
-  //   navigate("/settings/userleavedetails" + id);
+  //   navigate("/employee/userleavedetails" + id);
   // };
   useEffect(() => {
     fetch(`${host}/emp/emp_1/` + id)
@@ -33,7 +33,7 @@ const EmpDetail = () => {
       });
   }, []);
   // const leaveNavigate = () => {
-  //   navigate("/settings/userleavedetails" + id);
+  //   navigate("/employee/userleavedetails" + id);
   // };
   const img = emo
   const Removefunction = () => {
@@ -57,7 +57,7 @@ const EmpDetail = () => {
               "Your file has been deleted.",
               "success"
             ).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           })
           .catch((err) => {
@@ -85,7 +85,7 @@ const EmpDetail = () => {
               >
                 <div className="flex">
                   <Link
-                    to="/settings/manageprofile" className="btn text-primary">
+                    to="/employee/manageprofile" className="btn text-primary">
                     <TiArrowBack size={30} />
                   </Link>
                 </div>

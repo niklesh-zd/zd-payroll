@@ -76,7 +76,7 @@ function AddEmployee(props) {
               title: "Successful",
               text: "Employee Successfully Created!",
             }).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           } else {
             notify(response.data.message);
@@ -103,7 +103,7 @@ function AddEmployee(props) {
               title: "Successful",
               text: "Employee Successfully Updated!",
             }).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           }
         })
@@ -137,7 +137,7 @@ function AddEmployee(props) {
   const handleInput = (event) => {
     const { value, selectionStart, selectionEnd } = event.target;
     const sanitizedValue = value.replace(
-      /[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g,
+      /[!@#$%^&*()1234567890;:'"?/{}><,.=_-]/,
       ""
     );
     event.target.value = sanitizedValue;
@@ -145,10 +145,10 @@ function AddEmployee(props) {
   };
   return (
     <div className="">
-      <Link to="/settings/manageprofile" className="btn text-dark">
+      <Link to="/employee/manageprofile" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
-      <form style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <ToastContainer />
         <div className="px-4 pt-5">
           <div className="row gx-12">
@@ -182,7 +182,6 @@ function AddEmployee(props) {
                     <div className="form-group">
                       <label className="profile_details_text">First Name</label>
                       <input
-                        pattern="[a-zA-Z0-9\s]*"
                         onInput={handleInput}
                         type="text"
                         style={{ textTransform: "capitalize" }}
@@ -873,7 +872,7 @@ function AddEmployee(props) {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
