@@ -19,7 +19,7 @@ check('Contact_Number_Home', 'Contact_Number_Home is required').not().isEmpty(),
 check('Contact_Number', 'Contact_Number is required').not().isEmpty(),
 // check('Permanent_Address ',' Permanent_Address is required').not().isEmpty(),
 check('fatherName', 'fatherName is required').not().isEmpty(),
-check('PAN_No', 'PAN_No is required').not().isEmpty(),
+check('PAN_No', 'PAN_No is required').not().isEmpty().isLength({ min: 10, max: 10 }, 'invalid pan number'),,
 check('ADHAR', 'ADHAR  is valid').not().isEmpty().isLength({ min: 12, max: 12 }, 'invalid adhar number'),
 check('Bank_No', 'Bank_No is required').not().isEmpty()
 ], add_employ)
