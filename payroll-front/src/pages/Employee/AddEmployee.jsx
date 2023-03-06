@@ -8,7 +8,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils"
 import { TiArrowBack } from "react-icons/ti"
-import { parseISO, startOfDay } from 'date-fns';
 
 function AddEmployee(props) {
   console.log("props", props);
@@ -17,6 +16,7 @@ function AddEmployee(props) {
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
+  const [submitDisable, setSubmitDisable] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,6 +67,7 @@ function AddEmployee(props) {
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
+      setSubmitDisable(true)
       axios
         .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
@@ -94,6 +95,7 @@ function AddEmployee(props) {
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
+      setSubmitDisable(true)
       axios
         .post(`${host}/emp/update/` + props.data._id, fields)
         .then((response) => {
@@ -862,6 +864,7 @@ function AddEmployee(props) {
               <div className="form-group text-center">
                 {props.data ? (
                   <input
+                    disabled={submitDisable}
                     type="submit"
                     value="Update"
                     className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
@@ -869,6 +872,7 @@ function AddEmployee(props) {
                   />
                 ) : (
                   <input
+                    disabled={submitDisable}
                     type="submit"
                     value="Submit"
                     className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"

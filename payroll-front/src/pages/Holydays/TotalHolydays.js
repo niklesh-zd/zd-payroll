@@ -109,9 +109,6 @@ function TotalHolydays() {
 
   return (
     <div>
-      {/* <Link to="/Holydays" className="btn text-dark">
-        <TiArrowBack size={30} />
-      </Link> */}
       <div>
         <div className="ml-5 mr-5">
           <DataTable
