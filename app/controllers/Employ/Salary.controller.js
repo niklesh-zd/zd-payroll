@@ -6,7 +6,7 @@ const SalaryModal = require('../../models/Employ/Salary.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model');
 const HolidayModal = require('../../models/Employ/Holiday.modal')
 const LeaveModal = require('../../models/Employ/leave.modal')
-const yearModal = require('../../models/Employ/Salary.modal')
+const yearModal = require('../../models/Employ/Year_Leave.modal')
 const ObjectId = require("mongodb").ObjectId;
 const moment = require("moment");
 const { request } = require("express");
@@ -15,22 +15,15 @@ var convertRupeesIntoWords = require('convert-rupees-into-words');
 var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
 
 class Salary {
-    async year_leave(req, res) {
-        var year = req.body.year
-        var leave = req.body.leave
-        const yearLeave = new yearModal({
-            year,
-            leave
-        })
-        await yearLeave.save();
-        console.log({ yearLeave });
-        res.send({ message: "Success " });
-    }
-    async get_year_leave(req, res, next) {
+
+
+
+    async get_salary(req, res, next) {
         try {
-            yearModal.findOne({ year: req.body.year })
+            yearModal.findOne({ year: req.query.year })
                 .then(function (leave) {
                     res.send(leave);
+                    console.log(leave.leave);
                 }).catch(next);
 
         }
@@ -43,35 +36,25 @@ class Salary {
         var user_id = req.query.userid;
         var year = req.query.year;
         var month = req.query.month
+
         if (!req.query.userid || !req.query.year || !req.query.month) {
             return res.send({ message: "Please fill in all fields." });
         }
-
-
         var Salary_Modal = await SalaryModal.find({
             userid: req.query.userid,
             Salary_Slip_Year: req.query.year,
             Salary_Slip_Month: req.query.month,
         })
         var leave_balence_year
-        if (year == "2022") {
-            leave_balence_year = 2
-        }
-        if (year == "2023") {
-            leave_balence_year = 1
-        }
-        if (year == "2024") {
-            leave_balence_year = 1
-        }
-        if (year == "2025") {
-            leave_balence_year = 1
-        }
-
         var empinfo_modal = await EmpInfoModal.find({
             _id: req.query.userid
         })
+        var year_leave_ = await yearModal.find({ year: req.query.year })
+        console.log(year_leave_[0].leave, '.................');
+        leave_balence_year = year_leave_[0].leave
         console.log(Salary_Modal);
         empinfo_modal = empinfo_modal[0]
+        // return
 
         if (Salary_Modal.length != 0 && !req.body.overwrite_slip) {
             return res.send(Salary_Modal[0])
@@ -354,7 +337,7 @@ class Salary {
             res.status(200).send({ success: true, 'salary': salary })
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() <= 5) {
+        else if (Salary_Modal.length == 0 && moment().date() >= 5) {
 
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)) {
 
@@ -631,18 +614,18 @@ class Salary {
     }
 
 
-    async get_salary(req, res, next) {
-        try {
-            SalaryModal.find({})
-                .then(function (leave) {
-                    res.send(leave);
-                }).catch(next);
+    // async get_salary(req, res, next) {
+    //     try {
+    //         SalaryModal.find({})
+    //             .then(function (leave) {
+    //                 res.send(leave);
+    //             }).catch(next);
 
-        }
-        catch (err) {
-            res.send({ "error": err })
-        }
-    }
+    //     }
+    //     catch (err) {
+    //         res.send({ "error": err })
+    //     }
+    // }
     async update_salary(req, res) {
         if (!req.body) {
             return res.status(400).send({

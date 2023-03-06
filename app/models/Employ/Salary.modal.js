@@ -142,33 +142,14 @@ const Salary = Schema({
     },
 
 )
-const year_Leave = Schema({
 
-    year
-        : {
-        type: Date,
-        required: true,
-
-    },
-    leave: {
-        type: Number,
-        required: true,
-    },
-
-},
-
-    {
-        timestamps: true
-    },
-)
 
 // collection creation 
 const SalaryModal = model('SALARY', Salary, "salary");
-const yearModal = model('YEAR_LEAVE', year_Leave, 'year_Leave')
 
 
 
 
 
-module.exports = (SalaryModal, yearModal);
+module.exports = SalaryModal;
 
