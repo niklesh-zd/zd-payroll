@@ -8,7 +8,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils"
 import { TiArrowBack } from "react-icons/ti"
-import { parseISO, startOfDay } from 'date-fns';
 
 function AddEmployee(props) {
   console.log("props", props);

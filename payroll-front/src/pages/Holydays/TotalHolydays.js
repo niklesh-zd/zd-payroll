@@ -174,7 +174,7 @@ function TotalHolydays() {
             Close
           </Button>
           <Button variant="primary" onClick={(e)=>handleHoliydaySubmit(e)}>
-            Save Changes
+            Add
           </Button>
         </Modal.Footer>
       </Modal>
