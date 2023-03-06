@@ -54,7 +54,7 @@ function LeaveDetails() {
       sortable: true,
     },
     {
-      name: "createdAt",
+      name: "CreatedAt",
       selector: "createdAt",
       sortable: true,
     },
@@ -144,7 +144,7 @@ function LeaveDetails() {
     <div>
 
       <Link
-        to="/settings/manageprofile" className="btn text-dark">
+        to="/employee/manageprofile" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <div>
@@ -162,7 +162,7 @@ function LeaveDetails() {
                 <div style={{ display: "flex" }}>
                   <h4>Leaves Details</h4>{" "}
                   <Link
-                    to="/settings/leave"
+                    to="/employee/leave"
                     className="btn btn-primary btn-sm ml-5 mr-5"
                   >
                     Add Leave (+)
