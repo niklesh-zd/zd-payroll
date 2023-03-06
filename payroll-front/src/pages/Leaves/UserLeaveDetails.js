@@ -100,7 +100,7 @@ function UserLeaveDetails() {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <h4>Leaves Details</h4>{" "}
                 <Link
-                  to="/settings/leave"
+                  to="/employee/leave"
                   className="btn btn-primary btn-sm ml-5 mr-5"
                 >
                   Add Leave (+)
