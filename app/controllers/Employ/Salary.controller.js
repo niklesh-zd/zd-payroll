@@ -26,6 +26,19 @@ class Salary {
         console.log({ yearLeave });
         res.send({ message: "Success " });
     }
+    async get_year_leave(req, res, next) {
+        try {
+            yearModal.findOne({ year: req.body.year })
+                .then(function (leave) {
+                    res.send(leave);
+                }).catch(next);
+
+        }
+        catch (err) {
+            res.send({ "error": err })
+        }
+    }
+
     async salary_(req, res, next) {
         var user_id = req.query.userid;
         var year = req.query.year;
@@ -40,7 +53,6 @@ class Salary {
             Salary_Slip_Year: req.query.year,
             Salary_Slip_Month: req.query.month,
         })
-        console.log('salary-api', year, '---');
         var leave_balence_year
         if (year == "2022") {
             leave_balence_year = 2
