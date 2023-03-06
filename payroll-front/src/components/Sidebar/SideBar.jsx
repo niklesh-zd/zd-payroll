@@ -71,18 +71,6 @@ const routes = [
     path: "/holiydays",
     name: "Holydays",
     icon: <FaCalendarCheck />,
-    subRoutes: [
-      {
-        path: "/add/holiyday",
-        name: "Add Holiydays",
-        icon: <FaClipboardList />,
-      },
-      {
-        path: "/holiydays",
-        name: "Holydays",
-        icon: <FaClipboard />,
-      },
-    ],
   },
 ];
 

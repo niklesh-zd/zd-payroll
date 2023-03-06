@@ -4,12 +4,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
+import { Modal, Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import host from "./../utils";
 
 function TotalHolydays() {
   const [totalHolydays, setTotalHolydays] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [show, setShow] = useState(false);
+  const [fields, setFields] = useState({});
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleOnchange = (e) =>{
+    let fieldObj = { ...fields };
+    fieldObj[e.target.name] = e.target.value;
+    setFields(fieldObj);
+  }
   var columns = [
     {
       name: "Holyday Name",
@@ -60,19 +71,22 @@ function TotalHolydays() {
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), 0, 1);
     const lastDay = new Date(today.getFullYear(), 11, 31);
-    const datesobject = { from_date: formatDate(firstDay), end_date: formatDate(lastDay) };
+    const datesobject = {
+      from_date: formatDate(firstDay),
+      end_date: formatDate(lastDay),
+    };
     axios
       .post(`${host}/Holiday/get-fastival`, datesobject)
       .then((res) => {
-        const filterArr = []
-        res.data.map((e)=>{
-            filterArr.push({
-                holiday_date: new Date(e.holiday_date ).toLocaleDateString("pt-PT"),
-                holiday_name: e.holiday_name,
-                holiday_type: e.holiday_type,
-                createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
-            })
-        })
+        const filterArr = [];
+        res.data.map((e) => {
+          filterArr.push({
+            holiday_date: new Date(e.holiday_date).toLocaleDateString("pt-PT"),
+            holiday_name: e.holiday_name,
+            holiday_type: e.holiday_type,
+            createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
+          });
+        });
         setTotalHolydays(filterArr);
       })
       .catch((err) => {
@@ -81,19 +95,23 @@ function TotalHolydays() {
   }, []);
 
   const deleteHolyday = () => {};
+  const handleHoliydaySubmit = (e) => {
+    e.preventDefault()
+    console.log("fields",fields);
+  };
   const filteredData = totalHolydays.filter((row) => {
-     return (
-        row.holiday_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        row.holiday_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        row.holiday_date.toLowerCase().includes(searchTerm.toLowerCase()) 
-        )
+    return (
+      row.holiday_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.holiday_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.holiday_date.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   });
 
   return (
     <div>
-      <Link to="/Holydays" className="btn text-dark">
+      {/* <Link to="/Holydays" className="btn text-dark">
         <TiArrowBack size={30} />
-      </Link>
+      </Link> */}
       <div>
         <div className="ml-5 mr-5">
           <DataTable
@@ -107,12 +125,9 @@ function TotalHolydays() {
               >
                 <div style={{ display: "flex" }}>
                   <h4>Holydays</h4>{" "}
-                  <Link
-                    to="/add/holiyday"
-                    className="btn btn-primary btn-sm ml-5 mr-5"
-                  >
-                    Add Holyday (+)
-                  </Link>
+                  <Button variant="primary" onClick={handleShow}>
+                  Add Holyday (+)
+                  </Button>
                 </div>
                 <div>
                   <input
@@ -133,6 +148,36 @@ function TotalHolydays() {
           />
         </div>
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Holiday</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Holiyday Name</Form.Label>
+              <Form.Control type="text" name="holiday_name" placeholder="Enter Holiday Name" onChange={(e)=>handleOnchange(e)}/>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Holiyday Type</Form.Label>
+              <Form.Control type="" name="holiday_type" placeholder="Enter Holiday Type" onChange={(e)=>handleOnchange(e)}/>
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Holiyday Date</Form.Label>
+              <Form.Control type="date" name="holiday_date" placeholder="Select Holiday Date" onChange={(e)=>handleOnchange(e)}/>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={(e)=>handleHoliydaySubmit(e)}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
