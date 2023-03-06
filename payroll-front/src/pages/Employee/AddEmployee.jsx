@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils"
 import { TiArrowBack } from "react-icons/ti"
+import { parseISO, startOfDay } from 'date-fns';
 
 function AddEmployee(props) {
   console.log("props", props);
@@ -143,6 +144,11 @@ function AddEmployee(props) {
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
+
+
+
+
+  // startOfDay(parseISO(fields.Date_of_Joining))
   return (
     <div className="">
       <Link to="/employee/manageprofile" className="btn text-dark">
@@ -314,7 +320,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control small_date"
                         placeholder="Date of Birth"
-                        value={new Date(fields.date_of_birth).toLocaleDateString("en-CA")}
+                        value={fields.date_of_birth?.substring(0, 10)} 
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
@@ -341,9 +347,10 @@ function AddEmployee(props) {
                         name="date_of_joining"
                         className="form-control small_date"
                         placeholder="Date Of Joining"
-                        value={new Date(fields.date_of_joining).toLocaleDateString("en-CA")}
+                        value={fields.date_of_joining?.substring(0, 10)} 
                         onChange={(e) => handleChange(e)}
                       />
+
                     </div>
                     <div className="errorMsg">{errors.date_of_joining}</div>
                   </div>
