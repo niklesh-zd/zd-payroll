@@ -15,6 +15,7 @@ const Leaves = () => {
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [Doj, setDoj] = useState([]);
+  const [submitDisable, setSubmitDisable] = useState(false);
 
   const [disableToDate, setDisableToDate] = useState(true);
   const [errors, setErrors] = useState({});
@@ -75,6 +76,7 @@ const Leaves = () => {
     console.log('validationErrors',validationErrors);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
+      setSubmitDisable(true);
     axios
       .post(`${host}/Emp_Leave/leave`, leavesData)
       .then((response) => {
@@ -96,7 +98,7 @@ const Leaves = () => {
       });
     }
   };
-  const selectOptions = users.map(option => ({ value: option._id, label: `${option.First_Name} ${option.Employee_Code}`  ,option:option.date_of_joining}));
+  const selectOptions = users.map(option => ({ value: option._id, label: `${option.First_Name} - ${option.Employee_Code}`  ,option:option.date_of_joining}));
 
 //   const dojOptions = Doj.map(dojoption => ({ dateOfBirth: dojoption.Date_of_Joining}));
 // console.log('dojOptions',dojOptions);
@@ -206,6 +208,7 @@ const Leaves = () => {
               <div className="submit pt-8">
                 <div className="form-group">
                   <input
+                    disabled={submitDisable}
                     type="submit"
                     value="Add"
                     className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-success"
