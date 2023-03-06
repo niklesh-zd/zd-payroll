@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils";
 import Select from 'react-select';
+import { leaveValidateForm } from "./leaveValidation";
 
 const Leaves = () => {
   let navigate = useNavigate();
@@ -14,6 +15,7 @@ const Leaves = () => {
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
   const [disableToDate, setDisableToDate] = useState(true);
+  const [errors, setErrors] = useState({});
   var leavesObj = {}
   const handleChange = (e) => {
     leavesObj = { ...leavesData };
@@ -64,7 +66,10 @@ const Leaves = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log("0000");
+    const validationErrors = leaveValidateForm(leavesData)
+    console.log('validationErrors',validationErrors);
+    setErrors(validationErrors.errObj);
+    if (validationErrors && validationErrors.formIsValid) {
     axios
       .post(`${host}/Emp_Leave/leave`, leavesData)
       .then((response) => {
@@ -84,6 +89,7 @@ const Leaves = () => {
       .catch((error) => {
         console.error("There was an error!", error);
       });
+    }
   };
   const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name }));
 
@@ -105,30 +111,13 @@ const Leaves = () => {
                   <label className="profile_details_text">
                     Select Employee Name
                   </label>
-                  {/* <select
-                    name="userid"
-                    className="form-control"
-                    value={leavesData.userid}
-                    placeholder="Select Employee"
-                    onChange={(e) => handleChange(e)}
-                  >
-                    <option value="" disabled={true} selected={true}>
-                      select Employee
-                    </option>
-                    {users.map((u) => {
-                      return (
-                        <option value={u._id} key={u._id}>
-                          {u.First_Name}
-                        </option>
-                      );
-                    })}
-                  </select> */}
                   <Select
                     options={selectOptions}
                     isSearchable={true}
                     placeholder="Select Employee"
                     onChange={(e) => handleSelectChange(e)}
                   />
+                  <div className="errorMsg">{errors.userid}</div>
                 </div>
               </div>
             </div>
@@ -143,6 +132,7 @@ const Leaves = () => {
                     onChange={(e) => handleChange(e)}
                     className="form-control"
                   ></input>
+                  <div className="errorMsg">{errors.from_date}</div>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -157,6 +147,7 @@ const Leaves = () => {
                     onChange={(e) => handleChange(e)}
                     className="form-control"
                   ></input>
+                  <div className="errorMsg">{errors.to_date}</div>
                 </div>
               </div>
             </div>
@@ -178,6 +169,7 @@ const Leaves = () => {
                     <option>Casual Leave</option>
                     <option>Compensatory Leave</option>
                   </select>
+                  <div className="errorMsg">{errors.reason_for_leave}</div>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -196,6 +188,7 @@ const Leaves = () => {
                     <option value="full">Full Day</option>
                     <option value="half">Half Day</option>
                   </select>
+                  <div className="errorMsg">{errors.leave_type}</div>
                 </div>
               </div>
             </div>

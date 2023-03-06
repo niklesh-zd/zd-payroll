@@ -79,7 +79,7 @@ export function validateForm(fields) {
   }
   let emailRegex =
     /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!fields.email || !emailRegex.test(fields.email)) {
+  if (!fields.email) {
     errObj["email"] = "*Please Enter Valid Email.";
     formIsValid = false;
   }
@@ -108,7 +108,7 @@ export function validateForm(fields) {
     formIsValid = false;
   }
   if (!fields.Bank_IFSC || fields.Bank_IFSC.length != 11) {
-    errObj["Bank_IFSC"] = "*Please Enter Bank IFSC.";
+    errObj["Bank_IFSC"] = "*Please Enter Valid Bank IFSC.";
     formIsValid = false;
   }
   if (
@@ -116,15 +116,15 @@ export function validateForm(fields) {
     fields.Bank_No.toString().length < 9 ||
     fields.Bank_No.toString().length > 17
   ) {
-    errObj["Bank_No"] = "*Please Enter Bank Number.";
+    errObj["Bank_No"] = "*Please Enter Valid Bank Number.";
     formIsValid = false;
   }
   if (!fields.PAN_No || fields.PAN_No.toString().length != 10) {
-    errObj["PAN_No"] = "*Please Enter Pan Number.";
+    errObj["PAN_No"] = "*Please Enter Valid Pan Number.";
     formIsValid = false;
   }
   if (!fields.ADHAR || fields.ADHAR.toString().length != 12) {
-    errObj["ADHAR"] = "*Please Enter Aadhar Number.";
+    errObj["ADHAR"] = "*Please Enter Valid Aadhar Number.";
     formIsValid = false;
   }
   if (!fields.DEGREE || fields.DEGREE == "") {

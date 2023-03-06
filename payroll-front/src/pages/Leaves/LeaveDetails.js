@@ -139,7 +139,7 @@ function LeaveDetails() {
       row.First_Name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
-  console.log("----", empLeaveData);
+
   return (
     <div>
 

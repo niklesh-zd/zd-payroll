@@ -311,7 +311,7 @@ class Salary {
             res.status(200).send({ success: true, 'salary' : salary }) 
         }
 
-        else if (Salary_Modal.length == 0 && moment().date() <= 5){            
+        else if (Salary_Modal.length == 0 && moment().date() >= 5){            
 
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)){
 

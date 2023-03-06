@@ -14,6 +14,7 @@ import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
+import TotalHolydays from "./pages/Holydays/TotalHolydays";
 
 function App() {
   const token = localStorage.getItem('token');
@@ -39,6 +40,7 @@ function App() {
             <Route path="/settings/leavedetails" element={<LeaveDetails />} />
             <Route path="/settings/userleavedetails/:id" element={<UserLeaveDetails />} />
             <Route path="/download/:id" element={<Downloadslip />} />
+            <Route path="/holiydays" element={<TotalHolydays />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>
