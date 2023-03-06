@@ -21,6 +21,7 @@ app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
 app.use("/Emp_Salary",require("./app/routes/Employ/Salary.route"))
 app.use("/Holiday",require("./app/routes/Employ/Holiday.route"))
 app.use("/login",require("./app/routes/Employ/login.route"))
+app.use("/year",require("./app/routes/Employ/Year_Leave.route"))
 
 
 app.get('/slip', (req, res) =>{
