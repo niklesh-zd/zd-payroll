@@ -1,0 +1,21 @@
+name: Node.js CD to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_package:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+   
+   
+
