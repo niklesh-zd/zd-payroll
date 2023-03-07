@@ -9,13 +9,11 @@ const cors = require('cors');
 app.use(cors())
 require('dotenv').config();
 
-app.get("/", (req, res) => {
-  res.send("Welcome every one....")
-});
 
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
      
+app.use("/", require("./app/routes/Employ/Employ.route"));
 app.use("/emp", require("./app/routes/Employ/Employ.route"));
 app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
 app.use("/Emp_Salary",require("./app/routes/Employ/Salary.route"))
