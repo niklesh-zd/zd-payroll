@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils"
-import {TiArrowBack} from "react-icons/ti"
+import { TiArrowBack } from "react-icons/ti"
 
 function AddEmployee(props) {
   console.log("props", props);
@@ -16,6 +16,7 @@ function AddEmployee(props) {
   const dojDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
+  const [submitDisable, setSubmitDisable] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,10 +46,10 @@ function AddEmployee(props) {
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-        ? "Pan Number already exiest"
-        : message == "alredy exist emails."
-        ? "Email already exiest"
-        : null,
+          ? "Pan Number already exiest"
+          : message == "alredy exist emails."
+            ? "Email already exiest"
+            : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -66,6 +67,7 @@ function AddEmployee(props) {
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
+      setSubmitDisable(true)
       axios
         .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
@@ -76,7 +78,7 @@ function AddEmployee(props) {
               title: "Successful",
               text: "Employee Successfully Created!",
             }).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           } else {
             notify(response.data.message);
@@ -93,6 +95,7 @@ function AddEmployee(props) {
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
+      setSubmitDisable(true)
       axios
         .post(`${host}/emp/update/` + props.data._id, fields)
         .then((response) => {
@@ -103,7 +106,7 @@ function AddEmployee(props) {
               title: "Successful",
               text: "Employee Successfully Updated!",
             }).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           }
         })
@@ -137,18 +140,23 @@ function AddEmployee(props) {
   const handleInput = (event) => {
     const { value, selectionStart, selectionEnd } = event.target;
     const sanitizedValue = value.replace(
-      /[!@#$%^&*()1234567890;:'"?/{}><,.+=-_-]/g,
+      /[!@#$%^&*()1234567890;:'"?/{}><,.=_-]/,
       ""
     );
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
+
+
+
+
+  // startOfDay(parseISO(fields.Date_of_Joining))
   return (
     <div className="">
-      <Link to="/settings/manageprofile" className="btn text-dark">
+      <Link to="/employee/manageprofile" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
-      <form style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <ToastContainer />
         <div className="px-4 pt-5">
           <div className="row gx-12">
@@ -182,7 +190,6 @@ function AddEmployee(props) {
                     <div className="form-group">
                       <label className="profile_details_text">First Name</label>
                       <input
-                        pattern="[a-zA-Z0-9\s]*"
                         onInput={handleInput}
                         type="text"
                         style={{ textTransform: "capitalize" }}
@@ -315,7 +322,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control small_date"
                         placeholder="Date of Birth"
-                        value={new Date(fields.date_of_birth).toLocaleDateString("en-CA")}
+                        value={fields.date_of_birth?.substring(0, 10)} 
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
@@ -337,14 +344,15 @@ function AddEmployee(props) {
                         Date of Joining:
                       </label>
                       <input
-                        // ref={dojDateInputRef}
+                        min="2020-01-01"
                         type="date"
                         name="date_of_joining"
                         className="form-control small_date"
                         placeholder="Date Of Joining"
-                        value={new Date(fields.date_of_joining).toLocaleDateString("en-CA")}
+                        value={fields.date_of_joining?.substring(0, 10)} 
                         onChange={(e) => handleChange(e)}
                       />
+
                     </div>
                     <div className="errorMsg">{errors.date_of_joining}</div>
                   </div>
@@ -571,6 +579,7 @@ function AddEmployee(props) {
                             Choose Degree
                           </option>
                           <option>BCA</option>
+                          <option>MCA</option>
                           <option>B.Arch</option>
                           <option>BE/B.TECH</option>
                           <option>B.Sc</option>
@@ -609,6 +618,8 @@ function AddEmployee(props) {
                           type="text"
                           min="2"
                           max="50"
+                          style={{ textTransform: "capitalize" }}
+                          pattern="[a-zA-Z0-9\s]*"
                           name="STREAM"
                           value={fields.STREAM}
                           onChange={(e) => handleChange(e)}
@@ -853,6 +864,7 @@ function AddEmployee(props) {
               <div className="form-group text-center">
                 {props.data ? (
                   <input
+                    disabled={submitDisable}
                     type="submit"
                     value="Update"
                     className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
@@ -860,6 +872,7 @@ function AddEmployee(props) {
                   />
                 ) : (
                   <input
+                    disabled={submitDisable}
                     type="submit"
                     value="Submit"
                     className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4 btn btn-success"
@@ -870,7 +883,7 @@ function AddEmployee(props) {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

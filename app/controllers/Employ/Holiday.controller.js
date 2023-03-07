@@ -77,7 +77,7 @@ class Holiday {
                             { holiday_type: 'Festival' },
                             { holiday_type: 'independence day' },
                             { holiday_type: ' gandhi jayanti' },
-                            { holiday_type: ' public holiday' }
+                            {holiday_type:'public holiday'}
                         ]
                     }
 
