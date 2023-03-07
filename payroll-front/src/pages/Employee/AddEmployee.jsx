@@ -14,6 +14,7 @@ function AddEmployee(props) {
   var propsObject = props.data;
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
+  const effectiveDateInputRef = useRef(null);
   const [fields, setFields] = useState({});
   const [errors, setErrors] = useState({});
   const [submitDisable, setSubmitDisable] = useState(false);
@@ -37,6 +38,10 @@ function AddEmployee(props) {
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
+    if (effectiveDateInputRef.current) {
+      const today = new Date(fieldObj.date_of_joining).toISOString().split("T")[0];
+      effectiveDateInputRef.current.setAttribute("min", today);
+    }
     setFields(fieldObj);
   }
 
@@ -71,7 +76,7 @@ function AddEmployee(props) {
       axios
         .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
-          console.log("success", response.data.message);
+          console.log("success", response.data);
           if (response.data.message == "Success ") {
             Swal.fire({
               icon: "success",
@@ -81,6 +86,7 @@ function AddEmployee(props) {
               navigate("/employee/manageprofile");
             });
           } else {
+            setSubmitDisable(false)
             notify(response.data.message);
           }
         })
@@ -108,6 +114,9 @@ function AddEmployee(props) {
             }).then(() => {
               navigate("/employee/manageprofile");
             });
+          }else{
+            setSubmitDisable(false)
+            notify(response.data.message);
           }
         })
         .catch((error) => {
@@ -149,8 +158,6 @@ function AddEmployee(props) {
 
 
 
-
-  // startOfDay(parseISO(fields.Date_of_Joining))
   return (
     <div className="">
       <Link to="/employee/manageprofile" className="btn text-dark">
@@ -546,6 +553,7 @@ function AddEmployee(props) {
                     <div className="form-group">
                       <label>Effective Date</label>
                       <input
+                        ref={effectiveDateInputRef}
                         type="date"
                         name="effective_date"
                         value={fields.effective_date}
