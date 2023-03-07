@@ -6,48 +6,25 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils";
-import Select from 'react-select';
 
 const Year_Leave = () => {
     let navigate = useNavigate();
-    const toDateInputRef = useRef(null);
     const [leavesData, setLeavesData] = useState({});
-    const [users, setUsers] = useState([]);
-    const [disableToDate, setDisableToDate] = useState(true);
     var leavesObj = {}
     const handleChange = (e) => {
         leavesObj = { ...leavesData };
         leavesObj[e.target.name] = e.target.value;
-        if (leavesObj.from_date) {
-            setDisableToDate(false);
-            if (toDateInputRef.current) {
-                const today = new Date(leavesObj.from_date).toISOString().split("T")[0];
-                toDateInputRef.current.setAttribute("min", today);
-            }
-        }
+        // if (leavesObj.from_date) {
+        //     setDisableToDate(false);
+        //     if (toDateInputRef.current) {
+        //         const today = new Date(leavesObj.from_date).toISOString().split("T")[0];
+        //         toDateInputRef.current.setAttribute("min", today);
+        //     }
+        // }
         setLeavesData(leavesObj);
     };
-    const handleSelectChange = (e) => {
-        leavesObj = { ...leavesData, userid: e.value };
-        setLeavesData(leavesObj);
-    }
 
     console.log("leavesData", leavesData);
-
-    useEffect(() => {
-        window
-            .fetch(`${host}/emp/get_employ`)
-            .then((res) => {
-                return res.json();
-            })
-            .then((resp) => {
-                console.log("res", resp);
-                setUsers(resp);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }, []);
 
     const notify = (message) => {
         toast(message, {
@@ -66,16 +43,16 @@ const Year_Leave = () => {
         e.preventDefault();
         console.log("0000");
         axios
-            .post(`${host}/Emp_Leave/leave`, leavesData)
+            .post(`${host}/year/year-leave`, leavesData)
             .then((response) => {
-                console.log("success", response.data.success);
-                if (response.data.success) {
+                console.log("success", response);
+                if (response.data.message == "Success ") {
                     Swal.fire({
                         icon: "success",
                         title: "Successful",
-                        text: "Leave Added Successfully!",
+                        text: "Successfully!",
                     }).then(() => {
-                        navigate("/settings/leavedetails");
+                        navigate("/leavedetails");
                     });
                 } else {
                     notify(response.data.message);
@@ -85,7 +62,6 @@ const Year_Leave = () => {
                 console.error("There was an error!", error);
             });
     };
-    const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name }));
 
     return (
         <div>
@@ -99,11 +75,11 @@ const Year_Leave = () => {
                         <div className="card-title" style={{ textAlign: "center" }}>
                             <h2 className="text-red-900"> Year_Leave</h2>
                         </div>
-            
+
                         <div className="row">
-                         
+
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                             
+
                             </div>
                         </div>
                         <div className="row">
@@ -111,11 +87,11 @@ const Year_Leave = () => {
                                 <div className="form-group">
                                     <label className="profile_details_text">Year_Leave</label>
                                     <select
-                                        name="reason_for_leave"
+                                        name="year"
                                         className="form-control"
-                                        value={leavesData.reason_for_leave}
+                                        value={leavesData.year}
                                         onChange={(e) => handleChange(e)}
-                                        placeholder="Leave Reason"
+                                        placeholder="Year"
                                     >
                                         <option disabled={true} selected={true}>
                                             Year_Leave
@@ -133,11 +109,11 @@ const Year_Leave = () => {
                                 <div className="form-group">
                                     <label className="profile_details_text">Leave Type</label>
                                     <select
-                                        name="leave_type"
+                                        name="leave"
                                         className="form-control"
-                                        value={leavesData.leave_type}
+                                        value={leavesData.leave}
                                         onChange={(e) => handleChange(e)}
-                                        placeholder="Leave Type"
+                                        placeholder="Leave"
                                     >
                                         <option disabled={true} selected={true}>
                                             Leave Day

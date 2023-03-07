@@ -248,9 +248,7 @@ class Emp {
             });
         }
 
-        if (moment(date_of_joining).isAfter(effective_date)){
-            return res.send({message: "effective date is before date of joining"})
-        }
+     
 
         const id = req.params.id;
         EmpInfoModal.findByIdAndUpdate(
