@@ -12,6 +12,7 @@ import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
+import Year_Leave from "./pages/Leaves/Year_Leave";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/settings/leavedetails" element={<LeaveDetails />} />
             <Route path="/settings/userleavedetails/:id" element={<UserLeaveDetails />} />
             <Route path="/download/:id" element={<Downloadslip />} />
+            <Route path="/Year_leave" element={<Year_Leave/>}/>
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>

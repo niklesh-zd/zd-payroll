@@ -155,7 +155,7 @@ class Emp {
                 return res.status(404).send({ message: "This user not Exist." });
             }
             res.send(employee);
-        }).catch((error) => {
+        }).catch((error) => {  
             res.status(500).send(error);
         })
 

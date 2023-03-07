@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaBars, FaHome, FaUser, FaCalendarCheck,FaHospitalUser,FaRupeeSign,FaClipboardList,FaClipboard } from "react-icons/fa";
+import { FaBars, FaHome, FaUser, FaCalendarCheck, FaHospitalUser, FaRupeeSign, FaClipboardList, FaClipboard } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BiAnalyse, BiSearch } from "react-icons/bi";
 import { BiCog } from "react-icons/bi";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
-import  zecimg  from "./zecdata.png";
+import zecimg from "./zecdata.png";
 const routes = [
   {
     path: "/",
@@ -67,6 +67,23 @@ const routes = [
       // },
     ],
   },
+  {
+    path: "/year_leavedetails",
+    name: "Year_Leave",
+    icon: <FaCalendarCheck />,
+    subRoutes: [
+      {
+        path: "/Year_leave",
+        name: "Add Year_Leave",
+        icon: <FaClipboardList />,
+      },
+      {
+        path: "/leavedetails",
+        name: "Manage Year_Leave",
+        icon: <FaClipboard />,
+      },
+    ],
+  },
 ];
 
 const SideBar = ({ children }) => {
@@ -121,8 +138,8 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar `}
         >
-          <div className="bg-white d-flex justify-content-center align-items-center" style={{height: '50px'}}>
-              <img src={zecimg}/>
+          <div className="bg-white d-flex justify-content-center align-items-center" style={{ height: '50px' }}>
+            <img src={zecimg} />
           </div>
           <div className="top_section pointer">
             <AnimatePresence>
@@ -143,7 +160,7 @@ const SideBar = ({ children }) => {
           </div>
           <section className="routes">
             {routes.map((route, index) => {
-              
+
               if (route.subRoutes) {
                 return (
                   <SidebarMenu
