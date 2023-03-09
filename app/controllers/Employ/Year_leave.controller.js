@@ -6,9 +6,20 @@ class year_Leave {
     async year_leave(req, res) {
         var year = req.body.year
         var leave = req.body.leave
+
+        const yearFind = await yearModal.findOne({ year: year })
+        if (yearFind) {
+            return res.send({ message: "alredy exist Year." })
+        }
+
         if (!year || !leave) {
             res.send({ message: "pleace fill filed " })
-        } else {
+
+        }
+
+
+
+        else {
             const yearLeave = new yearModal({
                 year,
                 leave
