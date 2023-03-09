@@ -31,10 +31,7 @@ class Emp {
                 res.send({ message: errors.array() })
             }
 
-            if (moment(date_of_joining).isAfter(effective_date)){
-                return res.send({message: "effective date is before date of joining"})
-            }
-
+        
 
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
@@ -155,7 +152,7 @@ class Emp {
                 return res.status(404).send({ message: "This user not Exist." });
             }
             res.send(employee);
-        }).catch((error) => {  
+        }).catch((error) => {
             res.status(500).send(error);
         })
 
@@ -248,7 +245,6 @@ class Emp {
             });
         }
 
-     
 
         const id = req.params.id;
         EmpInfoModal.findByIdAndUpdate(
