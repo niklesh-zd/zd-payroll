@@ -18,6 +18,7 @@ import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
 import Year_Leave from "./pages/Leaves/Year_Leave";
+import Year_Leave_Details from "./pages/Leaves/Year_leave_details";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 import TotalHolydays from "./pages/Holydays/TotalHolydays";
@@ -44,9 +45,10 @@ function App() {
             <Route path="/employee/EmpDetail:id" element={<EmpDetail />} />
             <Route path="/employee/leave" element={<Leaves />} />
             <Route path="/employee/leavedetails" element={<LeaveDetails />} />
-            <Route path="/employee/userleavedetails:id" element={<UserLeaveDetails />}/>
+            <Route path="/employee/userleavedetails:id" element={<UserLeaveDetails />} />
             <Route path="/download/:id" element={<Downloadslip />} />
-            <Route path="/Year_leave" element={<Year_Leave/>}/>
+            <Route path="/Year_leave" element={<Year_Leave />} />
+            <Route path="/year_leavedetails" element={<Year_Leave_Details />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>

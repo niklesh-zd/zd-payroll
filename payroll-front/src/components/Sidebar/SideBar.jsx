@@ -73,7 +73,7 @@ const routes = [
         icon: <FaClipboardList />,
       },
       {
-        path: "/leavedetails",
+        path: "/year_leavedetails",
         name: "Manage Year_Leave",
         icon: <FaClipboard />,
       },

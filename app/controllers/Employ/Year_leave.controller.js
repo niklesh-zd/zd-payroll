@@ -20,7 +20,7 @@ class year_Leave {
     }
     async get_year_leave(req, res, next) {
         try {
-            yearModal.findOne({ year: req.body.year })
+            yearModal.find({})
                 .then(function (leave) {
                     res.send(leave);
                 }).catch(next);
