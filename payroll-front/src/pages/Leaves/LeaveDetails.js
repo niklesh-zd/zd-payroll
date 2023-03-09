@@ -54,7 +54,7 @@ function LeaveDetails() {
       sortable: true,
     },
     {
-      name: "createdAt",
+      name: "CreatedAt",
       selector: "createdAt",
       sortable: true,
     },

@@ -142,9 +142,6 @@ const Dashboard = () => {
               </h2>
             </div>
           </div>
-
-
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
