@@ -49,19 +49,25 @@ class Salary {
         var empinfo_modal = await EmpInfoModal.find({
             _id: req.query.userid
         })
-        var year_leave_ = await yearModal.find({ year: req.query.year })
-        console.log(year_leave_[0].leave, '.................');
-        leave_balence_year = year_leave_[0].leave
-        console.log(Salary_Modal);
         empinfo_modal = empinfo_modal[0]
+        console.log(empinfo_modal);
+
+        if (moment(empinfo_modal.date_of_joining).date() < 15 && moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month)){
+            leave_balence_year = 0
+        }
+        else{
+            var year_leave_ = await yearModal.find({ year: req.query.year })
+            leave_balence_year = year_leave_[0].leave
+            
+        }
+        console.log("leave balance ", leave_balence_year);
+        
         // return
 
         if (Salary_Modal.length != 0 && !req.body.overwrite_slip) {
+            console.log(Salary_Modal[0])
             return res.send(Salary_Modal[0])
         }
-        // if () {
-
-        // }
 
         else if (Salary_Modal.length != 0 && req.body.overwrite_slip) {
 
@@ -105,10 +111,10 @@ class Salary {
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
                 var gross_flexi_benifits = Math.round(salary_emp - gross_basic_da - gross_hra - gross_ra)
-                var earned_basic_da = Math.round((gross_basic_da / working_days) * total_paid_days)
-                var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
-                var earned_ra = Math.round((gross_ra / working_days) * total_paid_days)
-                var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
+                var earned_basic_da = (gross_basic_da / working_days) * total_paid_days
+                var earned_hra = (gross_hra / working_days) * total_paid_days
+                var earned_ra = (gross_ra / working_days) * total_paid_days
+                var earned_flexi_benifits = (gross_flexi_benifits / working_days) * total_paid_days
                 var net_pay_in_number = ((salary_emp / working_days) * total_paid_days) + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
@@ -158,10 +164,10 @@ class Salary {
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
                 var gross_flexi_benifits = Math.round(salary_emp - gross_basic_da - gross_hra - gross_ra)
-                var earned_basic_da = Math.round((gross_basic_da / working_days) * total_paid_days)
-                var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
-                var earned_ra = Math.round((gross_ra / working_days) * total_paid_days)
-                var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
+                var earned_basic_da = (gross_basic_da / working_days) * total_paid_days
+                var earned_hra = (gross_hra / working_days) * total_paid_days
+                var earned_ra = (gross_ra / working_days) * total_paid_days
+                var earned_flexi_benifits = (gross_flexi_benifits / working_days) * total_paid_days
                 var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
@@ -277,20 +283,20 @@ class Salary {
                 var gross_flexi_benifits_2 = Math.round(((salary_emp_2 - gross_basic_da_2 - gross_hra_2 - gross_ra_2) / Number(month_array[Number(req.query.month) - 1]) * month_days_2))
                 var gross_flexi_benifits = gross_flexi_benifits_1 + gross_flexi_benifits_2
 
-                var earned_basic_da_1 = Math.round((gross_basic_da_1 / working_days_1) * present_days_1)
-                var earned_basic_da_2 = Math.round((gross_basic_da_2 / working_days_2) * present_days_2)
+                var earned_basic_da_1 = (gross_basic_da_1 / working_days_1) * present_days_1
+                var earned_basic_da_2 = (gross_basic_da_2 / working_days_2) * present_days_2
                 var earned_basic_da = earned_basic_da_1 + earned_basic_da_2
 
-                var earned_hra_1 = Math.round((gross_hra_1 / working_days_1) * present_days_1)
-                var earned_hra_2 = Math.round((gross_hra_2 / working_days_2) * present_days_2)
+                var earned_hra_1 = (gross_hra_1 / working_days_1) * present_days_1
+                var earned_hra_2 = (gross_hra_2 / working_days_2) * present_days_2
                 var earned_hra = earned_hra_1 + earned_hra_2
 
-                var earned_ra_1 = Math.round((gross_ra_1 / working_days_1) * present_days_1)
-                var earned_ra_2 = Math.round((gross_ra_2 / working_days_2) * present_days_2)
+                var earned_ra_1 = (gross_ra_1 / working_days_1) * present_days_1
+                var earned_ra_2 = (gross_ra_2 / working_days_2) * present_days_2
                 var earned_ra = earned_ra_1 + earned_ra_2
 
-                var earned_flexi_benifits_1 = Math.round((gross_flexi_benifits_1 / working_days_1) * present_days_1)
-                var earned_flexi_benifits_2 = Math.round((gross_flexi_benifits_2 / working_days_1) * present_days_2)
+                var earned_flexi_benifits_1 = (gross_flexi_benifits_1 / working_days_1) * present_days_1
+                var earned_flexi_benifits_2 = (gross_flexi_benifits_2 / working_days_1) * present_days_2
                 var earned_flexi_benifits = earned_flexi_benifits_1 + earned_flexi_benifits_2
 
                 var net_pay_in_number = Math.round((((salary_emp_1 / working_days_1) * present_days_1) + ((salary_emp_2 / working_days_2) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
@@ -318,11 +324,11 @@ class Salary {
                 Gross_RA: gross_ra,
                 Gross_Flext_benefits: gross_flexi_benifits,
                 Gross_total: gross_basic_da + gross_hra + gross_ra + gross_flexi_benifits,
-                Earned_Basic_DA: earned_basic_da,
-                Earned_HRA: earned_hra,
-                Earned_RA: earned_ra,
-                Earned_Flext_benefits: earned_flexi_benifits,
-                Total_earn: earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits,
+                Earned_Basic_DA: Math.round(earned_basic_da),
+                Earned_HRA: Math.round(earned_hra),
+                Earned_RA: Math.round(earned_ra),
+                Earned_Flext_benefits: Math.round(earned_flexi_benifits),
+                Total_earn: Math.round(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits),
                 Net_pay_in_number: net_pay_in_number,
                 Net_pay_in_words: net_pay_in_word,
                 ARRS: Number(req.body.arrear),
@@ -375,10 +381,10 @@ class Salary {
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
                 var gross_flexi_benifits = Math.round(salary_emp - gross_basic_da - gross_hra - gross_ra)
-                var earned_basic_da = Math.round((gross_basic_da / working_days) * total_paid_days)
-                var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
-                var earned_ra = Math.round((gross_ra / working_days) * total_paid_days)
-                var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
+                var earned_basic_da = (gross_basic_da / working_days) * total_paid_days
+                var earned_hra = (gross_hra / working_days) * total_paid_days
+                var earned_ra = (gross_ra / working_days) * total_paid_days
+                var earned_flexi_benifits = (gross_flexi_benifits / working_days) * total_paid_days
                 var net_pay_in_number = ((salary_emp / working_days) * total_paid_days) + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
@@ -428,10 +434,10 @@ class Salary {
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
                 var gross_flexi_benifits = Math.round(salary_emp - gross_basic_da - gross_hra - gross_ra)
-                var earned_basic_da = Math.round((gross_basic_da / working_days) * total_paid_days)
-                var earned_hra = Math.round((gross_hra / working_days) * total_paid_days)
-                var earned_ra = Math.round((gross_ra / working_days) * total_paid_days)
-                var earned_flexi_benifits = Math.round((gross_flexi_benifits / working_days) * total_paid_days)
+                var earned_basic_da = (gross_basic_da / working_days) * total_paid_days
+                var earned_hra = (gross_hra / working_days) * total_paid_days
+                var earned_ra = (gross_ra / working_days) * total_paid_days
+                var earned_flexi_benifits = (gross_flexi_benifits / working_days) * total_paid_days
                 var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
@@ -547,20 +553,20 @@ class Salary {
                 var gross_flexi_benifits_2 = Math.round(((salary_emp_2 - gross_basic_da_2 - gross_hra_2 - gross_ra_2) / Number(month_array[Number(req.query.month) - 1]) * month_days_2))
                 var gross_flexi_benifits = gross_flexi_benifits_1 + gross_flexi_benifits_2
 
-                var earned_basic_da_1 = Math.round((gross_basic_da_1 / working_days_1) * present_days_1)
-                var earned_basic_da_2 = Math.round((gross_basic_da_2 / working_days_2) * present_days_2)
+                var earned_basic_da_1 = (gross_basic_da_1 / working_days_1) * present_days_1
+                var earned_basic_da_2 = (gross_basic_da_2 / working_days_2) * present_days_2
                 var earned_basic_da = earned_basic_da_1 + earned_basic_da_2
 
-                var earned_hra_1 = Math.round((gross_hra_1 / working_days_1) * present_days_1)
-                var earned_hra_2 = Math.round((gross_hra_2 / working_days_2) * present_days_2)
+                var earned_hra_1 = (gross_hra_1 / working_days_1) * present_days_1
+                var earned_hra_2 = (gross_hra_2 / working_days_2) * present_days_2
                 var earned_hra = earned_hra_1 + earned_hra_2
 
-                var earned_ra_1 = Math.round((gross_ra_1 / working_days_1) * present_days_1)
-                var earned_ra_2 = Math.round((gross_ra_2 / working_days_2) * present_days_2)
+                var earned_ra_1 = (gross_ra_1 / working_days_1) * present_days_1
+                var earned_ra_2 = (gross_ra_2 / working_days_2) * present_days_2
                 var earned_ra = earned_ra_1 + earned_ra_2
 
-                var earned_flexi_benifits_1 = Math.round((gross_flexi_benifits_1 / working_days_1) * present_days_1)
-                var earned_flexi_benifits_2 = Math.round((gross_flexi_benifits_2 / working_days_1) * present_days_2)
+                var earned_flexi_benifits_1 = (gross_flexi_benifits_1 / working_days_1) * present_days_1
+                var earned_flexi_benifits_2 = (gross_flexi_benifits_2 / working_days_1) * present_days_2
                 var earned_flexi_benifits = earned_flexi_benifits_1 + earned_flexi_benifits_2
 
                 var net_pay_in_number = Math.round((((salary_emp_1 / working_days_1) * present_days_1) + ((salary_emp_2 / working_days_2) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
@@ -588,11 +594,11 @@ class Salary {
                 Gross_RA: gross_ra,
                 Gross_Flext_benefits: gross_flexi_benifits,
                 Gross_total: gross_basic_da + gross_hra + gross_ra + gross_flexi_benifits,
-                Earned_Basic_DA: earned_basic_da,
-                Earned_HRA: earned_hra,
-                Earned_RA: earned_ra,
-                Earned_Flext_benefits: earned_flexi_benifits,
-                Total_earn: earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits,
+                Earned_Basic_DA: Math.round(earned_basic_da),
+                Earned_HRA: Math.round(earned_hra),
+                Earned_RA: Math.round(earned_ra),
+                Earned_Flext_benefits: Math.round(earned_flexi_benifits),
+                Total_earn: Math.round(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits),
                 Net_pay_in_number: net_pay_in_number,
                 Net_pay_in_words: net_pay_in_word,
                 ARRS: Number(req.body.arrear),
