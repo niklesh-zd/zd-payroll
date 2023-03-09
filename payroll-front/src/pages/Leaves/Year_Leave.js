@@ -52,7 +52,7 @@ const Year_Leave = () => {
                         title: "Successful",
                         text: "Successfully!",
                     }).then(() => {
-                        navigate("/leavedetails");
+                        navigate("/year_leavedetails");
                     });
                 } else {
                     notify(response.data.message);
@@ -61,6 +61,7 @@ const Year_Leave = () => {
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+            
     };
 
     return (

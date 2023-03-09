@@ -29,20 +29,27 @@ function Year_Leave_Details
   ];
 
   // year = new Date(e.to_date).toLocaleDateString("pt-PT"),
-    useEffect(() => {
-      axios
-        .get(
-          `${host}/year/get_year_leave`
-        )
-        .then((response) => {
-          console.log(response);
-          setEmpLeaveData(response.data)
-        })
-        .catch((error) => {
-          console.error("There was an error!", error);
+  useEffect(() => {
+    axios
+      .get(
+        `${host}/year/get_year_leave`
+      )
+      .then((response) => {
+        let filteredArr = [];
+        let responseArr = response.data;
+        responseArr.map((e) => {
+          filteredArr.push({
+            year: new Date(e.year).getFullYear(),
+            leave: e.leave,
+            createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
+          });
         });
-    }, []);
-  console.log(id);
+        setEmpLeaveData(filteredArr);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
   return (
     <div>
       <div>
