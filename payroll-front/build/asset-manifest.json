@@ -5,16 +5,14 @@
 <<<<<<< HEAD
     "main.js": "/static/js/main.6a3d4e0e.js",
 =======
-    "main.js": "/static/js/main.c52f352f.js",
->>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
-=======
-    "main.css": "/static/css/main.cd7cf861.css",
 <<<<<<< HEAD
-    "main.js": "/static/js/main.3f91338a.js",
-=======
+    "main.css": "/static/css/main.cd7cf861.css",
     "main.js": "/static/js/main.fa189323.js",
 >>>>>>> 7abb2b207a8d1fcee1089f0e4d54dc2b901405c4
->>>>>>> 64501458455f05cf1f7de37eaa08b957713922d3
+=======
+    "main.js": "/static/js/main.c52f352f.js",
+>>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
+>>>>>>>>> Temporary merge branch 2
     "static/js/703.44b05656.chunk.js": "/static/js/703.44b05656.chunk.js",
     "static/js/13.be104af8.chunk.js": "/static/js/13.be104af8.chunk.js",
     "static/media/zecdata.png": "/static/media/zecdata.52082ac3a25f87796c6b.png",
@@ -24,16 +22,14 @@
 <<<<<<< HEAD
     "main.6a3d4e0e.js.map": "/static/js/main.6a3d4e0e.js.map",
 =======
-    "main.c52f352f.js.map": "/static/js/main.c52f352f.js.map",
->>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
-=======
-    "main.cd7cf861.css.map": "/static/css/main.cd7cf861.css.map",
 <<<<<<< HEAD
-    "main.3f91338a.js.map": "/static/js/main.3f91338a.js.map",
-=======
+    "main.cd7cf861.css.map": "/static/css/main.cd7cf861.css.map",
     "main.fa189323.js.map": "/static/js/main.fa189323.js.map",
 >>>>>>> 7abb2b207a8d1fcee1089f0e4d54dc2b901405c4
->>>>>>> 64501458455f05cf1f7de37eaa08b957713922d3
+=======
+    "main.c52f352f.js.map": "/static/js/main.c52f352f.js.map",
+>>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
+>>>>>>>>> Temporary merge branch 2
     "703.44b05656.chunk.js.map": "/static/js/703.44b05656.chunk.js.map",
     "13.be104af8.chunk.js.map": "/static/js/13.be104af8.chunk.js.map"
   },
@@ -43,15 +39,13 @@
 <<<<<<< HEAD
     "static/js/main.6a3d4e0e.js"
 =======
-    "static/js/main.c52f352f.js"
->>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
-=======
-    "static/css/main.cd7cf861.css",
 <<<<<<< HEAD
-    "static/js/main.3f91338a.js"
-=======
+    "static/css/main.cd7cf861.css",
     "static/js/main.fa189323.js"
 >>>>>>> 7abb2b207a8d1fcee1089f0e4d54dc2b901405c4
->>>>>>> 64501458455f05cf1f7de37eaa08b957713922d3
+=======
+    "static/js/main.c52f352f.js"
+>>>>>>> 3286635e90de4310e48b0e956bdaffcbf4c2e304
+>>>>>>>>> Temporary merge branch 2
   ]
 }
