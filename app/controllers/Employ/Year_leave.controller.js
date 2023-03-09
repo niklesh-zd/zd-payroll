@@ -6,17 +6,21 @@ class year_Leave {
     async year_leave(req, res) {
         var year = req.body.year
         var leave = req.body.leave
-        const yearLeave = new yearModal({
-            year,
-            leave
-        })
-        await yearLeave.save();
-        console.log({ yearLeave });
-        res.send({ message: "Success " });
+        if (!year || !leave) {
+            res.send({ message: "pleace fill filed " })
+        } else {
+            const yearLeave = new yearModal({
+                year,
+                leave
+            })
+            await yearLeave.save();
+            console.log({ yearLeave });
+            res.send({ message: "Success " });
+        }
     }
     async get_year_leave(req, res, next) {
         try {
-            yearModal.findOne({ year: req.body.year })
+            yearModal.find({})
                 .then(function (leave) {
                     res.send(leave);
                 }).catch(next);

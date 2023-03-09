@@ -31,10 +31,7 @@ class Emp {
                 res.send({ message: errors.array() })
             }
 
-            if (moment(date_of_joining).isAfter(effective_date)){
-                return res.send({message: "effective date is before date of joining"})
-            }
-
+        
 
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
@@ -248,9 +245,6 @@ class Emp {
             });
         }
 
-        if (moment(date_of_joining).isAfter(effective_date)){
-            return res.send({message: "effective date is before date of joining"})
-        }
 
         const id = req.params.id;
         EmpInfoModal.findByIdAndUpdate(

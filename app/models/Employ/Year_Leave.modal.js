@@ -7,12 +7,12 @@ const year_Leave = Schema({
     year
         : {
         type: Date,
-        required: true,
+        // required: true,
 
     },
     leave: {
         type: Number,
-        required: true,
+        // required: true,
     },
 
 },

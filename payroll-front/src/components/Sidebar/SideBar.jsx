@@ -8,7 +8,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
 import zecimg from "./zecdata.png";
-import zecd   from "./s.png"
 const routes = [
   {
     path: "/",
@@ -64,9 +63,21 @@ const routes = [
     ],
   },
   {
-    path: "/holiydays",
-    name: "Holydays",
+    path: "/year_leavedetails",
+    name: "Year_Leave",
     icon: <FaCalendarCheck />,
+    subRoutes: [
+      {
+        path: "/Year_leave",
+        name: "Add Year_Leave",
+        icon: <FaClipboardList />,
+      },
+      {
+        path: "/year_leavedetails",
+        name: "Manage Year_Leave",
+        icon: <FaClipboard />,
+      },
+    ],
   },
 ];
 
@@ -122,15 +133,9 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar `}
         >
-          {isOpen ? <div className="bg-white d-flex justify-content-center align-items-center" style={{ height: '50px' }}>
+          <div className="bg-white d-flex justify-content-center align-items-center" style={{ height: '50px' }}>
             <img src={zecimg} />
-          </div> :
-            <div className="bg-white d-flex justify-content-center align-items-center" style={{ height: '50px' }}>
-              <img src={zecd} />
-            </div>
-          }
-
-
+          </div>
           <div className="top_section pointer">
             <AnimatePresence>
               {isOpen && (

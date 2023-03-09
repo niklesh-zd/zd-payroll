@@ -17,6 +17,8 @@ import Leaves from "./pages/Leaves/Leave";
 import LeaveDetails from "./pages/Leaves/LeaveDetails";
 import UserLeaveDetails from "./pages/Leaves/UserLeaveDetails";
 import Downloadslip from "./pages/Salary_slip/downloadslip";
+import Year_Leave from "./pages/Leaves/Year_Leave";
+import Year_Leave_Details from "./pages/Leaves/Year_leave_details";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 import TotalHolydays from "./pages/Holydays/TotalHolydays";
