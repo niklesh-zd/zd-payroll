@@ -7,12 +7,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils";
 import Select from 'react-select';
-
+// {formatDate(fields.Date_of_Joining?.substring(0, 10))}
 const Leaves = () => {
   let navigate = useNavigate();
   const toDateInputRef = useRef(null);
   const [leavesData, setLeavesData] = useState({});
   const [users, setUsers] = useState([]);
+  const [Doj, setDoj] = useState([]);
+
   const [disableToDate, setDisableToDate] = useState(true);
   var leavesObj = {}
   const handleChange = (e) => {
@@ -27,7 +29,9 @@ const Leaves = () => {
     }
     setLeavesData(leavesObj);
   };
-  const handleSelectChange = (e) =>{
+  const handleSelectChange = (e) => {
+   const doj = (e.option?.substring(0, 10))
+   setDoj(doj);
     leavesObj = { ...leavesData, userid: e.value };
     setLeavesData(leavesObj);
   }
@@ -43,6 +47,7 @@ const Leaves = () => {
       .then((resp) => {
         console.log("res", resp);
         setUsers(resp);
+        // setDoj(resp)
       })
       .catch((err) => {
         console.log(err.message);
@@ -61,7 +66,7 @@ const Leaves = () => {
       theme: "light",
     });
   };
-
+  // new Date(e.date_of_joining).toLocaleDateString('pt-PT')
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("0000");
@@ -85,7 +90,11 @@ const Leaves = () => {
         console.error("There was an error!", error);
       });
   };
-  const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name }));
+  const selectOptions = users.map(option => ({ value: option._id, label: option.First_Name,option:option.date_of_joining}));
+
+//   const dojOptions = Doj.map(dojoption => ({ dateOfBirth: dojoption.Date_of_Joining}));
+// console.log('dojOptions',dojOptions);
+ 
 
   return (
     <div>
@@ -105,24 +114,6 @@ const Leaves = () => {
                   <label className="profile_details_text">
                     Select Employee Name
                   </label>
-                  {/* <select
-                    name="userid"
-                    className="form-control"
-                    value={leavesData.userid}
-                    placeholder="Select Employee"
-                    onChange={(e) => handleChange(e)}
-                  >
-                    <option value="" disabled={true} selected={true}>
-                      select Employee
-                    </option>
-                    {users.map((u) => {
-                      return (
-                        <option value={u._id} key={u._id}>
-                          {u.First_Name}
-                        </option>
-                      );
-                    })}
-                  </select> */}
                   <Select
                     options={selectOptions}
                     isSearchable={true}
@@ -137,6 +128,7 @@ const Leaves = () => {
                 <div className="form-group">
                   <label>From Date</label>
                   <input
+                    min={Doj}
                     type="date"
                     name="from_date"
                     value={leavesData.from_date}
