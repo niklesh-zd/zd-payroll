@@ -37,9 +37,9 @@ jobs:
     
     steps:
      - name: Set up SSH
-       uses: webfactory/ssh-agent@v0.5.0
-       with:
-        run: echo ${{ secrets.DROPLET_PRIVATE_KEY }}
+     #  uses: webfactory/ssh-agent@v0.5.0
+     #  with:
+       run: echo ${{ secrets.DROPLET_PRIVATE_KEY }}
 
         
      - name: Deploy application to Droplet
