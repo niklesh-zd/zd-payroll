@@ -19,10 +19,6 @@ jobs:
       with:
         node-version: '16.x'
     
-
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -43,12 +39,13 @@ jobs:
      - name: Deploy application to droplet
        uses: webfactory/ssh-agent@v0.5.0
        with:
-        ssh-private-key: ${{ secrets.DROPLET_SSH_KEY }}
+        key: ${{ secrets.DROPLET_SSH_KEY }}
         
      - name: Deploy application to Droplet
        run: |
          
-            ssh root@174.138.123.90 'cd /app && git pull && docker-compose down && docker-compose up -d'
+            ssh ${{ secrets.DROPLET_USERNAME }}@${{ secrets. DROPLET_IP }} 'cd /app && 
+            git pull && docker-compose down && docker-compose up -d'
 
     
 
