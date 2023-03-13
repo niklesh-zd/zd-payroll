@@ -52,17 +52,23 @@ const routes = [
       },
     ],
   },
+  // {
+  //   path: "/salary",
+  //   name: "Payroll",
+  //   icon: <FaHospitalUser />,
+  //   subRoutes: [
+  //     {
+  //       path: "/employee/salary",
+  //       name: "Salary Receipt",
+  //       icon: <FaRupeeSign />,
+  //     },
+  //   ],
+  // },
   {
-    path: "/salary",
-    name: "Payroll",
-    icon: <FaHospitalUser />,
-    subRoutes: [
-      {
-        path: "/employee/salary",
-        name: "Salary Receipt",
-        icon: <FaRupeeSign />,
-      },
-    ],
+    path: "/holiydays",
+    name: "Holiydays",
+    icon: <GiConcentrationOrb />,
+    // icon :<TfiThemifyFaviconAlt/>
   },
   {
     path: "/year_leavedetails",
@@ -80,12 +86,6 @@ const routes = [
         icon: <FaClipboard />,
       },
     ],
-  },
-  {
-    path: "/holiydays",
-    name: "Holiydays",
-    icon: <GiConcentrationOrb />,
-    // icon :<TfiThemifyFaviconAlt/>
   },
 ];
 

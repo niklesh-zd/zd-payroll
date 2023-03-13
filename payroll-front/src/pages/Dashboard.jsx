@@ -164,7 +164,7 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              {!todayPresent ? (
+              {!todayPresent || !totalEmployee? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <RotatingLines
                     className="text-center"
@@ -193,7 +193,7 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              {!yesterdayPresent ? (
+              {!yesterdayPresent || !totalEmployee? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <RotatingLines
                     className="text-center"
