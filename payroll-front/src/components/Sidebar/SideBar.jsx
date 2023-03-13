@@ -7,6 +7,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
+import { GiConcentrationOrb } from 'react-icons/gi';
+// import {TfiThemifyFaviconAlt} from 'react-icons/tfi'
 import zecimg from "./zecdata.png";
 const routes = [
   {
@@ -78,6 +80,12 @@ const routes = [
         icon: <FaClipboard />,
       },
     ],
+  },
+  {
+    path: "/holiydays",
+    name: "Holiydays",
+    icon: <GiConcentrationOrb />,
+    // icon :<TfiThemifyFaviconAlt/>
   },
 ];
 

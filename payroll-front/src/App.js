@@ -49,6 +49,7 @@ function App() {
             <Route path="/download/:id" element={<Downloadslip />} />
             <Route path="/Year_leave" element={<Year_Leave />} />
             <Route path="/year_leavedetails" element={<Year_Leave_Details />} />
+            <Route path="/holiydays" element={<TotalHolydays />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>
