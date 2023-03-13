@@ -36,15 +36,15 @@ function App() {
       <SideBar>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/settings" element={<Logout />} />
-          <Route path="/settings/salary:id" element={<Salary/>} />
-          <Route path="/settings/profile" element={<AddEmployee/>} />
-          <Route path="/settings/manageprofile" element={<ManageEmpyee/>} />
-          <Route path="/settings/EmpEdit:id" element={<EmpEdit />} />
-          <Route path="/settings/EmpDetail:id" element={<EmpDetail/>} />
-          <Route path="/settings/leave" element={<Leaves />} />
-          <Route path="/settings/leavedetails" element={<LeaveDetails />} />
-          <Route path="/settings/userleavedetails:id" element={<UserLeaveDetails />} />
+          <Route path="/employee" element={<Logout />} />
+          <Route path="/employee/salary:id" element={<Salary/>} />
+          <Route path="/employee/profile" element={<AddEmployee/>} />
+          <Route path="/employee/manageprofile" element={<ManageEmpyee/>} />
+          <Route path="/employee/EmpEdit:id" element={<EmpEdit />} />
+          <Route path="/employee/EmpDetail:id" element={<EmpDetail/>} />
+          <Route path="/employee/leave" element={<Leaves />} />
+          <Route path="/employee/leavedetails" element={<LeaveDetails />} />
+          <Route path="/employee/userleavedetails:id" element={<UserLeaveDetails />} />
           <Route path="/download:id" element={<Downloadslip />} />
         </Routes>
       </SideBar>
