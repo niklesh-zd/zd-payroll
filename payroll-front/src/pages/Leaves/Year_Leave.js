@@ -70,7 +70,7 @@ const Year_Leave = () => {
                 <ToastContainer />
                 <form className="container" onSubmit={handlesubmit}>
                     <div className="card m-5 p-3">
-                        <Link to="/settings/leavedetails">
+                        <Link to="/year_leavedetails">
                             <TiArrowBack size={25} />
                         </Link>
                         <div className="card-title" style={{ textAlign: "center" }}>
