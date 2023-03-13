@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
 import { GiConcentrationOrb } from 'react-icons/gi';
+import {GiImbricatedArrows} from 'react-icons/gi'
 // import {TfiThemifyFaviconAlt} from 'react-icons/tfi'
 import zecimg from "./zecdata.png";
 const routes = [
@@ -72,8 +73,8 @@ const routes = [
   },
   {
     path: "/year_leavedetails",
-    name: "Year_Leave",
-    icon: <FaCalendarCheck />,
+    name: "Year Leave",
+    icon: <GiImbricatedArrows />,
     subRoutes: [
       {
         path: "/Year_leave",
