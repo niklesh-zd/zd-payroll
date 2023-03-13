@@ -12,7 +12,7 @@ const Empedit = () => {
             return res.json()
           })
           .then((resp) => {
-            console.log('resp',resp);
+            // console.log('resp',resp);
             empdatachange(resp)
           })
           .catch((err) => {
@@ -21,7 +21,7 @@ const Empedit = () => {
       }, [])
       useEffect(()=>{
 
-        console.log('empdata',empdata);
+        // console.log('empdata',empdata);
       },[empdata])
     return ( 
         empdata ?

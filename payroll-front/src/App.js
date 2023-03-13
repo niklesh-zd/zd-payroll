@@ -25,7 +25,7 @@ import TotalHolydays from "./pages/Holydays/TotalHolydays";
 
 function App() {
   const token = localStorage.getItem("token");
-  console.log("---Token---", token);
+  // console.log("---Token---", token);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
