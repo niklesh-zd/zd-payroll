@@ -43,13 +43,9 @@ jobs:
         username: ${{ secrets.DROPLET_USERNAME }}
         key: ${{ secrets.DROPLET_PRIVATE_KEY }}
 
-        
-     - name: Deploy application to Drop
-       run: |
-         
-            ssh root@143.244.128.21 'cd /app && 
-            git pull && docker-compose down && docker-compose up -d'
-
+        script: |
+       
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.DROPLET_USERNAME }}@${{ secrets.DROPLET_IP }} 'cd /app && git pull && docker-compose down && docker-compose up -d'
     
 
 
