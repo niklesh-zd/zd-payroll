@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaBars, FaHome, FaUser, FaCalendarCheck,FaHospitalUser,FaRupeeSign,FaClipboardList,FaClipboard } from "react-icons/fa";
+import { FaBars, FaHome, FaUser, FaCalendarCheck, FaHospitalUser, FaRupeeSign, FaClipboardList, FaClipboard } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BiAnalyse, BiSearch } from "react-icons/bi";
 import { BiCog } from "react-icons/bi";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
-import  zecimg  from "./zecdata.png";
+import zecimg from "./zecdata.png";
 const routes = [
   {
     path: "/",
@@ -22,29 +22,29 @@ const routes = [
     exact: true,
     subRoutes: [
       {
-        path: "/settings/profile",
+        path: "/employee/profile",
         name: "Add Employee",
         icon: <FaUser />,
       },
       {
-        path: "/settings/manageprofile",
+        path: "/employee/manageprofile",
         name: "Manage Employee",
         icon: <FaUser />,
       },
     ],
   },
   {
-    path: "/settings/leavedetails",
+    path: "/employee/leavedetails",
     name: "Leaves",
     icon: <FaCalendarCheck />,
     subRoutes: [
       {
-        path: "/settings/leave",
+        path: "/employee/leave",
         name: "Add Leave",
         icon: <FaClipboardList />,
       },
       {
-        path: "/settings/leavedetails",
+        path: "/employee/leavedetails",
         name: "Manage leaves",
         icon: <FaClipboard />,
       },
@@ -56,21 +56,33 @@ const routes = [
     icon: <FaHospitalUser />,
     subRoutes: [
       {
-        path: "/settings/salary",
+        path: "/employee/salary",
         name: "Salary Receipt",
         icon: <FaRupeeSign />,
       },
-      // {
-      //   path: "/settings/salarydetails",
-      //   name: "Manage Salary",
-      //   icon: <MdMessage />,
-      // },
+    ],
+  },
+  {
+    path: "/year_leavedetails",
+    name: "Year_Leave",
+    icon: <FaCalendarCheck />,
+    subRoutes: [
+      {
+        path: "/Year_leave",
+        name: "Add Year_Leave",
+        icon: <FaClipboardList />,
+      },
+      {
+        path: "/year_leavedetails",
+        name: "Manage Year_Leave",
+        icon: <FaClipboard />,
+      },
     ],
   },
 ];
 
 const SideBar = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const inputAnimation = {
     hidden: {
@@ -121,8 +133,8 @@ const SideBar = ({ children }) => {
           }}
           className={`sidebar `}
         >
-          <div className="bg-white d-flex justify-content-center align-items-center" style={{height: '50px'}}>
-              <img src={zecimg}/>
+          <div className="bg-white d-flex justify-content-center align-items-center" style={{ height: '50px' }}>
+            <img src={zecimg} />
           </div>
           <div className="top_section pointer">
             <AnimatePresence>
@@ -143,7 +155,6 @@ const SideBar = ({ children }) => {
           </div>
           <section className="routes">
             {routes.map((route, index) => {
-              
               if (route.subRoutes) {
                 return (
                   <SidebarMenu
