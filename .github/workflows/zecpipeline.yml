@@ -50,7 +50,7 @@ jobs:
           StrictHostKeyChecking no
           UserKnownHostsFile /dev/null
         
-     - name:  deploy docker compose
+     - name:  deploy 
        run: | 
           docker-compose down || true   &&
           docker-compose up   || true
