@@ -47,7 +47,7 @@ jobs:
      - name: Deploy application to Drop
        run: |
          
-            ssh ${{ secrets.DROPLET_USERNAME }}@${{ secrets. DROPLET_IP }} 'cd /app && 
+            ssh root@174.138.123.90 'cd /app && 
             git pull && docker-compose down && docker-compose up -d'
 
     
