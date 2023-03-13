@@ -25,7 +25,6 @@ const EmpDetail = () => {
         return res.json();
       })
       .then((resp) => {
-        console.log("r================esp", resp);
         empdatachange(resp);
       })
       .catch((err) => {
@@ -36,7 +35,6 @@ const EmpDetail = () => {
   //   navigate("/employee/userleavedetails" + id);
   // };
   const img = emo
-  console.log('----empdata',empdata);
   const Removefunction = () => {
     Swal.fire({
       title: "Are you sure?",

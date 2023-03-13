@@ -15,13 +15,13 @@ function Year_Leave_Details
   var columns = [
     {
       name: "Year",
-      selector: "year",
+      selector: (rowData) => rowData["year"],
       sortable: true,
       width: 30,
     },
     {
       name: "Year_Leave",
-      selector: "leave",
+      selector: (rowData) => rowData["leave"],
       sortable: true,
     },
 

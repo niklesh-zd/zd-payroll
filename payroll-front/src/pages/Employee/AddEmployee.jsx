@@ -426,7 +426,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          checked={fields.gender == "Male"}
+                          defaultChecked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -434,7 +434,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          checked={fields.gender == "Female"}
+                          defaultChecked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -452,7 +452,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          checked={fields.Marital_Status == "Single"}
+                          defaultChecked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -460,7 +460,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          checked={fields.Marital_Status == "Married"}
+                          defaultChecked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>

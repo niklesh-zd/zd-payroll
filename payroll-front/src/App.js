@@ -33,20 +33,26 @@ function App() {
   };
   return (
     <Router>
-      <SideBar>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/employee/salary:id" element={<Salary/>} />
-          <Route path="/employee/profile" element={<AddEmployee/>} />
-          <Route path="/employee/manageprofile" element={<ManageEmpyee/>} />
-          <Route path="/employee/EmpEdit:id" element={<EmpEdit />} />
-          <Route path="/employee/EmpDetail:id" element={<EmpDetail/>} />
-          <Route path="/employee/leave" element={<Leaves />} />
-          <Route path="/employee/leavedetails" element={<LeaveDetails />} />
-          <Route path="/employee/userleavedetails:id" element={<UserLeaveDetails />} />
-          <Route path="/download:id" element={<Downloadslip />} />
-        </Routes>
-      </SideBar>
+      {!token ? (
+        <LoginPage onLogin={handleLogin} />
+      ) : (
+        <SideBar>
+          <Routes>
+            <Route path="/employee/salary:id" element={<Salary />} />
+            <Route path="/employee/profile" element={<AddEmployee />} />
+            <Route path="/employee/manageprofile" element={<ManageEmpyee />} />
+            <Route path="/employee/EmpEdit:id" element={<EmpEdit />} />
+            <Route path="/employee/EmpDetail:id" element={<EmpDetail />} />
+            <Route path="/employee/leave" element={<Leaves />} />
+            <Route path="/employee/leavedetails" element={<LeaveDetails />} />
+            <Route path="/employee/userleavedetails:id" element={<UserLeaveDetails />} />
+            <Route path="/download/:id" element={<Downloadslip />} />
+            <Route path="/Year_leave" element={<Year_Leave />} />
+            <Route path="/year_leavedetails" element={<Year_Leave_Details />} />
+            <Route path="/" element={<Dashboard />} />
+          </Routes>
+        </SideBar>
+      )}
     </Router>
   );
 }
