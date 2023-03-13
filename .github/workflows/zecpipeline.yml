@@ -45,7 +45,7 @@ jobs:
 
         script: |
        
-          ssh ${{ secrets.DROPLET_USERNAME }}@${{ secrets.DROPLET_IP }} 'git pull && docker-compose down && docker-compose up -d'
+          ssh  -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USERNAME }}@${{ secrets.DROPLET_IP }} 'git pull && docker-compose down && docker-compose up -d'
     
 
 
