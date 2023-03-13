@@ -43,6 +43,16 @@ jobs:
     steps:
      - name: Deploy application to droplet
        uses: actions/ssh-action@master
+       with:
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USERNAME }}
+        key: ${{ secrets.DROPLET_PRIVATE_KEY }}
+        
+     - name:  deploy docker compose
+       run: | 
+          docker-compose down || true   &&
+          docker-compose up   || true
+           
      
     
 
