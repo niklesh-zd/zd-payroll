@@ -37,9 +37,11 @@ jobs:
     
     steps:
      - name: Set up SSH
-     #  uses: webfactory/ssh-agent@v0.5.0
-     #  with:
-       run: echo ${{ secrets.DROPLET_PRIVATE_KEY }}
+       uses: appleboy/ssh-action@master
+       with:
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USERNAME }}
+        key: ${{ secrets.DROPLET_PRIVATE_KEY }}
 
         
      - name: Deploy application to Droplet
