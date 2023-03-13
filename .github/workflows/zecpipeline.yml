@@ -36,10 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-     - name: Deploy application to droplet
+     - name: Set up SSH
        uses: webfactory/ssh-agent@v0.5.0
        with:
-        key: ${{ secrets.DROPLET_PRIVATE_KEY }}
+        run: echo ${{ secrets.DROPLET_PRIVATE_KEY }}
+
         
      - name: Deploy application to Droplet
        run: |
