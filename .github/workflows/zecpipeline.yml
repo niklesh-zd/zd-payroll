@@ -38,6 +38,7 @@ jobs:
        tag: rohitkas/zecdatamain:latest
        
   Deploy:
+    needs: build_package
     runs-on: ubuntu-latest
     
     steps:
