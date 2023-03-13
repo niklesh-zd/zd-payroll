@@ -44,18 +44,12 @@ jobs:
        uses: webfactory/ssh-agent@v0.5.0
        with:
         ssh-private-key: ${{ secrets.DROPLET_SSH_KEY }}
-        known_hosts: ${{ secrets.DROPLET_KNOWN_HOSTS }}
-        ssh_config: |
-          Host *
-          StrictHostKeyChecking no
-          UserKnownHostsFile /dev/null
         
-     - name:  deploy 
-       run: | 
-          docker-compose down || true   &&
-          docker-compose up   || true
-           
-     
+     - name: Deploy application to Droplet
+       run: |
+         
+            ssh <USERNAME>@<DROPLET_IP> 'cd /app && git pull && docker-compose down && docker-compose up -d'
+
     
 
 
