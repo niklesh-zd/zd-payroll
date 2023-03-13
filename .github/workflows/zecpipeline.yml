@@ -44,7 +44,7 @@ jobs:
         key: ${{ secrets.DROPLET_PRIVATE_KEY }}
 
         
-     - name: Deploy application to Droplet
+     - name: Deploy application to Drop
        run: |
          
             ssh ${{ secrets.DROPLET_USERNAME }}@${{ secrets. DROPLET_IP }} 'cd /app && 
