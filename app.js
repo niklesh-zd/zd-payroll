@@ -5,6 +5,7 @@ const app = express();
 const pdf_genearation = require("./pdf_generator/pdfGenerator")
 const path = require('path')
 
+
 const cors = require('cors');
 app.use(cors())
 require('dotenv').config();
@@ -12,7 +13,8 @@ require('dotenv').config();
 
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
-     
+app.use(express.static(path.join(__dirname, 'public')));
+ 
 app.use("/", require("./app/routes/Employ/Employ.route"));
 app.use("/emp", require("./app/routes/Employ/Employ.route"));
 app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
