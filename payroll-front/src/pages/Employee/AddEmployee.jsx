@@ -38,14 +38,13 @@ function AddEmployee(props) {
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
-    if (effectiveDateInputRef.current) {
+    if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
       const today = new Date(fieldObj.date_of_joining).toISOString().split("T")[0];
       effectiveDateInputRef.current.setAttribute("min", today);
     }
     setFields(fieldObj);
   }
 
-  console.log("fields", fields);
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
@@ -69,6 +68,7 @@ function AddEmployee(props) {
   };
   function submituserRegistrationForm(e) {
     e.preventDefault();
+    console.log('fields',fields);
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
