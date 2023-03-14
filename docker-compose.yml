@@ -1,12 +1,18 @@
 version: '3'
 
 services:
-  app:
+  backend:
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.back
     ports:
       - "7071:7071"
+  frontend:
+     build:
+      context: ./payroll-front
+      dockerfile: Dockerfile.front
+    ports:
+      - "3000:3000"
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
