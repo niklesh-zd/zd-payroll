@@ -38,7 +38,7 @@ function AddEmployee(props) {
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
-    if (effectiveDateInputRef.current) {
+    if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
       const today = new Date(fieldObj.date_of_joining).toISOString().split("T")[0];
       effectiveDateInputRef.current.setAttribute("min", today);
     }
