@@ -4,15 +4,9 @@ services:
   backend:
     build: 
       context: .
-      dockerfile: Dockerfile
-    ports:
-      - "7071:7071"
-  frontend:
-     build:
-      context: ./payroll-front
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+      ports:
+       - "7071:7071"
+ 
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
