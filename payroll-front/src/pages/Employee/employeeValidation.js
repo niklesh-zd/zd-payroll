@@ -1,5 +1,4 @@
 export function validateForm(fields) {
-  console.log("---------validation---------");
   console.log("fields", fields);
   var formIsValid = true;
   let errObj = {};
