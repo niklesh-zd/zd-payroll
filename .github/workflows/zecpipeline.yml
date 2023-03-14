@@ -24,7 +24,7 @@ jobs:
       with:
         context: .
         push: true
-        dockerfile: Dockerfile.back
+        dockerfile: ./Dockerfile.back
         tags: rohitkas/app:latest 
         
     - name: Build and push Docker 
