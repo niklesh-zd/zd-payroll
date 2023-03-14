@@ -44,7 +44,8 @@ jobs:
         password: ${{ secrets.DROPLET2_PASSWORD }}
 
         script: |
-       
+        
+            cd /root
             docker-compose pull
             docker-compose up -d
     
