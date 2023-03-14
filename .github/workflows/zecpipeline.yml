@@ -45,7 +45,9 @@ jobs:
 
         script: |
        
-            'docker-compose down && docker-compose up -d'
+            cd ~/app
+            docker-compose pull
+            docker-compose up -d
     
 
 
