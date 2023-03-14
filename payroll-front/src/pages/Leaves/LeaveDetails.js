@@ -10,7 +10,6 @@ function LeaveDetails() {
   const navigate = useNavigate();
   const [empLeaveData, setEmpLeaveData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  console.log("empLeaveData", empLeaveData);
   const deleteLeave = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -44,43 +43,43 @@ function LeaveDetails() {
   var columns = [
     {
       name: "Name",
-      selector: "First_Name",
+      selector: (rowData) => rowData["First_Name"],
       sortable: true,
       width: 30,
     },
     {
       name: "Email",
-      selector: "email",
+      selector: (rowData) => rowData["email"],
       sortable: true,
     },
     {
-      name: "createdAt",
-      selector: "createdAt",
+      name: "CreatedAt",
+      selector: (rowData) => rowData["createdAt"],
       sortable: true,
     },
     {
       name: "From Date",
-      selector: "from_date",
+      selector: (rowData) => rowData["from_date"],
       sortable: true,
     },
     {
       name: "To Date",
-      selector: "to_date",
+      selector: (rowData) => rowData["to_date"],
       sortable: true,
     },
     {
       name: "Phone",
-      selector: "Contact_Number",
+      selector: (rowData) => rowData["Contact_Number"],
       sortable: true,
     },
     {
       name: "Leave Type",
-      selector: "leave_type",
+      selector: (rowData) => rowData["leave_type"],
       sortable: true,
     },
     {
       name: "Reason For Leave",
-      selector: "reason_for_leave",
+      selector: (rowData) => rowData["reason_for_leave"],
       sortable: true,
     },
     {
@@ -108,7 +107,6 @@ function LeaveDetails() {
         let filteredArr = [];
         let filteredObj = {};
         let responseArr = response.data.msg;
-        console.log("responseArr", responseArr);
         responseArr.map((e) => {
           e.result.map((w) => {
             filteredObj = {
@@ -127,7 +125,6 @@ function LeaveDetails() {
             createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
           });
         });
-        console.log("filteredArr", filteredArr);
         setEmpLeaveData(filteredArr);
       })
       .catch((error) => {
@@ -139,12 +136,12 @@ function LeaveDetails() {
       row.First_Name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
-  console.log("----", empLeaveData);
+
   return (
     <div>
 
       <Link
-        to="/settings/manageprofile" className="btn text-dark">
+        to="/employee/manageprofile" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <div>
@@ -162,7 +159,7 @@ function LeaveDetails() {
                 <div style={{ display: "flex" }}>
                   <h4>Leaves Details</h4>{" "}
                   <Link
-                    to="/settings/leave"
+                    to="/employee/leave"
                     className="btn btn-primary btn-sm ml-5 mr-5"
                   >
                     Add Leave (+)

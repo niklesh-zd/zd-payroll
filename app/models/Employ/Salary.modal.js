@@ -121,20 +121,20 @@ const Salary = Schema({
 
     ARRS: {
         type: Number,
-        default:0
+        default: 0
 
     },
     Additional: {
         type: Number,
-        default:0
+        default: 0
     },
     ARRS_Comment: {
         type: String,
-        default:""
+        default: ""
     },
     Additional_Comment: {
         type: String,
-        default:""
+        default: ""
     }
 },
     {
@@ -142,6 +142,7 @@ const Salary = Schema({
     },
 
 )
+
 
 // collection creation 
 const SalaryModal = model('SALARY', Salary, "salary");

@@ -12,13 +12,13 @@ const ManageEmpyee = () => {
   const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
   const LoadDetail = (_id) => {
-    navigate("/settings/EmpDetail/" + _id);
+    navigate("/employee/EmpDetail" + _id);
   };
   const generateSalary = (_id) => {
-    navigate("/settings/salary/" + _id);
+    navigate("/employee/salary" + _id);
   };
   const LoadEdit = (_id) => {
-    navigate("/settings/EmpEdit/" + _id);
+    navigate("/employee/EmpEdit" + _id);
   };
   useEffect(() => {
     window
@@ -45,10 +45,12 @@ const ManageEmpyee = () => {
         console.log(err);
       });
   }, []);
+  // const employeeCode = (rowData) => rowData["Employee_Code"];
+
   var columns = [
     {
       name: "Employee Code",
-      selector: "Employee_Code",
+      selector: (rowData) => rowData["Employee_Code"],
       sortable: true,
       width: "150px",                       // added line here
       headerStyle: (selector, id) => {
@@ -57,7 +59,7 @@ const ManageEmpyee = () => {
     },
     {
       name: "Name",
-      selector: "First_Name",
+      selector: (rowData) => rowData["First_Name"],
       sortable: true,
       width: "150px",                       // added line here
       headerStyle: (selector, id) => {
@@ -66,21 +68,21 @@ const ManageEmpyee = () => {
     },
     {
       name: "Email",
-      selector: "email",
+      selector: (rowData) => rowData["email"],
       sortable: true,
     },
     {
       name: "Phone",
-      selector: "Contact_Number",
+      selector:  (rowData) => rowData["Contact_Number"],
       sortable: true,
     },
     {
       name: "Experience",
-      selector: "experience",
+      selector: (rowData) => rowData["experience"],
     },
     {
       name: "DOJ",
-      selector: "DOJ",
+      selector:(rowData) => rowData["DOJ"],
     },
     {
       name: "Action",
@@ -147,7 +149,7 @@ const ManageEmpyee = () => {
                 <div style={{ display: "flex" }}>
                   <h4>Employees</h4>{" "}
                   <Link
-                    to="/settings/profile"
+                    to="/employee/profile"
                     className="btn btn-primary btn-sm ml-5 mr-5"
                   >
                     Add New (+)

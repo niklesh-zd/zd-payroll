@@ -14,10 +14,10 @@ const EmpDetail = () => {
   const [empdata, empdatachange] = useState({});
 
   const LoadEdit = () => {
-    navigate("/settings/EmpEdit/" + id);
+    navigate("/employee/EmpEdit" + id);
   };
   // const leaveNavigate = () => {
-  //   navigate("/settings/userleavedetails" + id);
+  //   navigate("/employee/userleavedetails" + id);
   // };
   useEffect(() => {
     fetch(`${host}/emp/emp_1/` + id)
@@ -25,7 +25,6 @@ const EmpDetail = () => {
         return res.json();
       })
       .then((resp) => {
-        console.log("r================esp", resp);
         empdatachange(resp);
       })
       .catch((err) => {
@@ -33,7 +32,7 @@ const EmpDetail = () => {
       });
   }, []);
   // const leaveNavigate = () => {
-  //   navigate("/settings/userleavedetails" + id);
+  //   navigate("/employee/userleavedetails" + id);
   // };
   const img = emo
   const Removefunction = () => {
@@ -57,7 +56,7 @@ const EmpDetail = () => {
               "Your file has been deleted.",
               "success"
             ).then(() => {
-              navigate("/settings/manageprofile");
+              navigate("/employee/manageprofile");
             });
           })
           .catch((err) => {
@@ -85,7 +84,7 @@ const EmpDetail = () => {
               >
                 <div className="flex">
                   <Link
-                    to="/settings/manageprofile" className="btn text-primary">
+                    to="/employee/manageprofile" className="btn text-primary">
                     <TiArrowBack size={30} />
                   </Link>
                 </div>
@@ -228,16 +227,24 @@ const EmpDetail = () => {
                 <p className="pmd-list-title">{empdata.Contact_Number_Home}</p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
-                <label className="pmd-list-subtitle">State</label>
-                <p className="pmd-list-title"><small href="" title="">mp</small></p>
+                <label className="pmd-list-subtitle">Current City</label>
+                <p className="pmd-list-title"><small>{empdata.current_city}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
-                <label className="pmd-list-subtitle">City</label>
-                <p className="pmd-list-title"><small>Indore</small></p>
+                <label className="pmd-list-subtitle">Current State</label>
+                <p className="pmd-list-title"><small>{empdata.current_state}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
                 <label className="pmd-list-subtitle">Current Address</label>
                 <p className="pmd-list-title"><small>{empdata.Current_Address}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Permanent City</label>
+                <p className="pmd-list-title"><small>{empdata.permanent_city}</small></p>
+              </div>
+              <div className="col-12 col-md-6 col-lg-3">
+                <label className="pmd-list-subtitle">Permanent State</label>
+                <p className="pmd-list-title"><small>{empdata.permanent_state}</small></p>
               </div>
               <div className="col-12 col-md-6 col-lg-3">
                 <label className="pmd-list-subtitle">Permanent Address</label>

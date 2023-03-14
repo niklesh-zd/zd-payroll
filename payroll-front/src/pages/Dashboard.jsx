@@ -8,15 +8,14 @@ import {
 import { GiScales } from "react-icons/gi";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import host from "./utils";
+import { RotatingLines } from "react-loader-spinner";
 const Dashboard = () => {
-  const navigate = useNavigate();
   const [totalEmployee, setTotalEmployee] = useState("");
   const [totalHoliday, setTotalHoliday] = useState([]);
   const [todayPresent, setTodayPresent] = useState({});
   const [yesterdayPresent, setYesterdayPresent] = useState({});
-  const [monthName, setMonthName] = useState("");
   useEffect(() => {
     window
       .fetch(`${host}/emp/get_employ`)
@@ -42,8 +41,6 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
-
-
 
   useEffect(() => {
     axios
@@ -78,7 +75,10 @@ const Dashboard = () => {
     <div id="root">
       <div className="container pt-5">
         <div className="row align-items-stretch">
-          <a className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"  href="/settings/manageprofile">
+          <Link
+            className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
+            to="/employee/manageprofile"
+          >
             <div
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
@@ -87,45 +87,72 @@ const Dashboard = () => {
                 <h4 className="">Total Employee</h4>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <h1>
-                  <HiUserGroup />
-                  {totalEmployee}
-                </h1>
-              </div>
-            </div>
-          </a>
-
-          <div className="c-dashboardInfo col-lg-3 col-md-6">
-            <div
-              className="wrap"
-              style={{ display: "flex", flexDirection: "column" }}
-            >
-              <h4 className="">Festival Holidays</h4>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <h1>
-                  {totalHoliday.length == 0 ? (
-                    <BsEmojiFrownFill />
-                  ) : totalHoliday.length < 3 ? (
-                    <BsFillEmojiLaughingFill />
-                  ) : (
-                    <BsFillEmojiHeartEyesFill />
-                  )}
-                </h1>
-              </div>
-              <div>
-                {totalHoliday.length > 0 ? (
-                  totalHoliday.map((e) => {
-                    return <h6>{e.holiday_name}</h6>;
-                  })
+                {!totalEmployee ? (
+                  <RotatingLines
+                    className="text-center"
+                    strokeColor="black"
+                    strokeWidth="8"
+                    animationDuration="0.75"
+                    width="26"
+                    visible={true}
+                  />
                 ) : (
-                  <h6>No Holidays This Month</h6>
+                  <h1>
+                    <HiUserGroup />
+                    {totalEmployee}
+                  </h1>
                 )}
               </div>
             </div>
+          </Link>
+          <div className="c-dashboardInfo col-lg-3 col-md-6">
+            <Link
+              className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
+              to="/holiydays"
+            >
+              <div
+                className="wrap"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <h4 className="">Festival Holidays</h4>
+                {!totalHoliday ? (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <RotatingLines
+                      className="text-center"
+                      strokeColor="black"
+                      strokeWidth="8"
+                      animationDuration="0.75"
+                      width="26"
+                      visible={true}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <h1>
+                        {totalHoliday.length == 0 ? (
+                          <BsEmojiFrownFill />
+                        ) : totalHoliday.length < 3 ? (
+                          <BsFillEmojiLaughingFill />
+                        ) : (
+                          <BsFillEmojiHeartEyesFill />
+                        )}
+                      </h1>
+                    </div>
+                    <div>
+                      {totalHoliday.length > 0 ? (
+                        totalHoliday.map((e) => {
+                          return <h6 key={e.holiday_name}>{e.holiday_name}</h6>;
+                        })
+                      ) : (
+                        <h6>No Holidays This Month</h6>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            </Link>
           </div>
-
-
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
@@ -137,14 +164,24 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              <h2>
-                {todayPresent.present_count}/{totalEmployee}
-              </h2>
+              {!todayPresent || !totalEmployee? (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <RotatingLines
+                    className="text-center"
+                    strokeColor="black"
+                    strokeWidth="8"
+                    animationDuration="0.75"
+                    width="26"
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <h2>
+                  {todayPresent.present_count}/{totalEmployee}
+                </h2>
+              )}
             </div>
           </div>
-
-
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
@@ -156,9 +193,22 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              <h2>
-                {yesterdayPresent.absent_count}/{totalEmployee}
-              </h2>
+              {!yesterdayPresent || !totalEmployee? (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <RotatingLines
+                    className="text-center"
+                    strokeColor="black"
+                    strokeWidth="8"
+                    animationDuration="0.75"
+                    width="26"
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <h2>
+                  {yesterdayPresent.absent_count}/{totalEmployee}
+                </h2>
+              )}
             </div>
           </div>
         </div>
