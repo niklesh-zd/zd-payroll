@@ -1,11 +1,12 @@
 version: '3'
 
 services:
-     build: 
+  app:
+    build: 
       context: .
-     ports:
-       - "7071:7071"
- 
+      dockerfile: Dockerfile
+    ports:
+      - "7071:7071"
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
