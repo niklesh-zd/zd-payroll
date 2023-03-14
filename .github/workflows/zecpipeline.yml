@@ -33,6 +33,8 @@ jobs:
         username: root
         password: ${{ secrets.DROPLET2_PASSWORD }}
         script: |
+          git pull
+          cd /zd-payroll
           docker-compose down
           docker-compose up -d
 
