@@ -24,17 +24,8 @@ jobs:
       with:
         context: .
         push: true
-        dockerfile: ./Dockerfile
         tags: rohitkas/app:latest 
-        
-    - name: Build and push Docker 
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        dockerfile: ./payroll-front/Dockerfile
-        tags:  rohitkas/frontend:latest
-        
+
     - name: Deploy to Droplet
       uses: appleboy/ssh-action@master
       with:
@@ -53,5 +44,4 @@ jobs:
     
    
    
-
 
