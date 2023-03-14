@@ -36,6 +36,7 @@ jobs:
           cd  ~/zd-payroll
           git pull 
           docker-compose down
+          docker rmi zd-payroll_app
           docker-compose up -d
 
 
