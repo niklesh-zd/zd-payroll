@@ -24,7 +24,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: rohitkas/app:latest 
+        tags: rohitkas/app:latest
 
     - name: Deploy to Droplet
       uses: appleboy/ssh-action@master
@@ -38,10 +38,3 @@ jobs:
           docker-compose down
           docker rmi zd-payroll_app
           docker-compose up -d
-
-
-        
-    
-   
-   
-
