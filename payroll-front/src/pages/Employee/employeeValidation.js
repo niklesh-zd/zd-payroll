@@ -78,7 +78,7 @@ export function validateForm(fields) {
   }
   let emailRegex =
     /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!fields.email) {
+  if (!fields.email || !emailRegex.test(fields.email)) {
     errObj["email"] = "*Please Enter Valid Email.";
     formIsValid = false;
   }

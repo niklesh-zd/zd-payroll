@@ -57,13 +57,13 @@ function Year_Leave_Details
           <DataTable
             title={
               <div style={{ display: "flex", alignItems: "center" }}>
-                <h4>Year_Leave Details</h4>{" "}
+                <h4>Year Leave Details</h4>{" "}
                 <Link
                   to="/Year_leave
                   "
                   className="btn btn-primary btn-sm ml-5 mr-5"
                 >
-                  Add Year_Leave (+)
+                  Add Year Leave (+)
                 </Link>
               </div>
             }

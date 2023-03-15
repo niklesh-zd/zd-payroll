@@ -121,9 +121,9 @@ function TotalHolydays() {
                 }}
               >
                 <div style={{ display: "flex" }}>
-                  <h4>Holydays</h4>{" "}
-                  <Button variant="primary" onClick={handleShow}>
-                  Add Holyday (+)
+                  <h4>Holiydays</h4>{" "}
+                  <Button variant="primary" className="ml-5 mr-5" onClick={handleShow}>
+                  Add Holiyday (+)
                   </Button>
                 </div>
                 <div>
