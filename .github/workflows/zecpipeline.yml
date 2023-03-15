@@ -5,37 +5,44 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build frontend
+      working-directory: ./payroll-front
+      run: npm run build
+      
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
-       registry: docker.io
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: rohitkas/app:latest
-
+    - name: Build Docker images
+      run: |
+        docker build -t zd-payroll .
+        docker build -t zd-payroll-frontend ./payroll-front
+    - name: Push Docker images to Digital Ocean registry
+      run: |
+        docker tag zd-payroll registry.digitalocean.com/zd-payroll/zd-payroll:latest && docker push registry.digitalocean.com/zd-payroll/zd-payroll:latest
+        docker tag zd-payroll-frontend registry.digitalocean.com/zd-payroll/zd-payroll-frontend:latest && docker push registry.digitalocean.com/zd-payroll/zd-payroll-frontend:latest
     - name: Deploy to Droplet
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DROPLET_IP }}
         username: root
         password: ${{ secrets.DROPLET2_PASSWORD }}
+        ports: 22
         script: |
           cd  ~/zd-payroll
-          git pull 
           docker-compose down
-          docker rmi zd-payroll_app
           docker-compose up -d
