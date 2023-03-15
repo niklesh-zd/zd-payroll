@@ -24,23 +24,23 @@ function TotalHolydays() {
   var columns = [
     {
       name: "Holyday Name",
-      selector: "holiday_name",
+      selector:   (rowData) => rowData["holiday_name"],
       sortable: true,
       width: 30,
     },
     {
       name: "Holyday Type",
-      selector: "holiday_type",
+      selector:  (rowData) => rowData["holiday_type"],
       sortable: true,
     },
     {
       name: "Holiday Date",
-      selector: "holiday_date",
+      selector:  (rowData) => rowData["holiday_date"],
       sortable: true,
     },
     {
       name: "Created At",
-      selector: "createdAt",
+      selector:  (rowData) => rowData["createdAt"],
       sortable: true,
     },
     {

@@ -105,51 +105,54 @@ const Dashboard = () => {
               </div>
             </div>
           </Link>
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
-            <div
-              className="wrap"
-              style={{ display: "flex", flexDirection: "column" }}
+            <Link
+              className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
+              to="/holiydays"
             >
-              <h4 className="">Festival Holidays</h4>
-              {!totalHoliday ? (
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <RotatingLines
-                    className="text-center"
-                    strokeColor="black"
-                    strokeWidth="8"
-                    animationDuration="0.75"
-                    width="26"
-                    visible={true}
-                  />
-                </div>
-              ) : (
-                <>
+              <div
+                className="wrap"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <h4 className="">Festival Holidays</h4>
+                {!totalHoliday ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <h1>
-                      {totalHoliday.length == 0 ? (
-                        <BsEmojiFrownFill />
-                      ) : totalHoliday.length < 3 ? (
-                        <BsFillEmojiLaughingFill />
+                    <RotatingLines
+                      className="text-center"
+                      strokeColor="black"
+                      strokeWidth="8"
+                      animationDuration="0.75"
+                      width="26"
+                      visible={true}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <h1>
+                        {totalHoliday.length == 0 ? (
+                          <BsEmojiFrownFill />
+                        ) : totalHoliday.length < 3 ? (
+                          <BsFillEmojiLaughingFill />
+                        ) : (
+                          <BsFillEmojiHeartEyesFill />
+                        )}
+                      </h1>
+                    </div>
+                    <div>
+                      {totalHoliday.length > 0 ? (
+                        totalHoliday.map((e) => {
+                          return <h6 key={e.holiday_name}>{e.holiday_name}</h6>;
+                        })
                       ) : (
-                        <BsFillEmojiHeartEyesFill />
+                        <h6>No Holidays This Month</h6>
                       )}
-                    </h1>
-                  </div>
-                  <div>
-                    {totalHoliday.length > 0 ? (
-                      totalHoliday.map((e) => {
-                        return <h6>{e.holiday_name}</h6>;
-                      })
-                    ) : (
-                      <h6>No Holidays This Month</h6>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </Link>
           </div>
-
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
               className="wrap"
@@ -161,7 +164,7 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              {!todayPresent ? (
+              {!todayPresent || !totalEmployee? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <RotatingLines
                     className="text-center"
@@ -190,7 +193,7 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              {!yesterdayPresent ? (
+              {!yesterdayPresent || !totalEmployee? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <RotatingLines
                     className="text-center"

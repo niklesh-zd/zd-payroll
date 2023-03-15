@@ -25,7 +25,7 @@ import TotalHolydays from "./pages/Holydays/TotalHolydays";
 
 function App() {
   const token = localStorage.getItem("token");
-  console.log("---Token---", token);
+  // console.log("---Token---", token);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
@@ -49,6 +49,7 @@ function App() {
             <Route path="/download/:id" element={<Downloadslip />} />
             <Route path="/Year_leave" element={<Year_Leave />} />
             <Route path="/year_leavedetails" element={<Year_Leave_Details />} />
+            <Route path="/holiydays" element={<TotalHolydays />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>
