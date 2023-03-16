@@ -150,6 +150,127 @@ class Leave {
             res.send({ "error": err })
         }
     }
+
+    async get_leave_today(req, res, next) {
+        try {
+            var today = moment(moment().utc().format('YYYY-MM-DD'))
+            const momentObj = moment(today);
+            const formatted_Date = momentObj.format('YYYY-MM-DD');
+            var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
+            var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
+            // return
+            const findLeave = await LeaveModal.find({
+                from_date: { $gte: from_date, $lte: to_date },
+                to_date: { $gte: from_date, $lte: to_date }
+            });
+
+            for (var i = 0; i < findLeave.length; i++) {
+
+                const date1 = new Date(findLeave[i].from_date);
+                const date2 = new Date(findLeave[i].to_date);
+                const formattedDate = date1.toISOString().slice(0, 10).replace(/-/g, "-");
+                const formattedDate1 = date2.toISOString().slice(0, 10).replace(/-/g, "-");
+                // console.log(formattedDate == formatted_Date || formattedDate1 == formatted_Date, '...');
+
+                // return
+                // if (formattedDate == formatted_Date || formattedDate1 == formatted_Date) {
+
+                //     const docs = await LeaveModal.aggregate([
+                //         {
+                //             $lookup: {
+                //                 from: "EmpInfo",
+                //                 localField: "userid",
+                //                 foreignField: "_id",
+                //                 as: "result"
+                //             }
+                //         }
+                //     ]).sort({ _id: -1 })
+                //     res.send({ msg: docs })
+                //     console.log("docs", docs);
+                // }
+                // const docs = await LeaveModal.aggregate([
+                //     {
+                //         $lookup: {
+                //             from: "EmpInfo",
+                //             localField: "userid",
+                //             foreignField: "_id",
+                //             as: "result"
+                //         }
+                //     },
+                //     {
+                //         $match: {
+                //             $or: [
+                //                 { formattedDate: formatted_Date },
+                //                 { formattedDate1: formatted_Date }
+                //             ],
+
+                //         }
+                //     },
+                //     { $sort: { _id: -1 } }
+
+                // ]);
+                // if (formattedDate == formatted_Date || formattedDate1 == formatted_Date) {
+                //     const docs = await LeaveModal.aggregate([
+                //         {
+                //             $lookup: {
+                //                 from: "EmpInfo",
+                //                 localField: "userid",
+                //                 foreignField: "_id",
+                //                 as: "result"
+                //             }
+                //         },
+                //         {
+                //             $match: {
+                //                 $or: [
+                //                     { formattedDate: formatted_Date },
+                //                     { formattedDate1: formatted_Date }
+                //                 ]
+                //             }
+                //         },
+                //         { $sort: { _id: -1 } }
+                //     ]);
+
+                //     res.send({ msg: docs });
+                //     console.log("docs", docs);
+
+
+            }
+
+            // res.send({ msg: docs })
+            // console.log("docs", docs);
+
+            // }
+            // return
+
+            const docs = await LeaveModal.aggregate([
+                {
+                    $match: {
+                        from_date: {
+                            $eq: new Date(today)
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "EmpInfo",
+                        localField: "userid",
+                        foreignField: "_id",
+                        as: "result"
+                    }
+                },
+                {
+                    $sort: {
+                        _id: -1
+                    }
+                }
+            ]);
+            res.send({ msg: docs });
+            console.log("docs", docs);
+        } catch (err) {
+            res.send({ "error": err })
+            console.log(err);
+        }
+    }
     async update_laeve(req, res) {
         if (!req.body) {
             return res.status(400).send({
@@ -246,7 +367,8 @@ class Leave {
 
             var from_date_ = moment(moment(findLeave[i].from_date).utc().format('YYYY-MM-DD'))
             var to_date_ = moment(moment(findLeave[i].to_date).utc().format('YYYY-MM-DD'))
-
+            // console.log(from_date_);
+            // return
             if (
                 today.isSameOrBefore(to_date_)
                 && today.isSameOrAfter(from_date_)

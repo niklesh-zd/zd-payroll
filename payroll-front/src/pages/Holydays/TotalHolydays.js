@@ -1,14 +1,19 @@
 import axios from "axios";
 import { TiArrowBack } from "react-icons/ti";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { BsPencilSquare } from "react-icons/bs";
+
 import host from "./../utils";
+import { ToastContainer, toast } from "react-toastify";
 
 function TotalHolydays() {
+  let navigate = useNavigate();
+
   const [totalHolydays, setTotalHolydays] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [show, setShow] = useState(false);
@@ -16,31 +21,33 @@ function TotalHolydays() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleOnchange = (e) =>{
+  const handleOnchange = (e) => {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
   }
   var columns = [
     {
-      name: "Holiday Name",
-      selector:   (rowData) => rowData["holiday_name"],
+      name: "Holyday Name",
+      selector: (rowData) => rowData["holiday_name"],
       sortable: true,
       width: 30,
     },
     {
-      name: "Holiday Type",
-      selector:  (rowData) => rowData["holiday_type"],
+      name: "Holiday Date",
+      selector: (rowData) => rowData["holiday_date"],
       sortable: true,
     },
     {
-      name: "Holiday Date",
-      selector:  (rowData) => rowData["holiday_date"],
+      name: "Holyday Type",
+      selector: (rowData) => rowData["holiday_type"],
       sortable: true,
     },
+
+
     {
       name: "Created At",
-      selector:  (rowData) => rowData["createdAt"],
+      selector: (rowData) => rowData["createdAt"],
       sortable: true,
     },
     {
@@ -55,6 +62,8 @@ function TotalHolydays() {
           >
             <FaTrash />
           </span>
+
+
         </>
       ),
 
@@ -76,8 +85,9 @@ function TotalHolydays() {
       end_date: formatDate(lastDay),
     };
     axios
-      .post(`${host}/Holiday/get-fastival`, datesobject)
+      .post(`${host}/Holiday/get-holiday`, datesobject)
       .then((res) => {
+        console.log(res.data, '......');
         const filterArr = [];
         res.data.map((e) => {
           filterArr.push({
@@ -85,6 +95,7 @@ function TotalHolydays() {
             holiday_name: e.holiday_name,
             holiday_type: e.holiday_type,
             createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
+            id: e._id
           });
         });
         setTotalHolydays(filterArr);
@@ -93,11 +104,77 @@ function TotalHolydays() {
         console.log(err);
       });
   }, []);
+  const LoadEdit = (_id) => {
+    navigate("/employee/EmpEdit" + _id);
+  };
+  const deleteHolyday = (id) => {
+    console.log(id, '****');
+    Swal.fire({
 
-  const deleteHolyday = () => {};
-  const handleHolidaySubmit = (e) => {
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window
+          .fetch(`${host}/Holiday/holiday_dalate/` + id.id, {
+            method: "POST",
+          })
+          .then((res) => {
+            Swal.fire(
+              "Deleted!",
+              "Your Leave has been deleted.",
+              "success"
+            ).then(() => {
+              window.location.reload(false);
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      }
+    });
+  };
+  const notify = (message) => {
+    toast(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+  const handleHoliydaySubmit = (e) => {
     e.preventDefault()
-    console.log("fields",fields);
+    console.log("0000");
+    console.log("fields", fields);
+    axios
+      .post(`${host}/Holiday/holiday`, fields)
+      .then((response) => {
+        console.log("success", response);
+        if (response.data.message == "Success ") {
+          Swal.fire({
+            icon: "success",
+            title: "Successful",
+            text: "Successfully!",
+          }).then(() => {
+            handleClose()
+            navigate("/holiydays");
+          });
+        } else {
+          notify(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
   };
   const filteredData = totalHolydays.filter((row) => {
     return (
@@ -122,8 +199,8 @@ function TotalHolydays() {
               >
                 <div style={{ display: "flex" }}>
                   <h4>Holidays</h4>{" "}
-                  <Button variant="primary" className="ml-5 mr-5" onClick={handleShow}>
-                  Add Holiday (+)
+                  <Button variant="primary" onClick={handleShow}>
+                    Add Holyday (+)
                   </Button>
                 </div>
                 <div>
@@ -152,17 +229,22 @@ function TotalHolydays() {
         <Modal.Body>
           <Form>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Holiday Name</Form.Label>
-              <Form.Control type="text" name="holiday_name" placeholder="Enter Holiday Name" onChange={(e)=>handleOnchange(e)}/>
+              <Form.Label>Holiyday Name</Form.Label>
+              <Form.Control type="text" name="holiday_name" placeholder="Enter Holiday Name" onChange={(e) => handleOnchange(e)} />
+            </Form.Group>
+
+            <Form.Group controlId="formHolidayType">
+              <Form.Label>Holiday Type</Form.Label>
+              <select name="holiday_type" className="form-control" onChange={(e) => handleOnchange(e)}>
+                <option disabled={true} selected={true}>Select Holiday Type</option>
+                <option>Public</option>
+                <option>Weekend</option>
+              </select>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Holiday Type</Form.Label>
-              <Form.Control type="" name="holiday_type" placeholder="Enter Holiday Type" onChange={(e)=>handleOnchange(e)}/>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Holiday Date</Form.Label>
-              <Form.Control type="date" name="holiday_date" placeholder="Select Holiday Date" onChange={(e)=>handleOnchange(e)}/>
+              <Form.Label>Holiyday Date</Form.Label>
+              <Form.Control type="date" name="holiday_date" placeholder="Select Holiday Date" onChange={(e) => handleOnchange(e)} />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -170,7 +252,7 @@ function TotalHolydays() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e)=>handleHolidaySubmit(e)}>
+          <Button variant="primary" onClick={(e) => handleHoliydaySubmit(e)}>
             Add
           </Button>
         </Modal.Footer>

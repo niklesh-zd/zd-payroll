@@ -5,6 +5,7 @@ const app = express();
 const pdf_genearation = require("./pdf_generator/pdfGenerator")
 const path = require('path')
 
+
 const cors = require('cors');
 app.use(cors())
 require('dotenv').config();
@@ -12,7 +13,8 @@ require('dotenv').config();
 
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
-     
+app.use(express.static(path.join(__dirname, 'public')));
+ 
 app.use("/", require("./app/routes/Employ/Employ.route"));
 app.use("/emp", require("./app/routes/Employ/Employ.route"));
 app.use("/Emp_Leave",require("./app/routes/Employ/Leave.route"))
@@ -20,6 +22,7 @@ app.use("/Emp_Salary",require("./app/routes/Employ/Salary.route"))
 app.use("/Holiday",require("./app/routes/Employ/Holiday.route"))
 app.use("/login",require("./app/routes/Employ/login.route"))
 app.use("/year",require("./app/routes/Employ/Year_Leave.route"))
+app.use("/eff", require("./app/routes/Employ/Effective.route"))
 
 
 app.get('/slip', (req, res) =>{

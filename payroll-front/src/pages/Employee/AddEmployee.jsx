@@ -838,6 +838,7 @@ function AddEmployee(props) {
                         rows="3"
                         cols="35"
                         placeholder="Enter your Local Address"
+                        style={{ textTransform: "capitalize" }}
                         value={fields.Current_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>
