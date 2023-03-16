@@ -22,7 +22,7 @@ import Year_Leave_Details from "./pages/Leaves/Year_leave_details";
 import LoginPage from "./Auth/LoginPage";
 import { useState } from "react";
 import TotalHolydays from "./pages/Holydays/TotalHolydays";
-
+import TotalPresent from "./pages/Leaves/TotalPresent";
 function App() {
   const token = localStorage.getItem("token");
   // console.log("---Token---", token);
@@ -50,6 +50,7 @@ function App() {
             <Route path="/Year_leave" element={<Year_Leave />} />
             <Route path="/year_leavedetails" element={<Year_Leave_Details />} />
             <Route path="/holiydays" element={<TotalHolydays />} />
+            <Route path="/TotalPresent" element={<TotalPresent />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </SideBar>

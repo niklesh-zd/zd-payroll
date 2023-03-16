@@ -31,7 +31,7 @@ class Emp {
                 res.send({ message: errors.array() })
             }
 
-        
+
 
             const emailFind = await EmpInfoModal.findOne({ email: email })
             const Pan_no = await EmpInfoModal.findOne({ PAN_No: PAN_No })
@@ -83,7 +83,7 @@ class Emp {
                     permanent_city,
                     current_state,
                     current_city,
-                    base_salary_list : [{salary_ : base_salary, effective_date : effective_date}],
+                    base_salary_list: [{ salary_: base_salary, effective_date: effective_date }],
                     ADHAR,
                     Bank_No,
                     Bank_IFSC,
@@ -165,40 +165,40 @@ class Emp {
                 return res.status(404).send({ message: "This user not Exist." });
             }
             const employ = new Emp_archInfoModal({
-                userid : req.params.id,
+                userid: req.params.id,
                 First_Name: userDelete.First_Name,
                 Last_Name: userDelete.Last_Name,
-                date_of_birth : userDelete.date_of_birth,
-                date_of_joining : userDelete.date_of_joining,
-                gender : userDelete.gender,
-                Contact_Number : userDelete.Contact_Number,
-                Contact_Number_Home : userDelete.Contact_Number_Home,
-                Permanent_Address : userDelete.Permanent_Address,
-                Current_Address : userDelete.Current_Address,
-                email : userDelete.email,
-                fatherName : userDelete.fatherName,
-                Alternate_Contact_number : userDelete.Alternate_Contact_number,
-                Blood_Group : userDelete.Blood_Group,
-                Marital_Status : userDelete.Marital_Status,
-                PAN_No : userDelete.PAN_No,
-                permanent_state : userDelete.permanent_state,
-                permanent_city : userDelete.permanent_city,
-                current_state : userDelete.current_state,
-                current_city : userDelete.current_city,
-                base_salary_list : userDelete.base_salary_list,
-                ADHAR : userDelete.ADHAR,
-                Bank_No : userDelete.Bank_No,
-                Bank_IFSC : userDelete.Bank_IFSC,
-                Position : userDelete.Position,
+                date_of_birth: userDelete.date_of_birth,
+                date_of_joining: userDelete.date_of_joining,
+                gender: userDelete.gender,
+                Contact_Number: userDelete.Contact_Number,
+                Contact_Number_Home: userDelete.Contact_Number_Home,
+                Permanent_Address: userDelete.Permanent_Address,
+                Current_Address: userDelete.Current_Address,
+                email: userDelete.email,
+                fatherName: userDelete.fatherName,
+                Alternate_Contact_number: userDelete.Alternate_Contact_number,
+                Blood_Group: userDelete.Blood_Group,
+                Marital_Status: userDelete.Marital_Status,
+                PAN_No: userDelete.PAN_No,
+                permanent_state: userDelete.permanent_state,
+                permanent_city: userDelete.permanent_city,
+                current_state: userDelete.current_state,
+                current_city: userDelete.current_city,
+                base_salary_list: userDelete.base_salary_list,
+                ADHAR: userDelete.ADHAR,
+                Bank_No: userDelete.Bank_No,
+                Bank_IFSC: userDelete.Bank_IFSC,
+                Position: userDelete.Position,
                 Employee_Code: userDelete.Employee_Code,
-                DEGREE : userDelete.DEGREE,
-                STREAM : userDelete.STREAM,
-                is_active : 0,
-                PASSED : userDelete.PASSED,
-                PERCENTAGE_OF_MARKS : userDelete.PERCENTAGE_OF_MARKS,
-                permanent_pin_code : userDelete.permanent_pin_code,
-                current_pin_code : userDelete.current_pin_code,
-                YEAR_OF_PASSING : userDelete.YEAR_OF_PASSING
+                DEGREE: userDelete.DEGREE,
+                STREAM: userDelete.STREAM,
+                is_active: 0,
+                PASSED: userDelete.PASSED,
+                PERCENTAGE_OF_MARKS: userDelete.PERCENTAGE_OF_MARKS,
+                permanent_pin_code: userDelete.permanent_pin_code,
+                current_pin_code: userDelete.current_pin_code,
+                YEAR_OF_PASSING: userDelete.YEAR_OF_PASSING
             })
             employ.save()
             res.status(201).json({ message: "delete successfuly" });
@@ -248,7 +248,7 @@ class Emp {
 
         const id = req.params.id;
         EmpInfoModal.findByIdAndUpdate(
-            id, 
+            id,
             {
                 First_Name: First_Name.charAt(0).toUpperCase() + First_Name.slice(1),
                 Last_Name: Last_Name.charAt(0).toUpperCase() + Last_Name.slice(1),
@@ -269,7 +269,7 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
+                base_salary_list: [{}],
                 ADHAR,
                 Bank_No,
                 Bank_IFSC,
@@ -281,9 +281,9 @@ class Emp {
                 PERCENTAGE_OF_MARKS,
                 permanent_pin_code,
                 current_pin_code,
-                YEAR_OF_PASSING,               
+                YEAR_OF_PASSING,
             }
-            ).sort({ _id: -1 })
+        ).sort({ _id: -1 })
             .then(data => {
                 if (!data) {
                     res.status(404).send({

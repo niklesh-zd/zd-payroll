@@ -114,7 +114,7 @@ function AddEmployee(props) {
             }).then(() => {
               navigate("/employee/manageprofile");
             });
-          }else{
+          } else {
             setSubmitDisable(false)
             notify(response.data.message);
           }
@@ -329,7 +329,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control small_date"
                         placeholder="Date of Birth"
-                        value={fields.date_of_birth?.substring(0, 10)} 
+                        value={fields.date_of_birth?.substring(0, 10)}
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
@@ -356,7 +356,7 @@ function AddEmployee(props) {
                         name="date_of_joining"
                         className="form-control small_date"
                         placeholder="Date Of Joining"
-                        value={fields.date_of_joining?.substring(0, 10)} 
+                        value={fields.date_of_joining?.substring(0, 10)}
                         onChange={(e) => handleChange(e)}
                       />
 
@@ -426,7 +426,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          defaultChecked={fields.gender == "Male"}
+                          checked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -434,7 +434,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          defaultChecked={fields.gender == "Female"}
+                          checked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -452,7 +452,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          defaultChecked={fields.Marital_Status == "Single"}
+                          checked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -460,7 +460,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          defaultChecked={fields.Marital_Status == "Married"}
+                          checked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -775,6 +775,7 @@ function AddEmployee(props) {
                         rows="3"
                         cols="35"
                         placeholder="Enter your Local Address"
+                        style={{ textTransform: "capitalize" }}
                         value={fields.Current_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>

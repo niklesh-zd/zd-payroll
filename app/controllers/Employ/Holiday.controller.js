@@ -12,11 +12,17 @@ class Holiday {
             var { holiday_name, holiday_type, holiday_date,
             } = req.body;
             // CHECK ALL FIELD IN FILL
+            const holiday_date_ = await HolidayModal.findOne({ holiday_date: holiday_date })
+
             if (!holiday_name || !holiday_type
                 || !holiday_date
             )
                 return res.send({ message: "Please fill in all fields." });
 
+            if (holiday_date_) {
+                return res.send({ message: "alredy exist date." })
+
+            }
             const leave = new HolidayModal({
                 holiday_name,
                 holiday_type,
@@ -26,8 +32,8 @@ class Holiday {
             //STORE YOUR LOGIN DATA IN DB 
             await leave.save();
             console.log({ leave });
-            // res.send({ message: "Success " });
-            res.status(200).send({ success: true })
+            res.send({ message: "Success " });
+            // res.status(200).send({ success: true })
 
         }
         catch (error) {
@@ -39,13 +45,33 @@ class Holiday {
 
     async get_Holiday_all(req, res, next) {
         try {
-            HolidayModal.find({}).sort({ _id: -1 })
-                .then(function (leave) {
-                    res.send(leave);
-                }).catch(next);
-        }
-        catch (err) {
-            res.send({ "eroor": err })
+            var FromDate = req.body.from_date;
+            var EndDate = req.body.end_date;
+            $and: [
+                { age: { $gte: 25 } },
+
+            ]
+            HolidayModal.find({
+                $and: [
+                    { holiday_date: { $gte: new Date(FromDate), $lt: new Date(EndDate) } },
+
+                    {
+                        $or: [
+                            { holiday_type: 'Public' },
+                            { holiday_type: 'Weekend' },
+
+                        ]
+                    }
+
+                ]
+            }
+            ).then(function (employee) {
+                res.send(employee)
+
+            }).catch(next);
+        } catch (err) {
+            res.send({ "error": err })
+            console.log(err);
         }
     }
     async get_holiday(req, res, next) {
@@ -74,16 +100,18 @@ class Holiday {
 
                     {
                         $or: [
-                            { holiday_type: 'Festival' },
-                            { holiday_type: 'independence day' },
-                            { holiday_type: ' gandhi jayanti' },
-                            {holiday_type:'public holiday'}
+                            { holiday_type: 'Public' },
+                            // { holiday_type: 'independence day' },
+                            // { holiday_type: ' gandhi jayanti' },
+                            // { holiday_type: 'public holiday' },
+                            // { holiday_type: '   weekend' },
+
                         ]
                     }
 
                 ]
             }
-            ).sort({ _id: -1 }).then(function (employee) {
+            ).then(function (employee) {
                 res.send(employee)
 
             }).catch(next);
@@ -100,8 +128,16 @@ class Holiday {
         }
 
         const id = req.params.id;
+        const { holiday_name, holiday_type, holiday_date
+        } = req.body;
+        HolidayModal.findByIdAndUpdate(id,
 
-        HolidayModal.findByIdAndUpdate(id, req.body)
+            {
+                holiday_name,
+                holiday_type,
+                holiday_date
+            }
+        )
             .then(data => {
                 if (!data) {
                     res.status(404).send({
