@@ -23,13 +23,13 @@ function TotalHolydays() {
   }
   var columns = [
     {
-      name: "Holyday Name",
+      name: "Holiday Name",
       selector:   (rowData) => rowData["holiday_name"],
       sortable: true,
       width: 30,
     },
     {
-      name: "Holyday Type",
+      name: "Holiday Type",
       selector:  (rowData) => rowData["holiday_type"],
       sortable: true,
     },
@@ -95,7 +95,7 @@ function TotalHolydays() {
   }, []);
 
   const deleteHolyday = () => {};
-  const handleHoliydaySubmit = (e) => {
+  const handleHolidaySubmit = (e) => {
     e.preventDefault()
     console.log("fields",fields);
   };
@@ -121,9 +121,9 @@ function TotalHolydays() {
                 }}
               >
                 <div style={{ display: "flex" }}>
-                  <h4>Holiydays</h4>{" "}
+                  <h4>Holidays</h4>{" "}
                   <Button variant="primary" className="ml-5 mr-5" onClick={handleShow}>
-                  Add Holiyday (+)
+                  Add Holiday (+)
                   </Button>
                 </div>
                 <div>
@@ -152,16 +152,16 @@ function TotalHolydays() {
         <Modal.Body>
           <Form>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Holiyday Name</Form.Label>
+              <Form.Label>Holiday Name</Form.Label>
               <Form.Control type="text" name="holiday_name" placeholder="Enter Holiday Name" onChange={(e)=>handleOnchange(e)}/>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Holiyday Type</Form.Label>
+              <Form.Label>Holiday Type</Form.Label>
               <Form.Control type="" name="holiday_type" placeholder="Enter Holiday Type" onChange={(e)=>handleOnchange(e)}/>
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Holiyday Date</Form.Label>
+              <Form.Label>Holiday Date</Form.Label>
               <Form.Control type="date" name="holiday_date" placeholder="Select Holiday Date" onChange={(e)=>handleOnchange(e)}/>
             </Form.Group>
           </Form>
@@ -170,7 +170,7 @@ function TotalHolydays() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e)=>handleHoliydaySubmit(e)}>
+          <Button variant="primary" onClick={(e)=>handleHolidaySubmit(e)}>
             Add
           </Button>
         </Modal.Footer>

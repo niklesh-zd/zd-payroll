@@ -236,7 +236,7 @@ class Emp {
             , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
             permanent_city,
             current_state, is_active, permanent_pin_code,
-            current_city, current_pin_code, effective_date
+            current_city, current_pin_code, effective_date, base_salary_list
         } = req.body;
 
         if (!req.body) {
@@ -269,7 +269,8 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
+                // $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
+                base_salary_list,
                 ADHAR,
                 Bank_No,
                 Bank_IFSC,
@@ -283,7 +284,7 @@ class Emp {
                 current_pin_code,
                 YEAR_OF_PASSING,               
             }
-            ).sort({ _id: -1 })
+            )
             .then(data => {
                 if (!data) {
                     res.status(404).send({
