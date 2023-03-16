@@ -84,12 +84,12 @@ const routes = [
     subRoutes: [
       {
         path: "/Year_leave",
-        name: "Add Year_Leave",
+        name: "Add Year Leave",
         icon: <FaClipboardList />,
       },
       {
         path: "/year_leavedetails",
-        name: "Manage Year_Leave",
+        name: "Manage Year Leave",
         icon: <FaClipboard />,
       },
 
