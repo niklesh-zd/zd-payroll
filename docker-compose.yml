@@ -11,7 +11,7 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
       - mongodb
-      - frontend
+  #    - frontend
 
   mongodb:
     image: mongo:latest
@@ -21,10 +21,10 @@ services:
     volumes:
       - mongodb-data:/data/db
 
-  frontend:
-    build: ./payroll-front
-    ports:
-      - "3000:3000"
+ # frontend:
+ #   build: ./payroll-front
+ #  ports:
+  #    - "3000:3000"
 
 volumes:
   mongodb-data:
