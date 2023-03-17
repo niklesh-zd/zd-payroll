@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "7071:7071"
+      - "80:7071"
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
