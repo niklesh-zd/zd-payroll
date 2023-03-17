@@ -9,7 +9,7 @@ class year_Leave {
 
         const yearFind = await yearModal.findOne({ year: year })
         if (yearFind) {
-            return res.send({ message: "alredy exist Year." })
+            return res.send({ message: " Year Already Exists." })
         }
 
         if (!year || !leave) {
