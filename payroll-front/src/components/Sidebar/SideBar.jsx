@@ -9,10 +9,12 @@ import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
 import { GiConcentrationOrb } from 'react-icons/gi';
 import { GiImbricatedArrows } from 'react-icons/gi'
-import {GiConcentricCrescents} from 'react-icons/gi'
-import {SiIconfinder} from 'react-icons/si'
-import {GiThreeLeaves} from 'react-icons/gi'
-import {GiRapidshareArrow} from 'react-icons/gi'
+import { GiConcentricCrescents } from 'react-icons/gi'
+import { SiIconfinder } from 'react-icons/si'
+import { GiThreeLeaves } from 'react-icons/gi'
+import { GiRapidshareArrow } from 'react-icons/gi'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { MdOutlineManageAccounts } from 'react-icons/md'
 // import {TfiThemifyFaviconAlt} from 'react-icons/tfi'
 import zecimg from "./zecdata.png";
 const routes = [
@@ -31,12 +33,12 @@ const routes = [
       {
         path: "/employee/profile",
         name: "Add Employee",
-        icon: <FaUser />,
+        icon: <AiOutlineUsergroupAdd />,
       },
       {
         path: "/employee/manageprofile",
         name: "Manage Employee",
-        icon: <FaUser />,
+        icon: <MdOutlineManageAccounts />,
       },
     ],
   },
@@ -212,7 +214,6 @@ const SideBar = ({ children }) => {
         </motion.div>
         <main>{children}</main>
         <div>
-          <p>welcome admin</p>
         </div>
       </div>
     </>
