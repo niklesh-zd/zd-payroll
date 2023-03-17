@@ -30,55 +30,55 @@ const Year_Leave = () => {
             theme: "light",
         });
     };
-const yearLeaveValidateForm = (fields) =>{
-    console.log("------------", fields);
-    var formIsValid = true;
-    let errObj = {};
-    if (Object.keys(fields).length === 0) {
-      console.log("Error");
-      formIsValid = false;
+    const yearLeaveValidateForm = (fields) => {
+        console.log("------------", fields);
+        var formIsValid = true;
+        let errObj = {};
+        if (Object.keys(fields).length === 0) {
+            console.log("Error");
+            formIsValid = false;
+        }
+        if (
+            !fields.year ||
+            fields.year == ""
+        ) {
+            errObj["year"] = "*This is required.";
+            formIsValid = false;
+        }
+        if (
+            !fields.leave ||
+            fields.leave == ""
+        ) {
+            errObj["leave"] = "*This is required.";
+            formIsValid = false;
+        }
+        return { formIsValid, errObj };
     }
-    if (
-      !fields.year ||
-      fields.year == ""
-    ) {
-      errObj["year"] = "*This is required.";
-      formIsValid = false;
-    }
-    if (
-      !fields.leave ||
-      fields.leave == ""
-    ) {
-      errObj["leave"] = "*This is required.";
-      formIsValid = false;
-    }
-    return { formIsValid, errObj };
-}
     const handlesubmit = (e) => {
         e.preventDefault();
         const validationErrors = yearLeaveValidateForm(leavesData)
-        console.log('validationErrors',validationErrors);
+        console.log('validationErrors', validationErrors);
         setErrors(validationErrors.errObj);
         if (validationErrors && validationErrors.formIsValid) {
-        axios
-            .post(`${host}/year/year-leave`, leavesData)
-            .then((response) => {
-                console.log("success", response);
-                if (response.data.message == "Success ") {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Successful",
-                        text: "Successfully!",
-                    }).then(() => {
-                        navigate("/year_leavedetails");
-                    });
-                } else {
-                    notify(response.data.message);
-                }
-            })
-            .catch((error) => {
-                console.error("There was an error!", error);
-            });
+            axios
+                .post(`${host}/year/year-leave`, leavesData)
+                .then((response) => {
+                    console.log("success", response);
+                    if (response.data.message == "Success ") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Successful",
+                            text: "Successfully!",
+                        }).then(() => {
+                            navigate("/year_leavedetails");
+                        });
+                    } else {
+                        notify(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("There was an error!", error);
+                });
         }
     };
 
@@ -109,6 +109,7 @@ const yearLeaveValidateForm = (fields) =>{
                                         <option disabled={true} selected={true}>
                                             Year Leave
                                         </option>
+                                        <option>2022</option>
                                         <option>2023</option>
                                         <option>2024</option>
                                         <option>2025</option>
