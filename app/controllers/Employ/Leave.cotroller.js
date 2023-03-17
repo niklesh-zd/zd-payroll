@@ -153,8 +153,7 @@ class Leave {
 
     async get_leave_today(req, res, next) {
         try {
-            var today = moment(moment().utc().format('YYYY-MM-DD'))
-          
+            var today = moment().subtract('day').format('YYYY-MM-DD');
             const docs = await LeaveModal.aggregate([
                 {
                     $match: {
