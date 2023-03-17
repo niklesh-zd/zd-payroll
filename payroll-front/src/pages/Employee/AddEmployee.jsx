@@ -162,7 +162,7 @@ function AddEmployee(props) {
               navigate("/employee/manageprofile");
             });
           } else {
-            setSubmitDisable(false)
+            setSubmitDisable(false);
             notify(response.data.message);
           }
         })
