@@ -9,7 +9,6 @@ const login = (req, res) => {
     return res.status(401).send({ message: "Invalid credentials" });
   } else {
     console.log("good to go");
-    // return res.send({message: "welcome admin"})
     const token = jwt.sign({ email }, secretKey, { expiresIn: '7d' });
     res.send({ token });
   }

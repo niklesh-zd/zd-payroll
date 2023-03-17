@@ -170,83 +170,82 @@ class Leave {
                 const date2 = new Date(findLeave[i].to_date);
                 const formattedDate = date1.toISOString().slice(0, 10).replace(/-/g, "-");
                 const formattedDate1 = date2.toISOString().slice(0, 10).replace(/-/g, "-");
-                // console.log(formattedDate == formatted_Date || formattedDate1 == formatted_Date, '...');
-
-                // return
-                // if (formattedDate == formatted_Date || formattedDate1 == formatted_Date) {
-
-                //     const docs = await LeaveModal.aggregate([
-                //         {
-                //             $lookup: {
-                //                 from: "EmpInfo",
-                //                 localField: "userid",
-                //                 foreignField: "_id",
-                //                 as: "result"
-                //             }
-                //         }
-                //     ]).sort({ _id: -1 })
-                //     res.send({ msg: docs })
-                //     console.log("docs", docs);
-                // }
-                // const docs = await LeaveModal.aggregate([
-                //     {
-                //         $lookup: {
-                //             from: "EmpInfo",
-                //             localField: "userid",
-                //             foreignField: "_id",
-                //             as: "result"
-                //         }
-                //     },
-                //     {
-                //         $match: {
-                //             $or: [
-                //                 { formattedDate: formatted_Date },
-                //                 { formattedDate1: formatted_Date }
-                //             ],
-
-                //         }
-                //     },
-                //     { $sort: { _id: -1 } }
-
-                // ]);
-                // if (formattedDate == formatted_Date || formattedDate1 == formatted_Date) {
-                //     const docs = await LeaveModal.aggregate([
-                //         {
-                //             $lookup: {
-                //                 from: "EmpInfo",
-                //                 localField: "userid",
-                //                 foreignField: "_id",
-                //                 as: "result"
-                //             }
-                //         },
-                //         {
-                //             $match: {
-                //                 $or: [
-                //                     { formattedDate: formatted_Date },
-                //                     { formattedDate1: formatted_Date }
-                //                 ]
-                //             }
-                //         },
-                //         { $sort: { _id: -1 } }
-                //     ]);
-
-                //     res.send({ msg: docs });
-                //     console.log("docs", docs);
-
-
             }
-
-            // res.send({ msg: docs })
-            // console.log("docs", docs);
-
-            // }
-            // return
-
             const docs = await LeaveModal.aggregate([
                 {
                     $match: {
                         from_date: {
                             $eq: new Date(today)
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "EmpInfo",
+                        localField: "userid",
+                        foreignField: "_id",
+                        as: "result"
+                    }
+                },
+                {
+                    $sort: {
+                        _id: -1
+                    }
+                }
+            ]);
+            res.send({ msg: docs });
+            console.log("docs", docs);
+        } catch (err) {
+            res.send({ "error": err })
+            console.log(err);
+        }
+    }
+    async get_yesterday_leave_(req, res, next) {
+        try {
+            var today = moment(moment().utc().format('YYYY-MM-DD'))
+            console.log(today, '..+.');
+
+            const momentObj = moment(today);
+            console.log(momentObj, '==...');
+
+            const formatted_Date = momentObj.format('YYYY-MM-DD');
+            console.log(formatted_Date, '...');
+
+            // Create a new Date object
+            var today = new Date();
+            console.log(today, '..--00-.');
+
+            // Subtract one day from it
+            var yesterday = new Date(today);
+
+            var yesterday_ = yesterday.setDate(today.getDate() - 1);
+
+            console.log(yesterday); // Output: "2023-03-16"
+            // Format yesterday's date as a string
+            var yesterdayString = yesterday.toISOString().slice(0, 10);
+
+            // Output yesterday's date
+            // return
+            var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
+            var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
+            // return
+            const findLeave = await LeaveModal.find({
+                from_date: { $gte: from_date, $lte: to_date },
+                to_date: { $gte: from_date, $lte: to_date }
+            });
+
+            for (var i = 0; i < findLeave.length; i++) {
+
+                const date1 = new Date(findLeave[i].from_date);
+                const date2 = new Date(findLeave[i].to_date);
+                const formattedDate = date1.toISOString().slice(0, 10).replace(/-/g, "-");
+                const formattedDate1 = date2.toISOString().slice(0, 10).replace(/-/g, "-");
+            }
+            const docs = await LeaveModal.aggregate([
+                {
+                    $match: {
+                        from_date: {
+                            $eq: new Date(yesterday_)
                         }
                     }
                 },
