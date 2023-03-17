@@ -1,5 +1,4 @@
-export function validateForm(fields) {
-  console.log("---------validation---------");
+export function validateForm(fields, checkUpdate) {
   console.log("fields", fields);
   var formIsValid = true;
   let errObj = {};
@@ -79,7 +78,7 @@ export function validateForm(fields) {
   }
   let emailRegex =
     /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!fields.email) {
+  if (!fields.email || !emailRegex.test(fields.email)) {
     errObj["email"] = "*Please Enter Valid Email.";
     formIsValid = false;
   }
@@ -99,13 +98,16 @@ export function validateForm(fields) {
     errObj["Marital_Status"] = "*Field is required";
     formIsValid = false;
   }
-  if (!fields.base_salary || fields.base_salary == "") {
-    errObj["base_salary"] = "*Please Enter Base Salary";
-    formIsValid = false;
-  }
-  if (!fields.effective_date || fields.effective_date == "") {
-    errObj["effective_date"] = "*Please Enter Effective Date";
-    formIsValid = false;
+  if(!checkUpdate){
+
+    if (!fields.base_salary || fields.base_salary == "") {
+      errObj["base_salary"] = "*Please Enter Base Salary";
+      formIsValid = false;
+    }
+    if (!fields.effective_date || fields.effective_date == "") {
+      errObj["effective_date"] = "*Please Enter Effective Date";
+      formIsValid = false;
+    }
   }
   if (!fields.Bank_IFSC || fields.Bank_IFSC.length != 11) {
     errObj["Bank_IFSC"] = "*Please Enter Valid Bank IFSC.";

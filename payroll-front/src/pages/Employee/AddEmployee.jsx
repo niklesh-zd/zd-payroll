@@ -6,12 +6,22 @@ import { validateForm } from "./employeeValidation";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import host from "./../utils"
-import { TiArrowBack } from "react-icons/ti"
+import host from "./../utils";
+import { TiArrowBack } from "react-icons/ti";
 
 function AddEmployee(props) {
-  console.log("props", props);
-  var propsObject = props.data;
+  console.log("props", props.data);
+  let effective_lastIndex;
+  if (props.data) {
+    var propsObject = props.data;
+    var base_salary_list = propsObject?.base_salary_list;
+    effective_lastIndex = propsObject.base_salary_list?.length - 1;
+  }
+  const [effectivesObj, setEffectivesObj] = useState({
+    base_salary: propsObject?.base_salary_list[effective_lastIndex].salary_,
+    effective_date:
+      propsObject?.base_salary_list[effective_lastIndex].effective_date,
+  });
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
   const effectiveDateInputRef = useRef(null);
@@ -23,25 +33,48 @@ function AddEmployee(props) {
   useEffect(() => {
     if (propsObject && propsObject !== {} && propsObject !== undefined) {
       const lastIndex = propsObject.base_salary_list?.length - 1;
-      const effective_date = new Date(
-        propsObject.base_salary_list[lastIndex].effective_date
-      ).toLocaleDateString("en-CA");
-      propsObject = {
-        base_salary: propsObject.base_salary_list[lastIndex].salary_,
-        effective_date: effective_date,
-        ...propsObject,
-      };
+      // const effective_date = new Date(
+      //   propsObject.base_salary_list[lastIndex].effective_date
+      // )
+      // propsObject = {
+      //   base_salary: propsObject.base_salary_list[lastIndex].salary_,
+      //   effective_date: effective_date,
+      //   ...propsObject,
+      // };
+      // console.log("base_salary_list", base_salary_list);
+      // if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
+        const today = new Date(propsObject.base_salary_list[lastIndex].effective_date)
+          .toISOString()
+          .split("T")[0];
+        effectiveDateInputRef.current.setAttribute("min", today);
+      // }
       propsObject && setFields(propsObject);
     }
   }, [propsObject]);
 
   function handleChange(e) {
+    console.log("fields", fields);
+    const lastIndex = propsObject.base_salary_list?.length - 1;
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
-      const today = new Date(fieldObj.date_of_joining).toISOString().split("T")[0];
+      const today = new Date(fieldObj.date_of_joining)
+        .toISOString()
+        .split("T")[0];
       effectiveDateInputRef.current.setAttribute("min", today);
     }
+    if(propsObject){
+      const today = new Date(propsObject.base_salary_list[lastIndex].effective_date)
+      .toISOString()
+      .split("T")[0];
+    effectiveDateInputRef.current.setAttribute("min", today);
+    }
+    // if (fieldObj.base_salary || fieldObj.effective_date) {
+    setEffectivesObj({
+      salary_: fieldObj.base_salary,
+      effective_date: fieldObj.effective_date,
+    });
+    // }
     setFields(fieldObj);
   }
 
@@ -50,10 +83,10 @@ function AddEmployee(props) {
       message == "alredy exist ADHAR."
         ? "Aadhar already exiest"
         : message == "alredy exist PAN_NO."
-          ? "Pan Number already exiest"
-          : message == "alredy exist emails."
-            ? "Email already exiest"
-            : null,
+        ? "Pan Number already exiest"
+        : message == "alredy exist emails."
+        ? "Email already exiest"
+        : null,
       {
         position: "top-center",
         autoClose: 5000,
@@ -72,7 +105,7 @@ function AddEmployee(props) {
     const validationErrors = validateForm(fields);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
-      setSubmitDisable(true)
+      setSubmitDisable(true);
       axios
         .post(`${host}/emp/add_employ`, fields)
         .then((response) => {
@@ -86,7 +119,7 @@ function AddEmployee(props) {
               navigate("/employee/manageprofile");
             });
           } else {
-            setSubmitDisable(false)
+            setSubmitDisable(false);
             notify(response.data.message);
           }
         })
@@ -98,12 +131,27 @@ function AddEmployee(props) {
 
   function updateUserDetails(e) {
     e.preventDefault();
-    const validationErrors = validateForm(fields);
+    const index = base_salary_list.length - 1;
+    // console.log("effectivesObj", effectivesObj);
+    // console.log("base_salary_list", base_salary_list);
+    const effectiveCondition =
+      effectivesObj.base_salary == base_salary_list[index].salary_ ||
+      effectivesObj.effective_date == base_salary_list[index].effective_date ||
+      effectivesObj.salary_ == undefined ||
+      effectivesObj.effective_date == undefined;
+    // console.log("effectiveCondition", effectiveCondition);
+    if (!effectiveCondition) {
+      console.log("yes itss difff");
+      base_salary_list.push(effectivesObj);
+    }
+    let finalData = { ...fields, base_salary_list };
+    console.log("finalData", finalData);
+    const validationErrors = validateForm(fields, true);
     setErrors(validationErrors.errObj);
     if (validationErrors && validationErrors.formIsValid) {
-      setSubmitDisable(true)
+      setSubmitDisable(true);
       axios
-        .post(`${host}/emp/update/` + props.data._id, fields)
+        .post(`${host}/emp/update/` + props.data._id, finalData)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "updated successfully.") {
@@ -114,7 +162,7 @@ function AddEmployee(props) {
             }).then(() => {
               navigate("/employee/manageprofile");
             });
-          }else{
+          } else {
             setSubmitDisable(false)
             notify(response.data.message);
           }
@@ -155,8 +203,6 @@ function AddEmployee(props) {
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
   };
-
-
 
   return (
     <div className="">
@@ -329,7 +375,7 @@ function AddEmployee(props) {
                         name="date_of_birth"
                         className="form-control small_date"
                         placeholder="Date of Birth"
-                        value={fields.date_of_birth?.substring(0, 10)} 
+                        value={fields.date_of_birth?.substring(0, 10)}
                         onChange={(e) => handleChange(e)}
                       />
                       <div className="errorMsg">{errors.date_of_birth}</div>
@@ -356,10 +402,9 @@ function AddEmployee(props) {
                         name="date_of_joining"
                         className="form-control small_date"
                         placeholder="Date Of Joining"
-                        value={fields.date_of_joining?.substring(0, 10)} 
+                        value={fields.date_of_joining?.substring(0, 10)}
                         onChange={(e) => handleChange(e)}
                       />
-
                     </div>
                     <div className="errorMsg">{errors.date_of_joining}</div>
                   </div>
@@ -426,7 +471,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Male"
                           name="gender"
-                          defaultChecked={fields.gender == "Male"}
+                          checked={fields.gender == "Male"}
                         />{" "}
                         Male
                         <input
@@ -434,7 +479,7 @@ function AddEmployee(props) {
                           value="Female"
                           name="gender"
                           className="ml-2"
-                          defaultChecked={fields.gender == "Female"}
+                          checked={fields.gender == "Female"}
                         />{" "}
                         Female
                       </div>
@@ -452,7 +497,7 @@ function AddEmployee(props) {
                           type="radio"
                           value="Single"
                           name="Marital_Status"
-                          defaultChecked={fields.Marital_Status == "Single"}
+                          checked={fields.Marital_Status == "Single"}
                         />{" "}
                         Single
                         <input
@@ -460,7 +505,7 @@ function AddEmployee(props) {
                           value="Married"
                           name="Marital_Status"
                           className="ml-2"
-                          defaultChecked={fields.Marital_Status == "Married"}
+                          checked={fields.Marital_Status == "Married"}
                         />{" "}
                         Married
                       </div>
@@ -533,35 +578,54 @@ function AddEmployee(props) {
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div className="form-group">
-                      <label>Base Salary</label>
-                      <input
-                        type="number"
-                        name="base_salary"
-                        value={fields.base_salary}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Enter Base Salary"
-                      ></input>
-                      <div className="errorMsg">{errors.base_salary}</div>
-                    </div>
-                  </div>
+                <br />
+                <div className="col-sm-12 edit_information">
+                  <div className="Account-details">
+                    <h5 className="text-left">Effective Details</h5>{" "}
+                    <hr style={{ margin: "0px" }} />
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div className="form-group d-flex flex-column">
+                          <label>Base Salary</label>
+                          {propsObject &&
+                            base_salary_list.map((e) => {
+                              return <label>₹ {e.salary_}</label>;
+                            })}
+                          <input
+                            type="number"
+                            name="base_salary"
+                            value={fields.base_salary}
+                            onChange={(e) => handleChange(e)}
+                            className="form-control"
+                            placeholder="Enter Base Salary"
+                          ></input>
+                          <div className="errorMsg">{errors.base_salary}</div>
+                        </div>
+                      </div>
 
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div className="form-group">
-                      <label>Effective Date</label>
-                      <input
-                        ref={effectiveDateInputRef}
-                        type="date"
-                        name="effective_date"
-                        value={fields.effective_date}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Efffective Date"
-                      ></input>
-                      <div className="errorMsg">{errors.effective_date}</div>
+                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div className="form-group d-flex flex-column">
+                          <label>Effective Date</label>
+                          {propsObject &&
+                            base_salary_list.map((e) => {
+                              return (
+                                <label>{e.effective_date?.slice(0, 10)}</label>
+                              );
+                            })}
+                          <input
+                            ref={effectiveDateInputRef}
+                            type="date"
+                            name="effective_date"
+                            value={fields.effective_date}
+                            onChange={(e) => handleChange(e)}
+                            className="form-control"
+                            placeholder="Efffective Date"
+                          ></input>
+                          <div className="errorMsg">
+                            {errors.effective_date}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -775,6 +839,7 @@ function AddEmployee(props) {
                         rows="3"
                         cols="35"
                         placeholder="Enter your Local Address"
+                        style={{ textTransform: "capitalize" }}
                         value={fields.Current_Address}
                         onChange={(e) => handleChange(e)}
                       ></textarea>

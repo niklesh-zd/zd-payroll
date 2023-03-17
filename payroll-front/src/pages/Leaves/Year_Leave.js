@@ -10,21 +10,13 @@ import host from "./../utils";
 const Year_Leave = () => {
     let navigate = useNavigate();
     const [leavesData, setLeavesData] = useState({});
+    const [errors, setErrors] = useState({});
     var leavesObj = {}
     const handleChange = (e) => {
         leavesObj = { ...leavesData };
         leavesObj[e.target.name] = e.target.value;
-        // if (leavesObj.from_date) {
-        //     setDisableToDate(false);
-        //     if (toDateInputRef.current) {
-        //         const today = new Date(leavesObj.from_date).toISOString().split("T")[0];
-        //         toDateInputRef.current.setAttribute("min", today);
-        //     }
-        // }
         setLeavesData(leavesObj);
     };
-
-    console.log("leavesData", leavesData);
 
     const notify = (message) => {
         toast(message, {
@@ -38,10 +30,36 @@ const Year_Leave = () => {
             theme: "light",
         });
     };
-
+const yearLeaveValidateForm = (fields) =>{
+    console.log("------------", fields);
+    var formIsValid = true;
+    let errObj = {};
+    if (Object.keys(fields).length === 0) {
+      console.log("Error");
+      formIsValid = false;
+    }
+    if (
+      !fields.year ||
+      fields.year == ""
+    ) {
+      errObj["year"] = "*This is required.";
+      formIsValid = false;
+    }
+    if (
+      !fields.leave ||
+      fields.leave == ""
+    ) {
+      errObj["leave"] = "*This is required.";
+      formIsValid = false;
+    }
+    return { formIsValid, errObj };
+}
     const handlesubmit = (e) => {
         e.preventDefault();
-        console.log("0000");
+        const validationErrors = yearLeaveValidateForm(leavesData)
+        console.log('validationErrors',validationErrors);
+        setErrors(validationErrors.errObj);
+        if (validationErrors && validationErrors.formIsValid) {
         axios
             .post(`${host}/year/year-leave`, leavesData)
             .then((response) => {
@@ -61,7 +79,7 @@ const Year_Leave = () => {
             .catch((error) => {
                 console.error("There was an error!", error);
             });
-            
+        }
     };
 
     return (
@@ -74,28 +92,22 @@ const Year_Leave = () => {
                             <TiArrowBack size={25} />
                         </Link>
                         <div className="card-title" style={{ textAlign: "center" }}>
-                            <h2 className="text-red-900"> Year_Leave</h2>
-                        </div>
-
-                        <div className="row">
-
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
-                            </div>
+                            <h2 className="text-red-900"> Year Leave</h2>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div className="form-group">
-                                    <label className="profile_details_text">Year_Leave</label>
+                                    <label className="profile_details_text">Year Leave</label>
                                     <select
                                         name="year"
                                         className="form-control"
                                         value={leavesData.year}
                                         onChange={(e) => handleChange(e)}
                                         placeholder="Year"
+                                        required={true}
                                     >
                                         <option disabled={true} selected={true}>
-                                            Year_Leave
+                                            Year Leave
                                         </option>
                                         <option>2023</option>
                                         <option>2024</option>
@@ -104,6 +116,7 @@ const Year_Leave = () => {
                                         <option>2027</option>
                                         <option>2028</option>
                                     </select>
+                                    <div className="errorMsg">{errors.year}</div>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -115,6 +128,7 @@ const Year_Leave = () => {
                                         value={leavesData.leave}
                                         onChange={(e) => handleChange(e)}
                                         placeholder="Leave"
+                                        required
                                     >
                                         <option disabled={true} selected={true}>
                                             Leave Day
@@ -122,6 +136,7 @@ const Year_Leave = () => {
                                         <option>1</option>
                                         <option >2</option>
                                     </select>
+                                    <div className="errorMsg">{errors.leave}</div>
                                 </div>
                             </div>
                         </div>

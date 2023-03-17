@@ -74,6 +74,7 @@ const Dashboard = () => {
   return (
     <div id="root">
       <div className="container pt-5">
+        <h1 style={{ display: "flex", justifyContent: "center",paddingBottom:"10px",marginBottom:"20px" }}className="text-center">WELCOME TO EMPLOYEE PORTAL</h1>
         <div className="row align-items-stretch">
           <Link
             className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
@@ -114,6 +115,7 @@ const Dashboard = () => {
                 className="wrap"
                 style={{ display: "flex", flexDirection: "column" }}
               >
+
                 <h4 className="">Festival Holidays</h4>
                 {!totalHoliday ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -154,33 +156,38 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="c-dashboardInfo col-lg-3 col-md-6">
-            <div
-              className="wrap"
-              style={{ display: "flex", flexDirection: "column" }}
+            <Link
+              className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
+              to="/TotalPresent"
             >
-              <h4 className="">Today Present</h4>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <h1>
-                  <GiScales />
-                </h1>
-              </div>
-              {!todayPresent || !totalEmployee? (
+              <div
+                className="wrap"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
+                <h4 className="">Today Present</h4>
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                  <RotatingLines
-                    className="text-center"
-                    strokeColor="black"
-                    strokeWidth="8"
-                    animationDuration="0.75"
-                    width="26"
-                    visible={true}
-                  />
+                  <h1>
+                    <GiScales />
+                  </h1>
                 </div>
-              ) : (
-                <h2>
-                  {todayPresent.present_count}/{totalEmployee}
-                </h2>
-              )}
-            </div>
+                {!todayPresent || !totalEmployee ? (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <RotatingLines
+                      className="text-center"
+                      strokeColor="black"
+                      strokeWidth="8"
+                      animationDuration="0.75"
+                      width="26"
+                      visible={true}
+                    />
+                  </div>
+                ) : (
+                  <h2>
+                    {todayPresent.present_count}/{totalEmployee}
+                  </h2>
+                )}
+              </div>
+            </Link>
           </div>
           <div className="c-dashboardInfo col-lg-3 col-md-6">
             <div
@@ -193,7 +200,7 @@ const Dashboard = () => {
                   <GiScales />
                 </h1>
               </div>
-              {!yesterdayPresent || !totalEmployee? (
+              {!yesterdayPresent || !totalEmployee ? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <RotatingLines
                     className="text-center"

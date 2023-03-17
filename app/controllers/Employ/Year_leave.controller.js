@@ -13,7 +13,7 @@ class year_Leave {
         }
 
         if (!year || !leave) {
-            res.send({ message: "pleace fill filed " })
+            res.send({ message: "please fill out this field" })
 
         }
 

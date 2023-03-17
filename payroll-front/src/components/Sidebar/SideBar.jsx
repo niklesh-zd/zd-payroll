@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
 import { GiConcentrationOrb } from 'react-icons/gi';
-import {GiImbricatedArrows} from 'react-icons/gi'
+import { GiImbricatedArrows } from 'react-icons/gi'
 // import {TfiThemifyFaviconAlt} from 'react-icons/tfi'
 import zecimg from "./zecdata.png";
 const routes = [
@@ -50,24 +50,19 @@ const routes = [
         path: "/employee/leavedetails",
         name: "Manage leaves",
         icon: <FaClipboard />,
+
+      },
+      {
+        path: "/TotalPresent",
+        name: "Today Absent",
+        icon: <FaClipboard />,
       },
     ],
   },
-  // {
-  //   path: "/salary",
-  //   name: "Payroll",
-  //   icon: <FaHospitalUser />,
-  //   subRoutes: [
-  //     {
-  //       path: "/employee/salary",
-  //       name: "Salary Receipt",
-  //       icon: <FaRupeeSign />,
-  //     },
-  //   ],
-  // },
+
   {
     path: "/holiydays",
-    name: "Holiydays",
+    name: "Holidays",
     icon: <GiConcentrationOrb />,
     // icon :<TfiThemifyFaviconAlt/>
   },
@@ -78,15 +73,21 @@ const routes = [
     subRoutes: [
       {
         path: "/Year_leave",
-        name: "Add Year_Leave",
+        name: "Add Year Leave",
         icon: <FaClipboardList />,
       },
       {
         path: "/year_leavedetails",
-        name: "Manage Year_Leave",
+        name: "Manage Year Leave",
         icon: <FaClipboard />,
       },
+
     ],
+  },
+  {
+    path: "/Logout",
+    name: "Logout",
+    icon: <FaHospitalUser />
   },
 ];
 
@@ -201,6 +202,9 @@ const SideBar = ({ children }) => {
           </section>
         </motion.div>
         <main>{children}</main>
+        <div>
+          <p>welcome admin</p>
+        </div>
       </div>
     </>
   );

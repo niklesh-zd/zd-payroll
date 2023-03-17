@@ -26,6 +26,7 @@ const EmpDetail = () => {
       })
       .then((resp) => {
         empdatachange(resp);
+        console.log(resp);
       })
       .catch((err) => {
         console.log(err.message);
@@ -165,6 +166,26 @@ const EmpDetail = () => {
               </div>
             </div>
             <hr />
+            <div className="row view-basic-card">
+            <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Effectives</h3>
+            {
+              empdata.base_salary_list?.map((e)=>{
+                return(
+                  <>
+                  <div className="col-12 col-md-6 col-lg-3">
+                  <label className="pmd-list-subtitle">Salary</label>
+                  <p className="pmd-list-title"><small>{e.salary_}</small></p>
+                </div>
+                <div className="col-12 col-md-6 col-lg-3">
+                  <label className="pmd-list-subtitle">Effective Date</label><br />
+                  <small>{e.effective_date}</small>
+                </div>
+                </>
+                )
+              })
+            }
+          </div>
+          <hr />
             <div className="row view-basic-card">
               <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Education Details</h3>
               <div className="col-12 col-md-6 col-lg-3">
