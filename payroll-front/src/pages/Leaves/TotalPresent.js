@@ -113,7 +113,7 @@ function TotalPresent() {
                                 }}
                             >
                                 <div style={{ display: "flex" }}>
-                                    <h4>Total Present</h4>{" "}
+                                    <h4>Today Absent</h4>{" "}
                                 </div>
                                 <div>
                                     <input

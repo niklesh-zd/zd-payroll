@@ -54,23 +54,12 @@ const routes = [
       },
       {
         path: "/TotalPresent",
-        name: "Total Present",
+        name: "Today Absent",
         icon: <FaClipboard />,
       },
     ],
   },
-  // {
-  //   path: "/salary",
-  //   name: "Payroll",
-  //   icon: <FaHospitalUser />,
-  //   subRoutes: [
-  //     {
-  //       path: "/employee/salary",
-  //       name: "Salary Receipt",
-  //       icon: <FaRupeeSign />,
-  //     },
-  //   ],
-  // },
+
   {
     path: "/holiydays",
     name: "Holidays",
@@ -94,6 +83,11 @@ const routes = [
       },
 
     ],
+  },
+  {
+    path: "/Logout",
+    name: "Logout",
+    icon: <FaHospitalUser />
   },
 ];
 
@@ -208,6 +202,9 @@ const SideBar = ({ children }) => {
           </section>
         </motion.div>
         <main>{children}</main>
+        <div>
+          <p>welcome admin</p>
+        </div>
       </div>
     </>
   );
