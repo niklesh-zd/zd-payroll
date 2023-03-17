@@ -9,6 +9,10 @@ import SidebarMenu from "./SidebarMenu";
 import { HiUserGroup } from 'react-icons/hi';
 import { GiConcentrationOrb } from 'react-icons/gi';
 import { GiImbricatedArrows } from 'react-icons/gi'
+import {GiConcentricCrescents} from 'react-icons/gi'
+import {SiIconfinder} from 'react-icons/si'
+import {GiThreeLeaves} from 'react-icons/gi'
+import {GiRapidshareArrow} from 'react-icons/gi'
 // import {TfiThemifyFaviconAlt} from 'react-icons/tfi'
 import zecimg from "./zecdata.png";
 const routes = [
@@ -55,12 +59,12 @@ const routes = [
       {
         path: "/TotalPresent",
         name: "Today Absent",
-        icon: <FaClipboard />,
+        icon: <GiConcentricCrescents />,
       },
       {
         path: "/YesterdayApsent",
         name: "Yesterday Absent",
-        icon: <FaClipboard />,
+        icon: <SiIconfinder />,
       },
     ],
   },
@@ -79,12 +83,12 @@ const routes = [
       {
         path: "/Year_leave",
         name: "Add Year Leave",
-        icon: <FaClipboardList />,
+        icon: <GiRapidshareArrow />,
       },
       {
         path: "/year_leavedetails",
         name: "Manage Year Leave",
-        icon: <FaClipboard />,
+        icon: <GiThreeLeaves />,
       },
 
     ],
