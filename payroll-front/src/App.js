@@ -24,6 +24,7 @@ import { useState } from "react";
 import TotalHolydays from "./pages/Holydays/TotalHolydays";
 import TotalPresent from "./pages/Leaves/TotalPresent";
 import Logout from "./Auth/Logout"
+import YesterdayApsent from "./pages/Leaves/YesterdayApsent";
 function App() {
   const token = localStorage.getItem("token");
   // console.log("---Token---", token);
@@ -54,6 +55,7 @@ function App() {
             <Route path="/TotalPresent" element={<TotalPresent />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="/Logout" element={<Logout/>}/>
+            <Route path="/YesterdayApsent" element={<YesterdayApsent/>}/>
           </Routes>
         </SideBar>
       )}

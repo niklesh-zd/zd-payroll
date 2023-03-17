@@ -71,6 +71,9 @@ const Dashboard = () => {
         console.log(err);
       });
   }, []);
+
+
+  
   return (
     <div id="root">
       <div className="container pt-5">
@@ -190,6 +193,10 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="c-dashboardInfo col-lg-3 col-md-6">
+          <Link
+          className="c-dashboardInfo col-lg-3 col-md-6 text-black text-decoration-none"
+          to="/YesterdayApsent"
+        >
             <div
               className="wrap"
               style={{ display: "flex", flexDirection: "column" }}
@@ -217,6 +224,7 @@ const Dashboard = () => {
                 </h2>
               )}
             </div>
+            </Link>
           </div>
         </div>
       </div>

@@ -57,6 +57,11 @@ const routes = [
         name: "Today Absent",
         icon: <FaClipboard />,
       },
+      {
+        path: "/YesterdayApsent",
+        name: "Yesterday Absent",
+        icon: <FaClipboard />,
+      },
     ],
   },
 
