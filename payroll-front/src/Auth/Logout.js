@@ -27,7 +27,7 @@ export default function Logout() {
     function LogoutDialog(props) {
         return (
             <div  >
-                <Toast>Do you really want to log out?</Toast>
+                <p>Do you really want to log out?</p>
 
                 <button onClick={props.onConfirm}>Yes</button>
                 <button onClick={props.onCancel}>No</button>
