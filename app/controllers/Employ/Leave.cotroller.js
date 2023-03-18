@@ -38,6 +38,33 @@ class Leave {
                 ]
             })
 
+            let dates = [];
+            for (let i = 0; i < user_data.length; i++) {
+                const leave_from_date = user_data[i].from_date
+                const leave_to_date = user_data[i].to_date
+                console.log('leave_from_date', leave_from_date);
+                console.log('leave_to_date', leave_to_date);
+
+                let currentDate = new Date(leave_from_date);
+                let endDate = new Date(leave_to_date);
+
+                while (currentDate <= endDate) {
+                    const ifDuplicate = currentDate.toISOString().slice(0, 10)
+                    if (dates.includes(ifDuplicate)) {
+                        console.log('--------YES DUPLICATES', ifDuplicate);
+                        res.send({ message: "alredy exist  date." })
+                    }
+                    else {
+                        res.send({ message1: "alredy exist  date." })
+                    }
+                    dates.push(ifDuplicate);
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                // console.log('dates',dates);
+            }
+            if (dates.includes()) {
+                res.send({ message: "alredy exist  date." })
+            }
             if (datelFind) {
                 return res.send({ message: "alredy exist  date." })
             }
