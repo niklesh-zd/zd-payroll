@@ -60,7 +60,7 @@ const routes = [
       },
       {
         path: "/TotalPresent",
-        name: "Today Absent",
+        name: "Today Present",
         icon: <GiConcentricCrescents />,
       },
       {

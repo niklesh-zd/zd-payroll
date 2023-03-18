@@ -115,7 +115,7 @@ const ManageEmpyee = () => {
               generateSalary(row._id);
             }}
           >
-            Receipt
+          PaySlip
           </span>
         </>
       ),
