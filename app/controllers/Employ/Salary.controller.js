@@ -50,7 +50,7 @@ class Salary {
         })
         empinfo_modal = empinfo_modal[0]
         // return
-        if (moment(empinfo_modal.date_of_joining).date() < 15 && moment(empinfo_modal.date_of_joining).month() + 1 == Number(req.query.month) && moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month)) {
+        if (moment(empinfo_modal.date_of_joining).date() > 15 && moment(empinfo_modal.date_of_joining).month() + 1 == Number(req.query.month) && moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month)) {
             leave_balence_year = 0
         }
         else {
