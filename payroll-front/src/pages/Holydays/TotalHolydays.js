@@ -17,6 +17,8 @@ function TotalHolydays() {
   const [totalHolydays, setTotalHolydays] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [show, setShow] = useState(false);
+  const [showOnlyWeekends, setShowOnlyWeekends] = useState(false);
+  const [showPublicHoliday, setShowPublicHoliday] = useState(false);
   const [fields, setFields] = useState({});
 
   const handleClose = () => setShow(false);
@@ -25,7 +27,7 @@ function TotalHolydays() {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     setFields(fieldObj);
-  }
+  };
   var columns = [
     {
       name: "Holyday Name",
@@ -44,7 +46,6 @@ function TotalHolydays() {
       sortable: true,
     },
 
-
     {
       name: "Created At",
       selector: (rowData) => rowData["createdAt"],
@@ -62,8 +63,6 @@ function TotalHolydays() {
           >
             <FaTrash />
           </span>
-
-
         </>
       ),
 
@@ -87,7 +86,7 @@ function TotalHolydays() {
     axios
       .post(`${host}/Holiday/get-holiday`, datesobject)
       .then((res) => {
-        console.log(res.data, '......');
+        console.log(res.data, "......");
         const filterArr = [];
         res.data.map((e) => {
           filterArr.push({
@@ -95,22 +94,40 @@ function TotalHolydays() {
             holiday_name: e.holiday_name,
             holiday_type: e.holiday_type,
             createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
-            id: e._id
+            id: e._id,
           });
         });
-        setTotalHolydays(filterArr);
+        if (showOnlyWeekends || showPublicHoliday) {
+          let weekendsArr = [];
+          let publicHolidayArr = [];
+          filterArr.map((ele) => {
+            if (ele.holiday_type === "Weekend") {
+              weekendsArr.push(ele);
+            } else {
+              publicHolidayArr.push(ele);
+            }
+          });
+          if (showOnlyWeekends) {
+            console.log('showOnlyWeekends',weekendsArr);
+            setTotalHolydays(weekendsArr);
+          }
+          if (showPublicHoliday) {
+            setTotalHolydays(publicHolidayArr);
+          }
+        } else {
+          setTotalHolydays(filterArr);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [showOnlyWeekends, showPublicHoliday]);
   const LoadEdit = (_id) => {
     navigate("/employee/EmpEdit" + _id);
   };
   const deleteHolyday = (id) => {
-    console.log(id, '****');
+    console.log(id, "****");
     Swal.fire({
-
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -152,8 +169,7 @@ function TotalHolydays() {
     });
   };
   const handleHoliydaySubmit = (e) => {
-    e.preventDefault()
-    console.log("0000");
+    e.preventDefault();
     console.log("fields", fields);
     axios
       .post(`${host}/Holiday/holiday`, fields)
@@ -165,7 +181,7 @@ function TotalHolydays() {
             title: "Successful",
             text: "Successfully!",
           }).then(() => {
-            handleClose()
+            handleClose();
             navigate("/holiydays");
           });
         } else {
@@ -176,6 +192,7 @@ function TotalHolydays() {
         console.error("There was an error!", error);
       });
   };
+
   const filteredData = totalHolydays.filter((row) => {
     return (
       row.holiday_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -187,6 +204,7 @@ function TotalHolydays() {
   return (
     <div>
       <div>
+        <ToastContainer />
         <div className="ml-5 mr-5">
           <DataTable
             title={
@@ -199,11 +217,43 @@ function TotalHolydays() {
               >
                 <div style={{ display: "flex" }}>
                   <h4>Holidays</h4>{" "}
-                  <Button variant="primary" onClick={handleShow}>
+                  <Button
+                    variant="primary"
+                    className="ml-5 mr-5 btn-sm"
+                    onClick={handleShow}
+                  >
                     Add Holyday (+)
                   </Button>
                 </div>
-                <div>
+                <div className="d-flex align-items-center">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitches"
+                    onChange={(e) => {setShowPublicHoliday(!showPublicHoliday); setShowOnlyWeekends(false)}}
+                    checked={showPublicHoliday}
+                  />
+                  <span
+                    className="px-2 d-flex"
+                    style={{ fontSize: "10px" }}
+                    htmlFor="customSwitches"
+                  >
+                    Public Holidays
+                  </span>
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitches"
+                    onChange={(e) => {setShowOnlyWeekends(!showOnlyWeekends); setShowPublicHoliday(false)}}
+                    checked={showOnlyWeekends}
+                  />
+                  <span
+                    className="px-2 d-flex"
+                    style={{ fontSize: "10px" }}
+                    htmlFor="customSwitches"
+                  >
+                    Show Weekends
+                  </span>
                   <input
                     type="text"
                     placeholder="Search"
@@ -230,13 +280,24 @@ function TotalHolydays() {
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Holiyday Name</Form.Label>
-              <Form.Control type="text" name="holiday_name" placeholder="Enter Holiday Name" onChange={(e) => handleOnchange(e)} />
+              <Form.Control
+                type="text"
+                name="holiday_name"
+                placeholder="Enter Holiday Name"
+                onChange={(e) => handleOnchange(e)}
+              />
             </Form.Group>
 
             <Form.Group controlId="formHolidayType">
               <Form.Label>Holiday Type</Form.Label>
-              <select name="holiday_type" className="form-control" onChange={(e) => handleOnchange(e)}>
-                <option disabled={true} selected={true}>Select Holiday Type</option>
+              <select
+                name="holiday_type"
+                className="form-control"
+                onChange={(e) => handleOnchange(e)}
+              >
+                <option disabled={true} selected={true}>
+                  Select Holiday Type
+                </option>
                 <option>Public</option>
                 <option>Weekend</option>
               </select>
@@ -244,7 +305,12 @@ function TotalHolydays() {
 
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Holiyday Date</Form.Label>
-              <Form.Control type="date" name="holiday_date" placeholder="Select Holiday Date" onChange={(e) => handleOnchange(e)} />
+              <Form.Control
+                type="date"
+                name="holiday_date"
+                placeholder="Select Holiday Date"
+                onChange={(e) => handleOnchange(e)}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>

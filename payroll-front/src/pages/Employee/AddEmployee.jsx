@@ -53,28 +53,26 @@ function AddEmployee(props) {
   }, [propsObject]);
 
   function handleChange(e) {
-    console.log("fields", fields);
-    const lastIndex = propsObject.base_salary_list?.length - 1;
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
     if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
       const today = new Date(fieldObj.date_of_joining)
-        .toISOString()
-        .split("T")[0];
+      .toISOString()
+      .split("T")[0];
       effectiveDateInputRef.current.setAttribute("min", today);
     }
     if(propsObject){
+      const lastIndex = propsObject?.base_salary_list?.length - 1;
       const today = new Date(propsObject.base_salary_list[lastIndex].effective_date)
       .toISOString()
       .split("T")[0];
     effectiveDateInputRef.current.setAttribute("min", today);
     }
-    // if (fieldObj.base_salary || fieldObj.effective_date) {
     setEffectivesObj({
       salary_: fieldObj.base_salary,
       effective_date: fieldObj.effective_date,
     });
-    // }
+    console.log('fieldObj',fieldObj);
     setFields(fieldObj);
   }
 
