@@ -5,6 +5,7 @@ const LeaveModal = require('../../models/Employ/leave.modal')
 const EmpInfoModal = require('../../models/Employ/Employ.model')
 const HolidayModal = require('../../models/Employ/Holiday.modal')
 const moment = require('moment');
+// const moment= require('moment-timezone');
 
 const Emp = require('../Employ/EmpInfo.cotroller');
 
@@ -37,6 +38,33 @@ class Leave {
                 ]
             })
 
+            let dates = [];
+            for (let i = 0; i < user_data.length; i++) {
+                const leave_from_date = user_data[i].from_date
+                const leave_to_date = user_data[i].to_date
+                console.log('leave_from_date', leave_from_date);
+                console.log('leave_to_date', leave_to_date);
+
+                let currentDate = new Date(leave_from_date);
+                let endDate = new Date(leave_to_date);
+
+                while (currentDate <= endDate) {
+                    const ifDuplicate = currentDate.toISOString().slice(0, 10)
+                    if (dates.includes(ifDuplicate)) {
+                        console.log('--------YES DUPLICATES', ifDuplicate);
+                        res.send({ message: "alredy exist  date." })
+                    }
+                    else {
+                        res.send({ message1: "alredy exist  date." })
+                    }
+                    dates.push(ifDuplicate);
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                console.log('dates',dates);
+            }
+            if (dates.includes()) {
+                res.send({ message: "alredy exist  date." })
+            }
             if (datelFind) {
                 return res.send({ message: "alredy exist  date." })
             }
@@ -154,31 +182,46 @@ class Leave {
     async get_leave_today(req, res, next) {
         try {
             var today = moment(moment().utc().format('YYYY-MM-DD'))
-          
-            const docs = await LeaveModal.aggregate([
-                {
-                    $match: {
-                        from_date: {
-                            $eq: new Date(today)
+
+            var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
+            var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
+            // var today = moment().subtract('day').format('YYYY-MM-DD');
+            const findLeave = await LeaveModal.find({
+                from_date_: { $gte: from_date, $lte: to_date },
+                to_date_: { $gte: from_date, $lte: to_date }
+            });
+
+
+            for (var i = 0; i < findLeave.length; i++) {
+                console.log(findLeave[i].from_date);
+                var docs = await LeaveModal.aggregate([
+                    {
+                        $match: {
+
+                            $or: [
+                                { from_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } },
+                                { to_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } }
+                            ]
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: "EmpInfo",
+                            localField: "userid",
+                            foreignField: "_id",
+                            as: "result"
+                        }
+                    },
+                    {
+                        $sort: {
+                            _id: -1
                         }
                     }
-                },
-                {
-                    $lookup: {
-                        from: "EmpInfo",
-                        localField: "userid",
-                        foreignField: "_id",
-                        as: "result"
-                    }
-                },
-                {
-                    $sort: {
-                        _id: -1
-                    }
-                }
-            ]);
+                ]);
+            }
             res.send({ msg: docs });
             console.log("docs--", docs);
+
         } catch (err) {
             res.send({ "error": err })
             console.log(err);
@@ -186,32 +229,46 @@ class Leave {
     }
     async get_yesterday_leave_(req, res, next) {
         try {
-            var yesterday = moment().subtract(1, 'day').format('YYYY-MM-DD');
+            var today = moment(moment().utc().format('YYYY-MM-DD'))
+            var yesterday = moment(moment().utc().subtract(1, 'days')).format('YYYY-MM-DD');
+            yesterday = moment(new Date(yesterday).toISOString())
+            var from_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-01"
+            var to_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-31"
+            const findLeave = await LeaveModal.find({
+                from_date_: { $gte: from_date, $lte: to_date },
+                to_date_: { $gte: from_date, $lte: to_date }
+            });
 
-            const docs = await LeaveModal.aggregate([
-                {
-                    $match: {
-                        from_date: {
-                            $eq: new Date(yesterday)
+
+            for (var i = 0; i < findLeave.length; i++) {
+                var docs = await LeaveModal.aggregate([
+                    {
+                        $match: {
+
+                            $or: [
+                                { from_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } },
+                                { to_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } }
+                            ]
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: "EmpInfo",
+                            localField: "userid",
+                            foreignField: "_id",
+                            as: "result"
+                        }
+                    },
+                    {
+                        $sort: {
+                            _id: -1
                         }
                     }
-                },
-                {
-                    $lookup: {
-                        from: "EmpInfo",
-                        localField: "userid",
-                        foreignField: "_id",
-                        as: "result"
-                    }
-                },
-                {
-                    $sort: {
-                        _id: -1
-                    }
-                }
-            ]);
+                ]);
+            }
             res.send({ msg: docs });
-            console.log("docs", docs);
+            console.log("docs--", docs);
+
         } catch (err) {
             res.send({ "error": err })
             console.log(err);
