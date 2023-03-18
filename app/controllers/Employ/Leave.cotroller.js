@@ -60,7 +60,7 @@ class Leave {
                     dates.push(ifDuplicate);
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
-                // console.log('dates',dates);
+                console.log('dates',dates);
             }
             if (dates.includes()) {
                 res.send({ message: "alredy exist  date." })
@@ -232,7 +232,6 @@ class Leave {
             var today = moment(moment().utc().format('YYYY-MM-DD'))
             var yesterday = moment(moment().utc().subtract(1, 'days')).format('YYYY-MM-DD');
             yesterday = moment(new Date(yesterday).toISOString())
-            console.log(yesterday, today, '...');
             var from_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-01"
             var to_date = String(yesterday.year()) + "-" + String(yesterday.month() + 1) + "-31"
             const findLeave = await LeaveModal.find({
@@ -242,7 +241,6 @@ class Leave {
 
 
             for (var i = 0; i < findLeave.length; i++) {
-                console.log(findLeave[i].from_date);
                 var docs = await LeaveModal.aggregate([
                     {
                         $match: {
