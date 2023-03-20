@@ -54,9 +54,6 @@ class Leave {
                         console.log('--------YES DUPLICATES', ifDuplicate);
                         res.send({ message: "alredy exist  date." })
                     }
-                    else {
-                        res.send({ message1: "alredy exist  date." })
-                    }
                     dates.push(ifDuplicate);
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
