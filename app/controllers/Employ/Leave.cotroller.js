@@ -39,29 +39,29 @@ class Leave {
             })
 
             let dates = [];
-            for (let i = 0; i < user_data.length; i++) {
-                const leave_from_date = user_data[i].from_date
-                const leave_to_date = user_data[i].to_date
-                console.log('leave_from_date', leave_from_date);
-                console.log('leave_to_date', leave_to_date);
+            // for (let i = 0; i < user_data.length; i++) {
+            //     const leave_from_date = user_data[i].from_date
+            //     const leave_to_date = user_data[i].to_date
+            //     console.log('leave_from_date', leave_from_date);
+            //     console.log('leave_to_date', leave_to_date);
 
-                let currentDate = new Date(leave_from_date);
-                let endDate = new Date(leave_to_date);
+            //     let currentDate = new Date(leave_from_date);
+            //     let endDate = new Date(leave_to_date);
 
-                while (currentDate <= endDate) {
-                    const ifDuplicate = currentDate.toISOString().slice(0, 10)
-                    if (dates.includes(ifDuplicate)) {
-                        console.log('--------YES DUPLICATES', ifDuplicate);
-                        res.send({ message: "alredy exist  date." })
-                    }
-                    else {
-                        res.send({ message1: "alredy exist  date." })
-                    }
-                    dates.push(ifDuplicate);
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-                console.log('dates',dates);
-            }
+            //     while (currentDate <= endDate) {
+            //         const ifDuplicate = currentDate.toISOString().slice(0, 10)
+            //         if (dates.includes(ifDuplicate)) {
+            //             console.log('--------YES DUPLICATES', ifDuplicate);
+            //             res.send({ message: "alredy exist  date." })
+            //         }
+            //         else {
+            //             res.send({ message1: "alredy exist  date." })
+            //         }
+            //         dates.push(ifDuplicate);
+            //         currentDate.setDate(currentDate.getDate() + 1);
+            //     }
+            //     console.log('dates',dates);
+            // }
             if (dates.includes()) {
                 res.send({ message: "alredy exist  date." })
             }
@@ -147,7 +147,6 @@ class Leave {
                 });
 
                 //STORE YOUR LOGIN DATA IN DB 
-                console.log(leave)
                 await leave.save();
             }
             res.status(200).send({ success: true })
@@ -182,7 +181,12 @@ class Leave {
     async get_leave_today(req, res, next) {
         try {
             var today = moment(moment().utc().format('YYYY-MM-DD'))
-
+            const convertedDate = today.add('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+            // return
+            const inputDate = new Date(convertedDate);
+            const outputDate = new Date(
+                Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate())
+            ).toISOString();
             var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
             var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
             // var today = moment().subtract('day').format('YYYY-MM-DD');
@@ -191,17 +195,19 @@ class Leave {
                 to_date_: { $gte: from_date, $lte: to_date }
             });
 
-
+            console.log('from_date', findLeave[0].from_date);
+            console.log('to_date', findLeave[0].to_date);
+            console.log('outputDate', outputDate);
+            console.log(outputDate == findLeave[0].from_date);
+            console.log("2023-03-20T00:00:00.000Z" == "2023-03-20T00:00:00.000Z");
             for (var i = 0; i < findLeave.length; i++) {
-                console.log(findLeave[i].from_date);
                 var docs = await LeaveModal.aggregate([
                     {
                         $match: {
 
-                            $or: [
-                                { from_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } },
-                                { to_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } }
-                            ]
+
+                            outputDate: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) },
+
                         }
                     },
                     {
@@ -366,7 +372,7 @@ class Leave {
             to_date: { $gte: from_date, $lte: to_date }
         });
 
-        const emp_count = await EmpInfoModal.find()
+        const emp_count = await EmpInfoModal.find({ is_active: 1 })
         var absent_count = 0
         for (let i = 0; i < findLeave.length; i++) {
 

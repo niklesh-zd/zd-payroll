@@ -178,7 +178,9 @@ const EmpDetail = () => {
                 </div>
                 <div className="col-12 col-md-6 col-lg-3">
                   <label className="pmd-list-subtitle">Effective Date</label><br />
-                  <small>{e.effective_date}</small>
+                  <small>{new Date(e.effective_date).toLocaleDateString(
+                    "pt-PT"
+                  )}</small>
                 </div>
                 </>
                 )

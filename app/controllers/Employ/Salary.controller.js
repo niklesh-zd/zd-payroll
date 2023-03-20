@@ -16,8 +16,6 @@ var month_array = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '
 
 class Salary {
 
-
-
     async get_salary(req, res, next) {
         try {
             yearModal.findOne({ year: req.query.year })
@@ -35,6 +33,19 @@ class Salary {
         var user_id = req.query.userid;
         var year = req.query.year;
         var month = req.query.month
+        const compareDates = (year, month, effective_date_emp) => {
+            var month_flag = Number(month) < 10 ? "0" : ""
+            var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8,10);
+                const effectiveDate = new Date(effective_date_emp);
+                const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
+                if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
+                    (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
+                  return "before";
+                } else {
+                  return "after";
+                }
+
+          }
 
         if (!req.query.userid || !req.query.year || !req.query.month) {
             return res.send({ message: "Please fill in all fields." });
@@ -59,14 +70,12 @@ class Salary {
 
         }
 
-        // var leave_balence_year = await yearModal.findOne({ year: year })
-
-
-        // return
-
         if (Salary_Modal.length != 0 && !req.body.overwrite_payslip) {
-            console.log(Salary_Modal[0])
+            console.log(Salary_Modal[0], '..................')
             return res.send(Salary_Modal[0])
+
+
+
 
         } else if (Salary_Modal.length != 0 && req.body.overwrite_payslip) {
 
@@ -421,7 +430,19 @@ class Salary {
                 });
 
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
-                var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
+                var salary_emp
+                var effective_date_emp = empinfo_modal.base_salary_list
+                var result = ""
+                for (let i = 0; i < effective_date_emp.length; i++) {
+                    result = compareDates(year, month, effective_date_emp[i].effective_date);
+                    if (result == "before") {
+                        salary_emp = effective_date_emp[i].salary_
+                        break
+                    }
+                }
+                console.log('result---',result);
+                console.log('salary_emp---',salary_emp);
+                // return
                 var balance_days = leave_balence_year - leave_taken
                 var present_days = working_days - leave_taken
                 var total_paid_days = present_days + leave_balence_year
@@ -704,7 +725,6 @@ class Salary {
             });
 
             await salary.save();
-            console.log({ salary });
             res.status(200).send({ success: true, 'salary': salary })
 
         }
