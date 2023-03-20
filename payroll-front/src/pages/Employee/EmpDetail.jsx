@@ -6,6 +6,7 @@ import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
 import host from "./../utils"
 import {TiArrowBack} from "react-icons/ti"
+import axios from "axios";
 
 const EmpDetail = () => {
   const navigate = useNavigate();
@@ -47,10 +48,7 @@ const EmpDetail = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        window
-          .fetch(`${host}/emp/delete_emp/` + id, {
-            method: "POST",
-          })
+        axios.post(`${host}/emp/update_status`,{id:id, status:0})
           .then((res) => {
             Swal.fire(
               "Deleted!",
