@@ -4,9 +4,17 @@ on:
   push:
     branches:
       - main
+      - dev
+      
+env:
+  PROD-DROPLATE-IP: ${{ secrets.DROPLET_IP }}
+  PROD-PASSWORD: ${{ secrets.DROPLET2_PASSWORD }}
+  DEV-DROPLATE-IP: ${{ secrets.DEV_DROPLET_IP }}
+  DEV-PASSWORD: ${{ secrets.DROPLET2_PASSWORD }}
+  
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,14 +33,38 @@ jobs:
         context: .
         push: true
         tags: rohitkas/app:latest
-
-    - name: Deploy to Droplet
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DROPLET_IP }}
-        username: root
-        password: ${{ secrets.DROPLET2_PASSWORD }}
-        script: |
+        
+  deploy-dev:
+     if: github.ref == 'refs/heads/dev'
+     needs: build
+     runs-on: ubuntu:latest
+     
+     steps:
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@master
+        with:
+         host: ${{ env.DEV-DROPLATE-IP }}
+         username: root
+         password: ${{ env.DEV-PASSWORD }}
+         script: |
+          cd  ~/zd-payroll
+          git pull 
+          docker-compose down
+          docker-compose up -d
+        
+  deploy-prod:
+     if: github.ref == 'refs/heads/main'
+     needs: build
+     runs-on: ubuntu:latest
+     
+     steps:
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@master
+        with:
+         host: ${{ env.PROD-DROPLATE-IP }}
+         username: root
+         password: ${{ env.PROD-PASSWORD }}
+         script: |
           cd  ~/zd-payroll
           git pull 
           docker-compose down
