@@ -172,7 +172,6 @@ class Leave {
                 }
             ]).sort({ _id: -1 })
             res.send({ msg: docs })
-            console.log("docs", docs);
         } catch (err) {
             res.send({ "error": err })
         }

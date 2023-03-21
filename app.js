@@ -10,6 +10,7 @@ const cors = require('cors');
 app.use(cors())
 require('dotenv').config();
 
+process.noDeprecation = true;
 
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
