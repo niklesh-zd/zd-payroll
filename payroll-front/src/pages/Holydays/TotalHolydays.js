@@ -231,7 +231,7 @@ function TotalHolydays() {
                     className="ml-5 mr-5 btn-sm"
                     onClick={handleShow}
                   >
-                    Add Holyday (+)
+                    Add Holiday (+)
                   </Button>
                 </div>
                 <div className="d-flex align-items-center">
