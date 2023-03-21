@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Badge } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { BsPencilSquare } from "react-icons/bs";
 
@@ -43,6 +43,15 @@ function TotalHolydays() {
     {
       name: "Holyday Type",
       selector: (rowData) => rowData["holiday_type"],
+      cell: (row) => (
+        <>
+          {row.holiday_type !== "Weekend" ? (
+            <Badge bg="success">{row.holiday_type}</Badge>
+          ) : (
+            row.holiday_type
+          )}
+        </>
+      ),
       sortable: true,
     },
 
@@ -108,7 +117,7 @@ function TotalHolydays() {
             }
           });
           if (showOnlyWeekends) {
-            console.log('showOnlyWeekends',weekendsArr);
+            console.log("showOnlyWeekends", weekendsArr);
             setTotalHolydays(weekendsArr);
           }
           if (showPublicHoliday) {
@@ -230,7 +239,10 @@ function TotalHolydays() {
                     type="checkbox"
                     className="custom-control-input"
                     id="customSwitches"
-                    onChange={(e) => {setShowPublicHoliday(!showPublicHoliday); setShowOnlyWeekends(false)}}
+                    onChange={(e) => {
+                      setShowPublicHoliday(!showPublicHoliday);
+                      setShowOnlyWeekends(false);
+                    }}
                     checked={showPublicHoliday}
                   />
                   <span
@@ -244,7 +256,10 @@ function TotalHolydays() {
                     type="checkbox"
                     className="custom-control-input"
                     id="customSwitches"
-                    onChange={(e) => {setShowOnlyWeekends(!showOnlyWeekends); setShowPublicHoliday(false)}}
+                    onChange={(e) => {
+                      setShowOnlyWeekends(!showOnlyWeekends);
+                      setShowPublicHoliday(false);
+                    }}
                     checked={showOnlyWeekends}
                   />
                   <span

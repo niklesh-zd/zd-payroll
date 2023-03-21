@@ -147,7 +147,7 @@ const Dashboard = () => {
                     <div>
                       {totalHoliday.length > 0 ? (
                         totalHoliday.map((e) => {
-                          return <h6 key={e.holiday_name}>{e.holiday_name}</h6>;
+                          return <h6 key={e.holiday_name}>{e.holiday_name} : {e.holiday_date.slice(0,10)}</h6>;
                         })
                       ) : (
                         <h6>No Holidays This Month</h6>
