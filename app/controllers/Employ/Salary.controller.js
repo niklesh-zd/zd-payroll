@@ -35,16 +35,16 @@ class Salary {
         var month = req.query.month
         const compareDates = (year, month, effective_date_emp) => {
             var month_flag = Number(month) < 10 ? "0" : ""
-            var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8, 10);
-            const effectiveDate = new Date(effective_date_emp);
-            const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
-            // if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
-            //     (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
-            if (toMatchDate < effectiveDate) {
-                return "before";
-            } else {
-                return "after";
-            }
+            var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8,10);
+                const effectiveDate = new Date(effective_date_emp);
+                const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
+                // if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
+                //     (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
+                    if(toMatchDate < effectiveDate){
+                  return "before";
+                } else {
+                  return "after";
+                }
 
         }
 
@@ -433,24 +433,24 @@ class Salary {
                 var salary_emp
                 var effective_date_emp = empinfo_modal.base_salary_list
                 var result = ""
-                console.log('effective_date_emp.length > 1', effective_date_emp.length > 1);
-                if (effective_date_emp.length > 1) {
+
+                console.log('effective_date_emp.length > 1',effective_date_emp.length > 1);
+                if(effective_date_emp.length > 1){
                     for (let i = 1; i < effective_date_emp.length; i++) {
                         result = compareDates(year, month, effective_date_emp[i].effective_date);
                         if (result == "before") {
-                            salary_emp = effective_date_emp[i - 1].salary_
+                            salary_emp = effective_date_emp[i-1].salary_
                             break
-                        } else {
+                        }else{
                             salary_emp = effective_date_emp[effective_date_emp.length - 1].salary_
                         }
                     }
 
-                } else {
+                }else{
                     salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 }
-                console.log('result---', result);
-                console.log('salary_emp---', salary_emp);
-
+                console.log('result---',result);
+                console.log('salary_emp---',salary_emp);
                 // var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 // return
                 var balance_days = leave_balence_year - leave_taken
