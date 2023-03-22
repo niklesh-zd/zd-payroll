@@ -34,22 +34,22 @@ class Salary {
         var year = req.query.year;
         var month = req.query.month
         const compareDates = (year, month, effective_date_emp) => {
-            console.log('year',year);
-            console.log('month',month);
-            console.log('effective_date_emp',effective_date_emp);
+            console.log('year', year);
+            console.log('month', month);
+            console.log('effective_date_emp', effective_date_emp);
             var month_flag = Number(month) < 10 ? "0" : ""
-            var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8,10);
-                const effectiveDate = new Date(effective_date_emp);
-                const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
-                // if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
-                //     (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
-                    if(toMatchDate < effectiveDate){
-                  return "before";
-                } else {
-                  return "after";
-                }
+            var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8, 10);
+            const effectiveDate = new Date(effective_date_emp);
+            const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
+            // if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
+            //     (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
+            if (toMatchDate < effectiveDate) {
+                return "before";
+            } else {
+                return "after";
+            }
 
-          }
+        }
 
         if (!req.query.userid || !req.query.year || !req.query.month) {
             return res.send({ message: "Please fill in all fields." });
@@ -406,8 +406,8 @@ class Salary {
             res.status(200).send({ success: true, 'salary': salary })
         }
         else if (Salary_Modal.length == 0) {
-            console.log('0000000',moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1);
-            console.log('Number(req.query.month)',Number(req.query.month));
+            console.log('0000000', moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1);
+            console.log('Number(req.query.month)', Number(req.query.month));
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)) {
 
                 const findLeave = await LeaveModal.find({
@@ -438,23 +438,23 @@ class Salary {
                 var salary_emp
                 var effective_date_emp = empinfo_modal.base_salary_list
                 var result = ""
-                console.log('effective_date_emp.length > 1',effective_date_emp.length > 1);
-                if(effective_date_emp.length > 1){
+                console.log('effective_date_emp.length > 1', effective_date_emp.length > 1);
+                if (effective_date_emp.length > 1) {
                     for (let i = 1; i < effective_date_emp.length; i++) {
                         result = compareDates(year, month, effective_date_emp[i].effective_date);
                         if (result == "before") {
-                            salary_emp = effective_date_emp[i-1].salary_
+                            salary_emp = effective_date_emp[i - 1].salary_
                             break
-                        }else{
+                        } else {
                             salary_emp = effective_date_emp[effective_date_emp.length - 1].salary_
                         }
                     }
 
-                }else{
+                } else {
                     salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 }
-                console.log('result---',result);
-                console.log('salary_emp---',salary_emp);
+                console.log('result---', result);
+                console.log('salary_emp---', salary_emp);
 
                 // var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 // return
@@ -703,7 +703,28 @@ class Salary {
                 var net_pay_in_number = Math.round((((salary_emp_1 / working_days) * present_days_1) + ((salary_emp_2 / working_days) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
             }
+            var salary_emp
+            var effective_date_emp = empinfo_modal.base_salary_list
+            var result = ""
+            console.log('effective_date_emp.length > 1', effective_date_emp.length > 1);
+            if (effective_date_emp.length > 1) {
+                for (let i = 1; i < effective_date_emp.length; i++) {
+                    result = compareDates(year, month, effective_date_emp[i].effective_date);
+                    if (result == "before") {
+                        salary_emp = effective_date_emp[i - 1].salary_
+                        break
+                    } else {
+                        salary_emp = effective_date_emp[effective_date_emp.length - 1].salary_
+                    }
+                }
 
+            } else {
+                salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
+            }
+            console.log('result---', result);
+            console.log('salary_emp---', salary_emp);
+            console.log(salary_emp, 'salary_emp');
+            // return
             const salary = new SalaryModal({
                 Employee_name: empinfo_modal.First_Name + " " + empinfo_modal.Last_Name,
                 userid: empinfo_modal._id,
@@ -724,7 +745,7 @@ class Salary {
                 Gross_HRA: gross_hra,
                 Gross_RA: gross_ra,
                 Gross_Flext_benefits: gross_flexi_benifits,
-                Gross_total: gross_basic_da + gross_hra + gross_ra + gross_flexi_benifits,
+                Gross_total: salary_emp,
                 Earned_Basic_DA: Math.round(earned_basic_da),
                 Earned_HRA: Math.round(earned_hra),
                 Earned_RA: Math.round(earned_ra),
