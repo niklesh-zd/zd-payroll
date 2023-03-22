@@ -48,7 +48,7 @@ jobs:
          password: ${{ env.DEV-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull
+          git pull
           docker-compose down
           docker-compose up -d
         
@@ -66,6 +66,6 @@ jobs:
          password: ${{ env.PROD-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull
+          git pull
           docker-compose down
           docker-compose up -d
