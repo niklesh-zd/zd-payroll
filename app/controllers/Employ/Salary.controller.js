@@ -339,8 +339,6 @@ class Salary {
                     leave_taken += findLeave_2[i].total_number_of_day
                 }
 
-
-                return
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var working_days_1 = moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() - 1 - holiday_1.length
                 var working_days_2 = Number(month_array[Number(req.query.month) - 1]) - holiday_2.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1
