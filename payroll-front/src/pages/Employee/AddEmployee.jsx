@@ -617,6 +617,7 @@ function AddEmployee(props) {
                             onChange={(e) => handleChange(e)}
                             className="form-control"
                             placeholder="Efffective Date"
+                            disabled={!fields.date_of_joining}
                           ></input>
                           <div className="errorMsg">
                             {errors.effective_date}
