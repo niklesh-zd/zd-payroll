@@ -35,7 +35,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-         context: /root/zd-payroll/branchdev
+         context: ~/zd-payroll/branchdev
          Dockerfile: Dockerfile.dev
          push: true
          tags: rohitkas/app-dev:latest
