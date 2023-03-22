@@ -54,8 +54,8 @@ jobs:
          password: ${{ env.DEV-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull app-dev
-          docker-compose down
+          docker-compose pull app-dev:latest
+          docker-compose down 
           docker-compose up -d
           
   build-prod:
@@ -84,6 +84,7 @@ jobs:
          password: ${{ env.PROD-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull app-prod
+          docker-compose pull 
           docker-compose down
+          docker rmi zd-payroll_app 
           docker-compose up -d
