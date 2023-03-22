@@ -30,13 +30,10 @@ class Salary {
     }
 
     async salary_(req, res, next) {
-        var user_id = req.query.userid;
         var year = req.query.year;
+        var arrear_effective_date = 0
         var month = req.query.month
         const compareDates = (year, month, effective_date_emp) => {
-            console.log('year', year);
-            console.log('month', month);
-            console.log('effective_date_emp', effective_date_emp);
             var month_flag = Number(month) < 10 ? "0" : ""
             var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8, 10);
             const effectiveDate = new Date(effective_date_emp);
@@ -406,10 +403,8 @@ class Salary {
             res.status(200).send({ success: true, 'salary': salary })
         }
         else if (Salary_Modal.length == 0) {
-            console.log('0000000', moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1);
-            console.log('Number(req.query.month)', Number(req.query.month));
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)) {
-
+                console.log('1111111');
                 const findLeave = await LeaveModal.find({
                     userid: req.query.userid,
                     from_date: {
@@ -473,10 +468,9 @@ class Salary {
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
 
-
-
             }
             else if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month) && empinfo_modal.base_salary_list.length == 1) {
+                console.log('222222');
                 const holiday = await HolidayModal.find({
                     holiday_date: {
                         $gte: req.query.year + "-" + req.query.month + '-01',
@@ -529,6 +523,7 @@ class Salary {
             }
             else if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month) &&
                 empinfo_modal.base_salary_list.length > 1 && moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() == 1) {
+                console.log('555555555');
                 const findLeave = await LeaveModal.find({
                     userid: req.query.userid,
                     from_date: {
@@ -575,7 +570,34 @@ class Salary {
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
 
             }
+
             else {
+                var salary_emp
+                var effective_date_emp = empinfo_modal.base_salary_list
+                var result = ""
+                console.log(moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month), '--------------true');
+                if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month)) {
+                    if (effective_date_emp.length > 1) {
+                        for (let i = 1; i < effective_date_emp.length; i++) {
+                            result = compareDates(year, month, effective_date_emp[i].effective_date);
+                            if (result == "before") {
+                                salary_emp = effective_date_emp[i - 1].salary_
+                                console.log('111111111111');
+                                break
+                            } else {
+                                salary_emp = effective_date_emp[i - 1].salary_
+                                console.log('222222222222222');
+                            }
+                        }
+
+
+                    } else {
+                        salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
+                        console.log('333333333');
+                    }
+                }
+
+                console.log('999999');
                 const holiday = await HolidayModal.find({
                     holiday_date: {
                         $gte: req.query.year + "-" + req.query.month + '-01',
@@ -596,7 +618,6 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
                     }
                 });
-
 
                 const findLeave = await LeaveModal.find({
                     userid: req.query.userid,
@@ -632,7 +653,6 @@ class Salary {
                     leave_taken_1 += findLeave_1[i].total_number_of_day
                 }
 
-
                 const findLeave_2 = await LeaveModal.find({
                     userid: req.query.userid,
                     from_date: {
@@ -649,7 +669,7 @@ class Salary {
                 for (let i = 0; i < findLeave_2.length; i++) {
                     leave_taken_2 += findLeave_2[i].total_number_of_day
                 }
-
+                console.log('-----');
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var working_days_1 = moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() - 1 - holiday_1.length
                 var working_days_2 = Number(month_array[Number(req.query.month) - 1]) - holiday_2.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1
@@ -665,62 +685,60 @@ class Salary {
                 var present_days = working_days - leave_taken
                 var present_days_1 = working_days_1 - leave_taken_1 + leave_balence_year
                 var present_days_2 = working_days_2 - leave_taken_2
-
+                console.log('88888');
                 var total_paid_days = present_days + leave_balence_year
-
+                var net_pay_in_number = Math.round((((salary_emp_1 / working_days) * present_days_1) + ((salary_emp_2 / working_days) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
+                var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
                 var gross_basic_da_1 = Math.round(((salary_emp_1 / 2) / Number(month_array[Number(req.query.month) - 1])) * month_days_1)
                 var gross_basic_da_2 = Math.round(((salary_emp_2 / 2) / Number(month_array[Number(req.query.month) - 1])) * month_days_2)
-                var gross_basic_da = gross_basic_da_1 + gross_basic_da_2
-
+                // var gross_basic_da = gross_basic_da_1 + gross_basic_da_2
+                var gross_basic_da = Math.round(salary_emp / 2)
+                console.log('3456');
                 var gross_hra_1 = Math.round((gross_basic_da_1 * 40) / 100)
                 var gross_hra_2 = Math.round((gross_basic_da_2 * 40) / 100)
-                var gross_hra = gross_hra_1 + gross_hra_2
+                // var gross_hra = gross_hra_1 + gross_hra_2
+                var gross_hra = Math.round((gross_basic_da * 40) / 100)
+
 
                 var gross_ra_1 = Math.round((gross_basic_da_1 * 15) / 100)
                 var gross_ra_2 = Math.round((gross_basic_da_2 * 15) / 100)
-                var gross_ra = gross_ra_1 + gross_ra_2
+                // var gross_ra = gross_ra_1 + gross_ra_2
+                var gross_ra = Math.round((gross_basic_da * 15) / 100)
+
 
                 var gross_flexi_benifits_1 = Math.round(((salary_emp_1 - gross_basic_da_1 - gross_hra_1 - gross_ra_1) / Number(month_array[Number(req.query.month) - 1]) * month_days_1))
                 var gross_flexi_benifits_2 = Math.round(((salary_emp_2 - gross_basic_da_2 - gross_hra_2 - gross_ra_2) / Number(month_array[Number(req.query.month) - 1]) * month_days_2))
-                var gross_flexi_benifits = gross_flexi_benifits_1 + gross_flexi_benifits_2
-
+                // var gross_flexi_benifits = gross_flexi_benifits_1 + gross_flexi_benifits_2
+                var gross_flexi_benifits = salary_emp - (gross_basic_da + gross_hra + gross_ra)
                 var earned_basic_da_1 = (gross_basic_da_1 / working_days) * present_days_1
                 var earned_basic_da_2 = (gross_basic_da_2 / working_days) * present_days_2
-                var earned_basic_da = earned_basic_da_1 + earned_basic_da_2
+                // var earned_basic_da = earned_basic_da_1 + earned_basic_da_2
+
+                var earned_basic_da = Math.round(net_pay_in_number / 2)
 
                 var earned_hra_1 = (gross_hra_1 / working_days) * present_days_1
                 var earned_hra_2 = (gross_hra_2 / working_days) * present_days_2
-                var earned_hra = earned_hra_1 + earned_hra_2
+                // var earned_hra = earned_hra_1 + earned_hra_2
+                var earned_hra = Math.round((earned_basic_da * 40) / 100)
 
                 var earned_ra_1 = (gross_ra_1 / working_days) * present_days_1
                 var earned_ra_2 = (gross_ra_2 / working_days) * present_days_2
-                var earned_ra = earned_ra_1 + earned_ra_2
+                // var earned_ra = earned_ra_1 + earned_ra_2
+                var earned_ra = Math.round((earned_basic_da * 15) / 100)
 
                 var earned_flexi_benifits_1 = (gross_flexi_benifits_1 / working_days) * present_days_1
                 var earned_flexi_benifits_2 = (gross_flexi_benifits_2 / working_days) * present_days_2
-                var earned_flexi_benifits = earned_flexi_benifits_1 + earned_flexi_benifits_2
+                // var earned_flexi_benifits = earned_flexi_benifits_1 + earned_flexi_benifits_2
 
-                var net_pay_in_number = Math.round((((salary_emp_1 / working_days) * present_days_1) + ((salary_emp_2 / working_days) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
-                var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
-            }
-            var salary_emp
-            var effective_date_emp = empinfo_modal.base_salary_list
-            var result = ""
-            console.log('effective_date_emp.length > 1', effective_date_emp.length > 1);
-            if (effective_date_emp.length > 1) {
-                for (let i = 1; i < effective_date_emp.length; i++) {
-                    result = compareDates(year, month, effective_date_emp[i].effective_date);
-                    if (result == "before") {
-                        salary_emp = effective_date_emp[i - 1].salary_
-                        break
-                    } else {
-                        salary_emp = effective_date_emp[effective_date_emp.length - 1].salary_
-                    }
-                }
+                var earned_flexi_benifits = net_pay_in_number - (earned_basic_da + earned_hra + earned_ra)
 
-            } else {
-                salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
+
+                var arrear_effective_date = net_pay_in_number - salary_emp
+                console.log(arrear_effective_date, 'arrear_effective_date');
             }
+            // return
+
+
             console.log('result---', result);
             console.log('salary_emp---', salary_emp);
             console.log(salary_emp, 'salary_emp');
@@ -750,10 +768,10 @@ class Salary {
                 Earned_HRA: Math.round(earned_hra),
                 Earned_RA: Math.round(earned_ra),
                 Earned_Flext_benefits: Math.round(earned_flexi_benifits),
-                Total_earn: Math.round(earned_basic_da + earned_hra + earned_ra + earned_flexi_benifits),
+                Total_earn: net_pay_in_number,
                 Net_pay_in_number: net_pay_in_number,
                 Net_pay_in_words: net_pay_in_word,
-                ARRS: Number(req.body.arrear),
+                ARRS: Number(req.body.arrear) + Number(arrear_effective_date),
                 Additional: Number(req.body.additional),
                 ARRS_Comment: req.body.arrear_comment,
                 Additional_Comment: req.body.additional_comment,
