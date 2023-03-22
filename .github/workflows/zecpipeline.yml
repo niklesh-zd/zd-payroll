@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
      runs-on: self-hosted
      
      steps:
-      - name: Deploy to prod
+      - name: Deploy to dev
         uses: appleboy/ssh-action@master
         with:
          host: ${{ env.DEV-DROPLATE-IP }}
