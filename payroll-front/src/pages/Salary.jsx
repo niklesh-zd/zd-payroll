@@ -45,7 +45,7 @@ function Salary() {
   };
 
   const getPreviousMonths = (empDetailObject) => {
-    const dateOfJoining = new Date(empDetailObject.Date_of_Joining);
+    const dateOfJoining = new Date(empDetailObject.base_salary[0].effective_date);
     const doj = dateOfJoining;
     const current = new Date();
     const startMonth = new Date(doj).getMonth();
@@ -105,7 +105,7 @@ function Salary() {
           Employee_Adhar: resp.ADHAR,
           Bank_Account_Number: resp.Bank_No,
           Bank_IFSC_Code: resp.Bank_IFSC,
-          base_salary: resp.base_salary,
+          base_salary: resp.base_salary_list,
         };
         getPreviousMonths(obje);
         empdatachange(obje);
@@ -114,7 +114,7 @@ function Salary() {
         console.log(err.message);
       });
   }, []);
-
+  
   return(
     <div className="pt-5">
       <div>
