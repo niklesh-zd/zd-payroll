@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app-dev:
+  app-pro:
     image: rohitkas/app-prod:latest
     container_name: app-dev
     restart: always
