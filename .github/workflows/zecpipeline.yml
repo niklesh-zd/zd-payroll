@@ -38,7 +38,7 @@ jobs:
          context: .
          Dockerfile: Dockerfile.dev
          push: true
-         tags: rohitkas/app-dev:latest
+         tags: rohitkas/app-dev:${{ github.sha }}
         
   deploy-dev:
      if: github.ref == 'refs/heads/dev'
@@ -54,9 +54,10 @@ jobs:
          password: ${{ env.DEV-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull app-dev:latest
+          docker-compose pull rohitkas/app-dev:${{ github.sha }}
           docker-compose down 
-          docker-compose up -d
+          docker-compose -f docker-compose.dev.yml up -d
+
           
   build-prod:
       if: github.ref == 'refs/heads/main'
@@ -68,7 +69,8 @@ jobs:
         with:
          context: .
          push: true
-         tags: rohitkas/app-prod:latest
+         tags: rohitkas/app-prod:${{ github.sha }}
+        
         
   deploy-prod:
      if: github.ref == 'refs/heads/main'
@@ -84,7 +86,7 @@ jobs:
          password: ${{ env.PROD-PASSWORD }}
          script: |
           cd  ~/zd-payroll
-          docker-compose pull 
+          docker-compose pull rohitkas/app-prod:${{ github.sha }}
           docker-compose down
           docker rmi zd-payroll_app 
           docker-compose up -d
