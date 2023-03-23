@@ -169,11 +169,6 @@ class Leave {
                 to_date_: { $gte: from_date, $lte: to_date }
             });
 
-            console.log('from_date', findLeave[0].from_date);
-            console.log('to_date', findLeave[0].to_date);
-            console.log('outputDate', outputDate);
-            console.log(outputDate == findLeave[0].from_date);
-            console.log("2023-03-20T00:00:00.000Z" == "2023-03-20T00:00:00.000Z");
             for (var i = 0; i < findLeave.length; i++) {
                 var docs = await LeaveModal.aggregate([
                     {

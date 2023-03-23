@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-   app-prod:
-    image: rohitkas/app-prod:${{github.sha }}
-    container_name: zecdata-pay
+  app-dev:
+    image: rohitkas/app-dev:latest
+    container_name: app-dev
     restart: always
     ports:
       - "80:7071"
@@ -11,7 +11,6 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
       - mongodb
-  #    - frontend
 
   mongodb:
     image: mongo:latest
@@ -21,10 +20,6 @@ services:
     volumes:
       - mongodb-data:/data/db
 
- # frontend:
- #   build: ./payroll-front
- #  ports:
-  #    - "3000:3000"
 
 volumes:
   mongodb-data:
