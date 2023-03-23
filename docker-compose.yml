@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app-pro:
-    image: rohitkas/app-prod
+    image: rohitkas/app-prod:${{ github.sha }}
     container_name: app-dev
     restart: always
     ports:
