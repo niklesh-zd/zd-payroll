@@ -13,12 +13,12 @@ services:
       - mongodb
   #    - frontend
 
-  mongodb:
-    image: mongo:latest
-    restart: always
-    ports:
+   mongodb:
+     image: mongo:latest
+     restart: always
+     ports:
       - "27017:27017"
-    volumes:
+     volumes:
       - mongodb-data:/data/db
 
  # frontend:
