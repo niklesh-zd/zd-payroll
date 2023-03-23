@@ -3,7 +3,7 @@ version: '3'
 services:
   app-dev:
     image: rohitkas/app-prod:latest
-    container_name: app-prod
+    container_name: app-dev
     restart: always
     ports:
       - "80:7071"
@@ -15,8 +15,11 @@ services:
   mongodb:
     image: mongo:latest
     restart: always
+    ports:
+      - "27017:27017"
     volumes:
       - mongodb-data:/data/db
 
 
 volumes:
+  mongodb-data:
