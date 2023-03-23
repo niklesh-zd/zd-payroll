@@ -2,8 +2,9 @@ version: '3'
 
 services:
   app-pro:
-    image: rohitkas/app-prod:latest
-    container_name: app-dev
+    build:
+    context: .
+    Dokerfile: Dockerfile
     restart: always
     ports:
       - "80:7071"
