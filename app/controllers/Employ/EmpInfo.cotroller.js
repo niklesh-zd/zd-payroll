@@ -20,9 +20,9 @@ class Emp {
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, DEGREE, STREAM, YEAR_OF_PASSING
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
-                permanent_city,
+                permanent_city,bonus,
                 current_state, is_active, permanent_pin_code,
-                current_city, current_pin_code, effective_date
+                current_city, current_pin_code, effective_date,training_days,notice_period,ctc
             } = req.body;
 
             const errors = validationResult(req)
@@ -96,8 +96,12 @@ class Emp {
                     PASSED,
                     PERCENTAGE_OF_MARKS,
                     permanent_pin_code,
+                    training_days,
                     current_pin_code,
                     YEAR_OF_PASSING,
+                    notice_period,
+                    ctc,
+                    bonus
                     // file,
                 });
                 //STORE YOUR LOGIN DATA IN DB 

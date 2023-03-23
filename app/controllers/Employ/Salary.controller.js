@@ -340,7 +340,7 @@ class Salary {
                 }
 
 
-                return
+                // return
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var working_days_1 = moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() - 1 - holiday_1.length
                 var working_days_2 = Number(month_array[Number(req.query.month) - 1]) - holiday_2.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1
@@ -542,12 +542,18 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
                     }
                 });
+                console.log();
 
                 var leave_taken = 0
                 for (let i = 0; i < findLeave.length; i++) {
                     leave_taken += findLeave[i].total_number_of_day
                 }
 
+
+                console.log(leave_taken, 'leave_taken');
+                console.log(findLeave, 'findLeave');
+
+                // return
 
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 console.log(working_days, '0000000000000');
@@ -557,8 +563,11 @@ class Salary {
                 var present_days = Number(month_array[Number(req.query.month) - 1]) - holiday_emp.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1 - leave_taken
                 console.log(present_days, 'present_days');
 
-                var total_paid_days = present_days + balance_days
+                var total_paid_days = present_days + leave_balence_year
+
+                console.log(balance_days, 'balance_days');
                 console.log(total_paid_days, 'total_paid_days');
+                // return
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
