@@ -2,7 +2,7 @@ version: '3'
 
 services:
    app-prod:
-    image: rohitkas/app-prod:${{github.sha }}
+    image: rohitkas/app-prod:latest
     container_name: zecdata-pay
     restart: always
     ports:
