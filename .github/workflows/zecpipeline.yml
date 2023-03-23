@@ -88,5 +88,5 @@ jobs:
           cd  ~/zd-payroll
           docker-compose -f docker-compose.yml down
           docker rmi rohitkas/app-prod
-          docker-compose -f docker-compose.yml pull
+          docker-compose -f docker-compose.yml pull rohitkas/app-prod:latest
           docker-compose -f docker-compose.yml up -d
