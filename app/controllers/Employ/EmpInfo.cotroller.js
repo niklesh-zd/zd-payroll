@@ -274,7 +274,6 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                // $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
                 base_salary_list,
                 ADHAR,
                 Bank_No,

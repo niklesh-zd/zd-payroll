@@ -353,6 +353,9 @@ class Salary {
 
                 var balance_days = leave_balence_year - leave_taken
 
+                console.log(balance_days, 'balance_days')
+                console.log(leave_taken, 'leave_taken');
+                // return
                 var present_days = working_days - leave_taken
                 var present_days_1 = working_days_1 - leave_taken_1 + leave_balence_year
                 var present_days_2 = working_days_2 - leave_taken_2
