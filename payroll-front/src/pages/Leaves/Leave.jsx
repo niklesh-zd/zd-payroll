@@ -91,6 +91,7 @@ const Leaves = () => {
           });
         } else {
           notify(response.data.message);
+          setSubmitDisable(false);
         }
       })
       .catch((error) => {
