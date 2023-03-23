@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app-pro:
-    image: rohitkas/app-prod:latest
+    image: rohitkas/app-prod
     container_name: app-dev
     restart: always
     ports:
