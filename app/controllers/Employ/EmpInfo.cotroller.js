@@ -241,7 +241,10 @@ class Emp {
             , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
             permanent_city,
             current_state, is_active, permanent_pin_code,
-            current_city, current_pin_code, effective_date, base_salary_list
+            current_city, current_pin_code, effective_date, base_salary_list,  training_days,
+            notice_period,
+            ctc,
+            bonus
         } = req.body;
 
         if (!req.body) {
@@ -287,6 +290,10 @@ class Emp {
                 permanent_pin_code,
                 current_pin_code,
                 YEAR_OF_PASSING,
+                training_days,
+                notice_period,
+                ctc,
+                bonus
             }
             )
             .then(data => {
