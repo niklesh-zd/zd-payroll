@@ -43,10 +43,12 @@ function AddEmployee(props) {
       // };
       // console.log("base_salary_list", base_salary_list);
       // if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
-        const today = new Date(propsObject.base_salary_list[lastIndex].effective_date)
-          .toISOString()
-          .split("T")[0];
-        effectiveDateInputRef.current.setAttribute("min", today);
+      const today = new Date(
+        propsObject.base_salary_list[lastIndex].effective_date
+      )
+        .toISOString()
+        .split("T")[0];
+      effectiveDateInputRef.current.setAttribute("min", today);
       // }
       propsObject && setFields(propsObject);
     }
@@ -57,22 +59,24 @@ function AddEmployee(props) {
     fieldObj[e.target.name] = e.target.value;
     if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
       const today = new Date(fieldObj.date_of_joining)
-      .toISOString()
-      .split("T")[0];
+        .toISOString()
+        .split("T")[0];
       effectiveDateInputRef.current.setAttribute("min", today);
     }
-    if(propsObject){
+    if (propsObject) {
       const lastIndex = propsObject?.base_salary_list?.length - 1;
-      const today = new Date(propsObject.base_salary_list[lastIndex].effective_date)
-      .toISOString()
-      .split("T")[0];
-    effectiveDateInputRef.current.setAttribute("min", today);
+      const today = new Date(
+        propsObject.base_salary_list[lastIndex].effective_date
+      )
+        .toISOString()
+        .split("T")[0];
+      effectiveDateInputRef.current.setAttribute("min", today);
     }
     setEffectivesObj({
       salary_: fieldObj.base_salary,
       effective_date: fieldObj.effective_date,
     });
-    console.log('fieldObj',fieldObj);
+    console.log("fieldObj", fieldObj);
     setFields(fieldObj);
   }
 
@@ -927,6 +931,70 @@ function AddEmployee(props) {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <h5 className="text-left">Additional Details</h5>{" "}
+            <hr style={{ margin: "0px" }} />
+            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div className="form-group">
+                <label className="profile_details_text">Training Days</label>
+                <input
+                  type="number"
+                  name="training_days"
+                  className="form-control"
+                  placeholder="Training Days"
+                  style={{ textTransform: "capitalize" }}
+                  value={fields.training_days}
+                  onChange={(e) => handleChange(e)}
+                />
+                <div className="errorMsg">{errors.training_days}</div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div className="form-group">
+                <label className="profile_details_text">Notice Period</label>
+                <input
+                  type="number"
+                  name="notice_period"
+                  className="form-control"
+                  placeholder="Notice Period"
+                  style={{ textTransform: "capitalize" }}
+                  value={fields.notice_period}
+                  onChange={(e) => handleChange(e)}
+                />
+                <div className="errorMsg">{errors.notice_period}</div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div className="form-group">
+                <label className="profile_details_text">CTC</label>
+                <input
+                  type="number"
+                  name="ctc"
+                  className="form-control"
+                  placeholder="CTC"
+                  style={{ textTransform: "capitalize" }}
+                  value={fields.ctc}
+                  onChange={(e) => handleChange(e)}
+                />
+                <div className="errorMsg">{errors.ctc}</div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div className="form-group">
+                <label className="profile_details_text">Bonus</label>
+                <input
+                  type="number"
+                  name="bonus"
+                  className="form-control"
+                  placeholder="Bonus"
+                  style={{ textTransform: "capitalize" }}
+                  value={fields.bonus}
+                  onChange={(e) => handleChange(e)}
+                />
+                <div className="errorMsg">{errors.bonus}</div>
               </div>
             </div>
           </div>
