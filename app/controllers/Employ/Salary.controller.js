@@ -550,16 +550,15 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
                     }
                 });
-                console.log('---11---');
                 const findLeave_1 = await LeaveModal.find({
                     userid: req.query.userid,
                     from_date: {
                         $gte: effective_date_emp_1,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)-1]
                     },
                     to_date: {
                         $gte: effective_date_emp_1,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)-1]
                     }
                 });
                 console.log('---22---');
