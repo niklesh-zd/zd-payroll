@@ -19,26 +19,25 @@ class Leave {
             var { userid, leave_type, from_date,
                 to_date, reason_for_leave,
             } = req.body;
-            
 
             function getMonthIntervals(start_date, end_date1) {
                 const intervals = [];
                 let current_date = new Date(start_date);
                 let end_date = new Date(end_date1);
                 while (current_date <= end_date) {
-                  const start_of_month = new Date(current_date.getFullYear(), current_date.getMonth(), 1);
-                  const end_of_month = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 0);
-                  end_of_month.setMinutes(end_of_month.getMinutes() + 330)
-                  const end_of_interval = current_date < end_of_month ? end_of_month:current_date;
-                  intervals.push({
-                    start_date: current_date.toISOString().substring(0, 10),
-                    end_date: end_of_interval.toISOString().substring(0, 10)
-                  });
-                  current_date = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 1);
-                  current_date.setMinutes(current_date.getMinutes() + 330)
+                    const start_of_month = new Date(current_date.getFullYear(), current_date.getMonth(), 1);
+                    const end_of_month = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 0);
+                    end_of_month.setMinutes(end_of_month.getMinutes() + 330)
+                    const end_of_interval = current_date < end_of_month ? end_of_month : current_date;
+                    intervals.push({
+                        start_date: current_date.toISOString().substring(0, 10),
+                        end_date: end_of_interval.toISOString().substring(0, 10)
+                    });
+                    current_date = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 1);
+                    current_date.setMinutes(current_date.getMinutes() + 330)
                 }
                 intervals[intervals.length - 1].end_date = end_date.toISOString().substring(0, 10);
-              
+
                 return intervals;
             }
 
@@ -59,7 +58,17 @@ class Leave {
                     { userid: userid }
                 ]
             })
+            var empinfo_modal = await EmpInfoModal.find({
+                _id: userid
+            })
+            empinfo_modal = empinfo_modal[0]
 
+            let effective_leave = empinfo_modal.base_salary_list[0].effective_date.toISOString().toString().slice(0, 10)
+            if (effective_leave > from_date) {
+                return res.send({ message: "You can not take leave before effective date , You have to update effective date" })
+            }
+
+            // return
             let dates = [];
             // for (let i = 0; i < user_data.length; i++) {
             //     const leave_from_date = user_data[i].from_date
@@ -118,7 +127,7 @@ class Leave {
                 const leave_1 = new LeaveModal({
                     userid,
                     leave_type: today,
-                    from_date:month_intervals[i].start_date,
+                    from_date: month_intervals[i].start_date,
                     to_date: month_intervals[i].end_date,
                     reason_for_leave,
                     total_number_of_day: total_leave_1
