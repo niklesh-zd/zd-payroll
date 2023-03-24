@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app-dev:
-    image: rohitkas/app-dev
+    image: rohitkas/app-dev:latest
     container_name: app-dev
     restart: always
     ports:
@@ -23,3 +23,4 @@ services:
 
 volumes:
   mongodb-data:
+
