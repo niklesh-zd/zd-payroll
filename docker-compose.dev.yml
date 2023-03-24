@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    restart: always
     ports:
       - "80:7071"
     environment:
