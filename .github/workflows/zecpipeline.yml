@@ -55,8 +55,10 @@ jobs:
          script: |
           cd  ~/zd-payroll
           docker-compose -f docker-compose.dev.yml down
-          docker-compose -f docker-compose.dev.yml pull 
+          docker rmi mongodb
+          docker rmi rohitkas/app-dev
           docker-compose -f docker-compose.dev.yml up -d
+
           
   build-prod:
       if: github.ref == 'refs/heads/main'
