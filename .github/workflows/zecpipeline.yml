@@ -95,5 +95,5 @@ jobs:
           cd  ~/zd-payroll
           git pull
           docker-compose -f docker-compose.yml down
-          docker rmi zd-payroll_app-pro_1 
+          docker rmi zd-payroll_app-pro
           docker-compose -f docker-compose.yml up -d
