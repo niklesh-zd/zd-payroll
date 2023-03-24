@@ -34,13 +34,17 @@ class Salary {
         var arrear_effective_date = 0
         var month = req.query.month
         const compareDates = (year, month, effective_date_emp) => {
+            // console.log(year, month, '----', effective_date_emp);
+            // console.log('88888888888888888888');
             var month_flag = Number(month) < 10 ? "0" : ""
             var to_match_date = year + "-" + month_flag + month + "-" + effective_date_emp.toString().slice(8, 10);
             const effectiveDate = new Date(effective_date_emp);
             const toMatchDate = new Date(`${to_match_date}T00:00:00.000Z`);
+            console.log('effectiveDate', effectiveDate);
+            console.log('toMatchDate', toMatchDate);
             // if (toMatchDate.getFullYear() < effectiveDate.getFullYear() ||
             //     (toMatchDate.getFullYear() === effectiveDate.getFullYear() && toMatchDate.getMonth() >= effectiveDate.getMonth())) {
-            if (toMatchDate < effectiveDate) {
+            if (toMatchDate <= effectiveDate) {
                 return "before";
             } else {
                 return "after";
@@ -134,14 +138,16 @@ class Salary {
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 console.log({ empinfo_modal });
                 var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
-                console.log("balance_days", balance_days);
                 var present_days = working_days - leave_taken
                 if (present_days == 0) {
                     leave_balence_year = 0
                 }
                 console.log("present_days", present_days);
                 var balance_days = leave_balence_year - leave_taken
-                var total_paid_days = present_days + leave_balence_year
+                console.log("balance_days", balance_days);
+                // var total_paid_days = present_days + leave_balence_year
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
+
                 console.log("total_paid_days", total_paid_days);
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
@@ -180,11 +186,11 @@ class Salary {
                     userid: req.query.userid,
                     from_date: {
                         $gte: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
                     },
                     to_date: {
                         $gte: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
                     }
                 });
 
@@ -193,15 +199,24 @@ class Salary {
                     leave_taken += findLeave[i].total_number_of_day
                 }
 
-
+                var balance_days = leave_balence_year - leave_taken
+                // var total_paid_days
+                console.log(total_paid_days, '---------');
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 var present_days = Number(month_array[Number(req.query.month) - 1]) - holiday_emp.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1 - leave_taken
                 if (present_days == 0) {
                     leave_balence_year = 0
                 }
-                var balance_days = leave_balence_year - leave_taken
-                var total_paid_days = present_days + leave_balence_year
+                console.log(balance_days, 'balance_days-------=---', typeof (balance_days), '---', balance_days <= 0);
+                // if (balance_days <= 0) {
+                //     total_paid_days = present_days
+                // }
+                // else {
+                //     total_paid_days = present_days + leave_balence_year
+                // }
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
+
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
@@ -213,7 +228,10 @@ class Salary {
                 var net_pay_in_number = (salary_emp / working_days) * total_paid_days + Number(req.body.arrear) + Number(req.body.additional)
                 net_pay_in_number = Math.round(net_pay_in_number)
                 var net_pay_in_word = convertRupeesIntoWords(net_pay_in_number)
-
+                console.log(balance_days <= 0);
+                console.log(balance_days, 'balance_days');
+                console.log('total_paid_days', total_paid_days);
+                console.log(present_days, 'present_days');
             }
             else if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 == Number(req.query.month) &&
                 empinfo_modal.base_salary_list.length > 1 && moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() == 1) {
@@ -252,7 +270,9 @@ class Salary {
                     leave_balence_year = 0
                 }
                 console.log("present_days", present_days);
-                var total_paid_days = present_days + leave_balence_year
+                // var total_paid_days = present_days + leave_balence_year
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
+
                 var balance_days = leave_balence_year - leave_taken
                 console.log("total_paid_days", total_paid_days);
                 var gross_basic_da = Math.round(salary_emp / 2)
@@ -364,16 +384,18 @@ class Salary {
                 console.log(balance_days, 'balance_days')
                 console.log(leave_taken, 'leave_taken');
                 // return
-                var present_days = working_days - leave_taken
                 if (present_days == 0) {
                     leave_balence_year = 0
                 }
+                var present_days = working_days - leave_taken
                 var balance_days = leave_balence_year - leave_taken
                 var present_days_1 = working_days_1 - leave_taken_1 + leave_balence_year
                 var present_days_2 = working_days_2 - leave_taken_2
                 var net_pay_in_number = Math.round((((salary_emp_1 / working_days) * present_days_1) + ((salary_emp_2 / working_days) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
-                var total_paid_days = present_days + leave_balence_year
+                // var total_paid_days = present_days + leave_balence_year)
+                var total_paid_days = (present_days + leave_balence_year)
+
 
                 var gross_basic_da_1 = Math.round(((salary_emp_1 / 2) / Number(month_array[Number(req.query.month) - 1])) * month_days_1)
                 var gross_basic_da_2 = Math.round(((salary_emp_2 / 2) / Number(month_array[Number(req.query.month) - 1])) * month_days_2)
@@ -466,6 +488,7 @@ class Salary {
         else if (Salary_Modal.length == 0) {
             if (moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).month() + 1 != Number(req.query.month)) {
                 console.log('1111111');
+
                 const findLeave = await LeaveModal.find({
                     userid: req.query.userid,
                     from_date: {
@@ -477,8 +500,12 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
                     }
                 });
-
+                console.log(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date, '---333---');
+                console.log(req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)], '---22--');
+                console.log(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date, '---11---');
                 var leave_taken = 0
+
+
                 for (let i = 0; i < findLeave.length; i++) {
                     leave_taken += findLeave[i].total_number_of_day
                 }
@@ -490,36 +517,83 @@ class Salary {
                     }
                 });
 
+
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 var salary_emp
+                var effective_date_emp_1
                 var effective_date_emp = empinfo_modal.base_salary_list
                 var result = ""
 
-                console.log('effective_date_emp.length > 1', effective_date_emp.length > 1);
                 if (effective_date_emp.length > 1) {
+                    console.log('effective_date_emp.length', effective_date_emp.length);
                     for (let i = 1; i < effective_date_emp.length; i++) {
+                        console.log('iiiiiiiiii', i);
                         result = compareDates(year, month, effective_date_emp[i].effective_date);
                         if (result == "before") {
                             salary_emp = effective_date_emp[i - 1].salary_
+                            effective_date_emp_1 = effective_date_emp[i - 1].effective_date
                             break
                         } else {
-                            salary_emp = effective_date_emp[effective_date_emp.length - 1].salary_
+                            salary_emp = effective_date_emp[i].salary_
+                            effective_date_emp_1 = effective_date_emp[i].effective_date
                         }
                     }
-
+                    console.log('result', result);
                 } else {
                     salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
                 }
-                console.log('result---', result);
-                console.log('salary_emp---', salary_emp);
-                // var salary_emp = Number(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].salary_)
+                console.log('salary_emp', salary_emp);
                 // return
-                var present_days = working_days - leave_taken
+                const holiday_emp = await HolidayModal.find({
+                    holiday_date: {
+                        $gte: effective_date_emp_1,
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                    }
+                });
+                console.log('---11---');
+                const findLeave_1 = await LeaveModal.find({
+                    userid: req.query.userid,
+                    from_date: {
+                        $gte: effective_date_emp_1,
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
+                    },
+                    to_date: {
+                        $gte: effective_date_emp_1,
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
+                    }
+                });
+                console.log('---22---');
+                let leave_taken_1 = 0
+                console.log('findLeave_1', findLeave_1);
+                for (let i = 0; i < findLeave_1.length; i++) {
+                    leave_taken_1 += findLeave_1[i].total_number_of_day
+                }
+                console.log('result---', result);
+                console.log('salary_emp---', moment(empinfo_modal.base_salary_list[0].effective_date).month() + 1);
+                console.log('salary_emp---', moment(empinfo_modal.base_salary_list[0].effective_date).year());
+                console.log('effective_date_emp', req.query.month);
+                console.log('effective_date_emp', req.query.year);
+                console.log('-----------------------');
+                console.log('leave_taken_1', leave_taken_1);
+                console.log('leave_taken', leave_taken);
+                // return   
+                var present_days
+                if (moment(empinfo_modal.base_salary_list[0].effective_date).year() == req.query.year && moment(empinfo_modal.base_salary_list[0].effective_date).month() + 1 == req.query.month) {
+                    console.log('leave_taken_1', leave_taken_1);
+                    present_days = Number(month_array[Number(req.query.month) - 1]) - holiday_emp.length - moment(effective_date_emp_1).date() + 1 - leave_taken_1
+                    leave_taken = leave_taken_1
+                } else {
+                    console.log('leave_taken', leave_taken);
+                    present_days = working_days - leave_taken
+                }
+                console.log('present_days', present_days);
+
+                // return
                 if (present_days == 0) {
                     leave_balence_year = 0
                 }
                 var balance_days = leave_balence_year - leave_taken
-                var total_paid_days = present_days + leave_balence_year
+                var total_paid_days = (present_days + leave_balence_year)
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
@@ -553,25 +627,31 @@ class Salary {
                     userid: req.query.userid,
                     from_date: {
                         $gte: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
                     },
                     to_date: {
                         $gte: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date,
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month)]
                     }
-                });
 
+                });
+                // const findLeave = await LeaveModal.find({
+                //     userid: req.query.userid,
+                //     from_date: {
+                //         $gte: req.query.year + "-" + req.query.month + '-01',
+                //         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                //     },
+                //     to_date: {
+                //         $gte: req.query.year + "-" + req.query.month + '-01',
+                //         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                //     }
+                // });
 
                 var leave_taken = 0
                 for (let i = 0; i < findLeave.length; i++) {
                     leave_taken += findLeave[i].total_number_of_day
                 }
 
-
-                console.log(leave_taken, 'leave_taken');
-                console.log(findLeave, 'findLeave');
-
-                // return
 
                 var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
                 console.log(working_days, '0000000000000');
@@ -581,13 +661,18 @@ class Salary {
                     leave_balence_year == 0
                 }
                 var present_days = Number(month_array[Number(req.query.month) - 1]) - holiday_emp.length - moment(empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date).date() + 1 - leave_taken
-                console.log(present_days, 'present_days');
 
-                var total_paid_days = present_days + leave_balence_year
-
-                console.log(balance_days, 'balance_days');
-                console.log(total_paid_days, 'total_paid_days');
+                // if (balance_days <= 0) {
+                //     total_paid_days = present_days
+                // }
+                // else {
+                //     total_paid_days = present_days + leave_balence_year
+                // }
+                // console.log(balance_days, 'balance_days');
+                // console.log(total_paid_days, 'total_paid_days');
                 // return
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
+
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
                 var gross_ra = Math.round((gross_basic_da * 15) / 100)
@@ -615,6 +700,13 @@ class Salary {
                         $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
                     }
                 });
+                const holiday = await HolidayModal.find({
+                    holiday_date: {
+                        $gte: req.query.year + "-" + req.query.month + '-01',
+                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
+                    }
+                });
+                var working_days = Number(month_array[Number(req.query.month) - 1]) - holiday.length
 
 
                 var leave_taken = 0
@@ -622,12 +714,7 @@ class Salary {
                     leave_taken += findLeave[i].total_number_of_day
                 }
 
-                const holiday = await HolidayModal.find({
-                    holiday_date: {
-                        $gte: req.query.year + "-" + req.query.month + '-01',
-                        $lte: req.query.year + "-" + req.query.month + "-" + month_array[Number(req.query.month) - 1]
-                    }
-                });
+
                 var present_days = working_days - leave_taken
                 if (present_days == 0) {
                     leave_balence_year = 0
@@ -637,7 +724,7 @@ class Salary {
                 var balance_days = leave_balence_year - leave_taken
                 console.log("balance_days", balance_days);
                 console.log("present_days", present_days);
-                var total_paid_days = present_days + leave_balence_year
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
                 console.log("total_paid_days", total_paid_days);
                 var gross_basic_da = Math.round(salary_emp / 2)
                 var gross_hra = Math.round((gross_basic_da * 40) / 100)
@@ -728,7 +815,7 @@ class Salary {
                         $lt: empinfo_modal.base_salary_list[empinfo_modal.base_salary_list.length - 1].effective_date
                     }
                 });
-
+                console.log();
                 var leave_taken_1 = 0
                 for (let i = 0; i < findLeave_1.length; i++) {
                     leave_taken_1 += findLeave_1[i].total_number_of_day
@@ -770,7 +857,10 @@ class Salary {
                 var present_days_1 = working_days_1 - leave_taken_1 + leave_balence_year
                 var present_days_2 = working_days_2 - leave_taken_2
                 console.log('88888');
-                var total_paid_days = present_days + leave_balence_year
+                console.log(present_days_1, 'present_days_1');
+                console.log('present_days_2', present_days_2);
+                console.log(present_days, 'present_days');
+                var total_paid_days = (present_days + leave_balence_year) - leave_taken
                 var net_pay_in_number = Math.round((((salary_emp_1 / working_days) * present_days_1) + ((salary_emp_2 / working_days) * present_days_2)) + Number(req.body.arrear) + Number(req.body.additional))
                 var net_pay_in_word = convertRupeesIntoWords(Math.round(net_pay_in_number))
                 var gross_basic_da_1 = Math.round(((salary_emp_1 / 2) / Number(month_array[Number(req.query.month) - 1])) * month_days_1)
@@ -823,9 +913,9 @@ class Salary {
             // return
 
 
-            console.log('result---', result);
-            console.log('salary_emp---', salary_emp);
-            console.log(salary_emp, 'salary_emp');
+            // console.log('result---', result);
+            // console.log('salary_emp---', salary_emp);
+            // console.log(salary_emp, 'salary_emp');
             // return
             const salary = new SalaryModal({
                 Employee_name: empinfo_modal.First_Name + " " + empinfo_modal.Last_Name,
