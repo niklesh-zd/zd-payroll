@@ -4,8 +4,6 @@ RUN git clone --branch dev https://github.com/niklesh-zd/zd-payroll.git /app
 
 RUN npm install
 
-COPY . .
-
 EXPOSE 7071
 
 CMD [ "npm", "start" ]
