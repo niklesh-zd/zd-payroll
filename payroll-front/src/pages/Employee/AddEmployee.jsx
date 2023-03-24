@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import host from "./../utils";
 import { TiArrowBack } from "react-icons/ti";
+import { FaTrash } from "react-icons/fa";
 
 function AddEmployee(props) {
   console.log("props", props.data);
@@ -134,7 +135,7 @@ function AddEmployee(props) {
     e.preventDefault();
     const index = base_salary_list.length - 1;
     // console.log("effectivesObj", effectivesObj);
-    // console.log("base_salary_list", base_salary_list);
+
     const effectiveCondition =
       effectivesObj.base_salary == base_salary_list[index].salary_ ||
       effectivesObj.effective_date == base_salary_list[index].effective_date ||
@@ -203,6 +204,30 @@ function AddEmployee(props) {
     );
     event.target.value = sanitizedValue;
     event.target.setSelectionRange(selectionStart, selectionEnd);
+  };
+
+  const handleEffectiveDelete = (index) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const i = base_salary_list.indexOf(index);
+        if (i > -1) {
+          base_salary_list.splice(i, 1);
+          Swal.fire(
+            "Deleted!",
+            "Click on Update to make changes.",
+            "success"
+          )
+        }
+      }
+    });
   };
 
   return (
@@ -601,7 +626,25 @@ function AddEmployee(props) {
                           {propsObject &&
                             base_salary_list.map((e) => {
                               return (
-                                <label>{e.effective_date?.slice(0, 10)}</label>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <label>
+                                    {e.effective_date?.slice(0, 10)}
+                                  </label>
+                                  <div className="d-flex">
+                                    {/* <span
+                                      onClick={() => handleEffectiveUpdate(e)}
+                                    >
+                                      <BsPencilSquare />
+                                    </span> */}
+                                    {base_salary_list.length > 1 ? (
+                                      <span
+                                        onClick={() => handleEffectiveDelete(e)}
+                                      >
+                                        <FaTrash />
+                                      </span>
+                                    ) : null}
+                                  </div>
+                                </div>
                               );
                             })}
                           <input
@@ -874,7 +917,7 @@ function AddEmployee(props) {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div className="form-group">
                       <label className="profile_details_text">
                         Current Address:

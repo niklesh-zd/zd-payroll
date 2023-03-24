@@ -1,5 +1,5 @@
 export function validateForm(fields, checkUpdate) {
-  console.log("fields", fields);
+  console.log("fields-----", fields);
   var formIsValid = true;
   let errObj = {};
   let alfhaRegex = /^[A-Za-z]+$/;
@@ -215,6 +215,22 @@ export function validateForm(fields, checkUpdate) {
     fields.Permanent_Address.length < 5
   ) {
     errObj["Permanent_Address"] = "*Please Enter Permanent Address";
+    formIsValid = false;
+  }
+  if (!fields.ctc.toString() || fields.ctc.toString() == "") {
+    errObj["ctc"] = "*Field is required";
+    formIsValid = false;
+  }
+  if (!fields.bonus.toString() || fields.bonus.toString() == "") {
+    errObj["bonus"] = "*Field is required";
+    formIsValid = false;
+  }
+  if (!fields.notice_period.toString() || fields.notice_period.toString() == "") {
+    errObj["notice_period"] = "*Field is required";
+    formIsValid = false;
+  }
+  if (!fields.training_days.toString() || fields.training_days.toString() == "") {
+    errObj["training_days"] = "*Field is required";
     formIsValid = false;
   }
   console.log("errObj", errObj);
