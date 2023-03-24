@@ -54,9 +54,8 @@ jobs:
          password: ${{ env.DEV-PASSWORD }}
          script: |
           cd  ~/zd-payroll
+          git pull origin dev
           docker-compose -f docker-compose.dev.yml down
-          docker rmi mongodb
-          docker rmi rohitkas/app-dev
           docker-compose -f docker-compose.dev.yml up -d
 
           
@@ -96,5 +95,5 @@ jobs:
           cd  ~/zd-payroll
           git pull
           docker-compose -f docker-compose.yml down
-          docker rmi zd-payroll_app-pro_1 
+          docker rmi zd-payroll_app-pro
           docker-compose -f docker-compose.yml up -d
