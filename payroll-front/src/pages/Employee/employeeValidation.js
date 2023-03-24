@@ -217,19 +217,19 @@ export function validateForm(fields, checkUpdate) {
     errObj["Permanent_Address"] = "*Please Enter Permanent Address";
     formIsValid = false;
   }
-  if (!fields.ctc.toString() || fields.ctc.toString() == "") {
+  if (!fields.ctc?.toString() || fields.ctc?.toString() == "") {
     errObj["ctc"] = "*Field is required";
     formIsValid = false;
   }
-  if (!fields.bonus.toString() || fields.bonus.toString() == "") {
+  if (!fields.bonus?.toString() || fields.bonus?.toString() == "") {
     errObj["bonus"] = "*Field is required";
     formIsValid = false;
   }
-  if (!fields.notice_period.toString() || fields.notice_period.toString() == "") {
+  if (!fields.notice_period?.toString() || fields.notice_period?.toString() == "") {
     errObj["notice_period"] = "*Field is required";
     formIsValid = false;
   }
-  if (!fields.training_days.toString() || fields.training_days.toString() == "") {
+  if (!fields.training_days?.toString() || fields.training_days?.toString() == "") {
     errObj["training_days"] = "*Field is required";
     formIsValid = false;
   }
