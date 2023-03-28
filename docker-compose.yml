@@ -9,7 +9,7 @@ services:
     ports:
       - "443:7071"
     volumes:
-      - /etc/letsencrypt/live/zecdata.com:/app/ssl
+      - /ssl:/app/ssl
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
