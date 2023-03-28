@@ -9,7 +9,7 @@ services:
     ports:
       - "443:7071"
     volumes:
-      - /ssl:/app/ssl
+      - /etc:/etc
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/employees
     depends_on:
