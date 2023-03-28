@@ -20,9 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Define options for HTTPS server
 const options = {
-  key: fs.readFileSync('/ssl/privkey.pem'),
-  cert: fs.readFileSync('/ssl/fullchain.pem'),
-  ca: [fs.readFileSync('/ssl/ca-bundle.crt')],
+  key: fs.readFileSync('/etc/letsencrypt/live/zecdata.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/zecdata.com/fullchain.pem'),
+  ca: [fs.readFileSync('/etc/letsencrypt/live/zecdata.com/ca-bundle.crt')],
   requestCert: false,
   rejectUnauthorized: false
 };
