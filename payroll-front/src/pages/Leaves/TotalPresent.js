@@ -5,9 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import host from "./../utils"
+import host from "./../utils";
+import { CircleSpinner } from "react-spinners-kit";
 function TotalPresent() {
     const navigate = useNavigate();
+    const [loading,setLoading] = useState(true);
     const [empLeaveData, setEmpLeaveData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,6 +58,8 @@ function TotalPresent() {
 
     ];
     useEffect(() => {
+
+        setLoading(true);
         axios
             .get(`${host}/Emp_Leave/get_leave_today`)
             .then((response) => {
@@ -82,9 +86,11 @@ function TotalPresent() {
                     });
                 });
                 setEmpLeaveData(filteredArr);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("There was an error!", error);
+                setLoading(false);
             });
     }, []);
     const filteredData = empLeaveData.filter((row) => {
@@ -128,6 +134,8 @@ function TotalPresent() {
                         }
                         columns={columns}
                         data={filteredData ? filteredData : []}
+                        progressPending={loading}
+                        progressComponent={<CircleSpinner size={30} color="#686769" loading={loading}/>}
                         pagination
                         highlightOnHover
                         search

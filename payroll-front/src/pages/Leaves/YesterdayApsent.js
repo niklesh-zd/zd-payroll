@@ -5,8 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import host from "./../utils"
+import host from "./../utils";
+import { CircleSpinner } from "react-spinners-kit";
 function YesterdayApsent() {
+    const [loading,setLoading] = useState(true);
     const navigate = useNavigate();
     const [empLeaveData, setEmpLeaveData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -56,6 +58,8 @@ function YesterdayApsent() {
 
     ];
     useEffect(() => {
+
+        setLoading(true);
         axios
             .get(`${host}/Emp_Leave/get_yesterday_leave_`)
             .then((response) => {
@@ -81,10 +85,14 @@ function YesterdayApsent() {
                         createdAt: new Date(e.createdAt).toLocaleDateString("pt-PT"),
                     });
                 });
+                console.log("filtered array");
+                console.log(filteredArr)
                 setEmpLeaveData(filteredArr);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("There was an error!", error);
+                setLoading(false);
             });
     }, []);
     const filteredData = empLeaveData.filter((row) => {
@@ -128,6 +136,8 @@ function YesterdayApsent() {
                         }
                         columns={columns}
                         data={filteredData ? filteredData : []}
+                        progressPending={loading}
+                        progressComponent={<CircleSpinner size={30} color="#686769" loading={loading}/>}
                         pagination
                         highlightOnHover
                         search

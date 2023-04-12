@@ -6,6 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { experienceCalculator } from "./experienceCalculator";
 import host from "./../utils";
+import { TiArrowBack } from "react-icons/ti";
 const ManageEmpyee = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -135,6 +136,9 @@ const ManageEmpyee = () => {
   });
   return (
     <div>
+       <Link to="/employee/profile" className="btn text-dark">
+        <TiArrowBack size={30} />
+      </Link>
       <div>
         <div className="ml-5 mr-5">
           <DataTable
