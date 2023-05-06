@@ -79,6 +79,14 @@ jobs:
      runs-on: self-hosted
      
      steps:
+      - name: Copy files to Droplet
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.PROD-DROPLATE-IP }}
+          username: root
+          password: ${{ env.PROD-PASSWORD }}
+          source: "."
+          target: "payroll-zd"
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
         with:
@@ -86,8 +94,7 @@ jobs:
          username: root
          password: ${{ env.PROD-PASSWORD }}
          script: |
-          cd  ~/zd-payroll
-          git pull
+          cd  ~/payroll-zd
           docker-compose -f docker-compose.yml down
           docker rmi zd-payroll_app-pro
           docker-compose -f docker-compose.yml up -d
