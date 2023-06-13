@@ -8,7 +8,7 @@ export default function Logout() {
   function handleLogout() {
     Swal.fire({
       title: "Are you sure?",
-      text: "Are you realy want to logout!",
+      text: "Are you really want to logout!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

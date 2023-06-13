@@ -4,16 +4,31 @@ const express = require("express");
 const app = express();
 const pdf_genearation = require("./pdf_generator/pdfGenerator")
 const path = require('path')
+//const https = require('https');
+//const fs = require('fs');
 
 
 const cors = require('cors');
 app.use(cors())
 require('dotenv').config();
 
+process.noDeprecation = true;
 
 const bodyparser = require('body-parser');
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Define options for HTTPS server
+//const options = {
+//  key: fs.readFileSync('/etc/letsencrypt/live/zecdata.com/privkey.pem'),
+//  cert: fs.readFileSync('/etc/letsencrypt/live/zecdata.com/fullchain.pem'),
+//  ca: [fs.readFileSync('/etc/letsencrypt/live/zecdata.com/ca-bundle.crt')],
+//  requestCert: false,
+//  rejectUnauthorized: false
+//};
+
+// Use HTTPS server instead of HTTP server
+//const server = https.createServer(options, app);
  
 app.use("/", require("./app/routes/Employ/Employ.route"));
 app.use("/emp", require("./app/routes/Employ/Employ.route"));

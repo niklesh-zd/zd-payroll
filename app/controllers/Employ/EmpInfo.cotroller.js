@@ -3,7 +3,8 @@ const express = require("express");
 const { findOne } = require("../../models/Employ/Employ.model");
 const EmpInfoModal = require('../../models/Employ/Employ.model');
 const Emp_archInfoModal = require('../../models/Employ/Employ_arch_model')
-const { validationResult } = require('express-validator/check');
+const { check ,validationResult} = require('express-validator');
+
 const moment = require("moment");
 const ObjectId = require("mongodb").ObjectId;
 
@@ -19,9 +20,9 @@ class Emp {
                 ADHAR, Bank_No, Bank_IFSC, Alternate_Contact_number,
                 Position, DEGREE, STREAM, YEAR_OF_PASSING
                 , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
-                permanent_city,
+                permanent_city,bonus,
                 current_state, is_active, permanent_pin_code,
-                current_city, current_pin_code, effective_date
+                current_city, current_pin_code, effective_date,training_days,notice_period,ctc
             } = req.body;
 
             const errors = validationResult(req)
@@ -95,8 +96,12 @@ class Emp {
                     PASSED,
                     PERCENTAGE_OF_MARKS,
                     permanent_pin_code,
+                    training_days,
                     current_pin_code,
                     YEAR_OF_PASSING,
+                    notice_period,
+                    ctc,
+                    bonus
                     // file,
                 });
                 //STORE YOUR LOGIN DATA IN DB 
@@ -236,7 +241,10 @@ class Emp {
             , PASSED, PERCENTAGE_OF_MARKS, permanent_state,
             permanent_city,
             current_state, is_active, permanent_pin_code,
-            current_city, current_pin_code, effective_date, base_salary_list
+            current_city, current_pin_code, effective_date, base_salary_list,  training_days,
+            notice_period,
+            ctc,
+            bonus
         } = req.body;
 
         if (!req.body) {
@@ -269,7 +277,6 @@ class Emp {
                 permanent_city,
                 current_state,
                 current_city,
-                // $push: {"base_salary_list": {salary_ : base_salary, effective_date : effective_date}},
                 base_salary_list,
                 ADHAR,
                 Bank_No,
@@ -283,6 +290,10 @@ class Emp {
                 permanent_pin_code,
                 current_pin_code,
                 YEAR_OF_PASSING,
+                training_days,
+                notice_period,
+                ctc,
+                bonus
             }
             )
             .then(data => {

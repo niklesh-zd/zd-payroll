@@ -1,23 +1,28 @@
 import axios from "axios";
-import { TiArrowBack } from "react-icons/ti";
+import { TiArrowBack, TiInputChecked } from "react-icons/ti";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { FaTrash } from "react-icons/fa";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Badge } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { BsPencilSquare } from "react-icons/bs";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 import host from "./../utils";
 import { ToastContainer, toast } from "react-toastify";
 
 function TotalHolydays() {
   let navigate = useNavigate();
-
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(true);
   const [totalHolydays, setTotalHolydays] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [show, setShow] = useState(false);
   const [showOnlyWeekends, setShowOnlyWeekends] = useState(false);
+  const [showAllHolidays, setShowAllHolidays] = useState(false);
   const [showPublicHoliday, setShowPublicHoliday] = useState(false);
   const [fields, setFields] = useState({});
 
@@ -43,6 +48,17 @@ function TotalHolydays() {
     {
       name: "Holyday Type",
       selector: (rowData) => rowData["holiday_type"],
+      cell: (row) => (
+        <>
+          {row.holiday_type !== "Weekend" ? (
+            <Badge bg="success">{row.holiday_type}</Badge>
+          ) : (
+            <Badge style={{ backgroundColor: "blue" }}>
+              {row.holiday_type}
+            </Badge>
+          )}
+        </>
+      ),
       sortable: true,
     },
 
@@ -75,6 +91,7 @@ function TotalHolydays() {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
+
   useEffect(() => {
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), 0, 1);
@@ -108,7 +125,7 @@ function TotalHolydays() {
             }
           });
           if (showOnlyWeekends) {
-            console.log('showOnlyWeekends',weekendsArr);
+            console.log("showOnlyWeekends", weekendsArr);
             setTotalHolydays(weekendsArr);
           }
           if (showPublicHoliday) {
@@ -222,15 +239,92 @@ function TotalHolydays() {
                     className="ml-5 mr-5 btn-sm"
                     onClick={handleShow}
                   >
-                    Add Holyday (+)
+                    Add Holiday (+)
                   </Button>
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center ">
+                  <ButtonGroup
+                    aria-label="Basic example"
+                    size="sm"
+                    style={{ marginRight: "10px" }}
+                  >
+                    <ToggleButton
+                      variant="outline-secondary"
+                      checked={checked3}
+                      id="toggle-check"
+                      type="checkbox"
+                      onClick={(e) => {
+                        setShowPublicHoliday(false);
+                        setShowOnlyWeekends(false);
+                        setShowAllHolidays(!showAllHolidays);
+                        setChecked1(false);
+                        setChecked2(false);
+                        setChecked3(true);
+                      }}
+                    >
+                      All
+                    </ToggleButton>
+                    <ToggleButton
+                      variant="outline-secondary"
+                      checked={checked2}
+                      id="toggle-check"
+                      type="checkbox"
+                      onClick={(e) => {
+                        setShowPublicHoliday(!showPublicHoliday);
+                        setShowAllHolidays(false);
+                        setShowOnlyWeekends(false);
+                        setChecked1(false);
+                        setChecked2(true);
+                        setChecked3(false);
+                      }}
+                    >
+                      Public
+                    </ToggleButton>
+                    <ToggleButton
+                      variant="outline-secondary"
+                      checked={checked1}
+                      id="toggle-check"
+                      type="checkbox"
+                      onClick={(e) => {
+                        setShowOnlyWeekends(!showOnlyWeekends);
+                        setShowAllHolidays(false);
+                        setShowPublicHoliday(false);
+                        setChecked1(true);
+                        setChecked2(false);
+                        setChecked3(false);
+                      }}
+                    >
+                      Weekend
+                    </ToggleButton>
+                  </ButtonGroup>
+                  {/*  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitches"
+                    onChange={(e) => {
+                      setShowPublicHoliday(false);
+                      setShowOnlyWeekends(false);
+                      setShowAllHolidays(!showAllHolidays);
+                    }}
+                     checked={showAllHolidays}
+                  />
+                  <span
+                    className="px-2 d-flex"
+                    style={{ fontSize: "10px" }}
+                    htmlFor="customSwitches"
+                  >
+                    All Holidays
+                  </span>
                   <input
                     type="checkbox"
                     className="custom-control-input"
                     id="customSwitches"
-                    onChange={(e) => {setShowPublicHoliday(!showPublicHoliday); setShowOnlyWeekends(false)}}
+                    onChange={(e) => {
+                      setShowPublicHoliday(!showPublicHoliday);
+                      setShowAllHolidays(false);
+                      setShowOnlyWeekends(false);
+                      
+                    }}
                     checked={showPublicHoliday}
                   />
                   <span
@@ -244,7 +338,11 @@ function TotalHolydays() {
                     type="checkbox"
                     className="custom-control-input"
                     id="customSwitches"
-                    onChange={(e) => {setShowOnlyWeekends(!showOnlyWeekends); setShowPublicHoliday(false)}}
+                    onChange={(e) => {
+                      setShowOnlyWeekends(!showOnlyWeekends);
+                      setShowAllHolidays(false);
+                      setShowPublicHoliday(false);
+                    }}
                     checked={showOnlyWeekends}
                   />
                   <span
@@ -253,7 +351,7 @@ function TotalHolydays() {
                     htmlFor="customSwitches"
                   >
                     Show Weekends
-                  </span>
+                  </span>*/}
                   <input
                     type="text"
                     placeholder="Search"

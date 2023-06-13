@@ -20,6 +20,27 @@ class Leave {
                 to_date, reason_for_leave,
             } = req.body;
 
+            function getMonthIntervals(start_date, end_date1) {
+                const intervals = [];
+                let current_date = new Date(start_date);
+                let end_date = new Date(end_date1);
+                while (current_date <= end_date) {
+                    const start_of_month = new Date(current_date.getFullYear(), current_date.getMonth(), 1);
+                    const end_of_month = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 0);
+                    end_of_month.setMinutes(end_of_month.getMinutes() + 330)
+                    const end_of_interval = current_date < end_of_month ? end_of_month : current_date;
+                    intervals.push({
+                        start_date: current_date.toISOString().substring(0, 10),
+                        end_date: end_of_interval.toISOString().substring(0, 10)
+                    });
+                    current_date = new Date(current_date.getFullYear(), current_date.getMonth() + 1, 1);
+                    current_date.setMinutes(current_date.getMinutes() + 330)
+                }
+                intervals[intervals.length - 1].end_date = end_date.toISOString().substring(0, 10);
+
+                return intervals;
+            }
+
             //date range validation
             const user_data = await LeaveModal.find({ userid: userid });
             for (let i = 0; i < user_data.length; i++) {
@@ -37,31 +58,41 @@ class Leave {
                     { userid: userid }
                 ]
             })
+            var empinfo_modal = await EmpInfoModal.find({
+                _id: userid
+            })
+            empinfo_modal = empinfo_modal[0]
 
-            let dates = [];
-            for (let i = 0; i < user_data.length; i++) {
-                const leave_from_date = user_data[i].from_date
-                const leave_to_date = user_data[i].to_date
-                console.log('leave_from_date', leave_from_date);
-                console.log('leave_to_date', leave_to_date);
-
-                let currentDate = new Date(leave_from_date);
-                let endDate = new Date(leave_to_date);
-
-                while (currentDate <= endDate) {
-                    const ifDuplicate = currentDate.toISOString().slice(0, 10)
-                    if (dates.includes(ifDuplicate)) {
-                        console.log('--------YES DUPLICATES', ifDuplicate);
-                        res.send({ message: "alredy exist  date." })
-                    }
-                    else {
-                        res.send({ message1: "alredy exist  date." })
-                    }
-                    dates.push(ifDuplicate);
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-                console.log('dates',dates);
+            let effective_leave = empinfo_modal.base_salary_list[0].effective_date.toISOString().toString().slice(0, 10)
+            if (effective_leave > from_date) {
+                return res.send({ message: "You can not take leave before effective date , You have to update effective date" })
             }
+
+            // return
+            let dates = [];
+            // for (let i = 0; i < user_data.length; i++) {
+            //     const leave_from_date = user_data[i].from_date
+            //     const leave_to_date = user_data[i].to_date
+            //     console.log('leave_from_date', leave_from_date);
+            //     console.log('leave_to_date', leave_to_date);
+
+            //     let currentDate = new Date(leave_from_date);
+            //     let endDate = new Date(leave_to_date);
+
+            //     while (currentDate <= endDate) {
+            //         const ifDuplicate = currentDate.toISOString().slice(0, 10)
+            //         if (dates.includes(ifDuplicate)) {
+            //             console.log('--------YES DUPLICATES', ifDuplicate);
+            //             res.send({ message: "alredy exist  date." })
+            //         }
+            //         else {
+            //             res.send({ message1: "alredy exist  date." })
+            //         }
+            //         dates.push(ifDuplicate);
+            //         currentDate.setDate(currentDate.getDate() + 1);
+            //     }
+            //     console.log('dates',dates);
+            // }
             if (dates.includes()) {
                 res.send({ message: "alredy exist  date." })
             }
@@ -80,78 +111,30 @@ class Leave {
             else {
                 today = 0.5;
             }
-
-            // validation for two documents in mongodb for leave's date range in two month
-
-            if (moment(to_date, "YYYY-MM-DD").month() != moment(from_date, "YYYY-MM-DD").month()) {
-
-                if (Number(from_date.split("-")[0]) % 4 == 0) {
-                    month_array[1] = '29'
-                }
-                else {
-                    month_array[1] = '28'
-                }
-                var to_date_split = to_date.split("-")[0] + "-" + from_date.split("-")[1] + "-" + month_array[moment(from_date, "YYYY-MM-DD").month()];
-                var from_date_split = from_date.split("-")[0] + "-" + to_date.split("-")[1] + "-01";
-
-                // calculating leaves first part
-                const holiday_1 = await HolidayModal.find({
-                    holiday_date: { $gte: from_date, $lte: to_date_split }
+            if (Number(from_date.split("-")[0]) % 4 == 0) {
+                month_array[1] = '29'
+            }
+            else {
+                month_array[1] = '28'
+            }
+            const month_intervals = getMonthIntervals(from_date, to_date);
+            for (let i = 0; i < month_intervals.length; i++) {
+                var holiday_1 = await HolidayModal.find({
+                    holiday_date: { $gte: month_intervals[i].start_date, $lte: month_intervals[i].end_date }
                 });
-                var diff_between_leaves_days_1 = (moment(to_date_split, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
+                var diff_between_leaves_days_1 = (moment(month_intervals[i].end_date, "YYYY-MM-DD").diff(moment(month_intervals[i].start_date, "YYYY-MM-DD"), "days")) + 1;
                 var total_leave_1 = (diff_between_leaves_days_1 - holiday_1.length) * today
-
                 const leave_1 = new LeaveModal({
                     userid,
                     leave_type: today,
-                    from_date,
-                    to_date: to_date_split,
+                    from_date: month_intervals[i].start_date,
+                    to_date: month_intervals[i].end_date,
                     reason_for_leave,
                     total_number_of_day: total_leave_1
                 });
-
-                // calculating leaves second part
-                const holiday_2 = await HolidayModal.find({
-                    holiday_date: { $gte: from_date_split, $lte: to_date }
-                });
-                var diff_between_leaves_days_2 = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date_split, "YYYY-MM-DD"), "days")) + 1;
-                var total_leave_2 = (diff_between_leaves_days_2 - holiday_2.length) * today
-
-                const leave_2 = new LeaveModal({
-                    userid,
-                    leave_type: today,
-                    from_date: from_date_split,
-                    to_date,
-                    reason_for_leave,
-                    total_number_of_day: total_leave_2
-                });
-
                 await leave_1.save();
-                await leave_2.save();
-            }
-            else {
-
-                const holiday = await HolidayModal.find({
-                    holiday_date: { $gte: from_date, $lte: to_date }
-                });
-                var diff_between_leaves_days = (moment(to_date, "YYYY-MM-DD").diff(moment(from_date, "YYYY-MM-DD"), "days")) + 1;
-                var total_leave = (diff_between_leaves_days - holiday.length) * today
-
-                const leave = new LeaveModal({
-                    userid,
-                    leave_type: today,
-                    from_date,
-                    to_date,
-                    reason_for_leave,
-                    total_number_of_day: total_leave
-                });
-
-                //STORE YOUR LOGIN DATA IN DB 
-                console.log(leave)
-                await leave.save();
             }
             res.status(200).send({ success: true })
-
         }
         catch (error) {
             console.log(error);
@@ -173,7 +156,6 @@ class Leave {
                 }
             ]).sort({ _id: -1 })
             res.send({ msg: docs })
-            console.log("docs", docs);
         } catch (err) {
             res.send({ "error": err })
         }
@@ -182,7 +164,12 @@ class Leave {
     async get_leave_today(req, res, next) {
         try {
             var today = moment(moment().utc().format('YYYY-MM-DD'))
-
+            const convertedDate = today.add('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+            // return
+            const inputDate = new Date(convertedDate);
+            const outputDate = new Date(
+                Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate())
+            ).toISOString();
             var from_date = String(today.year()) + "-" + String(today.month() + 1) + "-01"
             var to_date = String(today.year()) + "-" + String(today.month() + 1) + "-31"
             // var today = moment().subtract('day').format('YYYY-MM-DD');
@@ -191,17 +178,14 @@ class Leave {
                 to_date_: { $gte: from_date, $lte: to_date }
             });
 
-
             for (var i = 0; i < findLeave.length; i++) {
-                console.log(findLeave[i].from_date);
                 var docs = await LeaveModal.aggregate([
                     {
                         $match: {
 
-                            $or: [
-                                { from_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } },
-                                { to_date: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) } }
-                            ]
+
+                            outputDate: { $gte: new Date(findLeave[i].from_date), $lte: new Date(findLeave[i].to_date) },
+
                         }
                     },
                     {
@@ -366,7 +350,7 @@ class Leave {
             to_date: { $gte: from_date, $lte: to_date }
         });
 
-        const emp_count = await EmpInfoModal.find()
+        const emp_count = await EmpInfoModal.find({ is_active: 1 })
         var absent_count = 0
         for (let i = 0; i < findLeave.length; i++) {
 

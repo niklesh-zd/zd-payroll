@@ -92,7 +92,7 @@ const Year_Leave = () => {
                             <TiArrowBack size={25} />
                         </Link>
                         <div className="card-title" style={{ textAlign: "center" }}>
-                            <h2 className="text-red-900"> Year Leave</h2>
+                            <h2 className="text-red-900"> Year </h2>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -122,7 +122,7 @@ const Year_Leave = () => {
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div className="form-group">
-                                    <label className="profile_details_text">Leave Type</label>
+                                    <label className="profile_details_text">Months(Days)</label>
                                     <select
                                         name="leave"
                                         className="form-control"

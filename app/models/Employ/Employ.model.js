@@ -103,11 +103,11 @@ const EmpInfo = Schema({
     Bank_No: {
         type: String,
         required: true
-    },    
+    },
     base_salary_list: [
         {
-            salary_ : Number,
-            effective_date : Date
+            salary_: Number,
+            effective_date: Date
         },
     ],
     Bank_IFSC: {
@@ -165,6 +165,18 @@ const EmpInfo = Schema({
     current_pin_code: {
         type: Number,
     },
+    training_days: {
+        type: Number,
+    },
+    notice_period: {
+        type: Number,
+    },
+    ctc: {
+        type: Number,
+    },
+    bonus: {
+        type: Number
+    }
 
 },
     {

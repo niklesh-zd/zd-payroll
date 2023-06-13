@@ -141,14 +141,16 @@ body {
 }
 
 main {
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .sidebar {
   background: #3075BA;
-  position: relative;
+  position: sticky;
+  height: 100vh;
   color: white;
-  min-height: calc(101vh - 10px);
 }
 
 .cover-content {
